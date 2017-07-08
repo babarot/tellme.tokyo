@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -x
+
+IMAGE_TAG=${1:-latest}
+
+docker tag b4b4r07/tellme.tokyo b4b4r07/tellme.tokyo:${IMAGE_TAG}
+docker push b4b4r07/tellme.tokyo:${IMAGE_TAG}
+kubectl set image -f k8s/deployment.yml blog=b4b4r07/tellme.tokyo:${IMAGE_TAG}

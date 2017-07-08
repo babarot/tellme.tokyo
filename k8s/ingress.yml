@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: blog
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "kubernetes-ingress"
+    kubernetes.io/ingress.class: "gce"
+    # kubernetes.io/tls-acme: "true"
+spec:
+  # tls:
+  # - secretName: kubernetes-ingress-tls
+  #   hosts:
+  #   - b4b4r07.com
+  rules:
+  - host: b4b4r07.com
+    http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: blog
+          servicePort: 80

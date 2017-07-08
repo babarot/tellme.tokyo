@@ -1,0 +1,31 @@
+baseurl = "http://b4b4r07.com"
+languageCode = "ja-jp"
+title = "tellme.tokyo"
+theme = "tokyo"
+copyright = "Copyright &copy; 2013-2017 BABAROT All Right Reserved."
+
+[taxonomies]
+tag = "tags"
+category = "categories"
+
+[params]
+description = "Your description here"
+keywords = ["keyword 1", "keyword 2", "keyword 3"]
+author = "b4b4r07"
+profile = "profile.jpg"
+website = "http://b4b4r07.com"
+sharingicons = false
+displayauthor = false
+readmore = false
+
+[params.highlight]
+style = "github"
+languages = ["go", "dockerfile"]
+
+[[params.social]]
+url = "https://github.com/b4b4r07"
+fa_icon = "fa-github"
+
+[[params.social]]
+url = "https://twitter.com/b4b4r07"
+fa_icon = "fa-twitter"

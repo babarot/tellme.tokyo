@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -x
+
+docker build -t b4b4r07/tellme.tokyo -f Dockerfile-hugo .
+docker cp $(docker run -d b4b4r07/tellme.tokyo):/app/public .
+docker build -t b4b4r07/tellme.tokyo .

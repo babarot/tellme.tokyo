@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: blog
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: blog
+    spec:
+      containers:
+      - image: b4b4r07/tellme.tokyo
+        name: blog
+        ports:
+        - containerPort: 80
