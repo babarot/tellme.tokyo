@@ -1,12 +1,13 @@
-+++
-title = "Crowi 用の API Client 書いて公式に取り込まれた"
-date = "2017-04-04T00:00:00+09:00"
-description = ""
-categories = []
-draft = false
-author = "b4b4r07"
-tags = ["crowi", "go"]
-+++
+---
+title: "Crowi 用の API Client 書いて公式に取り込まれた"
+date: "2017-04-04T00:00:00+09:00"
+description: ""
+categories: []
+draft: false
+author: "b4b4r07"
+tags: ["crowi", "go"]
+
+---
 
 Crowi というオープンソースソフトウェアの wiki があります。
 
