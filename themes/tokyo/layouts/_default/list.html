@@ -6,6 +6,7 @@
     <article>
       <h1 class="title"><a href="{{ .Permalink }}">{{ .Title }}</a>{{ if .Draft }} ::Draft{{ end }}</h1>
       <h2 class="subtitle is-5">{{ .Date.Format "January 2, 2006" }}</h2>
+      <!--
       {{ if .Params.tags }}
         {{ partial "tags" .Params.tags }}
       {{ end }}
@@ -20,6 +21,7 @@
         </a>
         {{ end }}
       </div>
+      -->
     </article>
     {{ end }}
   </div>
