@@ -1,17 +1,22 @@
 +++
 title = "Crowi 用の API Client 書いて公式に取り込まれた"
-date = "2017-07-09T12:46:06+09:00"
+date = "2017-04-04T00:00:00+09:00"
 description = ""
 categories = []
 draft = false
 author = "b4b4r07"
-tags = []
+tags = ["crowi", "go"]
 +++
 
 Crowi というオープンソースソフトウェアの wiki があります。
 
 
-[http://site.crowi.wiki/:embed:cite]
+<iframe
+  class="c-hatena-embed"
+  src="https://hatenablog-parts.com/embed?url=http://site.crowi.wiki/"
+  frameborder="0"
+  scrolling="no">
+</iframe>
 
 
 Markdown で書ける wiki で、
@@ -30,18 +35,18 @@ Markdown で書ける wiki で、
 Crowi 用の API Client を Go で書きました。
 
 
-[https://github.com/crowi/go-crowi:embed:cite]
+<https://github.com/crowi/go-crowi>
 
 
 Go で API Client は初めて書いたのですが、@deeeet さんの記事が参考になりました。
 
 
-[http://deeeet.com/writing/2016/11/01/go-api-client/:title]
+[GolangでAPI Clientを実装する | SOTA](http://deeeet.com/writing/2016/11/01/go-api-client/)
 
 
 もともと、Qiita:Team からの移行ツールを Go で書いていたのですが、Crowi API と通信する部分は外部パッケージとして切り出したほうが汎用的に良いなと、go-crowi を作りました。
 
-https://github.com/b4b4r07/qiita2crowi
+<https://github.com/b4b4r07/qiita2crowi>
 
 このツールは Qiita:Team からのエクスポート用の JSON を食わすと、指定した Crowi に記事を作成してくれるものです。Qiita から画像を取ってきてアッタチメントしたり、コメントなども移行してくれます。
 
@@ -64,8 +69,6 @@ https://github.com/b4b4r07/qiita2crowi
 
 ## Others...
 
-
-[https://github.com/b4b4r07/vim-crowi:embed:cite]
-
+<https://github.com/b4b4r07/vim-crowi>
 
 Crowi 用の Vim plugin も作っているので良かったら見てみてください。開いているファイルでそのままページを作ってくれます。投げたらそのままブラウザを開いてくれるのでとても便利です。[mattn/memo](https://github.com/mattn/memo) と組み合わせると、メモった内容ですぐにページを作れるので捗ると思います。

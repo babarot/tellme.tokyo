@@ -11,9 +11,8 @@
     <div class="content">
       {{ .Content }}
     </div>
-    {{ if (ne ($.Param "sharingicons") false) }}
+    <br>
     {{ partial "sharing.html" . }}
-    {{ end }}
   </div>
 </section>
 {{ partial "disqus" . }}
