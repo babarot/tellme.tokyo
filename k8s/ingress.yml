@@ -5,14 +5,14 @@ metadata:
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "kubernetes-ingress"
     kubernetes.io/ingress.class: "gce"
-    # kubernetes.io/tls-acme: "true"
+    kubernetes.io/tls-acme: "true"
 spec:
-  # tls:
-  # - secretName: kubernetes-ingress-tls
-  #   hosts:
-  #   - b4b4r07.com
+  tls:
+  - secretName: kubernetes-ingress-tls
+    hosts:
+    - tellme.tokyo
   rules:
-  - host: b4b4r07.com
+  - host: tellme.tokyo
     http:
       paths:
       - path: /*

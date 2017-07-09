@@ -3,9 +3,9 @@ server {
   server_name localhost;
 
   location / {
-    # if ($http_x_forwarded_proto != "https") {
-    #   return 301 https://$host$request_uri;
-    # }
+    if ($http_x_forwarded_proto != "https") {
+      return 301 https://$host$request_uri;
+    }
 
     root  /usr/share/nginx/html;
     index index.html index.htm;

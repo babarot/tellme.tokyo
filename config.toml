@@ -1,4 +1,4 @@
-baseurl = "http://b4b4r07.com"
+baseurl = "https://tellme.tokyo"
 languageCode = "ja-jp"
 title = "tellme.tokyo"
 theme = "tokyo"
@@ -13,7 +13,7 @@ description = "Your description here"
 keywords = ["keyword 1", "keyword 2", "keyword 3"]
 author = "b4b4r07"
 profile = "profile.jpg"
-website = "http://b4b4r07.com"
+website = "https://tellme.tokyo"
 sharingicons = false
 displayauthor = false
 readmore = false
