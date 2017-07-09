@@ -13,7 +13,7 @@ tags: ["cli", "shell", "http"]
 
 おそらく先行実装は python で書かれたこれです。
 
-<img src="/images/httpstat/httpstat-1.png" width="500">
+<img src="/images/httpstat-1.png" width="500">
 
 curl にはウェブサイトの応答時間を計測する機能が搭載されており、このツールではそれを利用して出力結果をグラフィカルに表示させています。
 単なる curl のラッパーのようなツールなのですが、見た目がリッチになるのに加えて、単一ファイルで実行でき python のバージョンに影響されないような工夫がされているのが、受けているポイントのような気がします。
@@ -22,7 +22,7 @@ curl にはウェブサイトの応答時間を計測する機能が搭載され
 
 <https://github.com/davecheney/httpstat>
 
-<img src="/images/httpstat/httpstat-2.png" width="500">
+<img src="/images/httpstat-2.png" width="500">
 
 また、ついこの間まで 800 Stars くらいだったのですが、ここ1週間で爆発的に伸びています（記事投稿時 1,100 Stars）。
 これを機になのか、色々な実装を見るようになりました。知らないだけで他にもあるかもしれません。

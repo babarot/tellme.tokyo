@@ -1,8 +1,6 @@
 # dockefile for my blog
 # https://hub.docker.com/r/b4b4r07/tellme.tokyo/
 
-MAINTAINER BABAROT b4b4r07@gmail.com
-
 FROM golang:1.8-alpine AS hugo
 RUN apk add --update --no-cache git && \
     go get -v github.com/spf13/hugo && \
