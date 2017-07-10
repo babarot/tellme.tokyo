@@ -12,14 +12,7 @@ tags: ["crowi", "go"]
 
 Crowi というオープンソースソフトウェアの wiki があります。
 
-
-<iframe
-  class="c-hatena-embed"
-  src="https://hatenablog-parts.com/embed?url=http://site.crowi.wiki/"
-  frameborder="0"
-  scrolling="no">
-</iframe>
-
+{{< hatena "http://site.crowi.wiki/" >}}
 
 Markdown で書ける wiki で、
 
@@ -56,8 +49,7 @@ Go で API Client は初めて書いたのですが、@deeeet さんの記事が
 
 そして今日、Crowi のメインメンテナの @sotarok さんから公式においても良いかも、というお話をいただき transfer しました。
 
-<blockquote class="twitter-tweet" data-lang="ja"><p lang="en" dir="ltr">welcome to official go client for Crowi / “GitHub - crowi/go-crowi: A Go client for Crowi APIs” <a href="https://t.co/mwAGQ12c8w">https://t.co/mwAGQ12c8w</a></p>&mdash; Sotaro KARASAWA© (@sotarok) <a href="https://twitter.com/sotarok/status/848886736591568897">2017年4月3日</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+{{< tweet 848886736591568897 >}}
 
 公式 SDK としたほうが多くの人に使ってもらえるし、ユーザに安心感も与えられるのでこの移譲には大賛成です。P-R も歓迎しています (おそらく自分がこのままメンテすることになると思います)。
 

@@ -23,7 +23,11 @@ tags: ["mercari"]
 
 ## メルカリという会社
 
+<!--
 <img src="/images/mercari.png" width="800">
+-->
+
+{{< img src="/images/mercari.png" width="600" >}}
 
 <https://www.mercari.com>
 
