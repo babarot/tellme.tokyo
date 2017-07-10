@@ -5,6 +5,7 @@ description: ""
 categories: []
 draft: false
 author: "b4b4r07"
+oldlink: "http://b4b4r07.hatenadiary.com/entry/2016/10/01/191546"
 tags: ["mercari"]
 
 ---
@@ -21,6 +22,8 @@ tags: ["mercari"]
 - メルカリでは新卒採用もしているので興味があれば言ってください
 
 ## メルカリという会社
+
+<img src="/images/mercari.png" width="800">
 
 <https://www.mercari.com>
 

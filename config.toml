@@ -16,6 +16,7 @@ profile = "profile.jpg"
 website = "https://tellme.tokyo"
 sharingicons = true
 displayauthor = false
+displayoldlink = true
 readmore = false
 
 [params.permalinks]

@@ -5,6 +5,7 @@ description: ""
 categories: []
 draft: false
 author: "b4b4r07"
+oldlink: "http://b4b4r07.hatenadiary.com/entry/2017/04/04/023351"
 tags: ["crowi", "go"]
 
 ---

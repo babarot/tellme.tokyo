@@ -5,6 +5,7 @@ description: ""
 categories: []
 draft: false
 author: "b4b4r07"
+oldlink: "http://b4b4r07.hatenadiary.com/entry/2016/12/05/021806"
 tags: ["vim"]
 
 ---

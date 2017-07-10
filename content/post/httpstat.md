@@ -5,6 +5,7 @@ description: ""
 categories: []
 draft: false
 author: "b4b4r07"
+oldlink: "http://b4b4r07.hatenadiary.com/entry/2016/09/25/213810"
 tags: ["cli", "shell", "http"]
 
 ---
