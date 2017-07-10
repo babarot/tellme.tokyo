@@ -9,9 +9,9 @@ tags: ["cli", "shell", "http"]
 
 ---
 
-<https://github.com/reorx/httpstat>
-
 おそらく先行実装は python で書かれたこれです。
+
+<https://github.com/reorx/httpstat>
 
 <img src="/images/httpstat-1.png" width="500">
 

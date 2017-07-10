@@ -1,9 +1,8 @@
 baseurl = "https://tellme.tokyo"
-uglyURLs = false
 languageCode = "ja-jp"
 title = "tellme.tokyo"
-theme = "tokyo"
 copyright = "Copyright &copy; 2017 BABAROT All Right Reserved."
+googleAnalytics = "UA-102307515-1"
 
 [taxonomies]
 tag = "tags"
@@ -11,7 +10,7 @@ category = "categories"
 
 [params]
 description = "tellme.tokyo"
-keywords = ["keyword 1", "keyword 2", "keyword 3"]
+keywords = ["b4b4r07", "babarot"]
 author = "b4b4r07"
 profile = "profile.jpg"
 website = "https://tellme.tokyo"
