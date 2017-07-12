@@ -4,7 +4,7 @@
     <img
     src="{{ .Get "src" }}"
     {{ if or (.Get "alt") (.Get "caption") }}alt="{{ with .Get "alt"}}{{ . }}{{ else }}{{ .Get "caption" }}{{ end }}"{{ end }}
-    {{ if .Get "width" }}width="{{ .Get "width" }}"{{ end }}
+    {{ if .Get "width" }}width="{{ .Get "width" }}"{{ else }}width="500"{{ end }}
     />
     {{ if .Get "link"}}</a>{{ end }}
   {{ if or (or (.Get "title") (.Get "caption")) (.Get "attr")}}
