@@ -21,6 +21,7 @@ tags: ["go", "cli"]
 
 [http://www.tellme.tokyo/entry/2017/02/14/214231:embed:cite]
 
+
 このころから (いやもっと前から) シェルのヒストリ補完に不満を持っていました。
 
 
@@ -145,7 +146,7 @@ ZSH_HISTORY_KEYBIND_ARROW_DOWN="^n"
 となっています。
 以下のスクリーンショットからも分かるかと思います。
 
-<img src="/images/history.png" width="500">
+{{< img src="/images/history.png" >}}
 
 他にも以下のようなテキストテンプレートが使えるので自分好みのカラムを組み合わせることが出来ます。
 
@@ -176,7 +177,7 @@ date:2017-06-13T01:32:24.494724589+09:00	command:ls /Users/b4b4r07/Library/Cache
 `history add` のときにフィルタを掛けるのです。
 
 
-```tom
+```toml
 [history]
   ignore_words = [
       '^\w+$', 
@@ -194,7 +195,7 @@ true になっていると勝手にシェアを始めます (最低限 `$GITHUB_
 勝手に、と言ってもプライベートモード (Secret) で作るので URL が流出しなければ履歴が覗かれることはありません。
 
 
-```
+```toml
 [history]
   [history.sync]
     id = "" #ここは空で問題ないです (初回の同期のとき history.ltsv ファイルを探してきて補完してくれます)
@@ -213,7 +214,7 @@ export ZSH_HISTORY_AUTO_SYNC=false
 なのでバックアップの観点から Gist を使う強い理由はないです。
 
 
-```
+```console
 $ tree ~/.config/history/.backup/
 ~/.config/history/.backup/
 └── 2017
