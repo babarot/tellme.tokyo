@@ -1,0 +1,65 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: docker:17.06.0-ce
+        environment:
+          DOCKER_VERSION: 1.13.1
+          DOCKER_DOWNLOAD_PATH: /docker
+          GOOGLE_CLOUD_SDK_VERSION: 159.0.0
+          GOOGLE_CLOUD_SDK_DOWNLOAD_PATH: /google-cloud-sdk
+    steps:
+      - checkout
+      - setup_remote_docker
+      # - run:
+      #     name: Install docker client
+      #     command: |
+      #       ./scripts/install-docker-client.sh
+      # - save_cache:
+      #     key: docker-${DOCKER_VERSION}
+      #     paths:
+      #       - ${DOCKER_DOWNLOAD_PATH}
+      - run:
+          name: Show env
+          command: |
+            pwd
+            ls -1
+      - run:
+          name: Install and Setup Google Cloud SDK
+          command: |
+            export ACTIVATE_SERVICE_ACCOUNT=true
+            apk add --no-cache curl python
+            # ./scripts/install-google-cloud-sdk.sh
+            # ./scripts/setup-gcp-service-account.sh
+            if [ ! -e "${GOOGLE_CLOUD_SDK_DOWNLOAD_PATH}" ]; then
+                curl -L -o /tmp/google-cloud-sdk-$GOOGLE_CLOUD_SDK_VERSION-linux-x86_64.tar.gz \
+                     https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-$GOOGLE_CLOUD_SDK_VERSION-linux-x86_64.tar.gz
+                tar -xz -C /tmp -f /tmp/google-cloud-sdk-$GOOGLE_CLOUD_SDK_VERSION-linux-x86_64.tar.gz
+                mv /tmp/google-cloud-sdk $GOOGLE_CLOUD_SDK_DOWNLOAD_PATH
+                
+                ${GOOGLE_CLOUD_SDK_DOWNLOAD_PATH}/install.sh --quiet
+                ${GOOGLE_CLOUD_SDK_DOWNLOAD_PATH}/bin/gcloud components install kubectl --quiet
+            fi
+            ln -s ${GOOGLE_CLOUD_SDK_DOWNLOAD_PATH}/bin/gcloud /usr/local/bin/gcloud
+            ln -s ${GOOGLE_CLOUD_SDK_DOWNLOAD_PATH}/bin/kubectl /usr/local/bin/kubectl
+      - save_cache:
+          key: gcloud-${GOOGLE_CLOUD_SDK_VERSION}
+          paths:
+            - ${GOOGLE_CLOUD_SDK_DOWNLOAD_PATH}
+      - run:
+          name: Build docker image and push to GCR
+          command: |
+            cp -f scripts/Dockerfile-hugo .
+            cp -f scripts/Dockerfile .
+            docker build -t b4b4r07/tellme.tokyo:hugo -f Dockerfile-hugo .
+            docker cp $(docker run -d b4b4r07/tellme.tokyo:hugo):/app/public .
+            docker build -t b4b4r07/tellme.tokyo .
+            docker tag b4b4r07/tellme.tokyo b4b4r07/tellme.tokyo:latest
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push b4b4r07/tellme.tokyo:latest
+
+deployment:
+  production:
+    tag: /.*/
+    commands:
+      - echo "This is the tag trigger workaround"

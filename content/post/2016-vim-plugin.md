@@ -84,7 +84,7 @@ GitHub 登場以降は [vim.org](http://www.vim.org) にアップロードされ
 
 ※ 赤:NeoBundle、黄:vim-plug、青:dein.vim
 
-<img width="973" alt="Google Trends" src="https://qiita-image-store.s3.amazonaws.com/0/29787/ab6b5921-b068-4929-21c2-05f41c81df9e.png">
+{{< img src="/images/2016-vim-plugin.png" width="800" >}}
 
 <https://www.google.co.jp/trends/explore?geo=JP&q=dein.vim,NeoBundle,vim-plug>
 

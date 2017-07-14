@@ -1,0 +1,10 @@
+# vim: ft=dockerfile
+FROM golang:1.8-alpine
+
+RUN apk add --update --no-cache git && \
+    go get -v github.com/spf13/hugo && \
+    apk del --purge git
+
+COPY . /app
+WORKDIR /app
+RUN hugo
