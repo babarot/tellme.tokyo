@@ -11,26 +11,11 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      # - run:
-      #     name: Install docker client
-      #     command: |
-      #       ./scripts/install-docker-client.sh
-      # - save_cache:
-      #     key: docker-${DOCKER_VERSION}
-      #     paths:
-      #       - ${DOCKER_DOWNLOAD_PATH}
-      - run:
-          name: Show env
-          command: |
-            pwd
-            ls -1
       - run:
           name: Install and Setup Google Cloud SDK
           command: |
             export ACTIVATE_SERVICE_ACCOUNT=true
             apk add --no-cache curl python
-            # ./scripts/install-google-cloud-sdk.sh
-            # ./scripts/setup-gcp-service-account.sh
             if [ ! -e "${GOOGLE_CLOUD_SDK_DOWNLOAD_PATH}" ]; then
                 curl -L -o /tmp/google-cloud-sdk-$GOOGLE_CLOUD_SDK_VERSION-linux-x86_64.tar.gz \
                      https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-$GOOGLE_CLOUD_SDK_VERSION-linux-x86_64.tar.gz
@@ -57,6 +42,10 @@ jobs:
             docker tag b4b4r07/tellme.tokyo b4b4r07/tellme.tokyo:latest
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push b4b4r07/tellme.tokyo:latest
+      - run:
+          name: Kube
+          command: |
+            kubectl get pods
 
 deployment:
   production:
