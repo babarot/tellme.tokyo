@@ -42,13 +42,6 @@ jobs:
             docker tag b4b4r07/tellme.tokyo b4b4r07/tellme.tokyo:latest
             docker login -u $DOCKER_USER -p $DOCKER_PASS
             docker push b4b4r07/tellme.tokyo:latest
-      - run:
-          name: Kube
-          command: |
-            gcloud config configurations activate tellme-tokyo
-            kubectl config use-context gke_tellme-tokyo_asia-east1-a_cluster-1
-            gcloud container clusters get-credentials cluster-1 --zone asia-east1-a --project tellme-tokyo
-            kubectl get pods
 
 deployment:
   production:
