@@ -10,4 +10,5 @@ WORKDIR /app
 RUN hugo
 
 FROM nginx:alpine AS nginx
+COPY files/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=hugo /app/public /usr/share/nginx/html
