@@ -14,3 +14,7 @@ spec:
         name: blog
         ports:
         - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
