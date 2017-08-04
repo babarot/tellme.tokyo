@@ -35,6 +35,6 @@ curl にはウェブサイトの応答時間を計測する機能が搭載され
 Go で先を越され少し悔しい気もするので、curl のラッパーだしシェルスクリプトでも書いてみようと思い、書いてみました。
 なんのメリットがあるかは分かりませんが、bash オンリーで書いているので bash のある環境であれば動くはずです。
 
-<https://github.com/b4b4r07/httpstat>
+{{< hatena "https://github.com/b4b4r07/httpstat" >}}
 
 次に時間があるときは Vim script で書こうかな。
