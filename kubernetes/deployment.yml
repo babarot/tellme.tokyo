@@ -10,7 +10,8 @@ spec:
         app: blog
     spec:
       containers:
-      - image: b4b4r07/tellme.tokyo
+      - image: b4b4r07/tellme.tokyo:latest
+        imagePullPolicy: Always
         name: blog
         ports:
         - containerPort: 80
