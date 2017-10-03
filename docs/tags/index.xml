@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/</link>
+    <description>Recent content in Tags on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>Copyright &amp;copy; 2017 BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Mon, 12 Dec 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Bot</title>
+      <link>https://tellme.tokyo/tags/bot/</link>
+      <pubDate>Mon, 12 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/bot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Builderscon</title>
+      <link>https://tellme.tokyo/tags/builderscon/</link>
+      <pubDate>Sun, 04 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/builderscon/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Cli</title>
+      <link>https://tellme.tokyo/tags/cli/</link>
+      <pubDate>Tue, 13 Jun 2017 00:00:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/cli/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Crowi</title>
+      <link>https://tellme.tokyo/tags/crowi/</link>
+      <pubDate>Tue, 04 Apr 2017 00:00:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/crowi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Git</title>
+      <link>https://tellme.tokyo/tags/git/</link>
+      <pubDate>Tue, 20 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Gke</title>
+      <link>https://tellme.tokyo/tags/gke/</link>
+      <pubDate>Sun, 30 Jul 2017 12:37:33 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/gke/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Go</title>
+      <link>https://tellme.tokyo/tags/go/</link>
+      <pubDate>Tue, 13 Jun 2017 00:00:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>History</title>
+      <link>https://tellme.tokyo/tags/history/</link>
+      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/history/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Http</title>
+      <link>https://tellme.tokyo/tags/http/</link>
+      <pubDate>Sun, 25 Sep 2016 00:00:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/http/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kubernetes</title>
+      <link>https://tellme.tokyo/tags/kubernetes/</link>
+      <pubDate>Sun, 30 Jul 2017 12:37:33 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mercari</title>
+      <link>https://tellme.tokyo/tags/mercari/</link>
+      <pubDate>Sat, 01 Oct 2016 00:00:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/mercari/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Shell</title>
+      <link>https://tellme.tokyo/tags/shell/</link>
+      <pubDate>Sat, 05 Aug 2017 19:03:28 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/shell/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Slack</title>
+      <link>https://tellme.tokyo/tags/slack/</link>
+      <pubDate>Mon, 12 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/slack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Spinnaker</title>
+      <link>https://tellme.tokyo/tags/spinnaker/</link>
+      <pubDate>Sun, 30 Jul 2017 12:37:33 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/spinnaker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sql</title>
+      <link>https://tellme.tokyo/tags/sql/</link>
+      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/sql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vim</title>
+      <link>https://tellme.tokyo/tags/vim/</link>
+      <pubDate>Mon, 05 Dec 2016 00:00:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/vim/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vimconf</title>
+      <link>https://tellme.tokyo/tags/vimconf/</link>
+      <pubDate>Sun, 06 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/vimconf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Zsh</title>
+      <link>https://tellme.tokyo/tags/zsh/</link>
+      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/zsh/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

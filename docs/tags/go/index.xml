@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/go/</link>
+    <description>Recent content in Go on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>Copyright &amp;copy; 2017 BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Tue, 13 Jun 2017 00:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>最強のヒストリ補完を作りました</title>
+      <link>https://tellme.tokyo/post/2017/06/13/history/</link>
+      <pubDate>Tue, 13 Jun 2017 00:00:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2017/06/13/history/</guid>
+      <description>最強のヒストリ補完を求めて シェルヒストリに不満を持っていたので自作しました。 今の自分にとっては必要な機能を盛り込んでいて便利に使えていますが、誰かにとっては、もしくは数カ月後の自分にとってはぜんぜん最強じゃないかもしれないです。
+以前このようなエントリを書きました。
+[http://www.tellme.tokyo/entry/2017/02/14/214231:embed:cite]
+このころから (いやもっと前から) シェルのヒストリ補完に不満を持っていました。
+ 単純にデフォルトの C-r だと目的のものを探しづらい  例えばコマンド名の一部だけだとノイズが多すぎる けどディレクトリは覚えているからそれでもフィルタしたい、とか   他にも色々あって (その理由について先のエントリを見てもらうとして) zsh-history というツールを書きました。
+https://github.com/b4b4r07/zsh-history
+このときは最強のヒストリ補完ができたと、嬉々として先程のエントリを書いたのです。
+しかし、まあ数ヶ月使っていると不便な点が見えてきて、
+ 複数ホスト間でもヒストリ共有したい ディレクトリだけではなくブランチごとに履歴を持ちたい カジュアルに履歴を消したい などなどの変更を加えるときに SQLite3 だとめんどい パフォーマンスは落ちるかもしれないけどテキストで持ってたほうが何かと便利かも  みたいなことが相まって作り直そうと思ったわけです。
+新しく作った 特徴など 前回のネーミングセンスなさから変わらず、単に history となっています (そもそも前回のときのも zsh- prefix をつける必要性なかったので)。
+ 何ができるかというと、
+ peco/fzf などでフィルタできる ブランチとかディレクトリに限定してフィルタできる (任意) 自動でバックアップしてくれる gist 経由で同期できる  GITHUB_TOKEN さえ渡せばよしなにやってくれるので、ユーザは他の PC でトークンを設定して history sync するだけ  同期のタイミングとか時間間隔とか差分量 (100 行以上で同期、など) の設定ができる 履歴を直接編集できる zsh intergrate は書いてるので source misc/zsh/init.</description>
+    </item>
+    
+    <item>
+      <title>Crowi 用の API Client 書いて公式に取り込まれた</title>
+      <link>https://tellme.tokyo/post/2017/04/04/go-crowi/</link>
+      <pubDate>Tue, 04 Apr 2017 00:00:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2017/04/04/go-crowi/</guid>
+      <description>Crowi というオープンソースソフトウェアの wiki があります。
+ Markdown で書ける wiki で、
+ Markdown をオートプレビュー URL (パス構造) でページを作成/表現できる リビジョンヒストリ (差分を管理してくれる) いいね、ブックマーク、ポータル機能、&amp;hellip;  などの特徴があって、とても便利なサービスです。
+簡単に Heroku to deploy できるので気になる方は試してみてください。開発者向けにはオールインワンの Docker が有志によってメンテされているので、そちらを試してみても良いかもしれません。
+go-crowi Crowi 用の API Client を Go で書きました。
+https://github.com/crowi/go-crowi
+Go で API Client は初めて書いたのですが、@deeeet さんの記事が参考になりました。
+GolangでAPI Clientを実装する | SOTA
+もともと、Qiita:Team からの移行ツールを Go で書いていたのですが、Crowi API と通信する部分は外部パッケージとして切り出したほうが汎用的に良いなと、go-crowi を作りました。
+https://github.com/b4b4r07/qiita2crowi
+このツールは Qiita:Team からのエクスポート用の JSON を食わすと、指定した Crowi に記事を作成してくれるものです。Qiita から画像を取ってきてアッタチメントしたり、コメントなども移行してくれます。
+Transfer to Crowi そして今日、Crowi のメインメンテナの @sotarok さんから公式においても良いかも、というお話をいただき transfer しました。</description>
+    </item>
+    
+    <item>
+      <title>golang で zsh history を SQL 的に活用する</title>
+      <link>https://tellme.tokyo/post/2017/02/14/history-golang-sql/</link>
+      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2017/02/14/history-golang-sql/</guid>
+      <description>僕は開発中、zsh のヒストリー補完の機能をよく使います。具体的には次のような場面が多いです。
+ 多用するコマンド  結局開発中に使うのはエディタ (vim) と git サブコマンドに集中する ちょちょいと ^N (↑) で履歴をさかのぼる  alias がイケてない場面  「エディタで .zshrc 開いて追加してリロード」が面倒で後回ししがち そして登録せずに終わる の繰り返し&amp;hellip; うろ覚え程度のコマンドの alias 名はもはや思い出せない 結局エディタ開いて見直したり、^R で遡ることに挑戦する  長いコマンド列になるとき  引数が多いとき、多段のパイプで繋いだとき 例えば、複数のパラメータを与えたときの curl コマンド   Ctrl-r (history-incremental-search-backward) よるヒストリーサーチが便利なのはよく知られたことですが、それに加えて peco のようなコマンドラインセレクタと zsh history を組み合わせて、過去に自分が入力したコマンドをその一部の記憶から引き出せるようにしたりして、便利になるようにカスタマイズしていました。
+しかし、それでも以下のような不満がありました。
+ ディレクトリごとに履歴を持ってほしい  ある特定のディレクトリでのみ使うコマンドなど git checkout ブランチ とか (git 系全般にいえる) プロジェクトのリポジトリとか tmux などで zsh を複数立ち上げているときなどにヒストリーを混同したくない  コマンド履歴にタグを付けたい  コメント (interactive_comments オプション) をつけて保持しておきたい あとあと検索が楽になる  すべての履歴を保持したい  何件まで保存、などは考えたくない 数年前の履歴も引き出せるようにしておきたい ただし数十万〜件になろうともパフォーマンスは落としたくない 標準のヒストリーは数十 MB にもなると、もたつく等の報告例あり  特定の月に使用したコマンド履歴を出したい  一定期間だけ違うプロジェクトにアサインされていたとか  substring search したい  これもディレクトリごとにできるとよし  history が壊れないような仕組みがほしい  突然壊れたとの報告例あり (自分は経験したことないけど) Twitter で検索すると嘆いている人が多い   zsh のオプション (setopt) や Third-party 系のプラグインなどを併用すれば一部の課題は解決できるのですが、同時に満たしてくれるものはなく自作しました。</description>
+    </item>
+    
+  </channel>
+</rss>

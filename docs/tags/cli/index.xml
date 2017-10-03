@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cli on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/cli/</link>
+    <description>Recent content in Cli on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>Copyright &amp;copy; 2017 BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Tue, 13 Jun 2017 00:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/cli/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>最強のヒストリ補完を作りました</title>
+      <link>https://tellme.tokyo/post/2017/06/13/history/</link>
+      <pubDate>Tue, 13 Jun 2017 00:00:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2017/06/13/history/</guid>
+      <description>最強のヒストリ補完を求めて シェルヒストリに不満を持っていたので自作しました。 今の自分にとっては必要な機能を盛り込んでいて便利に使えていますが、誰かにとっては、もしくは数カ月後の自分にとってはぜんぜん最強じゃないかもしれないです。
+以前このようなエントリを書きました。
+[http://www.tellme.tokyo/entry/2017/02/14/214231:embed:cite]
+このころから (いやもっと前から) シェルのヒストリ補完に不満を持っていました。
+ 単純にデフォルトの C-r だと目的のものを探しづらい  例えばコマンド名の一部だけだとノイズが多すぎる けどディレクトリは覚えているからそれでもフィルタしたい、とか   他にも色々あって (その理由について先のエントリを見てもらうとして) zsh-history というツールを書きました。
+https://github.com/b4b4r07/zsh-history
+このときは最強のヒストリ補完ができたと、嬉々として先程のエントリを書いたのです。
+しかし、まあ数ヶ月使っていると不便な点が見えてきて、
+ 複数ホスト間でもヒストリ共有したい ディレクトリだけではなくブランチごとに履歴を持ちたい カジュアルに履歴を消したい などなどの変更を加えるときに SQLite3 だとめんどい パフォーマンスは落ちるかもしれないけどテキストで持ってたほうが何かと便利かも  みたいなことが相まって作り直そうと思ったわけです。
+新しく作った 特徴など 前回のネーミングセンスなさから変わらず、単に history となっています (そもそも前回のときのも zsh- prefix をつける必要性なかったので)。
+ 何ができるかというと、
+ peco/fzf などでフィルタできる ブランチとかディレクトリに限定してフィルタできる (任意) 自動でバックアップしてくれる gist 経由で同期できる  GITHUB_TOKEN さえ渡せばよしなにやってくれるので、ユーザは他の PC でトークンを設定して history sync するだけ  同期のタイミングとか時間間隔とか差分量 (100 行以上で同期、など) の設定ができる 履歴を直接編集できる zsh intergrate は書いてるので source misc/zsh/init.</description>
+    </item>
+    
+    <item>
+      <title>最近、httpstat なるものが流行っているらしい</title>
+      <link>https://tellme.tokyo/post/2016/09/25/httpstat/</link>
+      <pubDate>Sun, 25 Sep 2016 00:00:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/09/25/httpstat/</guid>
+      <description>おそらく先行実装は python で書かれたこれです。
+  curl にはウェブサイトの応答時間を計測する機能が搭載されており、このツールではそれを利用して出力結果をグラフィカルに表示させています。 単なる curl のラッパーのようなツールなのですが、見た目がリッチになるのに加えて、単一ファイルで実行でき python のバージョンに影響されないような工夫がされているのが、受けているポイントのような気がします。
+このツールを見たとき「Go で書いてみるの良さそう！（この手のツールで単一バイナリになるのは嬉しいですよね）」と思い、休憩時間やお昼休みなどにちまちま書いていたら、二日前に先を越されてしまいました（そりゃそうですよね。なんでもスピードが大事だと痛感）。
+  また、ついこの間まで 800 Stars くらいだったのですが、ここ1週間で爆発的に伸びています（記事投稿時 1,100 Stars）。 これを機になのか、色々な実装を見るようになりました。知らないだけで他にもあるかもしれません。
+ yosuke-furukawa/httpstat (JavaScript) tcnksm/go-httpstat (Go package) talhasch/php-httpstat (PHP)  Go で先を越され少し悔しい気もするので、curl のラッパーだしシェルスクリプトでも書いてみようと思い、書いてみました。 なんのメリットがあるかは分かりませんが、bash オンリーで書いているので bash のある環境であれば動くはずです。
+ 次に時間があるときは Vim script で書こうかな。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -3,6 +3,7 @@ languageCode = "ja-jp"
 title = "tellme.tokyo"
 copyright = "Copyright &copy; 2017 BABAROT All Right Reserved."
 googleAnalytics = "UA-102307515-1"
+publishDir = "docs"
 
 [taxonomies]
 tag = "tags"

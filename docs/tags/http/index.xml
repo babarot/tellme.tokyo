@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Http on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/http/</link>
+    <description>Recent content in Http on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>Copyright &amp;copy; 2017 BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Sun, 25 Sep 2016 00:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/http/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>最近、httpstat なるものが流行っているらしい</title>
+      <link>https://tellme.tokyo/post/2016/09/25/httpstat/</link>
+      <pubDate>Sun, 25 Sep 2016 00:00:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/09/25/httpstat/</guid>
+      <description>おそらく先行実装は python で書かれたこれです。
+  curl にはウェブサイトの応答時間を計測する機能が搭載されており、このツールではそれを利用して出力結果をグラフィカルに表示させています。 単なる curl のラッパーのようなツールなのですが、見た目がリッチになるのに加えて、単一ファイルで実行でき python のバージョンに影響されないような工夫がされているのが、受けているポイントのような気がします。
+このツールを見たとき「Go で書いてみるの良さそう！（この手のツールで単一バイナリになるのは嬉しいですよね）」と思い、休憩時間やお昼休みなどにちまちま書いていたら、二日前に先を越されてしまいました（そりゃそうですよね。なんでもスピードが大事だと痛感）。
+  また、ついこの間まで 800 Stars くらいだったのですが、ここ1週間で爆発的に伸びています（記事投稿時 1,100 Stars）。 これを機になのか、色々な実装を見るようになりました。知らないだけで他にもあるかもしれません。
+ yosuke-furukawa/httpstat (JavaScript) tcnksm/go-httpstat (Go package) talhasch/php-httpstat (PHP)  Go で先を越され少し悔しい気もするので、curl のラッパーだしシェルスクリプトでも書いてみようと思い、書いてみました。 なんのメリットがあるかは分かりませんが、bash オンリーで書いているので bash のある環境であれば動くはずです。
+ 次に時間があるときは Vim script で書こうかな。</description>
+    </item>
+    
+  </channel>
+</rss>
