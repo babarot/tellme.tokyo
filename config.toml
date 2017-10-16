@@ -2,7 +2,7 @@ baseurl = "https://tellme.tokyo"
 languageCode = "ja-jp"
 title = "tellme.tokyo"
 copyright = "Copyright &copy; 2017 BABAROT All Right Reserved."
-googleAnalytics = "UA-102307515-1"
+googleAnalytics = "UA-44183504-2"
 publishDir = "docs"
 
 [taxonomies]
