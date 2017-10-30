@@ -49,6 +49,24 @@
     </item>
     
     <item>
+      <title>Gce</title>
+      <link>https://tellme.tokyo/tags/gce/</link>
+      <pubDate>Mon, 30 Oct 2017 15:02:23 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/gce/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Gcp</title>
+      <link>https://tellme.tokyo/tags/gcp/</link>
+      <pubDate>Mon, 30 Oct 2017 15:02:23 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/gcp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Git</title>
       <link>https://tellme.tokyo/tags/git/</link>
       <pubDate>Tue, 20 Dec 2016 00:00:00 +0000</pubDate>
@@ -60,7 +78,7 @@
     <item>
       <title>Gke</title>
       <link>https://tellme.tokyo/tags/gke/</link>
-      <pubDate>Sun, 30 Jul 2017 12:37:33 +0900</pubDate>
+      <pubDate>Mon, 30 Oct 2017 15:02:23 +0900</pubDate>
       
       <guid>https://tellme.tokyo/tags/gke/</guid>
       <description></description>
@@ -90,6 +108,15 @@
       <pubDate>Sun, 25 Sep 2016 00:00:00 +0900</pubDate>
       
       <guid>https://tellme.tokyo/tags/http/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Iap</title>
+      <link>https://tellme.tokyo/tags/iap/</link>
+      <pubDate>Mon, 30 Oct 2017 15:02:23 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/iap/</guid>
       <description></description>
     </item>
     

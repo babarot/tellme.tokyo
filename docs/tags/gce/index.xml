@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Gke on tellme.tokyo</title>
-    <link>https://tellme.tokyo/tags/gke/</link>
-    <description>Recent content in Gke on tellme.tokyo</description>
+    <title>Gce on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/gce/</link>
+    <description>Recent content in Gce on tellme.tokyo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>Copyright &amp;copy; 2017 BABAROT All Right Reserved.</copyright>
     <lastBuildDate>Mon, 30 Oct 2017 15:02:23 +0900</lastBuildDate>
     
-	<atom:link href="https://tellme.tokyo/tags/gke/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://tellme.tokyo/tags/gce/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -23,20 +23,6 @@
 設定方法 GLB を作成する IAP を使う場合、GCP 上にロードバランサ (LB) を用意する必要があります。 これは IAP が LB に対して設定されるからです。
 本記事では GKE、GCE での設定方法について説明します。 現時点で GAE にも対応していますが今回は検証しません。
 1. GKE GKE で外部に公開したサービス (の Ingress) に対して ACL を設定したい、などでしょうか。 Ingress リソースを作成すると、自動で GLBC (GCE Load-Balancer Controller) が割り当てられます。 これは、GCP のウェブコンソールからも確認できます (メニュータブから Network services &amp;gt; Load balancing)。</description>
-    </item>
-    
-    <item>
-      <title>ブログをGKEで運用し、Spinnakerでデプロイする</title>
-      <link>https://tellme.tokyo/post/2017/07/30/blog-on-gke-deployed-by-spinnaker/</link>
-      <pubDate>Sun, 30 Jul 2017 12:37:33 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/post/2017/07/30/blog-on-gke-deployed-by-spinnaker/</guid>
-      <description>このブログをはてなブログから Google Container Engine (GKE) に移行しました。
-今回、移行先に GKE を選択した理由は GKE を使ってみたかったからです。ある Web サービスを GKE に移行することになったのですが、今まで Kubernetes を含め触ったことがなかったので、自分の持つサービスで練習がてらと思いブログを題材にしました。
-目次
- 移行のためにやったこと  ブログ用の Docker コンテナを作成 kubernetes cluster を構築 コンテナの入った Pod を動かす HTTPS 化する  記事の配信まで  Circle CI による継続的インテグレーション Spinnaker による継続的デリバリ  所感など  移行のためにやったこと 今回の移行に際し、移行周りのスクリプトや kubernetes のマニフェストファイル、及び記事自体を管理するために GitHub にリポジトリを作りました。
- 1. ブログ用の Docker コンテナを作成 まずはブログを配信するためのサーバを載せたコンテナを作成します。静的サイトジェネレーターには Hugo を利用しました。
-FROM golang:1.8-alpine AS hugo RUN apk add --update --no-cache git &amp;amp;&amp;amp; \ go get -v github.</description>
     </item>
     
   </channel>
