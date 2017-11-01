@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="SREになった - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2017/11/02/sre/">
+<meta property="og:description" content="tellme.tokyo">
+<meta property="og:type" content="website" />
+<title>SREになった | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">SREになった</h1>
+    <h2 class="subtitle is-5">November 2, 2017 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/sre">SRE</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      
+      <p>最近、といっても今年の7月からですが SRE チームにジョインしました。</p>
+
+<p>そもそも SRE とは Site Reliability Enginnering の略です。
+Google が提唱しました。
+国内ではメルカリがいち早くに改名したことでも知られています。</p>
+
+<p><a href="http://tech.mercari.com/entry/2015/11/18/153421">インフラチーム改め Site Reliability Engineering (SRE) チームになりました - Mercari Engineering Blog</a></p>
+
+<p>ところで、今からおよそ1年前に入社エントリを書きました。</p>
+
+<p><a href="https://tellme.tokyo/post/2016/10/01/mercari/">新卒でメルカリに入社した話 | tellme.tokyo</a></p>
+
+<p>この頃ちょうど SRE 研修という名目のもと1ヶ月半ほど SRE チームにて業務の一端を担当しました。
+研修という名を冠していますが、最前線にいる SRE から普通にタスクをもらって仕事したりレビューしてもらえるという、とても貴重な経験でした。
+このときにインフラレイヤでのアーキテクチャ/ネットワークの設計や、実際に SRE が担っている業務領域に興味を持ち、このキャリアパスで飯を食っていきたいと思ったわけです。
+無事に研修も終わり元のチームに戻ったわけですが、それ以降以前にもまして、SRE チームの動向ややりとりを羨望してました。</p>
+
+<p>メルカリではクォータの変わり目や定期的な面談などで他分野への興味など広く技術のことについて話す機会があります。
+そういった機会を利用しつつたびたびそれとなく話をしていた程度で、メルカリ SRE は技術力の高いチームであることもあり恐れ多くあまり声を大にしていなかったのですが、そうするうちに年も変わりたまたまあるきっかけを得ました。
+それは <a href="http://deeeet.com/writing/2017/02/13/mercari/">&ldquo;deeeet さんという人&rdquo;が入社する</a>っぽいぞという情報でした。
+以前から尊敬するエンジニアのひとりだったのでひどく興奮したのを覚えています。</p>
+
+<p>ときどき社内で話したり Go のイベントの手伝いや打ち上げなどで話す機会も多くなり、そのたびに「いつ SRE 来るんだ？」をいうジョブをもらい嬉しくも再度自分の思いを正しく伝えようと考えるきっかけになりました。
+それからは上長や先輩たちに 1on1 をお願いし、今後自分がどうしていきたいのかなどを相談し、異動へのバックアップをしていただきました<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup>。</p>
+
+<p>晴れて今年の7月から SRE チームにジョインしたわけですが、チーム異動こそがゴールではないので、引き続きやるべきことをやっていく次第です。
+直近では以下のようなことに手を出しつつ、Kubernetes を最大限に活用した Microservices 領域での基盤づくりなどを担当しています。</p>
+
+<ul>
+<li><a href="http://tech.mercari.com/entry/2017/09/11/150000">メルカリ社内ドキュメントツールの Crowi を Kubernetes に載せ替えました - Mercari Engineering Blog</a></li>
+<li><a href="https://tellme.tokyo/post/2017/10/30/cloud-iap/">Cloud Identity-Aware Proxy を使って GCP backend を保護する | tellme.tokyo</a></li>
+</ul>
+
+<p>Microservices でいうと、最近の状況やノウハウ、今後のチャレンジなどをまとめた資料があがっています。</p>
+
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/zrbK9wQkOA1j8K"
+  width="766" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"
+  style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen>
+</iframe>
+<div style="margin-bottom:5px">
+  <strong>
+    <a href="//www.slideshare.net/GoogleCloudPlatformJP/microservices-at-mercari"
+      title="GoogleCloudPlatformJP/microservices-at-mercari"
+      target="_blank">GoogleCloudPlatformJP/microservices-at-mercari
+    </a>
+  </strong> from 
+  <strong>
+    <a target="_blank" href="//www.slideshare.net/GoogleCloudPlatformJP/microservices-at-mercari">@deeeet</a>
+  </strong>
+</div>
+
+
+<p><br></p>
+
+<p>まだまだ、SRE としての基礎体力が足りんので精進しつつ、Kubernetes とその周りの技術や生態系 (Spinnaker や Prometheus など) についても一線で習熟させていきたいと思います。</p>
+
+<p>以上、初心を忘れないためのメモでした <sup class="footnote-ref" id="fnref:2"><a rel="footnote" href="#fn:2">2</a></sup>。</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:1">意向を聞き入れてもらえたこととそのサポートにはとても感謝しています
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+<li id="fn:2">社内でもたまに異動について聞かれるのでメモ
+ <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://tellme.tokyo"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2017 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-44183504-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
