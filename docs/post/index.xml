@@ -7,10 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>Copyright &amp;copy; 2017 BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Thu, 02 Nov 2017 01:33:34 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 01 Dec 2017 00:54:11 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kubernetes 開発環境構築のいろは</title>
+      <link>https://tellme.tokyo/post/2017/12/01/kubeabc/</link>
+      <pubDate>Fri, 01 Dec 2017 00:54:11 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2017/12/01/kubeabc/</guid>
+      <description>はじめに Kubernetes2 Advent Calendar 2017 - Qiita 1 日目です。
+Kubernetes 上で動かすアプリを作ることが多くなってきていると思いますが、従来のオペレーションとは違う方法で開発やデプロイなどを行う必要があります。 Kubernetes の実行環境として GKE を例に取ると、GCP プロジェクトやその中で作った GKE クラスタ、Kubernetes ネームスペースなど、見る必要のある領域が増えるとともに今までのやり方も変わるはずです。 本記事ではその際のユースケースと、それをいい感じにしてくれるツールを紹介します。
+今いるクラスタは何か 本番環境と開発環境 (Prod / Dev) でクラスタを分けることは多いと思います。 その他にもクラスタを持っていることもあるでしょう。
+Continuous Delivery のプラットフォームとして Spinnaker が注目されつつあるので、Kubernetes クラスタへのデプロイはこれに置き換わる可能性1はありますが、Spinnaker がサポートしていない Kubernetes リソース (例えば、PodDisruptionBudget など) については、まだ手動で kubectl apply せざるを得ません。 また、基本的なリソースに対する apply 相当のことが Spinnaker によってできるようになったとはいえ、まだまだ手動で apply を実行したい場面もあります。 そこで気をつけたいのは、今いるクラスタとネームスペースの確認です。
+Spinnaker は「デプロイ先のクラスタ」と「どのイメージを撒くか (manifest file)」をセットにして内部に持っているので「意図しないクラスタに対して意図しない manifest file をデプロイしてしまう」といった誤操作は防げるのですが、これが kubectl apply による手動だと今いるクラスタと -f に渡すファイル次第で、互い違いにデプロイしてしまうなどの事故も起こしかねません2。 毎回指差し確認するのも面倒ですし、そもそも確認を徹底するというのは有効打ではないので、常に見えるところに表示しておくのがおすすめです。
+ 手前味噌ですが、現在の Kubernetes クラスタと GCP プロジェクトを表示できるコマンドを書きました。</description>
+    </item>
     
     <item>
       <title>SREになった</title>
