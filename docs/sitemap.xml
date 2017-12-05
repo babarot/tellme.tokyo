@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://tellme.tokyo/post/2017/12/05/cashless/</loc>
+    <lastmod>2017-12-05T08:57:17-06:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/post/2017/12/01/kubeabc/</loc>
     <lastmod>2017-12-01T00:54:11+09:00</lastmod>
   </url>
@@ -161,6 +166,12 @@
   </url>
   
   <url>
+    <loc>https://tellme.tokyo/tags/life/</loc>
+    <lastmod>2017-12-05T08:57:17-06:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/tags/mercari/</loc>
     <lastmod>2016-10-01T00:00:00+09:00</lastmod>
     <priority>0</priority>
@@ -168,7 +179,7 @@
   
   <url>
     <loc>https://tellme.tokyo/post/</loc>
-    <lastmod>2017-12-01T00:54:11+09:00</lastmod>
+    <lastmod>2017-12-05T08:57:17-06:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -228,7 +239,7 @@
   
   <url>
     <loc>https://tellme.tokyo/</loc>
-    <lastmod>2017-12-01T00:54:11+09:00</lastmod>
+    <lastmod>2017-12-05T08:57:17-06:00</lastmod>
     <priority>0</priority>
   </url>
   

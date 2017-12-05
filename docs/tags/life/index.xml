@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Life on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/life/</link>
+    <description>Recent content in Life on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>Copyright &amp;copy; 2017 BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Tue, 05 Dec 2017 08:57:17 -0600</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/life/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>決済をキャッシュレス化している</title>
+      <link>https://tellme.tokyo/post/2017/12/05/cashless/</link>
+      <pubDate>Tue, 05 Dec 2017 08:57:17 -0600</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2017/12/05/cashless/</guid>
+      <description>現状 キャッシュレスに切り替えて1年以上になる。 上京とともに現金を使うスタイルをやめた。 地方だと完全キャッシュレス化は現実的ではないが、首都圏、少なくとも都内23区においては現金を使うことなく生活できている。
+ LINE Pay (JCB) ANA VISA Suica (VISA) モバイル Suica  よく使う決済手段は上記3つ。 他にもいくつかカードを持っているが、常用しているのは LINE Pay と ANA VISA Suica の2つで、電子マネーは Suica に絞っている。 ANA VISA Suica カードはややこしい名前だが Suica 機能 (オートチャージ設定可能) が付いた View カードで、ブランドが VISA になっている。
+決済手段 LINE Pay JCB で1枚選出するとなると LINE Pay 一択かなと思う。 最高クラスの還元率 (2%) にも関わらず年会費などは不要で、コンビニなどですぐに買うことができる。 ほぼクレジットカードのように使うことができる1が、実態としてはプリペイドカード。 口座を指定しておくことで、LINE のアプリから24/7で入出金することができる。 最近はセブン銀行にも対応したことで、万が一キャッシュが必要になった場合、口座から LINE Pay に移して現金化するといったことも可能になった。
+後述するがモバイル Suica と組み合わせると、「JCB は使えないが Suica は使える」というケースにおいてもポイントを取得することができる。
+ANA VISA Suica 国内では JCB は VISA/MasterCard に遜色なく使える2が、海外だとあまり使えるところがない。 分散させるために違うブランドで、なおかつ待遇のいいものを選んだ。</description>
+    </item>
+    
+  </channel>
+</rss>
