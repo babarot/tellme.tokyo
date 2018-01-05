@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="2017年振り返り - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2018/01/05/looking-back-on-2017/">
+<meta property="og:description" content="tellme.tokyo">
+<meta property="og:type" content="website" />
+<title>2017年振り返り | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">2017年振り返り</h1>
+    <h2 class="subtitle is-5">January 5, 2018 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/life">life</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      
+      <p>もう年も変わってしまったけれど、去年どのような1年を過ごしたのかを振り返る。</p>
+
+<p>1〜7月、<a href="https://tellme.tokyo/post/2017/11/02/sre/">SRE になった</a>という記事でもある通り、環境や心境の変化もあってクォータの変わり目でもある7月のタイミングでチームを異動した。
+それまでは JP チームでガイドだったり大型便向けの電話対応用の API を作ったり、配送周りで上がってくる問い合わせの技術対応をしていた。</p>
+
+<p>少し戻って6月は、<a href="http://tech.mercari.com/entry/2017/12/10/000000">US アプリの刷新チーム</a>にてバックエンド API のサーバサイドエンジニアをやっていた。
+入社からずっと JP のことをやっていたので、US に関わったのはとても新鮮だった。</p>
+
+<p>7月、SRE になったのだけれど、まずなにをやるべきか、ということになった。
+ちょうど<a href="https://speakerdeck.com/mercari/ja-mercari-tech-conf-2017-keynote#44">全社的に microservices 化に舵を切り出した</a>ころだったので、
+「microservices への技術転向を支える基盤づくりをする」SRE メンバーになることを当面の目標として、
+そのために必要な技術の学習やキャッチアップを兼ねて、
+社内ドキュメントツールとしてモノリシックに動いていた Crowi という Wiki サービスのマイクロサービス化をすることになった。</p>
+
+<ul>
+<li><a href="http://tech.mercari.com/entry/2017/09/11/150000">メルカリ社内ドキュメントツールの Crowi を Kubernetes に載せ替えました - Mercari Engineering Blog</a></li>
+</ul>
+
+<p>コンテナや Kubernetes、<a href="http://tech.mercari.com/entry/2017/08/21/092743">Spinnaker</a> といった技術やツールを勉強しつつ、ミドルウェア自体のキャッチアップもこのときにやった。
+仕事でありながら勉強できるという環境にあったので、とても貴重な体験だったかなと思う。
+また、(今回は) Crowi という</p>
+
+<blockquote>
+<p>Web アプリケーションを違うアーキテクチャに載せ替えるとしたときに考えるべきこと</p>
+</blockquote>
+
+<p>にフォーカスしながらミドルウェアの勉強ができたのもいい体験だった<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup>。
+各種ミドルウェア、ソフトウェアはそれぞれのマニュアルや技術書を読むことで得られるが、
+システムに落とし込んで構成を組むときに思慮するというのは今までに経験がなかったのでよかった。</p>
+
+<p>また、プライベートでははてなブログで書いていたブログをコンテナ化したり Kubernetes に載せたりして GKE の勉強をしていた (GCP のクーポンが切れたのでもう GKE には載っていない)。
+ちなみにちょっとずつこっちにインポートしているが、<a href="http://b4b4r07.hatenadiary.com/">以前のブログ</a>はまだ消してはいないので残っている。</p>
+
+<ul>
+<li><a href="https://tellme.tokyo/post/2017/07/30/blog-on-gke-deployed-by-spinnaker/">ブログをGKEで運用し、Spinnakerでデプロイする | tellme.tokyo</a></li>
+</ul>
+
+<p>9月は US 出張でサンフランシスコに行った。
+US での社内ドキュメントツールの選定<sup class="footnote-ref" id="fnref:2"><a rel="footnote" href="#fn:2">2</a></sup>と、6月 US チーム (@東京オフィス) で働いていたのでその挨拶も兼ねた出張だった。</p>
+
+<p>10月からはまたチームに戻り本格的に SRE microservices 担当としてやっていくことになった。
+次から次へと各種チームから microservices 立ち上げの依頼が来る中でそれらの案件をこなしつつ、デプロイフローの整理や、
+GKE など外部ネットワークから既存 API を安全に叩くための仕組みを容易したりと、microservices へと舵切りしていく際に必要な基盤を整えていた。</p>
+
+<p>また、これくらいから SRE 当番に参加させてもらい、既存のアーキテクチャで動くシステムの監視や運用のための勉強・実践を進めた。
+詳しい話は<a href="https://speakerdeck.com/kazeburo">ここ</a>と<a href="https://speakerdeck.com/cubicdaiya">ここ</a>にたくさんあるので割愛。</p>
+
+<p>プライベートでは引越しなどをした。同区内での引越しなので身の回りの環境に大きな変化があったわけではないけれど、引越しはやっぱり良い。
+人生が落ち着くまでは2年単位とかで引越してもいいかもしれない。</p>
+
+<p>12月、<a href="http://tech.mercari.com/entry/2017/11/13/093614">KubeCon + CloudNativeCon North America 2017にスポンサーとして参加した</a>。
+数日間かけて複数トラックで Kubernetes やその周りのエコシステムについてたくさんの発表を聞いた。
+また、今回はサービスメッシュの話題が大盛況で、今後引き続きウォッチ・検証が必要だなと感じた。
+KubeCon 参加レポートは (少し時間経ってるけど) また別記事で書こうと思っている (<a href="https://medium.com/@deeeet/kubecon2017感想-kubernetes-2018-7cf4280d435b">参考</a>)。</p>
+
+<p>そうしているうちに2017年が終わった。
+2017年は3月で良くも悪くも新卒1年目というブランド (でもないけど肩書) が外れ、ますます焦りともどかしさを感じていた中、
+自分のやりたいと思える方向に転換するきっかけや意思決定をできたことに嬉しさを感じる年であった。
+今年からはそれらがそれで終わらないように、やりたいと思うことでやりたいように、結果をきちんと出す年にしていく。</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:1">それと同時にコンテナに向いたアプリケーションとはどういうものなのかを知るにもいい機会となった。ちなみに Crowi をコンテナ化するにはもう少しテコ入れが必要な感じがある
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+<li id="fn:2">JP では先に挙げたとおり <a href="http://hrnabi.com/2017/06/16/14463/">Crowi を使っている</a>
+ <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://tellme.tokyo"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2017 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-44183504-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+

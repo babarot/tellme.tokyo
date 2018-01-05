@@ -7,10 +7,27 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>Copyright &amp;copy; 2017 BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Thu, 04 Jan 2018 20:32:44 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jan 2018 19:52:12 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>2017年振り返り</title>
+      <link>https://tellme.tokyo/post/2018/01/05/looking-back-on-2017/</link>
+      <pubDate>Fri, 05 Jan 2018 19:52:12 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/01/05/looking-back-on-2017/</guid>
+      <description>もう年も変わってしまったけれど、去年どのような1年を過ごしたのかを振り返る。
+1〜7月、SRE になったという記事でもある通り、環境や心境の変化もあってクォータの変わり目でもある7月のタイミングでチームを異動した。 それまでは JP チームでガイドだったり大型便向けの電話対応用の API を作ったり、配送周りで上がってくる問い合わせの技術対応をしていた。
+少し戻って6月は、US アプリの刷新チームにてバックエンド API のサーバサイドエンジニアをやっていた。 入社からずっと JP のことをやっていたので、US に関わったのはとても新鮮だった。
+7月、SRE になったのだけれど、まずなにをやるべきか、ということになった。 ちょうど全社的に microservices 化に舵を切り出したころだったので、 「microservices への技術転向を支える基盤づくりをする」SRE メンバーになることを当面の目標として、 そのために必要な技術の学習やキャッチアップを兼ねて、 社内ドキュメントツールとしてモノリシックに動いていた Crowi という Wiki サービスのマイクロサービス化をすることになった。
+ メルカリ社内ドキュメントツールの Crowi を Kubernetes に載せ替えました - Mercari Engineering Blog  コンテナや Kubernetes、Spinnaker といった技術やツールを勉強しつつ、ミドルウェア自体のキャッチアップもこのときにやった。 仕事でありながら勉強できるという環境にあったので、とても貴重な体験だったかなと思う。 また、(今回は) Crowi という
+ Web アプリケーションを違うアーキテクチャに載せ替えるとしたときに考えるべきこと
+ にフォーカスしながらミドルウェアの勉強ができたのもいい体験だった1。 各種ミドルウェア、ソフトウェアはそれぞれのマニュアルや技術書を読むことで得られるが、 システムに落とし込んで構成を組むときに思慮するというのは今までに経験がなかったのでよかった。
+また、プライベートでははてなブログで書いていたブログをコンテナ化したり Kubernetes に載せたりして GKE の勉強をしていた (GCP のクーポンが切れたのでもう GKE には載っていない)。 ちなみにちょっとずつこっちにインポートしているが、以前のブログはまだ消してはいないので残っている。
+ ブログをGKEで運用し、Spinnakerでデプロイする | tellme.tokyo  9月は US 出張でサンフランシスコに行った。 US での社内ドキュメントツールの選定2と、6月 US チーム (@東京オフィス) で働いていたのでその挨拶も兼ねた出張だった。</description>
+    </item>
     
     <item>
       <title>2017年に購読したサービス</title>
