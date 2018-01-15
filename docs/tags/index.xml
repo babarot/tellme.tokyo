@@ -175,6 +175,15 @@
     </item>
     
     <item>
+      <title>Music</title>
+      <link>https://tellme.tokyo/tags/music/</link>
+      <pubDate>Tue, 16 Jan 2018 00:45:23 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/music/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Shell</title>
       <link>https://tellme.tokyo/tags/shell/</link>
       <pubDate>Sat, 05 Aug 2017 19:03:28 +0900</pubDate>
@@ -225,6 +234,15 @@
       <pubDate>Wed, 11 Nov 2015 00:36:02 +0900</pubDate>
       
       <guid>https://tellme.tokyo/tags/ssh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Takui</title>
+      <link>https://tellme.tokyo/tags/takui/</link>
+      <pubDate>Tue, 16 Jan 2018 00:45:23 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/takui/</guid>
       <description></description>
     </item>
     
