@@ -7,10 +7,26 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>Copyright &amp;copy; 2017 BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Mon, 05 Dec 2016 00:00:00 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 31 Jan 2018 00:20:45 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/tags/vim/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>開いたファイルに対して ansible-vault を Vim から実行する</title>
+      <link>https://tellme.tokyo/post/2018/01/31/vim-ansible-vault/</link>
+      <pubDate>Wed, 31 Jan 2018 00:20:45 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/01/31/vim-ansible-vault/</guid>
+      <description>生の何かをそのままリポジトリの置いておくのが微妙ということで特定のファイルを ansible-vault で暗号化してプッシュする、ということはよくあると思います。
+例えば、Kubernetes の Secret を管理した YAML ファイルとかですね (例として正しいかは別の話ですが)。
+その場合、こんな感じで暗号化する必要があります。
+$ ansible-vault encrypt --vault-password-file=~/.vault_password secret.yaml  初回だけで済むならそこまで不便ではないのですが、このファイルを編集し再度リポジトリに上げるには復号と暗号化のセットも必要になります。 これがとても面倒です。 編集が必要ということは Vim なりのエディタで開くわけなので、そこでこのセットもいっぺんにできたら便利なわけです。
+というわけで開いているファイル (バッファ) に対して ansible-vault (encrypt|decrypt) を実行するプラグインをつくりました。
+ GIF イメージにある Credentials はサンプルです。
+ filetype が ansible-vault であれば yes/no で復号するかどうか聞いてあげると、もう一手間省けるのでさらに便利な気もしますが、とりあえずの不便さは解消されたので現状使える Vim コマンドと機能はこれだけです。
+ :AnsibleVaultEncrypt :AnsibleVaultDecrypt  便利になりました。</description>
+    </item>
     
     <item>
       <title>最近の Vim のプラグイン管理について考える</title>

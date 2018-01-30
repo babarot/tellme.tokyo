@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://tellme.tokyo/post/2018/01/31/vim-ansible-vault/</loc>
+    <lastmod>2018-01-31T00:20:45+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/post/2018/01/16/renga_no_ie/</loc>
     <lastmod>2018-01-16T00:45:23+09:00</lastmod>
   </url>
@@ -128,6 +133,12 @@
   </url>
   
   <url>
+    <loc>https://tellme.tokyo/tags/ansible-vault/</loc>
+    <lastmod>2018-01-31T00:20:45+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/tags/apple/</loc>
     <lastmod>2015-08-14T00:57:24+09:00</lastmod>
     <priority>0</priority>
@@ -248,7 +259,7 @@
   
   <url>
     <loc>https://tellme.tokyo/post/</loc>
-    <lastmod>2018-01-16T00:45:23+09:00</lastmod>
+    <lastmod>2018-01-31T00:20:45+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -290,7 +301,7 @@
   
   <url>
     <loc>https://tellme.tokyo/tags/</loc>
-    <lastmod>2015-08-14T00:57:24+09:00</lastmod>
+    <lastmod>2018-01-31T00:20:45+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -308,7 +319,7 @@
   
   <url>
     <loc>https://tellme.tokyo/tags/vim/</loc>
-    <lastmod>2016-12-05T00:00:00+09:00</lastmod>
+    <lastmod>2018-01-31T00:20:45+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -326,7 +337,7 @@
   
   <url>
     <loc>https://tellme.tokyo/</loc>
-    <lastmod>2018-01-16T00:45:23+09:00</lastmod>
+    <lastmod>2018-01-31T00:20:45+09:00</lastmod>
     <priority>0</priority>
   </url>
   

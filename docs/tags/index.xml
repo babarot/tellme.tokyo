@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>Copyright &amp;copy; 2017 BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Fri, 14 Aug 2015 00:57:24 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 31 Jan 2018 00:20:45 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Ansible Vault</title>
+      <link>https://tellme.tokyo/tags/ansible-vault/</link>
+      <pubDate>Wed, 31 Jan 2018 00:20:45 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/ansible-vault/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Apple</title>
@@ -258,7 +267,7 @@
     <item>
       <title>Vim</title>
       <link>https://tellme.tokyo/tags/vim/</link>
-      <pubDate>Mon, 05 Dec 2016 00:00:00 +0900</pubDate>
+      <pubDate>Wed, 31 Jan 2018 00:20:45 +0900</pubDate>
       
       <guid>https://tellme.tokyo/tags/vim/</guid>
       <description></description>
