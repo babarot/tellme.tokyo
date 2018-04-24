@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="Go から peco する - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2018/04/25/go-finder/">
+<meta property="og:description" content="tellme.tokyo">
+<meta property="og:type" content="website" />
+<title>Go から peco する | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">Go から peco する</h1>
+    <h2 class="subtitle is-5">April 25, 2018 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/go">go</a>
+    
+        <a class="button is-link" href="/tags/golang">golang</a>
+    
+        <a class="button is-link" href="/tags/fzf">fzf</a>
+    
+        <a class="button is-link" href="/tags/peco">peco</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      
+      <p><a href="https://github.com/peco/peco">peco</a> とか <a href="https://github.com/junegunn/fzf">fzf</a> のようなフィルターコマンドが便利すぎて使わない日はないのですが、これらをどうしてもGoプログラムに組み込んでしまいたいときが稀にあります。</p>
+
+<p>どちらも Go で書かれているので、ライブラリとして使えるように提供されていれば import するだけなのですが、どちらも CLI (Command Line Interface) のみを提供しています。
+CLI として作られている以上、シェルコマンドとして使うべきではあるのですが、そうすると何かと連携させたいとなった場合 (多くの場合はそうですが)、シェルスクリプトを書くことになります。
+小さなものであればそれで構わないのですが大きめなツールになる場合、基本的にシェルスクリプトを書きたくないわけで、そうするとやはりどうしても Go から扱いたくなります。</p>
+
+<p>CLI (シェルコマンド) といっても、アプリケーションに精通したインターフェースである API (Application Programming Interface) と似たようなもので、 CLI の場合、コマンドラインに精通したインターフェースを持っているわけです。
+そう考えると CLI のオプションはそのインターフェイスを通してコマンドに処理の変更を伝える起点と捉えることができます。
+Go ではコマンドラインインターフェースとやりとりできる <a href="https://golang.org/pkg/os/exec/"><code>os/exec</code></a> が標準パッケージとして使えるので、これをうまく使って CLI との通信部分を抽象化してラッパーライブラリとして実装できないか考えてみました。</p>
+
+<p><a href="https://github.com/b4b4r07/go-finder">https://github.com/b4b4r07/go-finder</a></p>
+
+<p>go-finder というパッケージを作りました。</p>
+
+<p>使い方は次のようになります。</p>
+
+<p><a href="https://godoc.org/github.com/b4b4r07/go-finder">finder - GoDoc</a></p>
+
+<pre><code class="language-go">fzf, err := finder.New(&quot;fzf&quot;, &quot;--reverse&quot;, &quot;--height&quot;, &quot;40&quot;)
+if err != nil {
+	panic(err)
+}
+fzf.Run()
+</code></pre>
+
+<pre><code class="language-go">peco, err := finder.New(&quot;peco&quot;, &quot;--layout=bottom-up&quot;)
+if err != nil {
+	panic(err)
+}
+peco.Run()
+</code></pre>
+
+<p>デフォルトでは <code>os.Stdin</code> からの入力をデータソースとして使用します。
+<code>finder.New()</code> が返す <code>*finder.Finder</code> には <code>Source</code> というフィールドが定義されていて、自由にデータソースを設定することができます。
+以下のようなよく使用されるソースに関しては、デフォルトでメソッドを提供しています。</p>
+
+<pre><code class="language-go">peco, _ := finder.New(&quot;peco&quot;)
+peco.FromFile(&quot;some-file.txt&quot;)
+peco.FromText(&quot;sample\ntext\nfoo&quot;)
+peco.FromCommand(&quot;cat&quot;, &quot;some-file.txt&quot;)
+peco.FromStdin() // デフォルト
+</code></pre>
+
+<p>また、以下のように独自のデータソースも定義できます。</p>
+
+<pre><code class="language-go">peco.From(func(in io.WriteCloser) error {
+		lines := []string{&quot;line 1&quot;, &quot;line 2&quot;, &quot;line 3&quot;}
+		for _, line := range lines {
+			fmt.Fprintln(in, line)
+		}
+		return nil
+	}
+}
+</code></pre>
+
+<p>peco か fzf か <a href="https://github.com/mooz/percol">percol</a> といったフィルタコマンドのうち、何が使われるかわからないケースについても Go として書くことができます。</p>
+
+<pre><code class="language-go">var opts []string
+command := finder.Command(&quot;fzf&quot;, &quot;peco&quot;, &quot;percol&quot;, &quot;zaw&quot;)
+switch command {
+case &quot;fzf&quot;:
+	opts = []string{
+		&quot;--reverse&quot;,
+		&quot;--height&quot;, &quot;40&quot;,
+	}
+case &quot;peco&quot;:
+	opts = []string{
+		&quot;--layout=bottom-up&quot;,
+	}
+}
+
+cli, err := finder.New(command, opts...)
+if err != nil {
+	panic(err)
+}
+
+items, err := cli.Run()
+if err != nil {
+	panic(err)
+}
+fmt.Printf(&quot;%#v\n&quot;, items)
+</code></pre>
+
+<p><code>finder.Command()</code> は引数にとったコマンドのうち、使用できる (PATH が通っている) コマンドを教えてくれるのでそれに合わせてオプションを定義します。</p>
+
+<p>以上のように、go-finder ではこれらのフィルタコマンドをラップしてあげることで Go で扱いやすくなりました。</p>
+
+<p>これにより、<a href="https://github.com/b4b4r07/enhancd">enhancd</a> の Go 化ができそうです。</p>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://tellme.tokyo"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2017 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-44183504-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+
