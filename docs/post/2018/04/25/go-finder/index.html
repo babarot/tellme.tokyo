@@ -66,15 +66,16 @@
     <br>
     <div class="content">
       
-      <p><a href="https://github.com/peco/peco">peco</a> とか <a href="https://github.com/junegunn/fzf">fzf</a> のようなフィルターコマンドが便利すぎて使わない日はないのですが、これらをどうしてもGoプログラムに組み込んでしまいたいときが稀にあります。</p>
+      <p><a href="https://github.com/peco/peco">peco</a> とか <a href="https://github.com/junegunn/fzf">fzf</a> のようなフィルターコマンドが便利すぎて使わない日はないのですが、これらをどうしても Go プログラムに組み込んでしまいたいときが稀にあります。</p>
 
 <p>どちらも Go で書かれているので、ライブラリとして使えるように提供されていれば import するだけなのですが、どちらも CLI (Command Line Interface) のみを提供しています。
 CLI として作られている以上、シェルコマンドとして使うべきではあるのですが、そうすると何かと連携させたいとなった場合 (多くの場合はそうですが)、シェルスクリプトを書くことになります。
 小さなものであればそれで構わないのですが大きめなツールになる場合、基本的にシェルスクリプトを書きたくないわけで、そうするとやはりどうしても Go から扱いたくなります。</p>
 
-<p>CLI (シェルコマンド) といっても、アプリケーションに精通したインターフェースである API (Application Programming Interface) と似たようなもので、 CLI の場合、コマンドラインに精通したインターフェースを持っているわけです。
-そう考えると CLI のオプションはそのインターフェイスを通してコマンドに処理の変更を伝える起点と捉えることができます。
-Go ではコマンドラインインターフェースとやりとりできる <a href="https://golang.org/pkg/os/exec/"><code>os/exec</code></a> が標準パッケージとして使えるので、これをうまく使って CLI との通信部分を抽象化してラッパーライブラリとして実装できないか考えてみました。</p>
+<p>シェルコマンドといっても CLI (Command Line Interface) なので、アプリケーションに精通したインターフェースである API (Application Programming Interface) と似たように考えることができて、CLI はコマンドラインに精通したインターフェースを持っているわけです。
+そう考えるとコマンドのオプションはそのインターフェイスを通してコマンドに処理の変更を伝える起点と捉えることができます。</p>
+
+<p>Go ではコマンドラインインターフェースとやりとりできる <a href="https://golang.org/pkg/os/exec/"><code>os/exec</code></a> が標準パッケージとして使えるので、これをうまく使って CLI との通信部分を抽象化してラッパーライブラリとして実装できないか考えてみました。</p>
 
 <p><a href="https://github.com/b4b4r07/go-finder">https://github.com/b4b4r07/go-finder</a></p>
 
@@ -100,7 +101,7 @@ peco.Run()
 
 <p>デフォルトでは <code>os.Stdin</code> からの入力をデータソースとして使用します。
 <code>finder.New()</code> が返す <code>*finder.Finder</code> には <code>Source</code> というフィールドが定義されていて、自由にデータソースを設定することができます。
-以下のようなよく使用されるソースに関しては、デフォルトでメソッドを提供しています。</p>
+以下のようなよく使用されるソースに関しては、パッケージでメソッドを提供しています。</p>
 
 <pre><code class="language-go">peco, _ := finder.New(&quot;peco&quot;)
 peco.FromFile(&quot;some-file.txt&quot;)
@@ -121,7 +122,7 @@ peco.FromStdin() // デフォルト
 }
 </code></pre>
 
-<p>peco か fzf か <a href="https://github.com/mooz/percol">percol</a> といったフィルタコマンドのうち、何が使われるかわからないケースについても Go として書くことができます。</p>
+<p>peco か fzf か <a href="https://github.com/mooz/percol">percol</a> といったフィルタコマンドのうち、何が使われるかわからないケースについても Go で書くことができます。</p>
 
 <pre><code class="language-go">var opts []string
 command := finder.Command(&quot;fzf&quot;, &quot;peco&quot;, &quot;percol&quot;, &quot;zaw&quot;)
@@ -151,7 +152,7 @@ fmt.Printf(&quot;%#v\n&quot;, items)
 
 <p><code>finder.Command()</code> は引数にとったコマンドのうち、使用できる (PATH が通っている) コマンドを教えてくれるのでそれに合わせてオプションを定義します。</p>
 
-<p>以上のように、go-finder ではこれらのフィルタコマンドをラップしてあげることで Go で扱いやすくなりました。</p>
+<p>以上のように、go-finder ではこれらのフィルタコマンドをラップしてあげることで Go から扱いやすくなりました。</p>
 
 <p>これにより、<a href="https://github.com/b4b4r07/enhancd">enhancd</a> の Go 化ができそうです。</p>
 
