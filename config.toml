@@ -4,6 +4,7 @@ title = "tellme.tokyo"
 copyright = "Copyright &copy; 2017 BABAROT All Right Reserved."
 googleAnalytics = "UA-44183504-2"
 publishDir = "docs"
+rssuri = "feed.xml"
 
 [taxonomies]
 tag = "tags"
