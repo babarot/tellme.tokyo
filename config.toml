@@ -1,7 +1,7 @@
 baseurl = "https://tellme.tokyo"
 languageCode = "ja-jp"
 title = "tellme.tokyo"
-copyright = "Copyright &copy; 2017 BABAROT All Right Reserved."
+copyright = "Copyright &copy; 2018 BABAROT All Right Reserved."
 googleAnalytics = "UA-44183504-2"
 publishDir = "docs"
 rssuri = "feed.xml"
