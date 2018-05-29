@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Http on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/http/</link>
+    <description>Recent content in Http on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>Copyright &amp;copy; 2018 BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Sun, 01 Apr 2018 23:05:54 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/http/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>複数のサービスのヘルスチェックをとるツール</title>
+      <link>https://tellme.tokyo/post/2018/04/01/req/</link>
+      <pubDate>Sun, 01 Apr 2018 23:05:54 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/04/01/req/</guid>
+      <description>ヘルスチェックのときの問題点 あるウェブサービスの動作確認をとっているとき、curl などを使ってリクエストを送ると思いますが、場合によっては環境変数が必要だったり、エンドポイントのパスが長かったり、Cloud IAP といった認証機構があったりします。 動作確認中はだいたい複数回実行するので実行しやすいように（また履歴で追いやすいように）、書き捨て用のシェルスクリプトにまとめたり、再利用しやすいようにワンライナーにしたりします。
+#!/bin/bash GOOGLE_APPLICATION_CREDENTIALS=&amp;quot;/path/to/google-credentials.json&amp;quot; CLIENT_ID=&amp;quot;sample.apps.googleusercontent.com&amp;quot; curl &amp;quot;https://iap-protected-app-url&amp;quot;  （再利用性が高く変数をスクリプト内のプロセスに閉じられる上に編集はしやすいが、毎回このようなシェルスクリプトを書くのは面倒）
+$ GOOGLE_APPLICATION_CREDENTIALS=&amp;quot;/path/to/google-credentials.json&amp;quot; CLIENT_ID=&amp;quot;sample.apps.googleusercontent.com&amp;quot; curl &amp;quot;https://iap-protected-app-url&amp;quot;  （再利用性も高く変数はコマンドのプロセスにしか影響しないが、長くて見づらく編集しづらい）
+環境変数を含むワンライナーだとあまりにも長いので、以下のように環境変数の宣言部分だけコマンドラインから先に実行してしまえば curl と URL のみの実行で済みますが、特定のエンドポイント用の環境変数が実行シェルに記録されてしまうのは好ましくありません。
+# 記録される $ GOOGLE_APPLICATION_CREDENTIALS=&amp;quot;/path/to/google-credentials.json&amp;quot; $ CLIENT_ID=&amp;quot;sample.apps.googleusercontent.com&amp;quot; $ curl &amp;quot;https://iap-protected-app-url&amp;quot;  （変数部分だけコマンドラインから定義してしまえば curl からの実行で済むが、シェルを再起動するまでは変数が実行プロセスに記録されてしまう）
+問題はこれだけではありません。 開発環境の動作確認が終わったら本番環境の動作確認です（critical なサービスではない場合、初動の動作確認はカジュアルに curl でヘルスチェックを取ることも多いです）。
+今度は本番環境に変わるのでURLや環境変数を書き換える必要があります。 また、開発環境と本番環境のヘルスチェックの行き来をしなきゃいけない場合もあります。 流石にここまでくると面倒くさくて、確認が終わったら削除するであろう取り急ぎなスクリプトにしちゃうことが多いです。
+あとからまたヘルスチェックをとりたいと思ったとき これまでは上記の方法でなんとかお茶を濁していたのですが、最近厳しくなってきました。 見ているサービスが多くなってきたためです。
+例えばあるサービスの Dev の様子がおかしいとなったとき、開発者が修正をデプロイしたとしても、場合によっては SRE や基盤チームがその後の疎通やサービスの状態をみたりします。 上にあるようなその場しのぎのスクリプトやワンライナーでやっていると、すでにスクリプトを削除していたり履歴を追うのが面倒で、こういうときにヘルスチェック用のパスが何だったのか（/health ? /status ?）、そもそもリクエストすべきサービスの URL がなんだったのか正確に思い出せません。
+ツール https://github.com/b4b4r07/req
+前に Cloud IAP で保護されたエンドポイントに対して簡単にリクエストを送るために作った CLI ツールの iap_curl が便利だったので、基本的な挙動はそのままに少し手を加えて汎用化しました。</description>
+    </item>
+    
+    <item>
+      <title>最近、httpstat なるものが流行っているらしい</title>
+      <link>https://tellme.tokyo/post/2016/09/25/httpstat/</link>
+      <pubDate>Sun, 25 Sep 2016 00:00:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/09/25/httpstat/</guid>
+      <description>おそらく先行実装は python で書かれたこれです。
+  curl にはウェブサイトの応答時間を計測する機能が搭載されており、このツールではそれを利用して出力結果をグラフィカルに表示させています。 単なる curl のラッパーのようなツールなのですが、見た目がリッチになるのに加えて、単一ファイルで実行でき python のバージョンに影響されないような工夫がされているのが、受けているポイントのような気がします。
+このツールを見たとき「Go で書いてみるの良さそう！（この手のツールで単一バイナリになるのは嬉しいですよね）」と思い、休憩時間やお昼休みなどにちまちま書いていたら、二日前に先を越されてしまいました（そりゃそうですよね。なんでもスピードが大事だと痛感）。
+  また、ついこの間まで 800 Stars くらいだったのですが、ここ1週間で爆発的に伸びています（記事投稿時 1,100 Stars）。 これを機になのか、色々な実装を見るようになりました。知らないだけで他にもあるかもしれません。
+ yosuke-furukawa/httpstat (JavaScript) tcnksm/go-httpstat (Go package) talhasch/php-httpstat (PHP)  Go で先を越され少し悔しい気もするので、curl のラッパーだしシェルスクリプトでも書いてみようと思い、書いてみました。 なんのメリットがあるかは分かりませんが、bash オンリーで書いているので bash のある環境であれば動くはずです。
+ 次に時間があるときは Vim script で書こうかな。</description>
+    </item>
+    
+    <item>
+      <title>HTTP のステータスコードを簡単に調べる</title>
+      <link>https://tellme.tokyo/post/2015/11/07/http_code/</link>
+      <pubDate>Sat, 07 Nov 2015 00:32:23 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/11/07/http_code/</guid>
+      <description> HTTPステータスコードは、HTTPにおいてWebサーバからのレスポンスの意味を表現する3桁の数字からなるコードで、RFC 2616、RFC 7231等によって定められている。via HTTPステータスコード - Wikipedia
+ 403とか404はよく目にもするので覚えていますが、300番台は？500番台は？とかとなると思い出せないことが多いです。 いちいちググり直すのも手間。 そんなときに、bash なりのシェルにてエイリアスとして登録しているハックを目にしました。
+ Jxck/dotfiles - GitHub  このまま参考にさせてもらおう、と思ったのですがすべて登録するのもな、と思いコマンドで用意しました1。
+
+ b4b4r07/http_code - GitHub  antigen で簡単にインストールできます。
+$ antigen bundle b4b4r07/http_code  antigen でない場合は、
+sudo sh -c &amp;quot;curl https://raw.githubusercontent.com/b4b4r07/http_code/master/bin/http_code -o /usr/local/bin/http_code &amp;amp;&amp;amp; chmod +x /usr/local/bin/http_code&amp;quot;  しかし、antigen でインストールしたほうが、補完ファイルなども使用できるようになります。
+使い方は gif アニメにもある通り、-a/--all オプションをつけると一覧表示、引数に数字を渡すとそれに対する説明を返します。
+ 番号が変わるものでもないので一度登録して変更することになる心配がないためエイリアスもいいと思います [return]   </description>
+    </item>
+    
+  </channel>
+</rss>

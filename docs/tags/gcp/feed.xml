@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gcp on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/gcp/</link>
+    <description>Recent content in Gcp on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>Copyright &amp;copy; 2018 BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Mon, 30 Oct 2017 15:02:23 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/gcp/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Cloud Identity-Aware Proxy を使って GCP backend を保護する</title>
+      <link>https://tellme.tokyo/post/2017/10/30/cloud-iap/</link>
+      <pubDate>Mon, 30 Oct 2017 15:02:23 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2017/10/30/cloud-iap/</guid>
+      <description>Cloud IAP とは  Cloud ID-Aware Proxy（Cloud IAP）は、Google Cloud Platform で動作するクラウド アプリケーションへのアクセスを制御します。 Cloud IAP はユーザー ID を確認し、そのユーザーがアプリケーションへのアクセスを許可されるかどうかを判断します。 - https://cloud.google.com/iap/
+ つまり Cloud Identity-Aware Proxy (Cloud IAP、または IAP) を使うことで、任意の GCP リソース 1 に存在するロードバランサに対して、許可された Google アカウントやサービスアカウントによるアクセスのみに絞ることができます。 また、このアクセスリスト (ACL) の追加や削除などは GCP のウェブコンソールから簡単に制御することができます。
+設定方法 GLB を作成する IAP を使う場合、GCP 上にロードバランサ (LB) を用意する必要があります。 これは IAP が LB に対して設定されるからです。
+本記事では GKE、GCE での設定方法について説明します。 現時点で GAE にも対応していますが今回は検証しません。
+1. GKE GKE で外部に公開したサービス (の Ingress) に対して ACL を設定したい、などでしょうか。 Ingress リソースを作成すると、自動で GLBC (GCE Load-Balancer Controller) が割り当てられます。 これは、GCP のウェブコンソールからも確認できます (メニュータブから Network services &amp;gt; Load balancing)。</description>
+    </item>
+    
+  </channel>
+</rss>

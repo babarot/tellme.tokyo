@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ssh on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/ssh/</link>
+    <description>Recent content in Ssh on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>Copyright &amp;copy; 2018 BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Wed, 11 Nov 2015 00:36:02 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/ssh/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ほんの 1分で GitHub に公開鍵を登録して SSH 接続する</title>
+      <link>https://tellme.tokyo/post/2015/11/11/ssh-keyreg/</link>
+      <pubDate>Wed, 11 Nov 2015 00:36:02 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/11/11/ssh-keyreg/</guid>
+      <description>公開鍵認証はとても便利ですが、他のマシンに移ったり Vagrant などで仮想開発環境をつくったときなど GitHub に公開鍵をアップロードするの面倒ではないですか？
+ssh-keygen で作成された 公開鍵.pub の中身をコピーしてブラウザに貼り付けて ssh -T git@github.com できるかチェック．．．
+面倒なので簡略化したプラグインをつくりました。利用者が打ち込むコマンドは以下のみです。
+$ # (antigen bundle b4b4r07/ssh-keyreg) $ ssh-keygen $ ssh-keyreg  はやい！！！
+
+ b4b4r07/ssh-keyreg - GitHub  上では、antigen でインストールすると書いていますが、このプラグインは bash でも動きます（補完は zsh のみです。ごめんなさい）。
+インストール $ # for zsh $ antigen bundle b4b4r07/ssh-keyreg $ # for bash $ sudo sh -c &amp;quot;curl https://raw.githubusercontent.com/b4b4r07/ssh-keyreg/master/bin/ssh-keyreg -o /usr/local/bin/ssh-keyreg &amp;amp;&amp;amp; chmod +x /usr/local/bin/ssh-keyreg&amp;quot;  使い方 $ ssh-keyreg usage: ssh-keyreg [-h|--help][[-d|--desc &amp;lt;desc&amp;gt;][-u|--user &amp;lt;user[:pass]&amp;gt;][-p|--path &amp;lt;path&amp;gt;]] [github|bitbucket] command line method or programmatically add ssh key to github.</description>
+    </item>
+    
+  </channel>
+</rss>

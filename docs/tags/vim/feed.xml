@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vim on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/vim/</link>
+    <description>Recent content in Vim on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>Copyright &amp;copy; 2018 BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Wed, 31 Jan 2018 00:20:45 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/vim/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>開いたファイルに対して ansible-vault を Vim から実行する</title>
+      <link>https://tellme.tokyo/post/2018/01/31/vim-ansible-vault/</link>
+      <pubDate>Wed, 31 Jan 2018 00:20:45 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/01/31/vim-ansible-vault/</guid>
+      <description>生の何かをそのままリポジトリの置いておくのが微妙ということで特定のファイルを ansible-vault で暗号化してプッシュする、ということはよくあると思います。
+例えば、Kubernetes の Secret を管理した YAML ファイルとかですね (例として正しいかは別の話ですが)。
+その場合、こんな感じで暗号化する必要があります。
+$ ansible-vault encrypt --vault-password-file=~/.vault_password secret.yaml  初回だけで済むならそこまで不便ではないのですが、このファイルを編集し再度リポジトリに上げるには復号と暗号化のセットも必要になります。 これがとても面倒です。 編集が必要ということは Vim なりのエディタで開くわけなので、そこでこのセットもいっぺんにできたら便利なわけです。
+というわけで開いているファイル (バッファ) に対して ansible-vault (encrypt|decrypt) を実行するプラグインをつくりました。
+ GIF イメージにある Credentials はサンプルです。
+ filetype が ansible-vault であれば yes/no で復号するかどうか聞いてあげると、もう一手間省けるのでさらに便利な気もしますが、とりあえずの不便さは解消されたので現状使える Vim コマンドと機能はこれだけです。
+ :AnsibleVaultEncrypt :AnsibleVaultDecrypt  便利になりました。</description>
+    </item>
+    
+    <item>
+      <title>最近の Vim のプラグイン管理について考える</title>
+      <link>https://tellme.tokyo/post/2016/12/05/2016-vim-plugin/</link>
+      <pubDate>Mon, 05 Dec 2016 00:00:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/12/05/2016-vim-plugin/</guid>
+      <description>この記事は Vim Advent Calendar 2016 の 5 日目の記事です。
+以前、neobundle.vim と vim-plug の比較記事を書きました。 それから数ヶ月後、dein.vim が登場し、再び比較記事を書こうと思っていたのですが、気づけばあれから 1 年が経っていました。 この記事は半年前 (&amp;lsquo;16年8月頃) に大枠だけ書き Qiita の限定共有に投稿していたのものを Advent Calendar 向けに書き下ろしたものです。
+Vim プラグインの歴史 GitHub 以前 (〜2008年) 昔の話です。 Vim script で拡張の機能を書いたらそのスクリプトを vim.org にアップして開発者同士で共有したり、ユーザがダウンロードして使っていたようです。 おそらくコレが所謂「プラグイン管理」の始まりなのですが、このときはまだ手動で行われていたようです (残念ながら、このときはまだ Vim に出会っていなかったためその肌感は分かりません&amp;hellip;)。
+例えば、こんな機能も Vim script で書いた拡張です (autogroup などは考慮してません)。
+autocmd BufWritePre * %s/\s\+$//e  Vim 7 から Vimball という機能が Vim 本体に同梱されて、それからはこれを利用するユーザもいたようです。 vim.org からアーカイブされたスクリプトを持ってきて、:so % したり、気に入ったら runtimepath 以下に置いて自動読み込みしたり。 その頃の plugins ディレクトリは混沌としていたようです。 ペライチのスクリプトが無造作に転がっており、同名ファイルに気をつけたりアップデートの情報は自分でキャッチしなければなりませんでした。
+GitHub 以降 (2008年〜) GitHub は 2008 年頃発のサービスですが、翌年には最大の Git のホスティングサービスになっていたようです。 本格的に流行りだしたのは 2011 年ころの印象を受けますが、このソーシャルコーディング時代の新風は Vim プラグイン界にも訪れ、席巻したようです。</description>
+    </item>
+    
+    <item>
+      <title>運営として VimConf 2016 に参加してきた</title>
+      <link>https://tellme.tokyo/post/2016/11/06/vimconf2016/</link>
+      <pubDate>Sun, 06 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/11/06/vimconf2016/</guid>
+      <description>株式会社ミクシィさんにて行われた VimConf 2016 の参加レポートです。自分は一般参加者としてではなく、一部運営に携わったのでその点について主に書ければなと思います。
+tl;dr   VimConf 2016 のまとめ役として参加しました スライドの感想や資料については他の方のレポートを見てください 「ババロットさん、アイコン変えた方がいいよ」  まとめ役として参画した背景 ある日突然、社内 Slack の個人チャンネル (分報的なアレ) にてこんなポストが投げられました (リンクだけ)。
+  二つ返事で参加レスをしたわけですが、これはノリで運営やってみました、とかでは全くないです。日々、Vim を使い vim-jp やその界隈の人たちのプラグインなどを使ったりし感謝していくうちに、いつかコミュニティに携わりたい・還元したいという気持ちが芽生えていたためです。たまたまこの煽りポストがいい後押しとなり、運営への参画を踏み出すきっかけになったのでした。
+ひとり KPT まとめ役という肩書きで参加したわけですが、色々振り返ってみるとやり残したことや課題感、続けたいことなどが見えたのでまとめてみます。
+ KEEP  VimConf 2017 への参画  せっかく自分の中に溜まったノウハウをここで途絶えさせるのは勿体無いので、次回も何らかの形で携わりたい。貢献し続けることも大切  参加率の良さ  9 割近くの参加率、総勢約 120 名での VimConf は初のこと。募集開始を遅らせたりなどの工夫があった。果たしてこれが功を奏したかは来年も試してテストしてみないとだけど  ケータリングの量  多すぎず少なすぎずで懇親会終わる頃にちょうど綺麗になくなった感。廃棄もほとんどなかったんじゃないかな。ここは自分ががっつり噛んでいたところなので見事な新卒力を発揮できた  交流が活発に見えた  誰とも話せない、という人はいなかった気がします。それとドリンク島がドリンクを求めた立ち寄った人との交流の場になっていたのは良かった   PROBLEM  コミットが足りなかった  TRY: 忙し月と準備が被った。次回も参加することで乗り越えていきたいところ  意外とバタバタ@懇親会準備1  TRY: 各種業者に当日リマインダを掛けられたのはよかった。ただ、一部到着連絡をもらえず開場まで運ばれたのには焦った (受付に人がいて気づいてくれた. いなかったらと思う図ちょっとゾッとする)。  意外とバタバタ@懇親会準備2  TRY: 皿や紙コップ、醤油や小皿のデプロイに手間取った。これは前々からその準備が必要だなって思った。発表中にごそごそするわけにもいかないだろうし。    印象に残ったこと # TODO: ババロットさんに中年エンジニアと誤認していたことを謝る。https://t.</description>
+    </item>
+    
+    <item>
+      <title>Vim からシェルコマンドを実行するプラグインを作った</title>
+      <link>https://tellme.tokyo/post/2014/10/05/vim-shellutils/</link>
+      <pubDate>Sun, 05 Oct 2014 00:52:51 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2014/10/05/vim-shellutils/</guid>
+      <description>Vim の魅力の1つにシェルとの親和性が挙げられます。 GUIじゃない Vim を使っている時にどうしてもさっと ls したかったり、さっとファイルの中身を cat してみたかったりしたときに、Vim を終了したくない、なんてことはありませんか。 Ctrl-z で Vim を中断し、コマンドをタイプし処理して戻ってきた頃には、「あれ、、、なんだったっけ」なんてこともしばしば。 思いつきやアイデアは1分1秒が大事なのです。
+そこで Vim のコマンドライン領域からシェルコマンドもどきを実行できるプラグインを作成しました。 もどきと書いたのは call system() や !command の類を使用しないためです（シェルコマンドをエミュレート）。 どちらもシェルのコマンドに依存する上に一時的に Vim 画面が切り替わったり、あまり挙動が好みではありませんでした。 そこで純 Vim script で作成することで Vim さえあればシェルコマンドを実行出来るようにしました。
+詳しくは、
+ README.md doc/shellutils.txt  をご覧ください。</description>
+    </item>
+    
+  </channel>
+</rss>

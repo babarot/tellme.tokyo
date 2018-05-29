@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Life on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/life/</link>
+    <description>Recent content in Life on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>Copyright &amp;copy; 2018 BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Fri, 05 Jan 2018 19:52:12 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/life/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>2017年振り返り</title>
+      <link>https://tellme.tokyo/post/2018/01/05/looking-back-on-2017/</link>
+      <pubDate>Fri, 05 Jan 2018 19:52:12 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/01/05/looking-back-on-2017/</guid>
+      <description>もう年も変わってしまったけれど、去年どのような1年を過ごしたのかを振り返る。
+1〜7月、SRE になったという記事でもある通り、環境や心境の変化もあってクォータの変わり目でもある7月のタイミングでチームを異動した。 それまでは JP チームでガイドだったり大型便向けの電話対応用の API を作ったり、配送周りで上がってくる問い合わせの技術対応をしていた。
+少し戻って6月は、US アプリの刷新チームにてバックエンド API のサーバサイドエンジニアをやっていた。 入社からずっと JP のことをやっていたので、US に関わったのはとても新鮮だった。
+7月、SRE になったのだけれど、まずなにをやるべきか、ということになった。 ちょうど全社的に Microservices 化に舵を切り出したころだったので、 「Microservices への技術転向を支える基盤づくりをする」SRE メンバーになることを当面の目標として、 そのために必要な技術の学習やキャッチアップを兼ねて、 社内ドキュメントツールとしてモノリシックに動いていた Crowi という Wiki サービスをコンテナ化して Kubernetes で構築してみることになった。
+ メルカリ社内ドキュメントツールの Crowi を Kubernetes に載せ替えました - Mercari Engineering Blog  コンテナや Kubernetes、Spinnaker といった技術やツールを勉強しつつ、ミドルウェア自体のキャッチアップもこのときにやった。 仕事でありながら勉強できるという環境にあったので、とても貴重な体験だったかなと思う。 また、(今回は) Crowi という、
+ Web アプリケーションを違うアーキテクチャに載せ替えるとしたときに考えるべきこと
+ にフォーカスしながらミドルウェアの勉強ができたのもいい体験だった1。 各種ミドルウェア、ソフトウェアはそれぞれのマニュアルや技術書を読むことで得られるが、 システムに落とし込んで構成を組むときに思慮するというのは今までに経験がなかったのでよかった。
+また、プライベートでははてなブログで書いていたブログをコンテナ化したり Kubernetes に載せたりして GKE の勉強をしていた (GCP のクーポンが切れたのでもう GKE には載っていない)。 ちなみにちょっとずつこっちにインポートしているが、以前のブログはまだ消してはいないので残っている。
+ ブログをGKEで運用し、Spinnakerでデプロイする | tellme.</description>
+    </item>
+    
+    <item>
+      <title>2017年に購読したサービス</title>
+      <link>https://tellme.tokyo/post/2018/01/04/subscribing-services-2017/</link>
+      <pubDate>Thu, 04 Jan 2018 20:32:44 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/01/04/subscribing-services-2017/</guid>
+      <description>これらに便乗して。
+  とりあえず昨年通して購読していて思い出せるものだけ列挙した。
+購読したもの Amazon Prime 3,900円/年
+Amazon で買い物するから。
+Netflix 950円/月
+映画、頻繁にみるので。
+とにかく Breaking Bad はおすすめ。4周した。
+http://www.breakingbad.jp/
+アルバカーキに行ってロスポジョスエルマノスのチキンを食べたい。
+Dropbox 12,000円/年
+学生のときにヘビーに使っていたんだけど、いまはもうほとんどアクセスしていない。 オンラインストレージ自体に依存する生活をしていないので切っても良いのだけれど、昔のファイルなどを整理して移すのが面倒でそのままになっている。
+GitHub 7ドル/月
+ソフトウェアエンジニアなので。
+https://github.com/b4b4r07
+Education Plan が切れてしまい、使っていた Private Repo が Disabled になったので支払いとしては去年から。
+iCloud 130円/月
+50GB のプラン。iPhone のバックアップとして。今はまだ半分くらい。
+写真などなどいちいち Mac にバックアップ、とか考えなくて良くなったから便利。 iPhone を新調したら「iCloud から復元」するだけで、さっきまで触ってた端末と同じ状態になる。
+minikura 250円x複数個/月
+購読サービスかと言われると違う気もするけれど、月額課金している便利なサービス。
+使わないのに捨てられないもの (手紙、思い出の品) とかを預けている。 あとはシーズンではない洋服とか。
+Apple Music 980円/月
+Google Play Music、LINE MUSIC、Spotify、AWA、色々試したけどこれになった。 所持している Apple 製品が多いことが決め手だと思う。
+HomePod が来たらもっと便利になると思っている。
+Dartslive 315円/月
+最近出たベータ版の黒いほうのアプリが超絶便利。 そのうち Phoenix も課金するかも。</description>
+    </item>
+    
+    <item>
+      <title>決済をキャッシュレス化している</title>
+      <link>https://tellme.tokyo/post/2017/12/05/cashless/</link>
+      <pubDate>Tue, 05 Dec 2017 08:57:17 -0600</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2017/12/05/cashless/</guid>
+      <description>現状 キャッシュレスに切り替えて1年以上になる。 上京とともに現金を使うスタイルをやめた。 地方だと完全キャッシュレス化は現実的ではないが、首都圏、少なくとも都内23区においては現金を使うことなく生活できている。
+よく使う決済手段は3つ。
+ LINE Pay (JCB) ANA VISA Suica (VISA) モバイル Suica  他にもいくつかカードを持っているが、常用しているのは LINE Pay と ANA VISA Suica の2つで、電子マネーは Suica に絞っている。 ANA VISA Suica カードはややこしい名前だが Suica 機能 (オートチャージ設定可能) が付いた View カードで、ブランドが VISA になっている。
+決済手段 LINE Pay JCB で1枚選出するとなると LINE Pay 一択かなと思う。 最高クラスの還元率 (2%) にも関わらず年会費などは不要で、コンビニなどですぐに買うことができる。 ほぼクレジットカードのように使うことができる1が、実態としてはプリペイドカード。 口座を指定しておくことで、LINE のアプリから24/7で入出金することができる。 最近はセブン銀行にも対応した2ことで、万が一キャッシュが必要になった場合、口座から LINE Pay に移して現金化するといったことも可能になった。
+後述するがモバイル Suica と組み合わせると、「JCB は使えないが Suica は使える」というケースにおいてもポイントを取得することができる。
+ANA VISA Suica 国内では JCB は VISA/MasterCard に遜色なく使える3が、海外だとあまり使えるところがない。 分散させるために違うブランドで、なおかつ待遇・特典のいいものを選んだ。</description>
+    </item>
+    
+  </channel>
+</rss>
