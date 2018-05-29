@@ -4,7 +4,6 @@ title = "tellme.tokyo"
 copyright = "Copyright &copy; 2018 BABAROT All Right Reserved."
 googleAnalytics = "UA-44183504-2"
 publishDir = "docs"
-rssuri = "feed.xml"
 
 [taxonomies]
 tag = "tags"
@@ -40,3 +39,7 @@ fa_icon = "fa-github"
 [[params.social]]
 url = "https://twitter.com/b4b4r07"
 fa_icon = "fa-twitter"
+
+[outputFormats]
+  [outputFormats.RSS]
+    baseName = "feed"
