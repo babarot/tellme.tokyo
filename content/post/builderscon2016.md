@@ -1,6 +1,6 @@
 ---
 title: "builderscon tokyo 2016 に参加してきました"
-date: "2016-12-04"
+date: "2016-12-04T00:00:00+09:00"
 description: ""
 categories: []
 draft: false

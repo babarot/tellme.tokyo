@@ -84,17 +84,17 @@
   
   <url>
     <loc>https://tellme.tokyo/post/2017/02/14/history-golang-sql/</loc>
-    <lastmod>2017-02-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-02-14T00:00:00+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://tellme.tokyo/post/2016/12/20/git-tips/</loc>
-    <lastmod>2016-12-20T00:00:00+00:00</lastmod>
+    <lastmod>2016-12-20T00:00:00+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://tellme.tokyo/post/2016/12/12/yamato-bot/</loc>
-    <lastmod>2016-12-12T00:00:00+00:00</lastmod>
+    <lastmod>2016-12-12T00:00:00+09:00</lastmod>
   </url>
   
   <url>
@@ -104,12 +104,12 @@
   
   <url>
     <loc>https://tellme.tokyo/post/2016/12/04/builderscon2016/</loc>
-    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
+    <lastmod>2016-12-04T00:00:00+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://tellme.tokyo/post/2016/11/06/vimconf2016/</loc>
-    <lastmod>2016-11-06T00:00:00+00:00</lastmod>
+    <lastmod>2016-11-06T00:00:00+09:00</lastmod>
   </url>
   
   <url>
@@ -172,13 +172,13 @@
   
   <url>
     <loc>https://tellme.tokyo/tags/bot/</loc>
-    <lastmod>2016-12-12T00:00:00+00:00</lastmod>
+    <lastmod>2016-12-12T00:00:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://tellme.tokyo/tags/builderscon/</loc>
-    <lastmod>2016-12-04T00:00:00+00:00</lastmod>
+    <lastmod>2016-12-04T00:00:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -225,7 +225,7 @@
   
   <url>
     <loc>https://tellme.tokyo/tags/git/</loc>
-    <lastmod>2016-12-20T00:00:00+00:00</lastmod>
+    <lastmod>2016-12-20T00:00:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -249,7 +249,7 @@
   
   <url>
     <loc>https://tellme.tokyo/tags/history/</loc>
-    <lastmod>2017-02-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-02-14T00:00:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -315,7 +315,7 @@
   
   <url>
     <loc>https://tellme.tokyo/tags/slack/</loc>
-    <lastmod>2016-12-12T00:00:00+00:00</lastmod>
+    <lastmod>2016-12-12T00:00:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -327,7 +327,7 @@
   
   <url>
     <loc>https://tellme.tokyo/tags/sql/</loc>
-    <lastmod>2017-02-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-02-14T00:00:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -369,13 +369,13 @@
   
   <url>
     <loc>https://tellme.tokyo/tags/vimconf/</loc>
-    <lastmod>2016-11-06T00:00:00+00:00</lastmod>
+    <lastmod>2016-11-06T00:00:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://tellme.tokyo/tags/zsh/</loc>
-    <lastmod>2017-02-14T00:00:00+00:00</lastmod>
+    <lastmod>2017-02-14T00:00:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   

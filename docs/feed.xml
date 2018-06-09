@@ -291,7 +291,7 @@ Transfer to Crowi そして今日、Crowi のメインメンテナの @sotarok �
     <item>
       <title>golang で zsh history を SQL 的に活用する</title>
       <link>https://tellme.tokyo/post/2017/02/14/history-golang-sql/</link>
-      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 14 Feb 2017 00:00:00 +0900</pubDate>
       
       <guid>https://tellme.tokyo/post/2017/02/14/history-golang-sql/</guid>
       <description>僕は開発中、zsh のヒストリー補完の機能をよく使います。具体的には次のような場面が多いです。
@@ -303,7 +303,7 @@ Transfer to Crowi そして今日、Crowi のメインメンテナの @sotarok �
     <item>
       <title>かゆいところに手が届く系の Git Tips 話</title>
       <link>https://tellme.tokyo/post/2016/12/20/git-tips/</link>
-      <pubDate>Tue, 20 Dec 2016 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 20 Dec 2016 00:00:00 +0900</pubDate>
       
       <guid>https://tellme.tokyo/post/2016/12/20/git-tips/</guid>
       <description>この記事は Git Advent Calendar 2016 の 20 日目です。git コマンドを日常的に実行するわけですが、外部スクリプトなどで個人的に日々改善しているお話についてまとめてみました。
@@ -322,7 +322,7 @@ SSH に切り替える pull や push には HTTPS と SSH が選べると思い�
     <item>
       <title>実用 Slack bot ヤマト編</title>
       <link>https://tellme.tokyo/post/2016/12/12/yamato-bot/</link>
-      <pubDate>Mon, 12 Dec 2016 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 12 Dec 2016 00:00:00 +0900</pubDate>
       
       <guid>https://tellme.tokyo/post/2016/12/12/yamato-bot/</guid>
       <description>この記事は Slack Advent Calendar 2016 - Qiita の 12 日目です。
@@ -353,7 +353,7 @@ GitHub 以降 (2008年〜) GitHub は 2008 年頃発のサービスですが、�
     <item>
       <title>builderscon tokyo 2016 に参加してきました</title>
       <link>https://tellme.tokyo/post/2016/12/04/builderscon2016/</link>
-      <pubDate>Sun, 04 Dec 2016 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 04 Dec 2016 00:00:00 +0900</pubDate>
       
       <guid>https://tellme.tokyo/post/2016/12/04/builderscon2016/</guid>
       <description>引用
@@ -366,7 +366,7 @@ php.ini について知る @uzulla さんによる発表でした。PHP を書�
     <item>
       <title>運営として VimConf 2016 に参加してきた</title>
       <link>https://tellme.tokyo/post/2016/11/06/vimconf2016/</link>
-      <pubDate>Sun, 06 Nov 2016 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 06 Nov 2016 00:00:00 +0900</pubDate>
       
       <guid>https://tellme.tokyo/post/2016/11/06/vimconf2016/</guid>
       <description>株式会社ミクシィさんにて行われた VimConf 2016 の参加レポートです。自分は一般参加者としてではなく、一部運営に携わったのでその点について主に書ければなと思います。

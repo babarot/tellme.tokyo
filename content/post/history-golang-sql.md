@@ -1,6 +1,6 @@
 ---
 title: "golang で zsh history を SQL 的に活用する"
-date: "2017-02-14"
+date: "2017-02-14T00:00:00+09:00"
 description: ""
 categories: []
 draft: false

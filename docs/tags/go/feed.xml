@@ -72,7 +72,7 @@ Transfer to Crowi そして今日、Crowi のメインメンテナの @sotarok �
     <item>
       <title>golang で zsh history を SQL 的に活用する</title>
       <link>https://tellme.tokyo/post/2017/02/14/history-golang-sql/</link>
-      <pubDate>Tue, 14 Feb 2017 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 14 Feb 2017 00:00:00 +0900</pubDate>
       
       <guid>https://tellme.tokyo/post/2017/02/14/history-golang-sql/</guid>
       <description>僕は開発中、zsh のヒストリー補完の機能をよく使います。具体的には次のような場面が多いです。

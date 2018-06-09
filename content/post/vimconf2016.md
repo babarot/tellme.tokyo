@@ -1,6 +1,6 @@
 ---
 title: "運営として VimConf 2016 に参加してきた"
-date: "2016-11-06"
+date: "2016-11-06T00:00:00+09:00"
 description: ""
 categories: []
 draft: false
