@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"os/signal"
+	"path/filepath"
 	"runtime"
 
 	finder "github.com/b4b4r07/go-finder"
@@ -17,6 +18,7 @@ import (
 const (
 	envContentPath = "content/post"
 	envHostURL     = "http://localhost:1313"
+	envBlog        = "tellme.tokyo"
 )
 
 type cli struct {
@@ -47,6 +49,15 @@ func main() {
 }
 
 func (c cli) Run() error {
+	cwd, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+
+	if filepath.Base(cwd) != envBlog {
+		return fmt.Errorf("%s: not blog dir", cwd)
+	}
+
 	fzf, err := finder.New("fzf", "--reverse", "--height", "40")
 	if err != nil {
 		return err
