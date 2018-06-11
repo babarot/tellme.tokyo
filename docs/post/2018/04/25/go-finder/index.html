@@ -110,14 +110,14 @@ peco.FromStdin() // デフォルト
 
 <p>また、以下のように独自のデータソースも定義できます。</p>
 
-<pre><code class="language-go">peco.From(func(in io.WriteCloser) error {
+<pre><code class="language-go">peco.From(func(out io.WriteCloser) error {
 		lines := []string{&quot;line 1&quot;, &quot;line 2&quot;, &quot;line 3&quot;}
 		for _, line := range lines {
-			fmt.Fprintln(in, line)
+			fmt.Fprintln(out, line)
 		}
 		return nil
 	}
-}
+})
 </code></pre>
 
 <p>peco か fzf か <a href="https://github.com/mooz/percol">percol</a> といったフィルタコマンドのうち、何が使われるかわからないケースについても Go で書くことができます。</p>
