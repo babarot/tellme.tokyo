@@ -6,7 +6,7 @@ categories: []
 draft: false
 author: "b4b4r07"
 oldlink: ""
-tags: ["go", "golang", "fzf", "peco"]
+tags: ["go", "fzf", "peco"]
 
 ---
 
