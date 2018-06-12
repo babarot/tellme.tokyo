@@ -2,7 +2,9 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"context"
+	"flag"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -51,28 +53,38 @@ func (c CLI) exit(msg interface{}) int {
 	}
 }
 
+func (c CLI) validate() error {
+	cwd, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+	if filepath.Base(cwd) != envBlog {
+		return fmt.Errorf("%s: not blog dir", cwd)
+	}
+	return nil
+}
+
 func main() {
+	blog := CLI{
+		Stdout:      os.Stdout,
+		Stderr:      os.Stderr,
+		ContentPath: envContentPath, // TODO: support args
+	}
+	if err := blog.validate(); err != nil {
+		fmt.Fprintf(os.Stderr, "[ERROR] %s: %v\n", envAppName, err)
+		os.Exit(1)
+	}
+
 	app := cli.NewCLI(envAppName, envAppVersion)
 	app.Args = os.Args[1:]
 	app.Commands = map[string]cli.CommandFactory{
 		"edit": func() (cli.Command, error) {
-			return &EditCommand{CLI: CLI{
-				Stdout:      os.Stdout,
-				Stderr:      os.Stderr,
-				ContentPath: envContentPath, // TODO: support args
-			}}, nil
-		},
-		"tag": func() (cli.Command, error) {
-			return &TagCommand{CLI: CLI{
-				Stdout:      os.Stdout,
-				Stderr:      os.Stderr,
-				ContentPath: envContentPath, // TODO: support args
-			}}, nil
+			return &EditCommand{CLI: blog}, nil
 		},
 	}
 	exitStatus, err := app.Run()
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+		fmt.Fprintf(os.Stderr, "[ERROR] %s: %v\n", envAppName, err)
 	}
 	os.Exit(exitStatus)
 }
@@ -80,30 +92,104 @@ func main() {
 // EditCommand is one of the subcommands
 type EditCommand struct {
 	CLI
+	Option EditOption
+}
+
+// EditOption is the options for EditCommand
+type EditOption struct {
+	Tag  bool
+	Open bool
+}
+
+func (c *EditCommand) flagSet() *flag.FlagSet {
+	flags := flag.NewFlagSet("edit", flag.ExitOnError)
+	flags.BoolVar(&c.Option.Tag, "tag", false, "edit article with tag")
+	flags.BoolVar(&c.Option.Open, "open", false, "open article with browser when editing")
+	return flags
 }
 
 // Run run edit command
 func (c *EditCommand) Run(args []string) int {
-	cwd, err := os.Getwd()
+	flags := c.flagSet()
+	if err := flags.Parse(args); err != nil {
+		return c.exit(err)
+	}
+
+	var files []string
+	var err error
+	if c.Option.Tag {
+		files, err = c.selectFilesWithTag()
+	} else {
+		files, err = c.selectFiles()
+	}
 	if err != nil {
 		return c.exit(err)
 	}
 
-	if filepath.Base(cwd) != envBlog {
-		return c.exit(fmt.Errorf("%s: not blog dir", cwd))
-	}
+	return c.exit(c.edit(files))
+}
 
+// Synopsis returns synopsis
+func (c *EditCommand) Synopsis() string {
+	return "Edit blog articles"
+}
+
+// Help returns help message
+func (c *EditCommand) Help() string {
+	var b bytes.Buffer
+	flags := c.flagSet()
+	flags.SetOutput(&b)
+	flags.PrintDefaults()
+	return fmt.Sprintf(
+		"Usage of %s:\n\nOptions:\n%s", flags.Name(), b.String(),
+	)
+}
+
+func (c *EditCommand) selectFilesWithTag() ([]string, error) {
+	var files []string
+	articles, err := walk(c.ContentPath, 1)
+	if err != nil {
+		return files, err
+	}
 	fzf, err := finder.New("fzf", "--reverse", "--height", "40")
 	if err != nil {
-		return c.exit(err)
+		return files, err
 	}
-	fzf.FromDir(c.ContentPath, true)
+	fzf.From(func(out io.WriteCloser) error {
+		var tags []string
+		for _, article := range articles {
+			tags = append(tags, article.Body.Tags...)
+		}
+		sort.Strings(tags)
+		for _, tag := range uniqSlice(tags) {
+			fmt.Fprintln(out, tag)
+		}
+		return nil
+	})
 	items, err := fzf.Run()
 	if err != nil {
-		return c.exit(err)
+		return files, err
 	}
-	if len(items) == 0 {
-		return c.exit(0)
+	for _, item := range items {
+		for _, article := range articles.Filter(item) {
+			files = append(files, article.Path)
+		}
+	}
+	return files, nil
+}
+
+func (c *EditCommand) selectFiles() ([]string, error) {
+	fzf, err := finder.New("fzf", "--reverse", "--height", "40")
+	if err != nil {
+		return []string{}, err
+	}
+	fzf.FromDir(c.ContentPath, true)
+	return fzf.Run()
+}
+
+func (c *EditCommand) edit(files []string) error {
+	if len(files) == 0 {
+		return nil
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -121,7 +207,7 @@ func (c *EditCommand) Run(args []string) int {
 
 	go newHugo("server", "-D").Run(ctx)
 
-	if false {
+	if c.Option.Open {
 		quit := make(chan bool)
 		go func() {
 			// discard error
@@ -131,71 +217,8 @@ func (c *EditCommand) Run(args []string) int {
 		<-quit
 	}
 
-	vim := newShell("vim", items...)
-	return c.exit(vim.Run(context.Background()))
-}
-
-// Synopsis returns synopsis
-func (c *EditCommand) Synopsis() string {
-	return "Edit blog articles"
-}
-
-// Help returns help message
-func (c *EditCommand) Help() string {
-	return "Usage: edit"
-}
-
-// TagCommand is one of the subcommands
-type TagCommand struct {
-	CLI
-}
-
-// Run runs tag command
-func (c *TagCommand) Run(args []string) int {
-	articles, err := walk(c.ContentPath, 1)
-	if err != nil {
-		return c.exit(err)
-	}
-	fzf, err := finder.New("fzf", "--reverse", "--height", "40")
-	if err != nil {
-		return c.exit(err)
-	}
-	fzf.From(func(in io.WriteCloser) error {
-		var tags []string
-		for _, article := range articles {
-			tags = append(tags, article.Body.Tags...)
-		}
-		sort.Strings(tags)
-		for _, tag := range uniqSlice(tags) {
-			fmt.Fprintln(in, tag)
-		}
-		return nil
-	})
-	items, err := fzf.Run()
-	if err != nil {
-		return c.exit(err)
-	}
-	if len(items) == 0 {
-		return c.exit(0)
-	}
-	var files []string
-	for _, item := range items {
-		for _, article := range articles.Filter(item) {
-			files = append(files, article.Path)
-		}
-	}
 	vim := newShell("vim", files...)
-	return c.exit(vim.Run(context.Background()))
-}
-
-// Synopsis returns synopsis
-func (c *TagCommand) Synopsis() string {
-	return "Operate article tags"
-}
-
-// Help returns help message
-func (c *TagCommand) Help() string {
-	return "Usage: tag"
+	return vim.Run(context.Background())
 }
 
 func newHugo(args ...string) shell {
@@ -256,14 +279,14 @@ func runCommand(command string, args ...string) error {
 	return newShell(command, args...).Run(context.Background())
 }
 
-// Article is
+// Article represents the article information
 type Article struct {
 	File string
 	Path string
 	Body Body
 }
 
-// Body is
+// Body represents article contents
 type Body struct {
 	Title       string   `yaml:"title"`
 	Date        string   `yaml:"date"`
@@ -275,7 +298,7 @@ type Body struct {
 	Tags        []string `yaml:"tags"`
 }
 
-// Articles is
+// Articles is a collection of articles
 type Articles []Article
 
 // Filter filters articles
