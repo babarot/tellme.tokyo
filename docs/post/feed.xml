@@ -7,10 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>Copyright &amp;copy; 2018 BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Tue, 29 May 2018 12:18:56 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 23 Jul 2018 14:35:00 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/post/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Microservices Platform Meeupで話した</title>
+      <link>https://tellme.tokyo/post/2018/07/23/microservices-platform-meetup/</link>
+      <pubDate>Mon, 23 Jul 2018 14:35:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/07/23/microservices-platform-meetup/</guid>
+      <description>-- Microservices における Terraform の活用とユースケースについて話した。
+ Microservices とは UNIX の設計思想にもある Make each program do one thing well. をもとに書き直し、1つのアプリケーションを複数のサービス(コンポーネント)に分割して、独立して稼働できるようにしたもの。
+Monolithic architecture にも Pros/Cons があり、Microservices architecture にも Pros/Cons があるのだが、Monolithic から Micrroservices へ移行する際の Cons の1つとしてインフラの Provisioning が挙げられる。 Monolithic の場合だと、新機能の追加は同じコードベースをいじることで解決できることが多く、その場合既存のインフラを使いまわしてデプロイすることで実現できる。 しかし、Microservices の場合だと Isolation の観点からインフラを独立させる必要があり、新機能追加 (つまり、Microservices の新規作成) のたびにインフラを用意することがコストとなってしまう。 また、アーキテクチャと同じようにチーム構成をサービス単位で自己組織化させる必要がある (Developer, QA, SRE, &amp;hellip;) のだが、こうなると各 Developer がインフラの準備をする必要がある。 インフラ構築・運用に不慣れな Developer にそれらをアシストしつつ自動化する Solution が必要になる。
+こういった背景がありその問題点を解決するものとして Terraform を使い、Terraform Module を使って Automation / Infrastructure as Code しているという話をした。 そのおかげで Developer は One command で Microservices に必要なセットを構築することができるようになっている。</description>
+    </item>
     
     <item>
       <title>『ルポ川崎』を読んだ</title>

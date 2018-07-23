@@ -202,6 +202,15 @@
     </item>
     
     <item>
+      <title>Microservices</title>
+      <link>https://tellme.tokyo/tags/microservices/</link>
+      <pubDate>Mon, 23 Jul 2018 14:35:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/microservices/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Music</title>
       <link>https://tellme.tokyo/tags/music/</link>
       <pubDate>Tue, 16 Jan 2018 00:45:23 +0900</pubDate>
@@ -279,6 +288,24 @@
       <pubDate>Tue, 16 Jan 2018 00:45:23 +0900</pubDate>
       
       <guid>https://tellme.tokyo/tags/takui/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Talk</title>
+      <link>https://tellme.tokyo/tags/talk/</link>
+      <pubDate>Mon, 23 Jul 2018 14:35:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/talk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Terraform</title>
+      <link>https://tellme.tokyo/tags/terraform/</link>
+      <pubDate>Mon, 23 Jul 2018 14:35:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/terraform/</guid>
       <description></description>
     </item>
     

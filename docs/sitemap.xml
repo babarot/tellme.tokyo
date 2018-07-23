@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://tellme.tokyo/post/2018/07/23/microservices-platform-meetup/</loc>
+    <lastmod>2018-07-23T14:35:00+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/post/2018/05/29/repo_kawasaki/</loc>
     <lastmod>2018-05-29T12:18:56+09:00</lastmod>
   </url>
@@ -284,6 +289,12 @@
   </url>
   
   <url>
+    <loc>https://tellme.tokyo/tags/microservices/</loc>
+    <lastmod>2018-07-23T14:35:00+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/tags/music/</loc>
     <lastmod>2018-01-16T00:45:23+09:00</lastmod>
     <priority>0</priority>
@@ -297,7 +308,7 @@
   
   <url>
     <loc>https://tellme.tokyo/post/</loc>
-    <lastmod>2018-05-29T12:18:56+09:00</lastmod>
+    <lastmod>2018-07-23T14:35:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -350,6 +361,18 @@
   </url>
   
   <url>
+    <loc>https://tellme.tokyo/tags/talk/</loc>
+    <lastmod>2018-07-23T14:35:00+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/tags/terraform/</loc>
+    <lastmod>2018-07-23T14:35:00+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/tags/twitter/</loc>
     <lastmod>2016-10-17T00:24:32+09:00</lastmod>
     <priority>0</priority>
@@ -375,7 +398,7 @@
   
   <url>
     <loc>https://tellme.tokyo/</loc>
-    <lastmod>2018-05-29T12:18:56+09:00</lastmod>
+    <lastmod>2018-07-23T14:35:00+09:00</lastmod>
     <priority>0</priority>
   </url>
   
