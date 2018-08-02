@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="HashiCorp Vault に入門する - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2018/07/09/hashicorp-vault/">
+<meta property="og:description" content="tellme.tokyo">
+<meta property="og:type" content="website" />
+<title>HashiCorp Vault に入門する | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">HashiCorp Vault に入門する</h1>
+    <h2 class="subtitle is-5">July 9, 2018 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/hashicorp">hashicorp</a>
+    
+        <a class="button is-link" href="/tags/vault">vault</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      
+      
+
+<p>本記事では、<a href="https://www.vaultproject.io/">HashiCorp Vault</a> (以下、Vault) を用いた「機密上の一元管理」として何ができるのかを示す。</p>
+
+<h2 id="検証環境">検証環境</h2>
+
+<ul>
+<li>HashiCorp Vault 0.10.3</li>
+</ul>
+
+<h2 id="vault-とは何か">Vault とは何か</h2>
+
+<p>Vault は&rdquo;シークレット&rdquo;にセキュアにアクセスするためのツールである。
+&ldquo;シークレット&rdquo;とは API キーであったり、パスワードや証明書といったエンドユーザに公開するべきではないすべてのものを指す。
+Vault ではこれらのシークレットにアクセスするための統合的なインターフェースを提供し、それらへのアクセスなどはすべて audit log に記録するツールになっている。</p>
+
+<p>特徴的な機能としては以下が挙げられる。</p>
+
+<ul>
+<li>Secure Secret Storage
+
+<ul>
+<li>任意の Key/Value のペアでシークレットを格納する。Vaultでは、これらのシークレットを永続ストレージに書き込む前に暗号化しているため、ローストレージにアクセスしただけではシークレットを見ることができないようになっている。保存先はディスクや <a href="https://www.consul.io/">Consul</a> などがある</li>
+</ul></li>
+<li>Dynamic Secrets
+
+<ul>
+<li>AWS や DB 向けにオンデマンドにシークレットを生成することができる。例えば、アプリケーションが S3 バケットにアクセスする必要がある場合、Vault はオンデマンドに有効なアクセス権を持つ AWS 鍵ペアを生成する。動的に生成されたシークレットについては Lease (リース) が終了した時点で、自動で取り消される (Revoke)</li>
+</ul></li>
+<li>Data Encryption
+
+<ul>
+<li>データを保存することなく暗号化と復号を行うことができる。 これにより、セキュリティチームは、独自の暗号化方式を設計することなく、暗号化されたデータを SQL などの場所に格納するための暗号化パラメータと開発者を定義できる</li>
+</ul></li>
+<li>Leasing and Renewal
+
+<ul>
+<li>すべてのシークレットには <a href="https://www.vaultproject.io/docs/concepts/lease.html">Lease ID</a> が付与される。 リース (Lease) が終了すると、Vault はそのシークレットを自動的に取り消す (Revoke)。クライアントは、更新 API を使用して明示的にリースを更新できる (Renew)</li>
+</ul></li>
+<li>Revocation
+
+<ul>
+<li>Vault では単一のシークレットだけではなく任意の条件に当てはまる複数のシークレット、例えば、「あるユーザが Read できるシークレットすべて」などを一括で取り消すことができる</li>
+</ul></li>
+</ul>
+
+<h2 id="はじめに">はじめに</h2>
+
+<p>Vault はサーバー/クライアント型のアプリケーションである。
+<code>vault</code> コマンドひとつでサーバと CLI クライアントを担う。</p>
+
+<pre><code class="language-bash">$ brew install vault
+...
+$ vault version
+Vault v0.10.3 ('533003e27840d9646cb4e7d23b3a113895da1dd0')
+</code></pre>
+
+<p>以下のページから直接ダウンロードして、パスを通しても良い。</p>
+
+<p><a href="https://www.vaultproject.io/downloads.html">https://www.vaultproject.io/downloads.html</a></p>
+
+<p>ローカルで試すには以下のようにすると良い。</p>
+
+<pre><code class="language-bash">$ vault server -dev
+</code></pre>
+
+<p><a href="https://www.vaultproject.io/docs/concepts/dev-server.html">dev モード</a>で起動するとすでにある程度設定済みの config を読み込んだ状態の Vault サーバが起動する。
+Secret Backend にはインメモリが指定されているので、終了した時点ですべてのシークレットは破棄される。</p>
+
+<p>Vault はフォアグラウンドで起動するので、他の Terminal から、</p>
+
+<pre><code class="language-bash">$ export VAULT_ADDR='http://127.0.0.1:8200'
+$ vault status
+</code></pre>
+
+<p>により、さっき立てたサーバのステータスを確認することができる。</p>
+
+<pre><code class="language-bash">$ vault kv put secret/hello foo=world
+</code></pre>
+
+<p>データは KVS 形式で特定の Secret Backend に保存される。
+書き込みには kv コマンドの put を使って実現できる。
+保存先は <code>secret/hello</code> で、キー <code>foo</code> バリュー <code>world</code> が保存される。</p>
+
+<pre><code class="language-bash">$ vault kv get -format=json secret/hello | jq -r .data.data
+{
+  &quot;foo&quot;: &quot;world&quot;
+}
+</code></pre>
+
+<p>保存先を指定するときに <code>secret/</code> プレフィックスは Secret Engine を意味する。
+<code>secret/</code> はすでにシステムによって定義されているのですぐに利用することができる。</p>
+
+<p>また、次のように未定義の Secret Engine に Key value を書き込みしてみる。</p>
+
+<pre><code class="language-bash">$ vault write foo/bar baz=qux
+Error writing data to foo/bar: Error making API request.
+
+URL: PUT http://127.0.0.1:8200/v1/foo/bar
+Code: 404. Errors:
+
+* no handler for route 'foo/bar'
+</code></pre>
+
+<p>未定義の Secret Engine を指定して書き込みを行うと Not Found を返すことがわかる。
+また、エラーから見て分かる通り、すべての Vault との通信は CLI においても REST API を介して行われる。</p>
+
+<pre><code class="language-bash">$ vault kv delete secret/hello
+</code></pre>
+
+<p>hello にある KV は delete コマンドを通して DELETE によって削除することができる (このときリソースがあるかどうかは問わない)。</p>
+
+<h2 id="グローサリー">グローサリー</h2>
+
+<p>アーキテクチャを理解する上でいくつか知っておくべき用語を載せる。</p>
+
+<ul>
+<li>Storage Backend
+
+<ul>
+<li>暗号化されたデータの永続的なストレージ。Vault によって信頼は担保されず、耐久性のみが期待される</li>
+</ul></li>
+<li>Barrier
+
+<ul>
+<li>Vault 周辺の暗号網として機能する。Vault と Storage Backend 間を流れるすべてのデータは保護される。Barrier が内部にアクセスするには事前に Unseal (開封) されている必要がある</li>
+</ul></li>
+<li>Secrets Engine
+
+<ul>
+<li>シークレットの管理を担当する。 &ldquo;kv&rdquo; のようなシンプルな Secret Engine は照会すると同じシークレットを返すだけである。他の Secret Engine は照会されるたびに動的に生成するポリシーによってシークレットを作成する。これにより、一意のシークレット作成できる上にきめ細かな取り消しとポリシーの更新を実行できる</li>
+</ul></li>
+<li>Audit Device
+
+<ul>
+<li>Audit ログの管理を担う。Vault へのすべてのリクエストと Vault からのレスポンスはここを経由し記録される</li>
+</ul></li>
+<li>Auth Method
+
+<ul>
+<li>Vault に接続しているユーザーまたはアプリケーションを認証に使用される。認証されると、Auth Method は適用されるべきポリシーのリストを返す。Vault は認証されたユーザーを受け取り、今後のリクエストに使用できるクライアントトークンを返す。たとえば、<code>userpass</code> Auth Method は、ユーザー名とパスワードを使用してユーザーを認証する。また、<code>github</code> Auth Method を使用すると、ユーザーは GitHub を介して認証することができる</li>
+</ul></li>
+<li>Client Token (別名「Vault Token」)
+
+<ul>
+<li>クライアントトークンは、Web サイトにおけるセッション Cookie のような役割を持つ。ユーザーが認証すると Vault は今後のリクエストに使用されるクライアントトークンを返す。トークンは Vault によってクライアントの ID を確認し、適用可能な ACL ポリシーを適用するために使用される。このトークンは HTTP ヘッダーを介して渡される</li>
+</ul></li>
+<li>Secret
+
+<ul>
+<li>Vault によって返却されるものを指す。ただし、Vault によって返されるものはすべてがシークレットではなく、システム設定、ステータス情報、ポリシーなどはシークレットではない。シークレットは常に何らかの Lease に紐付けられている。これは、クライアントがシークレットのコンテンツを無期限に使用できること想定していないからである</li>
+</ul></li>
+</ul>
+
+<h2 id="アーキテクチャ">アーキテクチャ</h2>
+
+<p>以下にアーキテクチャ図を示す。</p>
+
+<p><img src="https://www.vaultproject.io/assets/images/layers-368ccce4.png" alt="" /></p>
+
+<p>HTTP API と Secret Backend は外にあるが、それ以外のすべてのコンポーネントは Barrier の中にある。
+Storage Backend は Barrier の外にあり Valut の信頼網の中になく、単に暗号化されたデータを永続的に格納するために使用される。
+Vault サーバを起動するときは、再起動後もデータを利用できるように、Storage Backend を提供しておく必要がある。</p>
+
+<p>一度起動すると Vault は Sealed 状態 (封緘) になる。
+Vault で操作するには、事前に Unsealed 状態 (開封) にしておく必要がある。
+これは、Unsealed key を提供することでできる。
+そして Vault が初期化されると、すべてのデータを保護するために使用される暗号化キーが生成される。
+またそのキーはマスターキーによって保護される。
+デフォルトでは、Vault は <a href="https://www.toshiba.co.jp/tech/review/2007/07/62_07pdf/a07.pdf">Shamir の秘密分散アルゴリズム</a>と呼ばれる手法を使用してマスターキーを5つのシェアキーに分割する。
+そのうち3つのシェアキーはマスターキーを再構築するために必要になる。</p>
+
+<p><img src="https://www.vaultproject.io/assets/images/vault-shamir-secret-sharing-7b9a3763.svg" width="500"></p>
+
+<p>シェアキーの数と必要な最小の閾値は指定することができる。
+Shamir のテクニックは無効にすることができ、マスターキーは Unseal に直接使用される。
+Vault が暗号化キーを取得すると、Storage Backend 内のデータを復号化し、Unsealed 状態になる。
+開封された Vault は、設定された Audit Devide、Auth Method、Secret Engine のすべてを読み込む。
+Audit Devide、Auth Method、Secret Engine の設定は、保護されるべき内容のため Vault に保存される必要がある。
+正しいパーミッションを持つユーザだけがそれらを変更できる
+つまり、Barrier の外に指定できない。
+これらを Vault に格納することで、ACL システムによって保護され、Audit log に追跡されるようになる。</p>
+
+<p>Vault が Unseal された後、HTTP API からコアに要求を処理できるようになる。 コアはシステムを通じた要求の流れを管理し、ACL を実施し、Audit ログに記録される。</p>
+
+<p>クライアントが最初に Vault に接続するときは認証が必要になる。
+Vault では柔軟性を持たせるために設定可能な認証方式がいくつか用意されている。
+対ユーザにはユーザ名/パスワードや GitHub などがオペレータに使用されるが、アプリケーションでは公開鍵/秘密鍵やトークンを使用して認証する。
+認証要求はコアを介して Auth Method に流れ、要求が有効かどうかを判断し、関連するポリシーのリストを返す。</p>
+
+<p>ポリシーは名前付き ACL ルールである。
+たとえば、&rdquo;root&rdquo; ポリシーは組み込みであり、すべてのリソースへのアクセスを許可する。
+パスを細かく制御して、任意の名前付きポリシーを作成できる。
+Vault はホワイトリストモードでのみ動作するため、アクセス権がポリシーを介して明示的に許可されないと操作できない。
+ポリシーは Policy Store によって保存、管理される。
+この内部ストアは System Backend を介して操作できる。
+System Backend は常に <code>sys/</code> にマウントされる。</p>
+
+<p>認証が行われると、Auth Method が適用可能なポリシーを提供し、新しいクライアントトークンが生成され、Token Store によって管理される。
+このクライアントトークンはクライアントに返され、今後のリクエストに使用される (Web サイトのクッキーのようなもの)。
+このトークンには認証方法の設定次第で Lease が関連付けられていることがあり、その場合は無効化されるのを防ぐため定期的に Renew する必要がある。</p>
+
+<p>認証が完了したときのリクエストフローを説明すると、認証されるとすべてのリクエストはクライアントトークンによって行われる。
+トークンは、クライアントが許可されていることを確認し、関連するポリシーをロードするために使用される。
+ポリシーは、クライアントのリクエストを承認するために使用される。
+リクエストは、そのタイプに応じて処理される Secret Engine にルーティングされる。
+Secret Engine がシークレットを返すと、コアはそれを Expiration Mgr に登録し、Lease ID を添付する。
+Lease ID は、クライアントがシークレットを更新または取り消すために使用される。
+クライアントが Lease を期限切れにすると、Expiration Mgr は自動的にそのシークレットを取り消す。</p>
+
+<h2 id="コンセプト">コンセプト</h2>
+
+<h3 id="seal-unseal">Seal / Unseal</h3>
+
+<p>Vault サーバが起動すると、まず sealed 状態から始まる。
+この状態では、Vault は物理ストレージの場所とアクセス方法を知ることはできるものの、いずれも解読できない。
+Unsealing とは、解読キーを読み取ってデータを解読して Vault にアクセスできるようにするために必要なマスターキーを構築するプロセスを指す。
+Sealed 状態の Vault ではほとんど操作ができない。
+たとえば、認証、マウントテーブルの管理などはすべて不可能である。</p>
+
+<p>Vault によって保存されたデータは暗号化されて保存される。
+Vault では、データを復号するために暗号化に使ったキーが必要になる。
+暗号化キーもデータとともに格納されるが、マスターキーと呼ばれる別の暗号化キーで暗号化される。
+そしてマスターキーはどこにも格納されない。</p>
+
+<p>したがって、データを復号するにはマスターキーを必要とする暗号化キーを復号する必要がある。
+そして Unsealing は、このマスターキーを再構築するプロセスである。</p>
+
+<p>このマスターキーを単一のキーとしてオペレータに配布する代わりに、ShamirShamir の秘密分散アルゴリズムと呼ばれるアルゴリズムを使用して、キーをシャードに分割する。
+マスターキーを再構成するには、一定のシャードの閾値が必要になる。</p>
+
+<h3 id="lease-renew-revoke">Lease, Renew, Revoke</h3>
+
+<h2 id="参考文献">参考文献</h2>
+
+<p><a href="https://tomohisaoda.com/posts/2018/contributed-article-on-hashicorp-vault-to-webdb-press.html">https://tomohisaoda.com/posts/2018/contributed-article-on-hashicorp-vault-to-webdb-press.html</a>
+<a href="https://repl.info/archives/1925/">https://repl.info/archives/1925/</a>
+<a href="https://qiita.com/munisystem/items/5fe1eead92b946bc5946">https://qiita.com/munisystem/items/5fe1eead92b946bc5946</a></p>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://tellme.tokyo"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2018 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-44183504-2', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='//www.google-analytics.com/analytics.js'></script>
+
+
+

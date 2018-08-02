@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://tellme.tokyo/post/2018/08/02/vault-intro/</loc>
+    <lastmod>2018-08-02T19:51:52+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/post/2018/08/01/tokyo-life/</loc>
     <lastmod>2018-08-01T03:48:04+09:00</lastmod>
   </url>
@@ -252,6 +257,12 @@
   </url>
   
   <url>
+    <loc>https://tellme.tokyo/tags/hashicorp/</loc>
+    <lastmod>2018-08-02T19:51:52+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/tags/history/</loc>
     <lastmod>2017-02-14T00:00:00+09:00</lastmod>
     <priority>0</priority>
@@ -313,7 +324,7 @@
   
   <url>
     <loc>https://tellme.tokyo/post/</loc>
-    <lastmod>2018-08-01T03:48:04+09:00</lastmod>
+    <lastmod>2018-08-02T19:51:52+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -390,6 +401,12 @@
   </url>
   
   <url>
+    <loc>https://tellme.tokyo/tags/vault/</loc>
+    <lastmod>2018-08-02T19:51:52+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/tags/vim/</loc>
     <lastmod>2018-01-31T00:20:45+09:00</lastmod>
     <priority>0</priority>
@@ -409,7 +426,7 @@
   
   <url>
     <loc>https://tellme.tokyo/</loc>
-    <lastmod>2018-08-01T03:48:04+09:00</lastmod>
+    <lastmod>2018-08-02T19:51:52+09:00</lastmod>
     <priority>0</priority>
   </url>
   
