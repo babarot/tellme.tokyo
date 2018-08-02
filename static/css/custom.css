@@ -25,14 +25,6 @@ code {
     border-radius: 2px;
 }
 
-code,
-kbd,
-pre,
-samp {
-    font-family: monospace, serif;
-    font-size: 1em;
-}
-
 .article-header2 {
     margin: 10px 0 25px -4px;
     padding: 5px 0 5px 10px;
