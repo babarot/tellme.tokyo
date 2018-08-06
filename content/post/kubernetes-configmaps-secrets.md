@@ -343,7 +343,7 @@ kubectl create configmap my-config \
 - コンテナ化したアプリケーションへの設定注入は環境変数が良い
 - Dockerfile に書いてビルドするのではなく、Deployment 経由でプロセスに伝えるべき
 - Deployment YAML にハードコードするのではなく、Secret / ConfigMap 経由で伝えるべき
-- Secret / ConfigMap は Kubernetes の軽量シークレットストアである
+- Secret / ConfigMap は Kubernetes の Key-value データストア (保存先は etcd) である
 - Secret / ConfigMap の違いは、
     - Secret: Base64 エンコードされるため、機密情報 (API ーなど) 向き
     - ConfigMap: 生データのまま保存されるため、それ以外の情報 (ポート番号など) 向き
