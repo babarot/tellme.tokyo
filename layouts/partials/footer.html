@@ -1,7 +1,7 @@
 <section class="section">
   <div class="container has-text-centered header-logo">
     <a href="{{ .Site.Params.website  }}">{{ with .Site.Params.profile }}<img src="/images/{{ . }}" width="64" height="64"></a><br>{{ end }}<br>
-    <p>{{ .Site.Copyright | safeHTML }}</p>
+    <p>{{ replace .Site.Copyright "{year}" .Now.Year | safeHTML }}</p>
   </div>
 </section>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
