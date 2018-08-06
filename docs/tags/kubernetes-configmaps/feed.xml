@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubernetes Configmaps on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/kubernetes-configmaps/</link>
+    <description>Recent content in Kubernetes Configmaps on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>Copyright &amp;copy; 2018 BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Tue, 07 Aug 2018 01:01:47 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/kubernetes-configmaps/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kubernetes 上で Credentials を扱う</title>
+      <link>https://tellme.tokyo/post/2018/08/07/kubernetes-configmaps-secrets/</link>
+      <pubDate>Tue, 07 Aug 2018 01:01:47 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/08/07/kubernetes-configmaps-secrets/</guid>
+      <description>アプリケーションにロジックを外側から変更したい場合やソースコード外から設定されるべき情報 (API キーや何らかのトークン、その他の Credentials など) をアプリケーション側から読み取れるようにしたい場合がある。 よくある方法として、環境変数やフラグなどがある。
+しかしこれらは往々にしてアプリケーションにハードコードされがちである (ロジックが書かれたファイル外に定義されたとしてもそれはハードコードに等しい)。 そうすると設定変更のたびにデプロイを必要とするし、言わずもがなセキュリティ的には厳しい。
+またこの問題は、コンテナとマイクロサービスの領域において更に顕著になる。 同じデータを2つの異なるコンテナで参照する必要がある場合や、ホストマシンが使えないのでどうやってコンテナ内に渡すべきかを考える必要が出てくる。
+実際にハードコードされたアプリケーションから環境変数に移し、それらをコンテナ化し Kubernetes に載せ替えてくステップを追う。
+アプリ側にハードコードされた例 var http = require(&#39;http&#39;); var server = http.createServer(function (request, response) { const language = &#39;English&#39;; const API_KEY = &#39;123-456-789&#39;; response.write(`Language: ${language}\n`); response.write(`API Key: ${API_KEY}\n`); response.end(`\n`); }); server.listen(3000);  language やAPI キーを変更する場合は、コードを編集する必要がある。 またバグやセキュリティリーク、ソースコードの履歴を汚すアプローチである。
+これの代わりに環境変数を使う。
+環境変数を使うパターン Step 1: 環境変数を読み込む var http = require(&#39;http&#39;); var server = http.createServer(function (request, response) { const language = process.env.LANGUAGE; const API_KEY = process.</description>
+    </item>
+    
+  </channel>
+</rss>

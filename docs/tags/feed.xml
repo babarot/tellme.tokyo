@@ -177,9 +177,27 @@
     <item>
       <title>Kubernetes</title>
       <link>https://tellme.tokyo/tags/kubernetes/</link>
-      <pubDate>Fri, 01 Dec 2017 00:54:11 +0900</pubDate>
+      <pubDate>Tue, 07 Aug 2018 01:01:47 +0900</pubDate>
       
       <guid>https://tellme.tokyo/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Configmaps</title>
+      <link>https://tellme.tokyo/tags/kubernetes-configmaps/</link>
+      <pubDate>Tue, 07 Aug 2018 01:01:47 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/kubernetes-configmaps/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Secrets</title>
+      <link>https://tellme.tokyo/tags/kubernetes-secrets/</link>
+      <pubDate>Tue, 07 Aug 2018 01:01:47 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/kubernetes-secrets/</guid>
       <description></description>
     </item>
     
