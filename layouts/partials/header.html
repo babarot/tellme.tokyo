@@ -12,8 +12,8 @@
 <meta property="og:image" content="{{ . | absURL }}">
 <meta name="twitter:image" content="{{ . | absURL }}">
 {{ else }}
-<meta property="og:image" content="/images/{{ .Site.Params.Profile }}">
-<meta name="twitter:image" content="/images/{{ .Site.Params.Profile }}">
+<meta property="og:image" content="{{ .Site.Params.Avatar }}">
+<meta name="twitter:image" content="{{ .Site.Params.Avatar }}">
 {{ end }}
 <title>{{ .Title }}{{ if eq .IsHome false }} | {{ .Site.Title }}{{ end }}</title>
 <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/style.css">
