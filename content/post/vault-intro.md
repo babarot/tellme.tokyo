@@ -6,6 +6,7 @@ categories: []
 draft: false
 author: b4b4r07
 oldlink: ""
+image: "https://www.vaultproject.io/assets/images/og-image-7fdfa20b.png"
 tags:
 - hashicorp
 - vault

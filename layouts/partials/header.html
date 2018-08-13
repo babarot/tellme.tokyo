@@ -8,9 +8,9 @@
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="og:description" content="{{ .Site.Params.Description }}">
 <meta property="og:type" content="website" />
-{{ with .Site.Params.Image }}
+{{ with .Params.Image }}
 <meta property="og:image" content="{{ . | absURL }}">
-<meta property="twitter:image" content="{{ . | absURL }}">
+<meta name="twitter:image" content="{{ . | absURL }}">
 {{ end }}
 <title>{{ .Title }}{{ if eq .IsHome false }} | {{ .Site.Title }}{{ end }}</title>
 <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/style.css">
