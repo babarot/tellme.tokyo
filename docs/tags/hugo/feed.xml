@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hugo on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/hugo/</link>
+    <description>Recent content in Hugo on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Mon, 13 Aug 2018 18:58:07 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/hugo/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hugo で PlantUML のようなシーケンス図を描画する</title>
+      <link>https://tellme.tokyo/post/2018/08/13/hugo-mermaid/</link>
+      <pubDate>Mon, 13 Aug 2018 18:58:07 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/08/13/hugo-mermaid/</guid>
+      <description>Hugo で PlantUML を描画して埋め込めないものかと調べていると、
+ Add exec shortcode #796 - gohugoio/hugo・GitHub  Hugo の Shortcodes の機能を使って、HTML の生成をフックにしてレンダリングした後に埋め込む、みたいなことをできるようにする議論自体はあったものの進んでいないようで、他の案はないかと調べると PlantUML ではなく mermaid が良いとわかった。
+vjeantet/hugo-theme-docdock にあったディレクトリ構成を真似て以下のようにした。
+ b4b4r07/tellme.tokyo - f8fe64c・GitHub  Shortcodes を使って以下のようなシーケンス図を書くと、
+{{\&amp;lt; mermaid align=&amp;quot;left&amp;quot; \&amp;gt;}} sequenceDiagram participant Alice participant Bob Alice-&amp;gt;&amp;gt;John: Hello John, how are you? loop Healthcheck John-&amp;gt;John: Fight against hypochondria end Note right of John: Rational thoughts &amp;lt;br/&amp;gt;prevail... John--&amp;gt;Alice: Great! John-&amp;gt;Bob: How about you? Bob--&amp;gt;John: Jolly good! {{\&amp;lt; /mermaid \&amp;gt;}}  次のようにレンダリングされる。</description>
+    </item>
+    
+  </channel>
+</rss>
