@@ -1,7 +1,7 @@
 baseurl = "https://tellme.tokyo"
 languageCode = "ja-jp"
 title = "tellme.tokyo"
-copyright = "Copyright &copy; {year} BABAROT All Right Reserved."
+copyright = "BABAROT All Right Reserved."
 googleAnalytics = "UA-44183504-2"
 publishDir = "docs"
 
@@ -20,8 +20,11 @@ displayauthor = false
 displayoldlink = true
 readmore = false
 
-[params.permalinks]
-post = "/post/:year/:month/:day/:filename/"
+# [params.permalinks]
+# post = "/post/:year/:month/:day/:filename/"
+
+[permalinks]
+  post = "/post/:year/:month/:day/:filename/"
 
 [params.sharing]
 twitter = true
