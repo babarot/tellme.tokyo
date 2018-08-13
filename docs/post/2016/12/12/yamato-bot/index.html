@@ -70,7 +70,7 @@
 
 <h1 id="はじめに">はじめに</h1>
 
-<p>最近のエンジニアは Slack に常駐していることが多くなってきたと思います。ゆえに bot が便利であることはご存知かと思います。受け取った文字列を echo する bot や、ランダムに画像を返す bot もその練習としてはいいですが、次のステップに bot を書くとしたら実用的なものを書きたいですよね<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup>。</p>
+<p>最近のエンジニアは Slack に常駐していることが多くなってきたと思います。ゆえに bot が便利であることはご存知かと思います。受け取った文字列を echo する bot や、ランダムに画像を返す bot もその練習としてはいいですが、次のステップに bot を書くとしたら実用的なものを書きたいですよね<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>。</p>
 
 <h1 id="配送状況を通知する">配送状況を通知する</h1>
 
@@ -80,7 +80,7 @@
   class="hatenablogcard"
   style="width:100%;height:155px;max-width:420px;"
   src="https://hatenablog-parts.com/embed?url=https%3a%2f%2fgithub.com%2fb4b4r07%2fyamato-bot"
-  title="error: cannot access positional params by string name"
+  title=""
   width="300"
   height="150"
   frameborder="0"
@@ -128,7 +128,7 @@
 
 <p>この bot は Node.js で書いてます。<a href="https://github.com/foreverjs/forever">Botkit</a> のおかげでサクッと書けるのは良いのですが、デーモン化するにあたり <a href="https://github.com/foreverjs/forever">forever</a> を利用していると色々モヤることが多く、現在は Go 言語 (Supervisord) で書き直しています (本当は間に合わせるはずだった)。</p>
 
-<p>それと、今回この bot を書くにあたり他の手段や先行実装がないかと調べはしたのですが、あまり手応えがなく自作しました<sup class="footnote-ref" id="fnref:2"><a rel="footnote" href="#fn:2">2</a></sup>。しかし一度 bot 化しておくと、後で自分の要求次第でフレキシブルに作り込めるので、そこは他のツールや手段に勝るメリットだと思います<sup class="footnote-ref" id="fnref:3"><a rel="footnote" href="#fn:3">3</a></sup>。</p>
+<p>それと、今回この bot を書くにあたり他の手段や先行実装がないかと調べはしたのですが、あまり手応えがなく自作しました<sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup>。しかし一度 bot 化しておくと、後で自分の要求次第でフレキシブルに作り込めるので、そこは他のツールや手段に勝るメリットだと思います<sup class="footnote-ref" id="fnref:3"><a href="#fn:3">3</a></sup>。</p>
 
 <p>以上、Slack Advent Calendar でした。</p>
 
@@ -140,7 +140,7 @@
   class="hatenablogcard"
   style="width:100%;height:155px;max-width:420px;"
   src="https://hatenablog-parts.com/embed?url=http%3a%2f%2fb4b4r07.hatenadiary.com%2fentry%2f2016%2f10%2f17%2f205021"
-  title="error: cannot access positional params by string name"
+  title=""
   width="300"
   height="150"
   frameborder="0"
@@ -152,7 +152,7 @@
   class="hatenablogcard"
   style="width:100%;height:155px;max-width:420px;"
   src="https://hatenablog-parts.com/embed?url=http%3a%2f%2fmercan.mercari.com%2fentry%2f2016%2f10%2f18%2f120000"
-  title="error: cannot access positional params by string name"
+  title=""
   width="300"
   height="150"
   frameborder="0"
@@ -210,11 +210,15 @@
 
 
 <script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-44183504-2', 'auto');
-ga('send', 'pageview');
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 

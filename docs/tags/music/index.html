@@ -16,7 +16,7 @@
 
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
 
-<link rel="alternate" type="application/rss+xml" href="https://tellme.tokyo/tags/music/feed.xml" title="tellme.tokyo" />
+<link rel="alternate" type="application/rss+xml+xml" href="https://tellme.tokyo/tags/music/feed.xml" title="tellme.tokyo" />
 
 <section class="section">
   <div class="container">
@@ -103,11 +103,15 @@
 
 
 <script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-44183504-2', 'auto');
-ga('send', 'pageview');
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 

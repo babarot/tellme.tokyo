@@ -75,18 +75,18 @@ Kubernetes の実行環境として GKE を例に取ると、GCP プロジェク
 <p>本番環境と開発環境 (Prod / Dev) でクラスタを分けることは多いと思います。
 その他にもクラスタを持っていることもあるでしょう。</p>
 
-<p><a href="http://tech.mercari.com/entry/2017/08/21/092743">Continuous Delivery のプラットフォーム</a>として <a href="https://www.spinnaker.io/">Spinnaker</a> が注目されつつあるので、Kubernetes クラスタへのデプロイはこれに置き換わる可能性<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup>はありますが、Spinnaker がサポートしていない Kubernetes リソース (例えば、<a href="https://kubernetes.io/docs/concepts/workloads/pods/disruptions/">PodDisruptionBudget</a> など) については、まだ手動で <code>kubectl apply</code> せざるを得ません。
+<p><a href="http://tech.mercari.com/entry/2017/08/21/092743">Continuous Delivery のプラットフォーム</a>として <a href="https://www.spinnaker.io/">Spinnaker</a> が注目されつつあるので、Kubernetes クラスタへのデプロイはこれに置き換わる可能性<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>はありますが、Spinnaker がサポートしていない Kubernetes リソース (例えば、<a href="https://kubernetes.io/docs/concepts/workloads/pods/disruptions/">PodDisruptionBudget</a> など) については、まだ手動で <code>kubectl apply</code> せざるを得ません。
 また、基本的なリソースに対する apply 相当のことが Spinnaker によってできるようになったとはいえ、まだまだ手動で apply を実行したい場面もあります。
 そこで気をつけたいのは、今いるクラスタとネームスペースの確認です。</p>
 
-<p>Spinnaker は「デプロイ先のクラスタ」と「どのイメージを撒くか (manifest file)」をセットにして内部に持っているので「意図しないクラスタに対して意図しない manifest file をデプロイしてしまう」といった誤操作は防げるのですが、これが <code>kubectl apply</code> による手動だと今いるクラスタと <code>-f</code> に渡すファイル次第で、互い違いにデプロイしてしまうなどの事故も起こしかねません<sup class="footnote-ref" id="fnref:2"><a rel="footnote" href="#fn:2">2</a></sup>。
+<p>Spinnaker は「デプロイ先のクラスタ」と「どのイメージを撒くか (manifest file)」をセットにして内部に持っているので「意図しないクラスタに対して意図しない manifest file をデプロイしてしまう」といった誤操作は防げるのですが、これが <code>kubectl apply</code> による手動だと今いるクラスタと <code>-f</code> に渡すファイル次第で、互い違いにデプロイしてしまうなどの事故も起こしかねません<sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup>。
 毎回指差し確認するのも面倒ですし、そもそも確認を徹底するというのは有効打ではないので、常に見えるところに表示しておくのがおすすめです。</p>
 
 <iframe
   class="hatenablogcard"
   style="width:100%;height:155px;max-width:420px;"
   src="https://hatenablog-parts.com/embed?url=https%3a%2f%2fgithub.com%2fb4b4r07%2fkubeabc"
-  title="error: cannot access positional params by string name"
+  title=""
   width="300"
   height="150"
   frameborder="0"
@@ -261,7 +261,7 @@ $ kubectl logs -f P
   class="hatenablogcard"
   style="width:100%;height:155px;max-width:420px;"
   src="https://hatenablog-parts.com/embed?url=https%3a%2f%2fgithub.com%2fb4b4r07%2fkubeabc%2fblob%2fmaster%2fcli%2fkube"
-  title="error: cannot access positional params by string name"
+  title=""
   width="300"
   height="150"
   frameborder="0"
@@ -375,11 +375,15 @@ $ kubectl logs -f P
 
 
 <script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-44183504-2', 'auto');
-ga('send', 'pageview');
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 

@@ -76,7 +76,7 @@
 <li><a href="https://github.com/Jxck/dotfiles/blob/51e2a584de551559d716333a53573d1cd32debdd/zsh/http_status.zsh">Jxck/dotfiles - GitHub</a></li>
 </ul>
 
-<p>このまま参考にさせてもらおう、と思ったのですがすべて登録するのもな、と思いコマンドで用意しました<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup>。</p>
+<p>このまま参考にさせてもらおう、と思ったのですがすべて登録するのもな、と思いコマンドで用意しました<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>。</p>
 
 <p><a href="https://github.com/b4b4r07/http_code"><img src="https://raw.githubusercontent.com/b4b4r07/screenshots/master/http_code/demo.gif" alt="" /></a></p>
 
@@ -144,11 +144,15 @@
 
 
 <script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-44183504-2', 'auto');
-ga('send', 'pageview');
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 

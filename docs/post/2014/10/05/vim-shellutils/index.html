@@ -66,7 +66,7 @@
   class="hatenablogcard"
   style="width:100%;height:155px;max-width:420px;"
   src="https://hatenablog-parts.com/embed?url=https%3a%2f%2fgithub.com%2fb4b4r07%2fvim-shellutils"
-  title="error: cannot access positional params by string name"
+  title=""
   width="300"
   height="150"
   frameborder="0"
@@ -144,11 +144,15 @@ GUIじゃない Vim を使っている時にどうしてもさっと <code>ls</c
 
 
 <script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-44183504-2', 'auto');
-ga('send', 'pageview');
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 

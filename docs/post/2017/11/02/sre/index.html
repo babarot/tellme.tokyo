@@ -83,7 +83,7 @@ Google が提唱しました。
 以前から尊敬するエンジニアのひとりだったのでひどく興奮したのを覚えています。</p>
 
 <p>ときどき社内で話したり Go のイベントの手伝いや打ち上げなどで話す機会も多くなり、そのたびに「いつ SRE 来るんだ？」をいうジョブをもらい嬉しくも再度自分の思いを正しく伝えようと考えるきっかけになりました。
-それからは上長や先輩たちに 1on1 をお願いし、今後自分がどうしていきたいのかなどを相談し、異動へのバックアップをしていただきました<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup>。</p>
+それからは上長や先輩たちに 1on1 をお願いし、今後自分がどうしていきたいのかなどを相談し、異動へのバックアップをしていただきました<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>。</p>
 
 <p>晴れて今年の7月から SRE チームにジョインしたわけですが、チーム異動こそがゴールではないので、引き続きやるべきことをやっていく次第です。
 直近では以下のようなことに手を出しつつ、Kubernetes を最大限に活用した Microservices 領域での基盤づくりなどを担当しています。</p>
@@ -116,7 +116,7 @@ Google が提唱しました。
 
 <p>まだまだ、SRE としての基礎体力が足りんので精進しつつ、Kubernetes とその周りの技術や生態系 (Spinnaker や Prometheus など) についても一線で習熟させていきたいと思います。</p>
 
-<p>以上、初心を忘れないためのメモでした <sup class="footnote-ref" id="fnref:2"><a rel="footnote" href="#fn:2">2</a></sup>。</p>
+<p>以上、初心を忘れないためのメモでした <sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup>。</p>
 <div class="footnotes">
 
 <hr />
@@ -166,11 +166,15 @@ Google が提唱しました。
 
 
 <script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-44183504-2', 'auto');
-ga('send', 'pageview');
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 

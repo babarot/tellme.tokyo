@@ -74,7 +74,7 @@ Twitter Streaming Daemon なので <a href="https://github.com/b4b4r07/twistd"><
   class="hatenablogcard"
   style="width:100%;height:155px;max-width:420px;"
   src="https://hatenablog-parts.com/embed?url=https%3a%2f%2fgithub.com%2fb4b4r07%2ftwistd"
-  title="error: cannot access positional params by string name"
+  title=""
   width="300"
   height="150"
   frameborder="0"
@@ -145,7 +145,7 @@ $ sudo make install      # ビルドして /etc 以下に config 置く
 <h2 id="終わりに">終わりに</h2>
 
 <p>ある国には <a href="https://ja.wikipedia.org/wiki/エシュロン">エシュロン</a>という装置があるそうですが、実際に使ってみるとそれを彷彿とさせる仕上がりでした (詳しくは知らない)。
-個人 (特にエンジニア) が発信するツールはブログか Twitter が大半を占めると思うのですが、Slack インテグレーションの Google Alert と、この twistd を併せて使うことで大体網羅して監視できるのが <del>気持ち悪い</del> 良いです<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup>。
+個人 (特にエンジニア) が発信するツールはブログか Twitter が大半を占めると思うのですが、Slack インテグレーションの Google Alert と、この twistd を併せて使うことで大体網羅して監視できるのが <del>気持ち悪い</del> 良いです<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>。
 &hellip;というようなエピローグはさておき、こんな感じになります。</p>
 
 <p><a href="https://github.com/b4b4r07/twistd"><img src="https://raw.githubusercontent.com/b4b4r07/screenshots/master/twistd/demo.gif" alt="twistd" /></a></p>
@@ -201,11 +201,15 @@ $ sudo make install      # ビルドして /etc 以下に config 置く
 
 
 <script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-44183504-2', 'auto');
-ga('send', 'pageview');
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 

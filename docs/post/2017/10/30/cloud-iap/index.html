@@ -78,7 +78,7 @@ Cloud IAP はユーザー ID を確認し、そのユーザーがアプリケー
 
 <p><img src="https://cloud.google.com/images/products/iap/iap-lead.png" alt="" /></p>
 
-<p>つまり Cloud Identity-Aware Proxy (Cloud IAP、または IAP) を使うことで、任意の GCP リソース <sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup> に存在するロードバランサに対して、許可された Google アカウントやサービスアカウントによるアクセスのみに絞ることができます。
+<p>つまり Cloud Identity-Aware Proxy (Cloud IAP、または IAP) を使うことで、任意の GCP リソース <sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup> に存在するロードバランサに対して、許可された Google アカウントやサービスアカウントによるアクセスのみに絞ることができます。
 また、このアクセスリスト (ACL) の追加や削除などは GCP のウェブコンソールから簡単に制御することができます。</p>
 
 <h1 id="設定方法">設定方法</h1>
@@ -111,7 +111,7 @@ Ingress リソースを作成すると、自動で GLBC (GCE Load-Balancer Contr
 
 
 
-<p>あとは、GCP backend <sup class="footnote-ref" id="fnref:2"><a rel="footnote" href="#fn:2">2</a></sup> に紐付いた GLB が存在すれば IAP を有効にすることができるので、いつも通り <a href="https://kubernetes.io/docs/concepts/services-networking/service/">Service</a> や <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployment</a> のリソースを作るだけで特にやることはありません。</p>
+<p>あとは、GCP backend <sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup> に紐付いた GLB が存在すれば IAP を有効にすることができるので、いつも通り <a href="https://kubernetes.io/docs/concepts/services-networking/service/">Service</a> や <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployment</a> のリソースを作るだけで特にやることはありません。</p>
 
 <h3 id="2-gce">2. GCE</h3>
 
@@ -120,7 +120,7 @@ Ingress リソースを作成すると、自動で GLBC (GCE Load-Balancer Contr
 これは GLB がどのインスタンスグループにリクエストをバランシングするべきかを指示するために必要です。
 仮に GCE インスタンスが 1 台でも、特定の Instance groups に所属させます (あとから台数を増やすことも可能です)。</p>
 
-<p>GCP backend <sup class="footnote-ref" id="fnref:3"><a rel="footnote" href="#fn:3">3</a></sup> に紐付いた GLB が用意できたら、あとはコンソールから IAP を有効にするだけです。</p>
+<p>GCP backend <sup class="footnote-ref" id="fnref:3"><a href="#fn:3">3</a></sup> に紐付いた GLB が用意できたら、あとはコンソールから IAP を有効にするだけです。</p>
 
 <h2 id="glb-に対して-iap-を有効にする">GLB に対して IAP を有効にする</h2>
 
@@ -307,7 +307,7 @@ Go や Python、PHP といった各種言語での具体例については以下
   class="hatenablogcard"
   style="width:100%;height:155px;max-width:420px;"
   src="https://hatenablog-parts.com/embed?url=https%3a%2f%2fgithub.com%2fb4b4r07%2fmake_iap_request"
-  title="error: cannot access positional params by string name"
+  title=""
   width="300"
   height="150"
   frameborder="0"
@@ -322,7 +322,7 @@ Go や Python、PHP といった各種言語での具体例については以下
   class="hatenablogcard"
   style="width:100%;height:155px;max-width:420px;"
   src="https://hatenablog-parts.com/embed?url=https%3a%2f%2fgithub.com%2fb4b4r07%2fiap_curl"
-  title="error: cannot access positional params by string name"
+  title=""
   width="300"
   height="150"
   frameborder="0"
@@ -338,7 +338,7 @@ GOOGLE_APPLICATION_CREDENTIALS=&quot;/path/to/service-account.json&quot;
 iap_curl &quot;https://myserver.your-iap-protected-app.com&quot;
 </code></pre>
 
-<p>内部で実行するコマンドは <code>curl</code> ですが、<code>httpstat</code> <sup class="footnote-ref" id="fnref:4"><a rel="footnote" href="#fn:4">4</a></sup> を使ってベンチマークを取ることも可能です。</p>
+<p>内部で実行するコマンドは <code>curl</code> ですが、<code>httpstat</code> <sup class="footnote-ref" id="fnref:4"><a href="#fn:4">4</a></sup> を使ってベンチマークを取ることも可能です。</p>
 
 <pre><code class="language-bash">IAP_CURL_BIN=&quot;httpstat&quot;
 iap_curl &quot;https://myserver.your-iap-protected-app.com&quot;
@@ -465,11 +465,15 @@ Cloud IAP ではその LB のそれぞれに対して IAP を有効にするか�
 
 
 <script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-44183504-2', 'auto');
-ga('send', 'pageview');
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 

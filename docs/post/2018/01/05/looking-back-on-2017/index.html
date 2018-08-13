@@ -86,7 +86,7 @@
 <p>Web アプリケーションを違うアーキテクチャに載せ替えるとしたときに考えるべきこと</p>
 </blockquote>
 
-<p>にフォーカスしながらミドルウェアの勉強ができたのもいい体験だった<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup>。
+<p>にフォーカスしながらミドルウェアの勉強ができたのもいい体験だった<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>。
 各種ミドルウェア、ソフトウェアはそれぞれのマニュアルや技術書を読むことで得られるが、
 システムに落とし込んで構成を組むときに思慮するというのは今までに経験がなかったのでよかった。</p>
 
@@ -98,7 +98,7 @@
 </ul>
 
 <p>9月は US 出張でサンフランシスコに行った。
-US での社内ドキュメントツールの選定<sup class="footnote-ref" id="fnref:2"><a rel="footnote" href="#fn:2">2</a></sup>と、6月 US チーム (@東京オフィス) で働いていたのでその挨拶も兼ねた出張だった。</p>
+US での社内ドキュメントツールの選定<sup class="footnote-ref" id="fnref:2"><a href="#fn:2">2</a></sup>と、6月 US チーム (@東京オフィス) で働いていたのでその挨拶も兼ねた出張だった。</p>
 
 <p>10月からはまたチームに戻り本格的に SRE Microservices 担当としてやっていくことになった。
 次から次へと各種チームから Microservices 立ち上げの依頼が来る中でそれらの案件をこなしつつ、デプロイフローの整理や、
@@ -168,11 +168,15 @@ KubeCon 参加レポートは (少し時間経ってるけど) また別記事�
 
 
 <script>
-window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-ga('create', 'UA-44183504-2', 'auto');
-ga('send', 'pageview');
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
-<script async src='//www.google-analytics.com/analytics.js'></script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 
 
