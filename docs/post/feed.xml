@@ -7,10 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Mon, 13 Aug 2018 18:58:07 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 16 Aug 2018 00:55:17 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/post/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Bind Address で少しハマった話</title>
+      <link>https://tellme.tokyo/post/2018/08/16/bind-address/</link>
+      <pubDate>Thu, 16 Aug 2018 00:55:17 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/08/16/bind-address/</guid>
+      <description>以下の要件を満たして hugo server を立ち上げたいという要求がありテンポラリで対応することになった。
+ hugo server はローカルではなく、ある GCE インスタンスで実行する ローカルから繋ぎたいが、ポートフォワードは使わない  この要件を満たすためには、
+ GCE インスタンスに :1313 でつなぎに行けるようにポートを開ける (ファイアウォールの設定) ポートフォワードは使えないので、グローバル IP を取る (とりあえず Ephemeral)  以下を参考に Firewall rule を設定して、GCE インスタンスにアプライした。
+How to open a specific port such as 9090 in Google Compute Engine - Stack Overflow
+動作確認として適当に Serve するスクリプトで :1313 を LISTEN して nmap してみた。
+package main import ( &amp;quot;net/http&amp;quot; &amp;quot;io&amp;quot; ) func helloHandler(w http.ResponseWriter, r *http.Request) { io.WriteString(w, &amp;quot;Hello world!</description>
+    </item>
     
     <item>
       <title>Hugo で PlantUML のようなシーケンス図を描画する</title>

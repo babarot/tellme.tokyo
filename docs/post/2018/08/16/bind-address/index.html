@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="Bind Address で少しハマった話 - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2018/08/16/bind-address/">
+<meta property="og:description" content="tellme.tokyo">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>Bind Address で少しハマった話 | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">Bind Address で少しハマった話</h1>
+    <h2 class="subtitle is-5">August 16, 2018 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/hugo">hugo</a>
+    
+        <a class="button is-link" href="/tags/bind-address">bind-address</a>
+    
+        <a class="button is-link" href="/tags/network">network</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      
+      <p>以下の要件を満たして <code>hugo server</code> を立ち上げたいという要求がありテンポラリで対応することになった。</p>
+
+<ul>
+<li><code>hugo server</code> はローカルではなく、ある GCE インスタンスで実行する</li>
+<li>ローカルから繋ぎたいが、ポートフォワードは使わない</li>
+</ul>
+
+<p>この要件を満たすためには、</p>
+
+<ul>
+<li>GCE インスタンスに :1313 でつなぎに行けるようにポートを開ける (ファイアウォールの設定)</li>
+<li>ポートフォワードは使えないので、グローバル IP を取る (とりあえず Ephemeral)</li>
+</ul>
+
+<p>以下を参考に Firewall rule を設定して、GCE インスタンスにアプライした。</p>
+
+<p><a href="https://stackoverflow.com/questions/21065922/how-to-open-a-specific-port-such-as-9090-in-google-compute-engine">How to open a specific port such as 9090 in Google Compute Engine - Stack Overflow</a></p>
+
+<p><img src="/images/bind-address/1.png" width="400"></p>
+
+<p><img src="/images/bind-address/2.png" width="400"></p>
+
+<p>動作確認として適当に Serve するスクリプトで :1313 を LISTEN して nmap してみた。</p>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;net/http&quot;
+	&quot;io&quot;
+)
+
+func helloHandler(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, &quot;Hello world!&quot;)
+}
+
+func main() {
+	http.HandleFunc(&quot;/&quot;, helloHandler)
+	http.ListenAndServe(&quot;:1313&quot;, nil)
+}
+</code></pre>
+
+<pre><code class="language-console">$ nmap -p 1313 &lt;ip_address&gt;
+...
+PORT     STATE SERVICE
+1313/tcp open  bmc_patroldb
+
+Nmap done: 1 IP address (1 host up) scanned in 0.37 seconds
+</code></pre>
+
+<p>問題なさそうなので、</p>
+
+<pre><code class="language-console">[b4b4r07@instance-1 site] hugo server
+</code></pre>
+
+<p>次はこれで行けるかとローカルから <code>http://&lt;ip_address&gt;:1313/</code> でリクエストすると Connection refused になった。</p>
+
+<p><code>ps</code> しても hugo プロセスはいるし、</p>
+
+<pre><code class="language-console">[b4b4r07@instance-1 site] curl localhost:1313
+</code></pre>
+
+<p>しても問題ない。</p>
+
+<p>しかし、よく hugo の STDOUT を見ると、</p>
+
+<pre><code class="language-console">...
+Total in 11 ms
+Watching for changes in /home/user/site/{content,data,layouts,static,themes}
+Watching for config changes in /home/user/site/config.toml
+Serving pages from memory
+Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
+Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
+Press Ctrl+C to stop
+</code></pre>
+
+<p>bind address が 127.0.0.1 になっていた。</p>
+
+<pre><code class="language-console">[b4b4r07@instance-1 site] hugo server --bind 0.0.0.0
+...
+Web Server is available at http://localhost:1313/ (bind address 0.0.0.0)
+Press Ctrl+C to stop
+</code></pre>
+
+<p>で起動して、<code>http://&lt;ip_address&gt;:1313/</code> すると 200 になった。</p>
+
+<iframe
+  class="hatenablogcard"
+  style="width:100%;height:155px;max-width:420px;"
+  src="https://hatenablog-parts.com/embed?url=https%3a%2f%2fkeens.github.io%2fblog%2f2016%2f02%2f24%2fbind_addressnoimigayouyakuwakatta%2f"
+  title=""
+  width="300"
+  height="150"
+  frameborder="0"
+  scrolling="no">
+</iframe>
+
+
+<p>これの理解にはこの記事が役立った。</p>
+
+<p>127.0.0.1 を指定したらローカルホストからで、0.0.0.0 だと外部からも参照できるくらいにしか考えたことがなかったので、この機会を得たことでいい勉強になった。</p>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://tellme.tokyo"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2018 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
