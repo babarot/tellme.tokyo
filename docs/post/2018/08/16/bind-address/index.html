@@ -145,13 +145,17 @@ Press Ctrl+C to stop
 
 <p>bind address が 127.0.0.1 になっていた。</p>
 
+<p>これだとローカルからのリクエストしか受け付けないので、次のようにして起動し直した。</p>
+
 <pre><code class="language-console">[b4b4r07@instance-1 site] hugo server --bind 0.0.0.0
 ...
 Web Server is available at http://localhost:1313/ (bind address 0.0.0.0)
 Press Ctrl+C to stop
 </code></pre>
 
-<p>で起動して、<code>http://&lt;ip_address&gt;:1313/</code> すると 200 になった。</p>
+<p>手元から <code>http://&lt;ip_address&gt;:1313/</code> すると 200 になった。</p>
+
+<p>これの理解にはこの記事が役立った。</p>
 
 <iframe
   class="hatenablogcard"
@@ -164,8 +168,6 @@ Press Ctrl+C to stop
   scrolling="no">
 </iframe>
 
-
-<p>これの理解にはこの記事が役立った。</p>
 
 <p>127.0.0.1 を指定したらローカルホストからで、0.0.0.0 だと外部からも参照できるくらいにしか考えたことがなかったので、この機会を得たことでいい勉強になった。</p>
 

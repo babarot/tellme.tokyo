@@ -90,6 +90,8 @@ Press Ctrl+C to stop
 
 bind address が 127.0.0.1 になっていた。
 
+これだとローカルからのリクエストしか受け付けないので、次のようにして起動し直した。
+
 ```console
 [b4b4r07@instance-1 site] hugo server --bind 0.0.0.0
 ...
@@ -97,10 +99,10 @@ Web Server is available at http://localhost:1313/ (bind address 0.0.0.0)
 Press Ctrl+C to stop
 ```
 
-で起動して、`http://<ip_address>:1313/` すると 200 になった。
-
-{{<hatena "https://keens.github.io/blog/2016/02/24/bind_addressnoimigayouyakuwakatta/" >}}
+手元から `http://<ip_address>:1313/` すると 200 になった。
 
 これの理解にはこの記事が役立った。
+
+{{<hatena "https://keens.github.io/blog/2016/02/24/bind_addressnoimigayouyakuwakatta/" >}}
 
 127.0.0.1 を指定したらローカルホストからで、0.0.0.0 だと外部からも参照できるくらいにしか考えたことがなかったので、この機会を得たことでいい勉強になった。
