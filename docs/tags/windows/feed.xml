@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Windows on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/windows/</link>
+    <description>Recent content in Windows on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Thu, 27 Sep 2018 20:06:55 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/windows/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Windows 時代の使用ソフト晒し</title>
+      <link>https://tellme.tokyo/post/2018/09/27/windows-era/</link>
+      <pubDate>Thu, 27 Sep 2018 20:06:55 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/09/27/windows-era/</guid>
+      <description>〜2013 年ごろまで Windows を使っていた (Windows 7 SP2 が最後)。 そのころはいろいろなフリーソフトにお世話になった。
+画像はマイベストフリーソフト「あふｗ」。
+一覧 ファイル管理  あふｗ 内骨格 Paper Plane xUI DF NexusFile X-Finder Easy File Locker  ファイル比較  df  ファイル名変更  練馬 Flexible Renamer ファイル名変更君 お～瑠璃ね～ま～  ファイル圧縮  Lhaplus Noah 7-Zip caldix  ファイル検索  Everything FileSeeker3 Locate32  ファイル暗号化  アタッシェケース ED TrueCrypt  ファイル移動  FireFikeCopy FastCopy  ブラウザ  Sleipnir kiki  アプリランチャ  CLaunch Fenrir CraftLauncher Clock Launcher cltc  IME  Google IME  テキストエディタ  Vim  オフィス  PDForcel pdfi pdft xdoc2txt SumatraPDF i2pdf LibreOffice  画像  ViX JTrim BatchGOO!</description>
+    </item>
+    
+  </channel>
+</rss>
