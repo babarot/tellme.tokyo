@@ -16,7 +16,7 @@ tags: ["tokyo", "life"]
 # 衣
 
 - AURALEE
-- Dulcamara
+- JieDa
 - NEEDLES
 - NEON SIGN
 - Sasquatchfabrix.
@@ -25,10 +25,8 @@ tags: ["tokyo", "life"]
 - bukht
 - crepuscule
 - dairiku
+- doublet
 - kolor
-- kujaku
-- sacai
-- the Sakaki
 
 # 食
 
@@ -36,15 +34,15 @@ tags: ["tokyo", "life"]
 - 丸香
 - 八兵衛
 - 山半
-- 山長
-- 源八
+- 山長 (恵比寿)
+- 源八 (北澤)
 - 珈琲コーラル
 
 # 住
 
 - 上野、稲荷町
 - 下北沢
-- 代々木上原
+- 中目黒
 - 新江古田
 - 江ノ島 (神奈川県)
 - 経堂
