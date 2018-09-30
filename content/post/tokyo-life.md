@@ -20,7 +20,6 @@ tags: ["tokyo", "life"]
 - NEEDLES
 - NEON SIGN
 - Sasquatchfabrix.
-- UNUSED
 - URU
 - bukht
 - crepuscule
