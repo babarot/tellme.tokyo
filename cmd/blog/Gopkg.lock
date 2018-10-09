@@ -2,16 +2,20 @@
 
 
 [[projects]]
-  branch = "master"
   name = "github.com/armon/go-radix"
   packages = ["."]
-  revision = "1fca145dffbcaa8fe914309b1ec0cfc67500fe61"
+  revision = "1a2de0c21c94309923825da3df33a4381872c795"
+  version = "v1.0.0"
 
 [[projects]]
   branch = "master"
   name = "github.com/b4b4r07/go-finder"
-  packages = ["."]
-  revision = "e4b09ef78b78913d0e75b8d35f3797f9031febab"
+  packages = [
+    ".",
+    "installer",
+    "source"
+  ]
+  revision = "3b5256afd50b55a4f534260f6cc0faf20b0c64fd"
 
 [[projects]]
   name = "github.com/bgentry/speakeasy"
@@ -22,8 +26,8 @@
 [[projects]]
   name = "github.com/chzyer/readline"
   packages = ["."]
-  revision = "2972be24d48e78746da79ba8e24e8b488c9880de"
-  # version = "v1.4"
+  revision = "62c6fe6193755f722b8b8788aa7357be55a50ff1"
+  version = "v1.4"
 
 [[projects]]
   name = "github.com/fatih/color"
@@ -32,16 +36,16 @@
   version = "v1.7.0"
 
 [[projects]]
-  branch = "master"
   name = "github.com/hashicorp/errwrap"
   packages = ["."]
-  revision = "d6c0cd88035724dd42e0f335ae30161c20575ecc"
+  revision = "8a6fb523712970c966eefc6b39ed2c5e74880354"
+  version = "v1.0.0"
 
 [[projects]]
-  branch = "master"
   name = "github.com/hashicorp/go-multierror"
   packages = ["."]
-  revision = "3d5d8f294aa03d8e98859feac328afbdf1ae0703"
+  revision = "886a7fbe3eb1c874d46f623bfa70af45f425b3d1"
+  version = "v1.0.0"
 
 [[projects]]
   name = "github.com/mattn/go-colorable"
@@ -52,14 +56,20 @@
 [[projects]]
   name = "github.com/mattn/go-isatty"
   packages = ["."]
-  revision = "0360b2af4f38e8d38c7fce2a9f4e702702d73a39"
-  version = "v0.0.3"
+  revision = "6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c"
+  version = "v0.0.4"
 
 [[projects]]
-  branch = "master"
   name = "github.com/mitchellh/cli"
   packages = ["."]
-  revision = "c48282d14eba4b0817ddef3f832ff8d13851aefd"
+  revision = "3d22a244be8aa6fb16ac24af0e195c08b7d973aa"
+  version = "v1.0.0"
+
+[[projects]]
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
+  version = "v0.8.0"
 
 [[projects]]
   name = "github.com/posener/complete"
@@ -69,14 +79,14 @@
     "cmd/install",
     "match"
   ]
-  revision = "98eb9847f27ba2008d380a32c98be474dea55bdf"
-  version = "v1.1.1"
+  revision = "dcda3199365ca2a5f24aea4c42aa56f6a197d117"
+  version = "v1.1.2"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "ac767d655b305d4e9612f5f6e33120b9176c4ad4"
+  revision = "4497e2df6f9e69048a54498c7affbbec3294ad47"
 
 [[projects]]
   name = "gopkg.in/yaml.v2"

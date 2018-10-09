@@ -20,6 +20,7 @@ import (
 	yaml "gopkg.in/yaml.v2"
 
 	finder "github.com/b4b4r07/go-finder"
+	source "github.com/b4b4r07/go-finder/source"
 	"github.com/chzyer/readline"
 	"github.com/fatih/color"
 	"github.com/mitchellh/cli"
@@ -35,9 +36,9 @@ const (
 
 // CLI represents the command-line interface
 type CLI struct {
-	Stdout      io.Writer
-	Stderr      io.Writer
-	ContentPath string
+	Stdout io.Writer
+	Stderr io.Writer
+	Config Config
 }
 
 func (c CLI) exit(msg interface{}) int {
@@ -57,26 +58,17 @@ func (c CLI) exit(msg interface{}) int {
 	}
 }
 
-func (c CLI) validate() error {
-	cwd, err := os.Getwd()
-	if err != nil {
-		return err
-	}
-	if filepath.Base(cwd) != envBlog {
-		return fmt.Errorf("%s: not blog dir", cwd)
-	}
-	return nil
-}
-
 func main() {
-	blog := CLI{
-		Stdout:      os.Stdout,
-		Stderr:      os.Stderr,
-		ContentPath: envContentPath, // TODO: support args
-	}
-	if err := blog.validate(); err != nil {
+	cfg, err := loadConfig()
+	if err != nil {
 		fmt.Fprintf(os.Stderr, "[ERROR] %s: %v\n", envAppName, err)
 		os.Exit(1)
+	}
+
+	blog := CLI{
+		Stdout: os.Stdout,
+		Stderr: os.Stderr,
+		Config: cfg,
 	}
 
 	app := cli.NewCLI(envAppName, envAppVersion)
@@ -154,25 +146,22 @@ func (c *EditCommand) Help() string {
 
 func (c *EditCommand) selectFilesWithTag() ([]string, error) {
 	var files []string
-	articles, err := walk(c.ContentPath, 1)
+	articles, err := walk(c.Config.BlogDir, 1)
 	if err != nil {
 		return files, err
 	}
+
+	var tags []string
+	for _, article := range articles {
+		tags = append(tags, article.Body.Tags...)
+	}
+	sort.Strings(tags)
+	tags = uniqSlice(tags)
 	fzf, err := finder.New("fzf", "--reverse", "--height", "40")
 	if err != nil {
 		return files, err
 	}
-	fzf.From(func(out io.WriteCloser) error {
-		var tags []string
-		for _, article := range articles {
-			tags = append(tags, article.Body.Tags...)
-		}
-		sort.Strings(tags)
-		for _, tag := range uniqSlice(tags) {
-			fmt.Fprintln(out, tag)
-		}
-		return nil
-	})
+	fzf.Read(source.Slice(tags))
 	items, err := fzf.Run()
 	if err != nil {
 		return files, err
@@ -190,7 +179,9 @@ func (c *EditCommand) selectFiles() ([]string, error) {
 	if err != nil {
 		return []string{}, err
 	}
-	fzf.FromDir(c.ContentPath, true)
+	// TODO
+	abs, _ := filepath.Abs(c.Config.BlogDir)
+	fzf.Read(source.Dir(abs, true))
 	return fzf.Run()
 }
 
@@ -507,11 +498,10 @@ func scan(message string, allowEmpty bool) (string, error) {
 		tmp = os.Getenv("TEMP")
 	}
 	l, err := readline.NewEx(&readline.Config{
-		Prompt:            message,
-		HistoryFile:       filepath.Join(tmp, "blog.txt"),
-		InterruptPrompt:   "^C",
-		EOFPrompt:         "exit",
-		HistorySearchFold: true,
+		Prompt:          message,
+		HistoryFile:     filepath.Join(tmp, "blog.txt"),
+		InterruptPrompt: "^C",
+		EOFPrompt:       "exit",
 	})
 	if err != nil {
 		return "", err
