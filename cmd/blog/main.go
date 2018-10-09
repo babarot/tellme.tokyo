@@ -16,6 +16,7 @@ import (
 	"runtime"
 	"sort"
 	"strings"
+	"time"
 
 	yaml "gopkg.in/yaml.v2"
 
@@ -39,6 +40,7 @@ type CLI struct {
 	Stdout io.Writer
 	Stderr io.Writer
 	Config Config
+	Finder finder.Finder
 }
 
 func (c CLI) exit(msg interface{}) int {
@@ -64,11 +66,13 @@ func main() {
 		fmt.Fprintf(os.Stderr, "[ERROR] %s: %v\n", envAppName, err)
 		os.Exit(1)
 	}
-
+	// TODO
+	finder, _ := finder.New(cfg.FinderCommands...)
 	blog := CLI{
 		Stdout: os.Stdout,
 		Stderr: os.Stderr,
 		Config: cfg,
+		Finder: finder,
 	}
 
 	app := cli.NewCLI(envAppName, envAppVersion)
@@ -157,12 +161,8 @@ func (c *EditCommand) selectFilesWithTag() ([]string, error) {
 	}
 	sort.Strings(tags)
 	tags = uniqSlice(tags)
-	fzf, err := finder.New("fzf", "--reverse", "--height", "40")
-	if err != nil {
-		return files, err
-	}
-	fzf.Read(source.Slice(tags))
-	items, err := fzf.Run()
+	c.Finder.Read(source.Slice(tags))
+	items, err := c.Finder.Run()
 	if err != nil {
 		return files, err
 	}
@@ -175,14 +175,22 @@ func (c *EditCommand) selectFilesWithTag() ([]string, error) {
 }
 
 func (c *EditCommand) selectFiles() ([]string, error) {
-	fzf, err := finder.New("fzf", "--reverse", "--height", "40")
+	articles, err := walk(c.Config.BlogDir, 1)
 	if err != nil {
 		return []string{}, err
 	}
-	// TODO
-	abs, _ := filepath.Abs(c.Config.BlogDir)
-	fzf.Read(source.Dir(abs, true))
-	return fzf.Run()
+	sort.Slice(articles, func(i, j int) bool {
+		return articles[i].Date.After(articles[j].Date)
+	})
+	for _, article := range articles {
+		c.Finder.Add(article.Body.Title, article)
+	}
+	var files []string
+	items, err := c.Finder.Select()
+	for _, item := range items {
+		files = append(files, item.(Article).Path)
+	}
+	return files, err
 }
 
 func (c *EditCommand) edit(files []string) error {
@@ -361,6 +369,7 @@ func runCommand(command string, args ...string) error {
 
 // Article represents the article information
 type Article struct {
+	Date time.Time
 	File string
 	Path string
 	Body Body
@@ -442,7 +451,9 @@ func walk(base string, depth int) (Articles, error) {
 		if err = yaml.Unmarshal(content, &body); err != nil {
 			return err
 		}
+		date, _ := time.Parse("2006-01-02T15:04:05-07:00", body.Date)
 		articles = append(articles, Article{
+			Date: date,
 			File: filepath.Base(path),
 			Path: path,
 			Body: body,
