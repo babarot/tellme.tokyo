@@ -40,8 +40,7 @@ func getDefaultDir() (string, error) {
 
 func getConfigPath() (string, error) {
 	rcfiles := []string{
-		filepath.Join(os.Getenv("PWD"), ".blogrc"),      // TODO
-		filepath.Join(os.Getenv("PWD"), ".blogrc.yaml"), // TODO
+		filepath.Join(os.Getenv("PWD"), "blog.yaml"),
 		filepath.Join(os.Getenv("HOME"), ".config", "blog", "config.yaml"),
 		filepath.Join(os.Getenv("HOME"), ".config", "blog", "config.yml"),
 	}

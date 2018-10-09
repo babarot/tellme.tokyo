@@ -12,7 +12,6 @@ import (
 	"sort"
 
 	"github.com/b4b4r07/go-finder/source"
-	"github.com/k0kubun/pp"
 )
 
 // EditCommand is one of the subcommands
@@ -121,8 +120,6 @@ func (c *EditCommand) edit(files []string) error {
 		return nil
 	}
 
-	// os.Chdir()
-
 	ctx, cancel := context.WithCancel(context.Background())
 	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, os.Interrupt)
@@ -136,7 +133,7 @@ func (c *EditCommand) edit(files []string) error {
 		}
 	}()
 
-	go newHugo(c.Config.BlogDir, "server", "-D").Run(ctx)
+	go newHugo("server", "-D").setDir(c.Config.BlogDir).Run(ctx)
 
 	if c.Option.Open {
 		quit := make(chan bool)
@@ -152,8 +149,7 @@ func (c *EditCommand) edit(files []string) error {
 	return vim.Run(context.Background())
 }
 
-func newHugo(dir string, args ...string) shell {
-	pp.Println(dir)
+func newHugo(args ...string) shell {
 	return shell{
 		stdin:  os.Stdin,
 		stdout: ioutil.Discard, // to /dev/null
@@ -162,7 +158,6 @@ func newHugo(dir string, args ...string) shell {
 		env:     map[string]string{},
 		command: "hugo",
 		args:    args,
-		dir:     dir,
 	}
 }
 
