@@ -43,13 +43,14 @@ func (c CLI) exit(msg interface{}) int {
 }
 
 func main() {
-	cfg, err := loadConfig()
-	if err != nil {
+	var cfg Config
+	if err := cfg.LoadFile(); err != nil {
 		fmt.Fprintf(os.Stderr, "[ERROR] %s: %v\n", envAppName, err)
 		os.Exit(1)
 	}
 	// TODO
 	finder, _ := finder.New(cfg.FinderCommands...)
+	// finder.Install("") // TODO
 	blog := CLI{
 		Stdout: os.Stdout,
 		Stderr: os.Stderr,
