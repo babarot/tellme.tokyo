@@ -16,7 +16,42 @@ type Config struct {
 	BlogDir        string   `yaml:"blog_dir"`
 }
 
-func getDefaultDir() (string, error) {
+// LoadFile loads Config
+func (cfg *Config) LoadFile() error {
+	configPath, _ := getConfigPath()
+	_, err := os.Stat(configPath)
+	if err == nil {
+		buf, err := readFile(configPath)
+		if err != nil {
+			return err
+		}
+		err = yaml.Unmarshal(buf, &cfg)
+		if err != nil {
+			return err
+		}
+		return nil
+	}
+
+	if !os.IsNotExist(err) {
+		return err
+	}
+
+	configDir, err := getConfigDir()
+	if err != nil {
+		return err
+	}
+	configPath = filepath.Join(configDir, "config.yaml")
+	f, err := os.Create(configPath)
+	if err != nil {
+		return err
+	}
+
+	cfg.BlogDir = filepath.Join(os.Getenv("HOME"), "src", "github.com", "b4b4r07", "tellme.tokyo")
+	cfg.FinderCommands = []string{"fzf", "--reverse", "--height", "50%"}
+	return yaml.NewEncoder(f).Encode(cfg)
+}
+
+func getConfigDir() (string, error) {
 	var dir string
 
 	switch runtime.GOOS {
@@ -39,48 +74,15 @@ func getDefaultDir() (string, error) {
 }
 
 func getConfigPath() (string, error) {
-	rcfiles := []string{
+	configPaths := []string{
 		filepath.Join(os.Getenv("PWD"), "blog.yaml"),
 		filepath.Join(os.Getenv("HOME"), ".config", "blog", "config.yaml"),
 		filepath.Join(os.Getenv("HOME"), ".config", "blog", "config.yml"),
 	}
-	for _, rcfile := range rcfiles {
-		if _, err := os.Stat(rcfile); err == nil {
-			return rcfile, nil
+	for _, configPath := range configPaths {
+		if _, err := os.Stat(configPath); err == nil {
+			return configPath, nil
 		}
 	}
-	return "", errors.New("no config files")
-}
-
-// LoadFile loads Config
-func (cfg *Config) LoadFile() error {
-	file, _ := getConfigPath()
-	_, err := os.Stat(file)
-	if err == nil {
-		buf, err := readFile(file)
-		if err != nil {
-			return err
-		}
-		err = yaml.Unmarshal(buf, &cfg)
-		if err != nil {
-			return err
-		}
-		return nil
-	}
-
-	if !os.IsNotExist(err) {
-		return err
-	}
-
-	dir, _ := getDefaultDir()
-	file = filepath.Join(dir, "config.yaml")
-	f, err := os.Create(file)
-	if err != nil {
-		return err
-	}
-
-	cfg.FinderCommands = []string{"fzf", "--reverse", "--height", "50%"}
-	// TODO
-	cfg.BlogDir = filepath.Join(os.Getenv("HOME"), "src", "github.com", "b4b4r07", "tellme.tokyo")
-	return yaml.NewEncoder(f).Encode(cfg)
+	return "", errors.New("no available config file")
 }

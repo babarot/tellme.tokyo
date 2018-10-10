@@ -10,8 +10,6 @@ import (
 	"os/signal"
 	"path/filepath"
 	"sort"
-
-	"github.com/b4b4r07/go-finder/source"
 )
 
 // EditCommand is one of the subcommands
@@ -72,24 +70,28 @@ func (c *EditCommand) Help() string {
 
 func (c *EditCommand) selectFilesWithTag() ([]string, error) {
 	var files []string
-	articles, err := walk(c.Config.BlogDir, 1)
+	post := Post{
+		Path:  filepath.Join(c.Config.BlogDir, "content", "post"),
+		Depth: 1,
+	}
+	err := post.walk()
 	if err != nil {
 		return files, err
 	}
 
 	var tags []string
-	for _, article := range articles {
+	for _, article := range post.Articles {
 		tags = append(tags, article.Body.Tags...)
 	}
 	sort.Strings(tags)
-	tags = uniqSlice(tags)
-	c.Finder.Read(source.Slice(tags))
-	items, err := c.Finder.Run()
-	if err != nil {
-		return files, err
+
+	for _, tag := range uniqSlice(tags) {
+		c.Finder.Add(tag, post.Articles.Filter(tag))
 	}
+
+	items, err := c.Finder.Select()
 	for _, item := range items {
-		for _, article := range articles.Filter(item) {
+		for _, article := range item.(Articles) {
 			files = append(files, article.Path)
 		}
 	}
@@ -97,17 +99,19 @@ func (c *EditCommand) selectFilesWithTag() ([]string, error) {
 }
 
 func (c *EditCommand) selectFiles() ([]string, error) {
-	articles, err := walk(filepath.Join(c.Config.BlogDir, "content", "post"), 1)
-	if err != nil {
-		return []string{}, err
+	var files []string
+	post := Post{
+		Path:  filepath.Join(c.Config.BlogDir, "content", "post"),
+		Depth: 1,
 	}
-	sort.Slice(articles, func(i, j int) bool {
-		return articles[i].Date.After(articles[j].Date)
-	})
-	for _, article := range articles {
+	err := post.walk()
+	if err != nil {
+		return files, err
+	}
+	post.Articles.SortByDate()
+	for _, article := range post.Articles {
 		c.Finder.Add(article.Body.Title, article)
 	}
-	var files []string
 	items, err := c.Finder.Select()
 	for _, item := range items {
 		files = append(files, item.(Article).Path)

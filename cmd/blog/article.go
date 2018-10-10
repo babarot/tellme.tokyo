@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"sort"
 	"time"
 
 	yaml "gopkg.in/yaml.v2"
@@ -77,6 +78,40 @@ func stringInSlice(a string, list []string) bool {
 	return false
 }
 
+// Post represents
+type Post struct {
+	Path     string
+	Depth    int
+	Articles Articles
+}
+
+func (p *Post) walk() error {
+	return filepath.Walk(p.Path, func(path string, info os.FileInfo, err error) error {
+		if path == p.Path {
+			return nil
+		}
+		if info == nil {
+			return err
+		}
+		content, err := readFile(path)
+		if err != nil {
+			return err
+		}
+		var body Body
+		if err = yaml.Unmarshal(content, &body); err != nil {
+			return err
+		}
+		date, _ := time.Parse("2006-01-02T15:04:05-07:00", body.Date)
+		p.Articles = append(p.Articles, Article{
+			Date: date,
+			File: filepath.Base(path),
+			Path: path,
+			Body: body,
+		})
+		return nil
+	})
+}
+
 func walk(base string, depth int) (Articles, error) {
 	var articles Articles
 	err := filepath.Walk(base, func(path string, info os.FileInfo, err error) error {
@@ -105,6 +140,20 @@ func walk(base string, depth int) (Articles, error) {
 	})
 
 	return articles, err
+}
+
+// // SortByDate sorts by the date of the article
+// func (p *Post) SortByDate() {
+// 	sort.Slice(p.Articles, func(i, j int) bool {
+// 		return p.Articles[i].Date.After(p.Articles[j].Date)
+// 	})
+// }
+
+// SortByDate sorts by the date of the article
+func (as *Articles) SortByDate() {
+	sort.Slice(*as, func(i, j int) bool {
+		return (*as)[i].Date.After((*as)[j].Date)
+	})
 }
 
 func readFile(path string) ([]byte, error) {
