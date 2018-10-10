@@ -19,10 +19,10 @@ type Article struct {
 	Body Body
 }
 
-func readArticle(filename string) (*Article, error) {
+func newArticle(path, filename string) (*Article, error) {
 	article := Article{
 		File: filename,
-		Path: "content/post/" + filename + ".md",
+		Path: filepath.Join(path, "content", "post", filename+".md"),
 	}
 	content, err := readFile(article.Path)
 	if err != nil {

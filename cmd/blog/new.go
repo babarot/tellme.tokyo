@@ -59,11 +59,11 @@ func (c *NewCommand) new(args []string) error {
 	if err != nil {
 		return err
 	}
-	hugo := newShell("hugo", append([]string{"new", "post/" + filename + ".md"}, args...)...)
+	hugo := newShell("hugo", append([]string{"new", "post/" + filename + ".md"}, args...)...).setDir(c.Config.BlogDir)
 	if err = hugo.Run(context.Background()); err != nil {
 		return err
 	}
-	article, err := readArticle(filename)
+	article, err := newArticle(c.Config.BlogDir, filename)
 	if err != nil {
 		return err
 	}
