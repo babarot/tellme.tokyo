@@ -1,6 +1,0 @@
-blog_dir: ../..
-finder_commands:
-  - "fzf"
-  - "--reverse"
-  - "--height"
-  - "40%"
