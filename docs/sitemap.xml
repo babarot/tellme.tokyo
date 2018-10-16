@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://tellme.tokyo/post/2018/10/16/write-blog-smoothly/</loc>
+    <lastmod>2018-10-16T13:18:07+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/post/2018/09/27/windows-era/</loc>
     <lastmod>2018-09-27T20:06:55+09:00</lastmod>
   </url>
@@ -206,6 +211,12 @@
   </url>
   
   <url>
+    <loc>https://tellme.tokyo/tags/blog/</loc>
+    <lastmod>2018-10-16T13:18:07+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/tags/book/</loc>
     <lastmod>2018-05-29T12:18:56+09:00</lastmod>
     <priority>0</priority>
@@ -279,6 +290,12 @@
   <url>
     <loc>https://tellme.tokyo/tags/go/</loc>
     <lastmod>2018-04-25T02:11:37+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/tags/golang/</loc>
+    <lastmod>2018-10-16T13:18:07+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -374,7 +391,7 @@
   
   <url>
     <loc>https://tellme.tokyo/post/</loc>
-    <lastmod>2018-09-27T20:06:55+09:00</lastmod>
+    <lastmod>2018-10-16T13:18:07+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -482,7 +499,7 @@
   
   <url>
     <loc>https://tellme.tokyo/</loc>
-    <lastmod>2018-09-27T20:06:55+09:00</lastmod>
+    <lastmod>2018-10-16T13:18:07+09:00</lastmod>
     <priority>0</priority>
   </url>
   

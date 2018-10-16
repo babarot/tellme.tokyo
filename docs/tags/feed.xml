@@ -40,6 +40,15 @@
     </item>
     
     <item>
+      <title>Blog</title>
+      <link>https://tellme.tokyo/tags/blog/</link>
+      <pubDate>Tue, 16 Oct 2018 13:18:07 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/blog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Book</title>
       <link>https://tellme.tokyo/tags/book/</link>
       <pubDate>Tue, 29 May 2018 12:18:56 +0900</pubDate>
@@ -144,6 +153,15 @@
       <pubDate>Wed, 25 Apr 2018 02:11:37 +0900</pubDate>
       
       <guid>https://tellme.tokyo/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Golang</title>
+      <link>https://tellme.tokyo/tags/golang/</link>
+      <pubDate>Tue, 16 Oct 2018 13:18:07 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/golang/</guid>
       <description></description>
     </item>
     

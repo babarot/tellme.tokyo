@@ -24,7 +24,7 @@ func newArticle(path, filename string) (*Article, error) {
 		File: filename,
 		Path: filepath.Join(path, "content", "post", filename+".md"),
 	}
-	content, err := readFile(article.Path)
+	content, err := readFrontMatter(article.Path)
 	if err != nil {
 		return &article, err
 	}
@@ -93,7 +93,7 @@ func (p *Post) walk() error {
 		if info == nil {
 			return err
 		}
-		content, err := readFile(path)
+		content, err := readFrontMatter(path)
 		if err != nil {
 			return err
 		}
@@ -121,7 +121,7 @@ func walk(base string, depth int) (Articles, error) {
 		if info == nil {
 			return err
 		}
-		content, err := readFile(path)
+		content, err := readFrontMatter(path)
 		if err != nil {
 			return err
 		}
@@ -156,7 +156,7 @@ func (as *Articles) SortByDate() {
 	})
 }
 
-func readFile(path string) ([]byte, error) {
+func readFrontMatter(path string) ([]byte, error) {
 	var encount int
 	var content string
 	file, err := os.Open(path)
