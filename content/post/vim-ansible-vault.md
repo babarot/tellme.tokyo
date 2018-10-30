@@ -37,3 +37,9 @@ filetype が ansible-vault であれば yes/no で復号するかどうか聞い
 - `:AnsibleVaultDecrypt`
 
 便利になりました。
+
+### 追記 (2018-10-25)
+
+[chase/vim-ansible-yaml: Add additional support for Ansible in VIM](https://github.com/chase/vim-ansible-yaml)
+
+先行実装がありました。ただメンテが滞っておりメンテナーを募集しているみたいです。

@@ -25,7 +25,9 @@ $ ansible-vault encrypt --vault-password-file=~/.vault_password secret.yaml  初
 というわけで開いているファイル (バッファ) に対して ansible-vault (encrypt|decrypt) を実行するプラグインをつくりました。
  GIF イメージにある Credentials はサンプルです。
  filetype が ansible-vault であれば yes/no で復号するかどうか聞いてあげると、もう一手間省けるのでさらに便利な気もしますが、とりあえずの不便さは解消されたので現状使える Vim コマンドと機能はこれだけです。
- :AnsibleVaultEncrypt :AnsibleVaultDecrypt  便利になりました。</description>
+ :AnsibleVaultEncrypt :AnsibleVaultDecrypt  便利になりました。
+追記 (2018-10-25) chase/vim-ansible-yaml: Add additional support for Ansible in VIM
+先行実装がありました。ただメンテが滞っておりメンテナーを募集しているみたいです。</description>
     </item>
     
     <item>
