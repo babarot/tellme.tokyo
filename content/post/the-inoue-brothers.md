@@ -8,11 +8,13 @@ author: b4b4r07
 oldlink: ""
 tags:
 - fashion
-- life
+- book
 ---
 
 <iframe src="https://player.vimeo.com/video/147622312" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 <p><a href="https://vimeo.com/147622312">The Inoue Brothers - In The Land of The Alpaca</a> from <a href="https://vimeo.com/presentplus">Present Plus</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+
+>デンマークで生まれ育った日系二世兄弟、井上聡(1978年生まれ)と清史(1980年生まれ)によるファッションブランド。2004年のブランド設立以来、生産の過程で地球環境に大きな負荷をかけない、生産者に不当な労働を強いない"エシカル(倫理的な)ファッション"を信条とし、春夏は東日本大震災で被災した縫製工場で生産するTシャツ、秋冬は南米アンデス地方の貧しい先住民たちと一緒につくったニットウェアを中心に展開する。さまざまなプロジェクトを通して、世の中に責任ある生産方法に対する関心を生み出すことを目標にしている。聡はコペンハーゲンを拠点にグラフィックデザイナーとして、清史はロンドンでヘアデザイナーとしても活動。そこで得た収入のほとんどを「ザ・イノウエ・ブラザーズ」の運営に費やす。
 
 <https://theinouebrothers.net/>
 
