@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -21,7 +22,7 @@ func (cfg *Config) LoadFile() error {
 	configPath, _ := getConfigPath()
 	_, err := os.Stat(configPath)
 	if err == nil {
-		buf, err := readFile(configPath)
+		buf, err := ioutil.ReadFile(configPath)
 		if err != nil {
 			return err
 		}

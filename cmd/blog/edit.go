@@ -10,6 +10,8 @@ import (
 	"os/signal"
 	"path/filepath"
 	"sort"
+
+	finder "github.com/b4b4r07/go-finder"
 )
 
 // EditCommand is one of the subcommands
@@ -85,12 +87,13 @@ func (c *EditCommand) selectFilesWithTag() ([]string, error) {
 	}
 	sort.Strings(tags)
 
+	items := finder.NewItems()
 	for _, tag := range uniqSlice(tags) {
-		c.Finder.Add(tag, post.Articles.Filter(tag))
+		items.Add(tag, post.Articles.Filter(tag))
 	}
 
-	items, err := c.Finder.Select()
-	for _, item := range items {
+	selectedItems, err := c.Finder.Select(items)
+	for _, item := range selectedItems {
 		for _, article := range item.(Articles) {
 			files = append(files, article.Path)
 		}
@@ -109,11 +112,14 @@ func (c *EditCommand) selectFiles() ([]string, error) {
 		return files, err
 	}
 	post.Articles.SortByDate()
+
+	items := finder.NewItems()
 	for _, article := range post.Articles {
-		c.Finder.Add(article.Body.Title, article)
+		items.Add(article.Body.Title, article)
 	}
-	items, err := c.Finder.Select()
-	for _, item := range items {
+
+	selectedItems, err := c.Finder.Select(items)
+	for _, item := range selectedItems {
 		files = append(files, item.(Article).Path)
 	}
 	return files, err

@@ -46,7 +46,6 @@ func main() {
 	var cfg Config
 	if err := cfg.LoadFile(); err != nil {
 		fmt.Fprintf(os.Stderr, "[ERROR] %s: %v\n", envAppName, err)
-		panic(err)
 		os.Exit(1)
 	}
 	// TODO
@@ -73,6 +72,5 @@ func main() {
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "[ERROR] %s: %v\n", envAppName, err)
 	}
-	panic(err)
 	os.Exit(exitStatus)
 }
