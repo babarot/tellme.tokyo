@@ -80,7 +80,9 @@
 ラベルを管理するための <a href="https://github.com/kubernetes/test-infra/tree/master/prow">bot</a> やツールすら動いている。
 実際に Kubernetes のコミュニティでは現在 180 個近くのラベルが定義されており、同様のラベルが導入されているリポジトリが数十個ある。</p>
 
-<p><a href="https://github.com/kubernetes/community/labels">https://github.com/kubernetes/community/labels</a></p>
+<ul>
+<li><a href="https://github.com/kubernetes/community/labels">Labels - kubernetes/community</a></li>
+</ul>
 
 <p>1つのリポジトリのラベルを管理するくらいならマニュアルでも可能だが、複数リポジトリとなるとリポジトリ間の同期が大変になってくる。
 特に ZenHub などの GitHub Issues を使ったマネジメントをしている場合、ラベル名が一致されていることとその付随情報 (色や説明) の同期が必須になる。
@@ -151,7 +153,7 @@ repos:
 <p><img src="/images/github-label-management.png" alt="" /></p>
 
 <p>定義されたラベル (<code>.labels</code>) が各リポジトリに存在しなければ作成し (<code>.repos[].labels</code>)、ここに羅列されていないラベルがある場合は削除するようになっている。
-例えば、<code>org/repo1</code> にも <code>area/security</code> を追加したかったら、</p>
+例えば、<code>org/repo2</code> にも <code>area/security</code> を追加したかったら、</p>
 
 <pre><code class="language-diff">  repos:
     - name: org/repo2

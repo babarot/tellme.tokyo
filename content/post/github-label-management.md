@@ -23,7 +23,7 @@ GitHub のラベルは Issues/P-Rs を管理するために便利な機能であ
 ラベルを管理するための [bot](https://github.com/kubernetes/test-infra/tree/master/prow) やツールすら動いている。
 実際に Kubernetes のコミュニティでは現在 180 個近くのラベルが定義されており、同様のラベルが導入されているリポジトリが数十個ある。
 
-https://github.com/kubernetes/community/labels
+- [Labels - kubernetes/community](https://github.com/kubernetes/community/labels)
 
 1つのリポジトリのラベルを管理するくらいならマニュアルでも可能だが、複数リポジトリとなるとリポジトリ間の同期が大変になってくる。
 特に ZenHub などの GitHub Issues を使ったマネジメントをしている場合、ラベル名が一致されていることとその付随情報 (色や説明) の同期が必須になる。
@@ -96,7 +96,7 @@ $ github-labeler
 ![](/images/github-label-management.png)
 
 定義されたラベル (`.labels`) が各リポジトリに存在しなければ作成し (`.repos[].labels`)、ここに羅列されていないラベルがある場合は削除するようになっている。
-例えば、`org/repo1` にも `area/security` を追加したかったら、
+例えば、`org/repo2` にも `area/security` を追加したかったら、
 
 ```diff
   repos:
