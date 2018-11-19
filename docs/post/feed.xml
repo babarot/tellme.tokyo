@@ -7,10 +7,27 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Thu, 08 Nov 2018 22:37:54 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 19 Nov 2018 20:08:07 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/post/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GitHub のラベルを宣言的に管理する</title>
+      <link>https://tellme.tokyo/post/2018/11/19/github-label-management/</link>
+      <pubDate>Mon, 19 Nov 2018 20:08:07 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/11/19/github-label-management/</guid>
+      <description>ソフトウェアの宣言的設定について &amp;ldquo;何かを管理する&amp;rdquo;となったときに、宣言的に設定できるようになっていると非常に便利である。 この宣言的設定 (Infrastructure as Code) とは、イミュータブルなインフラ (Immutable Infrastructure) を作るための基本的な考え方で、システムの状態を設定ファイルにて宣言するという考え方である。 具体的には Kubernetes のマニフェストファイル (YAML) だったり、Terraform のコード (HCL) が挙げられる。 この考え方は、インフラ領域に限らず、何らかの状態管理にはもってこいの手法である。
+GitHub のラベルは Issues/P-Rs を管理するために便利な機能である。 実際に Kubernetes 規模のリポジトリになると、ラベル管理なしにはやっていられない。 ラベルを管理するための bot やツールすら動いている。 実際に Kubernetes のコミュニティでは現在 180 個近くのラベルが定義されており、同様のラベルが導入されているリポジトリが数十個ある。
+https://github.com/kubernetes/community/labels
+1つのリポジトリのラベルを管理するくらいならマニュアルでも可能だが、複数リポジトリとなるとリポジトリ間の同期が大変になってくる。 特に ZenHub などの GitHub Issues を使ったマネジメントをしている場合、ラベル名が一致されていることとその付随情報 (色や説明) の同期が必須になる。 人間が手で追加や変更をしていると、必ず差異が発生する。
+ここで、冒頭に挙げた宣言的設定が有効な手段になる。
+github-labeler の紹介 https://github.com/b4b4r07/github-labeler
+宣言的設定の手法をラベル管理に持ち込むために、GitHub ラベルの定義とそれを作るリポジトリについて「YAML に書いたとおりになる」ツールを書いた。
+例えば次のような YAML を書く。
+labels: - name: area/security description: Indicates an issue on security area. color: 1d76db - name: kind/bug description: Categorizes issue or PR as related to a bug.</description>
+    </item>
     
     <item>
       <title>『僕たちはファッションの力で世界を変える』を読んだ</title>

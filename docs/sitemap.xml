@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://tellme.tokyo/post/2018/11/19/github-label-management/</loc>
+    <lastmod>2018-11-19T20:08:07+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/post/2018/11/08/the-inoue-brothers/</loc>
     <lastmod>2018-11-08T22:37:54+09:00</lastmod>
   </url>
@@ -293,6 +298,12 @@
   </url>
   
   <url>
+    <loc>https://tellme.tokyo/tags/github/</loc>
+    <lastmod>2018-11-19T20:08:07+09:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/tags/gke/</loc>
     <lastmod>2017-10-30T15:02:23+09:00</lastmod>
     <priority>0</priority>
@@ -306,7 +317,7 @@
   
   <url>
     <loc>https://tellme.tokyo/tags/golang/</loc>
-    <lastmod>2018-10-16T13:18:07+09:00</lastmod>
+    <lastmod>2018-11-19T20:08:07+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -402,7 +413,7 @@
   
   <url>
     <loc>https://tellme.tokyo/post/</loc>
-    <lastmod>2018-11-08T22:37:54+09:00</lastmod>
+    <lastmod>2018-11-19T20:08:07+09:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -510,7 +521,7 @@
   
   <url>
     <loc>https://tellme.tokyo/</loc>
-    <lastmod>2018-11-08T22:37:54+09:00</lastmod>
+    <lastmod>2018-11-19T20:08:07+09:00</lastmod>
     <priority>0</priority>
   </url>
   
