@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Mon, 19 Nov 2018 20:08:07 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 15 Feb 2019 01:09:19 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Go のコマンドラインツールを簡単にリリースする</title>
+      <link>https://tellme.tokyo/post/2019/02/15/release-go/</link>
+      <pubDate>Fri, 15 Feb 2019 01:09:19 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2019/02/15/release-go/</guid>
+      <description>goreleaser のおかげで Go のバイナリをクロスプラットフォーム向けにビルドしてパッケージングして GitHub Releases にアップロードするステップがだいぶ簡単になった。
+今までは、gox + ghr などを使ってそれらをスクリプト化したものを各リポジトリに用意する必要があったのが、今では goreleaser 用の設定ファイル (YAML) を置くだけでよくなった。
+例: stein/.goreleaser.yml at master · b4b4r07/stein
+しかしそれでもリリースするにあたっていくつかのプロセスが残っている。
+ tag 打ち バージョン情報の更新 Changelog の更新  それらをスクリプト化して各リポジトリに置くと、スクリプトに改修や機能追加すると各リポジトリでアップデートしなきゃいけなかった。自分向けなので必ずやらなきゃいけないわけではないけど、毎回シェルスクリプトを書くのも億劫だし、git.io を使って共用できるようにした。
+b4b4r07/release-go
+使い方は簡単で raw のスクリプトを curl などで取ってきて bash にわたすようにする。
+実際は Makefile なんかに書いておくとより便利になる。
+.PHONY: release release: @bash &amp;lt;(wget -o /dev/null -qO - https://git.io/release-go)  これを実行すると、
+ gobump を使って semver 形式で bump up git-chglog を使っている場合は Changelog の更新 goreleaser の実行  を必要に合わせてプロンプト経由で対話的に実行することができる。</description>
+    </item>
     
     <item>
       <title>GitHub のラベルを宣言的に管理する</title>
