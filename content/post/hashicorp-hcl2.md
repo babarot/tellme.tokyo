@@ -1,7 +1,7 @@
 ---
-title: "hashicorp/hcl2を使って独自DSLを定義する"
+title: "hashicorp/hcl2 を使って独自 DSL を定義する"
 date: "2019-02-19T02:44:36+09:00"
-description: ""
+description: "hcl2 の紹介とそれを使った独自 DSL の作り方について解説します"
 categories: []
 draft: false
 author: b4b4r07
@@ -33,9 +33,9 @@ HCL の目的はコマンドラインツールで使用するために、人間�
 例えば HCL2 の実装の方はより堅牢なエラー処理を可能にする機能などが盛り込まれています。
 HCL2 の開発が安定したらもとのリポジトリはアーカイブされ、こちらが HCL の本実装になるようです。
 
-ちなみに、HCL2 を含んだ HCL 全体のデザインなどは次の Paper が参考になります。
+ちなみに、HCL2 を含んだ HCL 全体のデザインなどは次の PDF が参考になります。
 
-https://media.readthedocs.org/pdf/hcl/guide/hcl.pdf
+[HCL Documentation](https://media.readthedocs.org/pdf/hcl/guide/hcl.pdf)
 
 ## HCL2 の機能
 
@@ -137,8 +137,8 @@ var LookupFunc = function.New(&function.Spec{
 
 ## DSL を定義する
 
-表題にある通り HCL ベースの DSL をつくりましょう。上で書いたとおり、HCL2 では 任意の関数などを定義した上で独自の DSL を定義できます。
-具体例をあげると、Terraform の [resource](https://www.terraform.io/docs/configuration/resources.html) ブロックのような感じで独自のスキーマを定義した上で、任意の変数、関数を組み込みとして提供する DSL を自身のプロダクトの設定ファイルに持ち込むことができます。
+表題にある通り HCL ベースの DSL をつくりましょう。上で書いたとおり、HCL2 では任意の関数などを定義した上で独自の DSL を定義できます。
+具体例をあげると、Terraform の [resource](https://www.terraform.io/docs/configuration/resources.html) ブロックのような感じで独自のスキーマを定義した上で、任意の変数・関数を組み込みとして提供する DSL を自身のプロダクトの設定ファイルに持ち込むことができます。
 
 これは結構すごいことだと思うんです。
 
@@ -161,7 +161,8 @@ rule "replicas" {
 
 上の例では、jsonpath を取得する関数を定義しています。
 
-ここからは実際の例を見ていきます。stein という YAML ファイルなどの設定ファイル言語に対して任意のルールセットによってテストするツールで用いられている HCL ベースの DSL を例に説明していきます。
+ここからは実際の例を見ていきます。
+stein という YAML ファイルなどの設定ファイル言語に対して任意のルールセットによってテストするツールで用いられている HCL ベースの DSL を例に説明していきます。
 
 [b4b4r07/stein: A linter for config files with a customizable rule set](https://github.com/b4b4r07/stein/)
 
@@ -239,7 +240,8 @@ JSON/YAML などで使う struct tag でバインドの設定をしていきま�
 
 これらの流れを踏まえて stein では、
 
-```
+```console
+$ tree -d ./lint
 lint/
 ├── args.go
 ├── lint.go                  <---- (2) gohcl.DecodeBody() の実行
@@ -277,6 +279,8 @@ Error: Unsupported argument
 
 An argument named "foo" is not expected here.
 ```
+
+もちろんこの診断結果も"DSL レベル"で実装者が定義できます。
 
 hcl2 はまだ開発途中ですが強力な表現力を提供することが可能なので、ユーザに強く設定ファイルを書かせたい場合[^1]にはいい選択肢となると思います。
 

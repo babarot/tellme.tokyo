@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta content="b4b4r07, babarot" name="keywords">
 <meta content="b4b4r07" name="author">
-<meta property="og:title" content="hashicorp/hcl2を使って独自DSLを定義する - tellme.tokyo">
+<meta property="og:title" content="hashicorp/hcl2 を使って独自 DSL を定義する - tellme.tokyo">
 <meta property="og:url" content="https://tellme.tokyo/post/2019/02/19/hashicorp-hcl2/">
 <meta property="og:description" content="tellme.tokyo">
 <meta property="og:type" content="website" />
@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
 
-<title>hashicorp/hcl2を使って独自DSLを定義する | tellme.tokyo</title>
+<title>hashicorp/hcl2 を使って独自 DSL を定義する | tellme.tokyo</title>
 <link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
 <link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
 <link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
@@ -51,7 +51,7 @@
 
 <section class="section">
   <div class="container">
-    <h1 class="title">hashicorp/hcl2を使って独自DSLを定義する</h1>
+    <h1 class="title">hashicorp/hcl2 を使って独自 DSL を定義する</h1>
     <h2 class="subtitle is-5">February 19, 2019 </h2>
     
       <div class="tags">
@@ -92,9 +92,9 @@ HCL の目的はコマンドラインツールで使用するために、人間�
 例えば HCL2 の実装の方はより堅牢なエラー処理を可能にする機能などが盛り込まれています。
 HCL2 の開発が安定したらもとのリポジトリはアーカイブされ、こちらが HCL の本実装になるようです。</p>
 
-<p>ちなみに、HCL2 を含んだ HCL 全体のデザインなどは次の Paper が参考になります。</p>
+<p>ちなみに、HCL2 を含んだ HCL 全体のデザインなどは次の PDF が参考になります。</p>
 
-<p><a href="https://media.readthedocs.org/pdf/hcl/guide/hcl.pdf">https://media.readthedocs.org/pdf/hcl/guide/hcl.pdf</a></p>
+<p><a href="https://media.readthedocs.org/pdf/hcl/guide/hcl.pdf">HCL Documentation</a></p>
 
 <h2 id="hcl2-の機能">HCL2 の機能</h2>
 
@@ -196,8 +196,8 @@ HCL はその特性上ファイル分割されていても一つにマージし�
 
 <h2 id="dsl-を定義する">DSL を定義する</h2>
 
-<p>表題にある通り HCL ベースの DSL をつくりましょう。上で書いたとおり、HCL2 では 任意の関数などを定義した上で独自の DSL を定義できます。
-具体例をあげると、Terraform の <a href="https://www.terraform.io/docs/configuration/resources.html">resource</a> ブロックのような感じで独自のスキーマを定義した上で、任意の変数、関数を組み込みとして提供する DSL を自身のプロダクトの設定ファイルに持ち込むことができます。</p>
+<p>表題にある通り HCL ベースの DSL をつくりましょう。上で書いたとおり、HCL2 では任意の関数などを定義した上で独自の DSL を定義できます。
+具体例をあげると、Terraform の <a href="https://www.terraform.io/docs/configuration/resources.html">resource</a> ブロックのような感じで独自のスキーマを定義した上で、任意の変数・関数を組み込みとして提供する DSL を自身のプロダクトの設定ファイルに持ち込むことができます。</p>
 
 <p>これは結構すごいことだと思うんです。</p>
 
@@ -219,7 +219,8 @@ HCL はその特性上ファイル分割されていても一つにマージし�
 
 <p>上の例では、jsonpath を取得する関数を定義しています。</p>
 
-<p>ここからは実際の例を見ていきます。stein という YAML ファイルなどの設定ファイル言語に対して任意のルールセットによってテストするツールで用いられている HCL ベースの DSL を例に説明していきます。</p>
+<p>ここからは実際の例を見ていきます。
+stein という YAML ファイルなどの設定ファイル言語に対して任意のルールセットによってテストするツールで用いられている HCL ベースの DSL を例に説明していきます。</p>
 
 <p><a href="https://github.com/b4b4r07/stein/">b4b4r07/stein: A linter for config files with a customizable rule set</a></p>
 
@@ -299,7 +300,8 @@ JSON/YAML などで使う struct tag でバインドの設定をしていきま�
 
 <p>これらの流れを踏まえて stein では、</p>
 
-<pre><code>lint/
+<pre><code class="language-console">$ tree -d ./lint
+lint/
 ├── args.go
 ├── lint.go                  &lt;---- (2) gohcl.DecodeBody() の実行
 ├── policy.go                &lt;---- * decode される構造体の定義
@@ -337,6 +339,8 @@ JSON/YAML などで使う struct tag でバインドの設定をしていきま�
 
 An argument named &quot;foo&quot; is not expected here.
 </code></pre>
+
+<p>もちろんこの診断結果も&rdquo;DSL レベル&rdquo;で実装者が定義できます。</p>
 
 <p>hcl2 はまだ開発途中ですが強力な表現力を提供することが可能なので、ユーザに強く設定ファイルを書かせたい場合<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>にはいい選択肢となると思います。</p>
 <div class="footnotes">
