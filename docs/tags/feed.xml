@@ -168,7 +168,7 @@
     <item>
       <title>Go</title>
       <link>https://tellme.tokyo/tags/go/</link>
-      <pubDate>Fri, 15 Feb 2019 01:09:19 +0900</pubDate>
+      <pubDate>Tue, 19 Feb 2019 02:44:36 +0900</pubDate>
       
       <guid>https://tellme.tokyo/tags/go/</guid>
       <description></description>
@@ -186,9 +186,27 @@
     <item>
       <title>Hashicorp</title>
       <link>https://tellme.tokyo/tags/hashicorp/</link>
-      <pubDate>Thu, 02 Aug 2018 19:51:52 +0900</pubDate>
+      <pubDate>Tue, 19 Feb 2019 02:44:36 +0900</pubDate>
       
       <guid>https://tellme.tokyo/tags/hashicorp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hcl</title>
+      <link>https://tellme.tokyo/tags/hcl/</link>
+      <pubDate>Tue, 19 Feb 2019 02:44:36 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/hcl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hcl2</title>
+      <link>https://tellme.tokyo/tags/hcl2/</link>
+      <pubDate>Tue, 19 Feb 2019 02:44:36 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/hcl2/</guid>
       <description></description>
     </item>
     
