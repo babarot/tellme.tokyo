@@ -67,6 +67,9 @@ func main() {
 		"new": func() (cli.Command, error) {
 			return &NewCommand{CLI: blog}, nil
 		},
+		"publish": func() (cli.Command, error) {
+			return &PublishCommand{CLI: blog}, nil
+		},
 	}
 	exitStatus, err := app.Run()
 	if err != nil {
