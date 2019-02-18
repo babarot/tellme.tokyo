@@ -107,24 +107,24 @@ HCL2 の開発が安定したらもとのリポジトリはアーカイブされ
 <script defer src="/mermaid/mermaid.js">mermaid.initialize({startOnLoad:true});</script>
 <div class="mermaid" align="center" >
 graph TB;
-  hcl(HCL)   -- "hclparse.ParseHCL()"  --> file1("hcl.File")
-  json(JSON) -- "hclparse.ParseJSON()" --> file2("hcl.File")
-  file1      -- "hcl.MergeFiles()"     --> body((hcl.File))
-  file2      -- "hcl.MergeFiles()"     --> body((hcl.File))
+  hcl(HCL)   -- "hclparse.ParseHCL()"  --> file1("*hcl.File")
+  json(JSON) -- "hclparse.ParseJSON()" --> file2("*hcl.File")
+  file1      -- "hcl.MergeFiles()"     --> body((*hcl.File))
+  file2      -- "hcl.MergeFiles()"     --> body((*hcl.File))
   body       -- "gohcl.DecodeBody()"   --> struct("struct")
 </div>
 
 
 <p>HCL は JSON と互換性を持つので、hcl2 は両ファイル形式をサポートします。
-HCL が読み込まれると <a href="https://godoc.org/github.com/hashicorp/hcl2/hclparse#Parser.ParseHCL"><code>hclparse.ParseHCL()</code></a> によって <a href="https://godoc.org/github.com/hashicorp/hcl2/hcl#File">hcl.File</a> に変換されます。
+HCL が読み込まれると <a href="https://godoc.org/github.com/hashicorp/hcl2/hclparse#Parser.ParseHCL"><code>hclparse.ParseHCL()</code></a> によって <a href="https://godoc.org/github.com/hashicorp/hcl2/hcl#File">*hcl.File</a> に変換されます。
 HCL はその特性上ファイル分割されていても一つにマージして内部で扱うことができます (<code>terraform plan</code> するときにカレントディレクトリ内の <code>*.tf</code> ファイルが対象となって実行されるイメージ)。</p>
 
-<p><a href="https://godoc.org/github.com/hashicorp/hcl2/hcl#MergeFiles"><code>hcl.MergeFiles()</code></a> によって複数の hcl.File をマージして構造体に落とし込むこともできます。</p>
+<p><a href="https://godoc.org/github.com/hashicorp/hcl2/hcl#MergeFiles"><code>hcl.MergeFiles()</code></a> によって複数の *hcl.File をマージして構造体に落とし込むこともできます。</p>
 
 <p>そのあと、実際にデコード処理の部分として、<a href="https://godoc.org/github.com/hashicorp/hcl2/gohcl#DecodeBody"><code>gohcl.DecodeBody()</code></a> を使って任意の構造体に変換できます。</p>
 
 <p>ここからが hcl2 の面白い部分の一つです。中間表現をもつことで、デコード前にいろいろな処理を挟むことができるようになっています。
-具体的には <a href="https://godoc.org/github.com/hashicorp/hcl2/hcl#EvalContext">hcl.EvalContext</a> です。</p>
+そのひとつに <a href="https://godoc.org/github.com/hashicorp/hcl2/hcl#EvalContext">hcl.EvalContext</a> があります。</p>
 
 <pre><code class="language-go">type EvalContext struct {
 	Variables map[string]cty.Value
@@ -170,7 +170,7 @@ HCL はその特性上ファイル分割されていても一つにマージし�
 }
 </code></pre>
 
-<p>Terraform では <a href="https://www.terraform.io/docs/configuration/interpolation.html#lookup-map-key-default-">lookup</a> などが Terraform が提供する組み込み関数として定義されており、デコードする前に、つまりスキーマに対応する構造体などに変換される前にこれらがコンテキストとして渡されて評価されるため、実際には以下のような Go 関数が実行されるので、lookup があたかも 関数であるかのように HCL ファイル内で作用させることができます。</p>
+<p>Terraform では <a href="https://www.terraform.io/docs/configuration/interpolation.html#lookup-map-key-default-">lookup</a> などが Terraform が提供する組み込み関数として定義されており、デコードする前に、つまりスキーマに対応する構造体などに変換される前にこれらがコンテキストとして渡されて評価されるため、実際には以下のような Go 関数が実行されるので、lookup があたかも関数であるかのように HCL ファイル内で作用させることができます。</p>
 
 <pre><code class="language-go">var LookupFunc = function.New(&amp;function.Spec{
 	Params: []function.Parameter{
@@ -192,16 +192,19 @@ HCL はその特性上ファイル分割されていても一つにマージし�
 
 <p><a href="https://github.com/hashicorp/hcl2/tree/master/guide">hcl2/guide at master · hashicorp/hcl2</a></p>
 
-<p>公式リポジトリに guide 以下が参考になります。</p>
+<p>これについては公式リポジトリの guide ディレクトリ以下のドキュメントが参考になります。</p>
 
 <h2 id="dsl-を定義する">DSL を定義する</h2>
 
-<p>表題にある通り HCL ベースの DSL をつくりましょう。上で書いたとおり、HCL2 では任意の関数などを定義した上で独自の DSL を定義できます。
+<p>本記事のタイトルにもある通り HCL ベースの独自 DSL をつくりましょう。</p>
+
+<p>上で書いたとおり、HCL2 では任意の関数などを定義した上で独自の DSL を定義できます。
 具体例をあげると、Terraform の <a href="https://www.terraform.io/docs/configuration/resources.html">resource</a> ブロックのような感じで独自のスキーマを定義した上で、任意の変数・関数を組み込みとして提供する DSL を自身のプロダクトの設定ファイルに持ち込むことができます。</p>
 
 <p>これは結構すごいことだと思うんです。</p>
 
-<p>例えば、rule というスキーマを定義したとします。あとはそのスキーマを含めて提供する DSL として必要な関数や変数をデザインしてコンテキストとして織り込むだけで拡張可能な設定ファイルを作り上げることができます。</p>
+<p>例えば、rule というスキーマを定義したとします。
+あとはそのスキーマを含めて提供する DSL の中で必要な関数や変数をデザインしてコンテキストとして織り込むだけで、拡張可能な設定ファイルを作り上げることができます。</p>
 
 <pre><code class="language-hcl">rule &quot;replicas&quot; {
   description = &quot;Check the number of replicas is sufficient&quot;
@@ -224,19 +227,19 @@ stein という YAML ファイルなどの設定ファイル言語に対して�
 
 <p><a href="https://github.com/b4b4r07/stein/">b4b4r07/stein: A linter for config files with a customizable rule set</a></p>
 
-<p>上で述べたように、hcl.File での中間表現を経由して構造体に落とし込まれる過程を次のように表します。</p>
+<p>上で述べたように、*hcl.File での中間表現を経由して構造体に落とし込まれる過程を次のように表します。</p>
 
 <link href="/mermaid/mermaid.css" type="text/css" rel="stylesheet"/>
 <script defer src="/mermaid/mermaid.js">mermaid.initialize({startOnLoad:true});</script>
 <div class="mermaid" align="center" >
 graph TB;
-  hcl(HCL)   -- "hclparse.ParseHCL()"  --> file("hcl.File")
+  hcl(HCL)   -- "hclparse.ParseHCL()"  --> file("*hcl.File")
   file       -- "gohcl.DecodeBody()"   --> struct("struct")
 </div>
 
 
 <p>まずはじめに、<code>hclparse.ParseHCL()</code> の部分です。
-ソースコードからスキーマの定義を見ていきましょう。スキーマは HCL を hcl.File にパースする際に使用します。
+ソースコードからスキーマの定義を見ていきましょう。スキーマは HCL を *hcl.File にパースする際に使用します。
 このレイヤーでは &ldquo;DSL レベル&rdquo; でのバリデーションを設けることができます。
 例えば、「config ブロックは label (ブロック横の名付け) を取らない」や「rule ブロック内の report ブロックの level 属性は必須項目である」など。
 これに違反した場合、hcl.Diagnostic としてレポートすることができます。</p>
@@ -264,7 +267,7 @@ graph TB;
 
 <p>次に、<code>gohcl.DecodeBody()</code> の部分です。</p>
 
-<p>スキーマをもとに <code>hclparse.ParseHCL()</code> によってパースされた HCL は hcl.File になります。</p>
+<p>スキーマをもとに <code>hclparse.ParseHCL()</code> によってパースされた HCL は *hcl.File になります。</p>
 
 <pre><code class="language-go">// https://github.com/b4b4r07/stein/blob/fc9549f9db0f982f2756ef97a643ca9394de337e/lint/lint.go#L112-L117
 ctx, diags := l.policy.BuildContext(l.body, file.Path, file.Data)
@@ -275,9 +278,10 @@ if diags.HasErrors() {
 decodeDiags := gohcl.DecodeBody(l.body, ctx, &amp;policy)
 </code></pre>
 
-<p>hcl.File は hcl.EvalContext とともに <code>gohcl.DecodeBody()</code> によって <code>policy</code> 構造体にデコードされます。</p>
+<p>*hcl.File は hcl.EvalContext とともに <code>gohcl.DecodeBody()</code> によって Policy (<code>&amp;policy</code>) 構造体にデコードされます。</p>
 
-<p>ここのレイヤーでもバリデーションが実施されます。Marshal/Unmarshal の部分です。</p>
+<p>ここのレイヤーでもバリデーションが実施されます。
+他のパーサでいう Marshal/Unmarshal に相当する部分です。</p>
 
 <pre><code class="language-go">// https://github.com/b4b4r07/stein/blob/fc9549f9db0f982f2756ef97a643ca9394de337e/lint/policy.go#L10-L18
 type Policy struct {
@@ -288,10 +292,9 @@ type Policy struct {
 }
 </code></pre>
 
-<p>この Policy 構造体が実際に Go プログラム内で扱うものになります。
-JSON/YAML などで使う struct tag でバインドの設定をしていきます。</p>
+<p>この Policy 構造体が実際に Go プログラム内で扱うものになります。JSON/YAML などで使う struct tag でバインドの設定をしていきます。</p>
 
-<p>ちなみに、optional のフラグもありますが、block と併用する場合ポインタにして nil として扱う必要があります。</p>
+<p>ちなみに、optional の tag もありますが、block と併用する場合ポインタにして nil として扱う必要があります。</p>
 
 <ul>
 <li><a href="https://github.com/hashicorp/hcl2/pull/13">Added struct tag optional for gohcl by nicholasjackson · Pull Request #13 · hashicorp/hcl2</a></li>
@@ -321,7 +324,7 @@ lint/
 
 <h2 id="まとめ">まとめ</h2>
 
-<p>本記事では hashicorp/hcl2 パッケージを紹介するとともに以下の2点に焦点を当てて取り上げました。</p>
+<p>本記事では hashicorp/hcl2 パッケージを紹介するとともに以下の点に焦点をあてて取り上げました。</p>
 
 <ul>
 <li>独自のスキーマを定義、それをもとにパースしバリデーション違反を Diagnostic としてレポートできる</li>
@@ -340,7 +343,7 @@ lint/
 An argument named &quot;foo&quot; is not expected here.
 </code></pre>
 
-<p>もちろんこの診断結果も&rdquo;DSL レベル&rdquo;で実装者が定義できます。</p>
+<p>もちろんこの診断結果も &ldquo;DSL レベル&rdquo; で実装者が定義できます。</p>
 
 <p>hcl2 はまだ開発途中ですが強力な表現力を提供することが可能なので、ユーザに強く設定ファイルを書かせたい場合<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>にはいい選択肢となると思います。</p>
 <div class="footnotes">

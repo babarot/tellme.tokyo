@@ -46,23 +46,23 @@ HCL でも同様のアプローチを取りますが、内部で中間表現と�
 
 {{< mermaid >}}
 graph TB;
-  hcl(HCL)   -- "hclparse.ParseHCL()"  --> file1("hcl.File")
-  json(JSON) -- "hclparse.ParseJSON()" --> file2("hcl.File")
-  file1      -- "hcl.MergeFiles()"     --> body((hcl.File))
-  file2      -- "hcl.MergeFiles()"     --> body((hcl.File))
+  hcl(HCL)   -- "hclparse.ParseHCL()"  --> file1("*hcl.File")
+  json(JSON) -- "hclparse.ParseJSON()" --> file2("*hcl.File")
+  file1      -- "hcl.MergeFiles()"     --> body((*hcl.File))
+  file2      -- "hcl.MergeFiles()"     --> body((*hcl.File))
   body       -- "gohcl.DecodeBody()"   --> struct("struct")
 {{< /mermaid >}}
 
 HCL は JSON と互換性を持つので、hcl2 は両ファイル形式をサポートします。
-HCL が読み込まれると [`hclparse.ParseHCL()`](https://godoc.org/github.com/hashicorp/hcl2/hclparse#Parser.ParseHCL) によって [hcl.File](https://godoc.org/github.com/hashicorp/hcl2/hcl#File) に変換されます。
+HCL が読み込まれると [`hclparse.ParseHCL()`](https://godoc.org/github.com/hashicorp/hcl2/hclparse#Parser.ParseHCL) によって [*hcl.File](https://godoc.org/github.com/hashicorp/hcl2/hcl#File) に変換されます。
 HCL はその特性上ファイル分割されていても一つにマージして内部で扱うことができます (`terraform plan` するときにカレントディレクトリ内の `*.tf` ファイルが対象となって実行されるイメージ)。
 
-[`hcl.MergeFiles()`](https://godoc.org/github.com/hashicorp/hcl2/hcl#MergeFiles) によって複数の hcl.File をマージして構造体に落とし込むこともできます。
+[`hcl.MergeFiles()`](https://godoc.org/github.com/hashicorp/hcl2/hcl#MergeFiles) によって複数の *hcl.File をマージして構造体に落とし込むこともできます。
 
 そのあと、実際にデコード処理の部分として、[`gohcl.DecodeBody()`](https://godoc.org/github.com/hashicorp/hcl2/gohcl#DecodeBody) を使って任意の構造体に変換できます。
 
 ここからが hcl2 の面白い部分の一つです。中間表現をもつことで、デコード前にいろいろな処理を挟むことができるようになっています。
-具体的には [hcl.EvalContext](https://godoc.org/github.com/hashicorp/hcl2/hcl#EvalContext) です。
+そのひとつに [hcl.EvalContext](https://godoc.org/github.com/hashicorp/hcl2/hcl#EvalContext) があります。
 
 ```go
 type EvalContext struct {
@@ -110,7 +110,7 @@ resource "aws_instance" "app" {
 }
 ```
 
-Terraform では [lookup](https://www.terraform.io/docs/configuration/interpolation.html#lookup-map-key-default-) などが Terraform が提供する組み込み関数として定義されており、デコードする前に、つまりスキーマに対応する構造体などに変換される前にこれらがコンテキストとして渡されて評価されるため、実際には以下のような Go 関数が実行されるので、lookup があたかも 関数であるかのように HCL ファイル内で作用させることができます。
+Terraform では [lookup](https://www.terraform.io/docs/configuration/interpolation.html#lookup-map-key-default-) などが Terraform が提供する組み込み関数として定義されており、デコードする前に、つまりスキーマに対応する構造体などに変換される前にこれらがコンテキストとして渡されて評価されるため、実際には以下のような Go 関数が実行されるので、lookup があたかも関数であるかのように HCL ファイル内で作用させることができます。
 
 ```go
 var LookupFunc = function.New(&function.Spec{
@@ -133,16 +133,19 @@ var LookupFunc = function.New(&function.Spec{
 
 [hcl2/guide at master · hashicorp/hcl2](https://github.com/hashicorp/hcl2/tree/master/guide)
 
-公式リポジトリに guide 以下が参考になります。
+これについては公式リポジトリの guide ディレクトリ以下のドキュメントが参考になります。
 
 ## DSL を定義する
 
-表題にある通り HCL ベースの DSL をつくりましょう。上で書いたとおり、HCL2 では任意の関数などを定義した上で独自の DSL を定義できます。
+本記事のタイトルにもある通り HCL ベースの独自 DSL をつくりましょう。
+
+上で書いたとおり、HCL2 では任意の関数などを定義した上で独自の DSL を定義できます。
 具体例をあげると、Terraform の [resource](https://www.terraform.io/docs/configuration/resources.html) ブロックのような感じで独自のスキーマを定義した上で、任意の変数・関数を組み込みとして提供する DSL を自身のプロダクトの設定ファイルに持ち込むことができます。
 
 これは結構すごいことだと思うんです。
 
-例えば、rule というスキーマを定義したとします。あとはそのスキーマを含めて提供する DSL として必要な関数や変数をデザインしてコンテキストとして織り込むだけで拡張可能な設定ファイルを作り上げることができます。
+例えば、rule というスキーマを定義したとします。
+あとはそのスキーマを含めて提供する DSL の中で必要な関数や変数をデザインしてコンテキストとして織り込むだけで、拡張可能な設定ファイルを作り上げることができます。
 
 ```hcl
 rule "replicas" {
@@ -166,16 +169,16 @@ stein という YAML ファイルなどの設定ファイル言語に対して�
 
 [b4b4r07/stein: A linter for config files with a customizable rule set](https://github.com/b4b4r07/stein/)
 
-上で述べたように、hcl.File での中間表現を経由して構造体に落とし込まれる過程を次のように表します。
+上で述べたように、*hcl.File での中間表現を経由して構造体に落とし込まれる過程を次のように表します。
 
 {{< mermaid >}}
 graph TB;
-  hcl(HCL)   -- "hclparse.ParseHCL()"  --> file("hcl.File")
+  hcl(HCL)   -- "hclparse.ParseHCL()"  --> file("*hcl.File")
   file       -- "gohcl.DecodeBody()"   --> struct("struct")
 {{< /mermaid >}}
 
 まずはじめに、`hclparse.ParseHCL()` の部分です。
-ソースコードからスキーマの定義を見ていきましょう。スキーマは HCL を hcl.File にパースする際に使用します。
+ソースコードからスキーマの定義を見ていきましょう。スキーマは HCL を *hcl.File にパースする際に使用します。
 このレイヤーでは "DSL レベル" でのバリデーションを設けることができます。
 例えば、「config ブロックは label (ブロック横の名付け) を取らない」や「rule ブロック内の report ブロックの level 属性は必須項目である」など。
 これに違反した場合、hcl.Diagnostic としてレポートすることができます。
@@ -204,7 +207,7 @@ var policySchema = &hcl.BodySchema{
 
 次に、`gohcl.DecodeBody()` の部分です。
 
-スキーマをもとに `hclparse.ParseHCL()` によってパースされた HCL は hcl.File になります。
+スキーマをもとに `hclparse.ParseHCL()` によってパースされた HCL は *hcl.File になります。
 
 ```go
 // https://github.com/b4b4r07/stein/blob/fc9549f9db0f982f2756ef97a643ca9394de337e/lint/lint.go#L112-L117
@@ -216,9 +219,10 @@ if diags.HasErrors() {
 decodeDiags := gohcl.DecodeBody(l.body, ctx, &policy)
 ```
 
-hcl.File は hcl.EvalContext とともに `gohcl.DecodeBody()` によって `policy` 構造体にデコードされます。
+*hcl.File は hcl.EvalContext とともに `gohcl.DecodeBody()` によって Policy (`&policy`) 構造体にデコードされます。
 
-ここのレイヤーでもバリデーションが実施されます。Marshal/Unmarshal の部分です。
+ここのレイヤーでもバリデーションが実施されます。
+他のパーサでいう Marshal/Unmarshal に相当する部分です。
 
 ```go
 // https://github.com/b4b4r07/stein/blob/fc9549f9db0f982f2756ef97a643ca9394de337e/lint/policy.go#L10-L18
@@ -230,10 +234,9 @@ type Policy struct {
 }
 ```
 
-この Policy 構造体が実際に Go プログラム内で扱うものになります。
-JSON/YAML などで使う struct tag でバインドの設定をしていきます。
+この Policy 構造体が実際に Go プログラム内で扱うものになります。JSON/YAML などで使う struct tag でバインドの設定をしていきます。
 
-ちなみに、optional のフラグもありますが、block と併用する場合ポインタにして nil として扱う必要があります。
+ちなみに、optional の tag もありますが、block と併用する場合ポインタにして nil として扱う必要があります。
 
 - [Added struct tag optional for gohcl by nicholasjackson · Pull Request #13 · hashicorp/hcl2](https://github.com/hashicorp/hcl2/pull/13)
 - [gohcl and optional attributes · Issue #24 · hashicorp/hcl2](https://github.com/hashicorp/hcl2/issues/24)
@@ -262,7 +265,7 @@ lint/
 
 ## まとめ
 
-本記事では hashicorp/hcl2 パッケージを紹介するとともに以下の2点に焦点を当てて取り上げました。
+本記事では hashicorp/hcl2 パッケージを紹介するとともに以下の点に焦点をあてて取り上げました。
 
 - 独自のスキーマを定義、それをもとにパースしバリデーション違反を Diagnostic としてレポートできる
 - EvalContext によって組み込み提供する変数、関数を実装できる
@@ -280,7 +283,7 @@ Error: Unsupported argument
 An argument named "foo" is not expected here.
 ```
 
-もちろんこの診断結果も"DSL レベル"で実装者が定義できます。
+もちろんこの診断結果も "DSL レベル" で実装者が定義できます。
 
 hcl2 はまだ開発途中ですが強力な表現力を提供することが可能なので、ユーザに強く設定ファイルを書かせたい場合[^1]にはいい選択肢となると思います。
 
