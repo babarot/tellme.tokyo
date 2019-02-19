@@ -36,9 +36,10 @@ kube-lint は決められた Kind (現在は Pod のみ) の決められたフ�
 
 ## 独自のルールをもとにテストする
 
+そこで次のツールを Terraform と [HashiCorp Sentinel](https://www.terraform.io/docs/enterprise/sentinel/index.html) から着想を得て作った。
+
 [b4b4r07/stein: A linter for config files with a customizable rule set](https://github.com/b4b4r07/stein/)
 
-そこで次のツールを Terraform と [HashiCorp Sentinel](https://www.terraform.io/docs/enterprise/sentinel/index.html) から着想を得て作った。
 HashiCorp Sentinel は HashiCorp が提唱する [Policy as Code](https://docs.hashicorp.com/sentinel/concepts/policy-as-code) を実装したツールになっている。
 要するに、「インフラの状態を設定ファイルとしてコードで書くように、設定ファイルの状態をポリシーとしてコードで書く」、という考え方でありそれを実践できるツールである。
 
@@ -64,8 +65,10 @@ main = rule {
 - Deployemnt が定義されているとき PodDisruptionBudget も同様に定義されているか
 - etc
 
-こうしたポリシーは会社はそのチームの方針によってことなるはずである。あくまで独自のルールを定義するときは、自由にルールを定義できるような機能を提供していなければならない。
+こうしたポリシーは会社やそのチームの方針によって異なる。
+こういったことからさまざまなユースケースをカバーするポリシーを定義するときは、ツール側で自由にルールを定義できるような機能を提供していなければならない。
 上の例で示したように、Sentinel では [Sentinel Language](https://docs.hashicorp.com/sentinel/language/) という専用言語を用いてルールを定義できるようにしている。
+
 Stein では Terraform のように HCL で定義できるようにしている。
 
 ```hcl
