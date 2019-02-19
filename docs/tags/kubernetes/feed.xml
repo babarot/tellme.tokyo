@@ -7,10 +7,22 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Tue, 07 Aug 2018 01:01:47 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 19 Feb 2019 21:40:24 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/tags/kubernetes/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kubernetes などの YAML を独自のルールをもとにテストする</title>
+      <link>https://tellme.tokyo/post/2019/02/19/test-kubernetes-yaml/</link>
+      <pubDate>Tue, 19 Feb 2019 21:40:24 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2019/02/19/test-kubernetes-yaml/</guid>
+      <description>設定ファイルのメンテナンスの必要性 Infrastructure as Code の普及もありインフラの状態やその他多くの設定が、設定ファイル言語 (YAML や HCL など) で記述されることが多くなった。 Terraform HCL や Kubernetes YAML など、人が継続的にメンテナンスしなければならなく、その設定が直接プロダクションに影響を与える場合、そのレビューがとても重要になる。 具体的に例えば、「デプロイする Replica の数」や「Resource limit や PodDisruptionBudget が適切か」などレビューの中で注意深く見なけれなならない点などがあげられる。 加えて日々のレビューの中で、問題にはならないが「Kubernetes の metadata.namespace は省略できるけど事故防止の意味も込めて明示的に書きましょう」といった設定ファイルに対して強制させたいポリシーなどが生まれて、ひとつのレビュー観点になっていくことは自然である。
+人がレビューの中で毎回見なければならないこと、毎回指摘すること、機械的にチェックできることはルールセットを定義して、それをもとに lint でチェックして CI で失敗させるのが効率的である。
+YAML などのただの設定ファイル言語に対して「独自のルールを定義してそれをもとにテストする」ということは実は難しかったりする。
+ garethr/kubeval: Validate your Kubernetes configuration files, supports multiple Kubernetes versions viglesiasce/kube-lint: A linter for Kubernetes resources with a customizable rule set  kubeval はマニフェストファイルの validator として機能する。例えば、integer として定義しなければいけないフィールドを string で定義していた場合に検知することができる。 kube-lint は決められた Kind (現在は Pod のみ) の決められたフィールドのチェックを決められたオペレータ (equal, not equal など) で違反していないかチェックすることができる。</description>
+    </item>
     
     <item>
       <title>Kubernetes 上で Credentials を扱う</title>
