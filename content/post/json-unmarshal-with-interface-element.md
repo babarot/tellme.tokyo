@@ -113,4 +113,6 @@ func (s *Module) UnmarshalJSON(b []byte) error {
 あとは Marshal してマップをバイト列にして、Unmarshal で struct にしている (map to struct)。
 ちなみに、先のブログにもある通り、これは他の要素も UnmarshalJSON してあげないと、`default` で抜けていくのでその要素がゼロ値になった struct になってしまう。struct の要素が多い場合は、紹介されていた alias を使うパターンで書いたほうがよい。
 
-ちなみに、サーバレスポンスなどがパラメータやイベントによって動的に変わる場合に、その要素の型を json.RawMessage として struct に埋め込んで実装した UnmarshalJSON で遅延評価する場合に json.RawMessage が役立つケースが多いようだった。
+また、サーバレスポンスなどがパラメータやイベントによって動的に変わる場合に、その要素の型を json.RawMessage として struct に埋め込んで実装した UnmarshalJSON で遅延評価する場合に json.RawMessage が役立つケースが多いようだった。
+
+例: [Go で構造の一部が動的に変わる JSON を扱いたい – Naomichi Agata – Medium](https://medium.com/@agatan/go-%E3%81%A7%E6%A7%8B%E9%80%A0%E3%81%AE%E4%B8%80%E9%83%A8%E3%81%8C%E5%8B%95%E7%9A%84%E3%81%AB%E5%A4%89%E3%82%8F%E3%82%8B-json-%E3%82%92%E6%89%B1%E3%81%84%E3%81%9F%E3%81%84-cb99efc04193)
