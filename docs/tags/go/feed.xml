@@ -7,10 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Tue, 19 Feb 2019 21:40:24 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 10 Apr 2019 23:42:51 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/tags/go/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>メソッドを持った interface を要素に持つ struct への JSON Unmarshal</title>
+      <link>https://tellme.tokyo/post/2019/04/10/json-unmarshal-with-interface-element/</link>
+      <pubDate>Wed, 10 Apr 2019 23:42:51 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2019/04/10/json-unmarshal-with-interface-element/</guid>
+      <description>interface要素を持つstructへのJSON Unmarshal - すぎゃーんメモ
+これが参考になった。
+ただ、このケースで上げているのは interface がどの struct で評価されればいいかわかっているケースだった。 例えば、これをキーに持つ JSON だった場合は struct A で、このキーがなかったら struct B で、みたいなケースは自分で JSON の中を読みにいって判別して Unmarshal する他ない。
+具体例を示す。
+type Module struct { Name string `json:&amp;quot;name&amp;quot;` Resources []Resource `json:&amp;quot;resources&amp;quot;` } // ちなみにメソッドを持っていない場合は // interface{} として Unmarshal されるのでエラーにならない type Resource interface { Get() // ... } type AWSModule struct { Name string `json:&amp;quot;name&amp;quot;` } func (m AWSModule) Get() {} type GCPModule struct { Name string `json:&amp;quot;name&amp;quot;` Project string `json:&amp;quot;project&amp;quot;` } func (m GCPModule) Get() {}  こういう状況だと上のブログにもある通り、</description>
+    </item>
     
     <item>
       <title>Kubernetes などの YAML を独自のルールをもとにテストする</title>
