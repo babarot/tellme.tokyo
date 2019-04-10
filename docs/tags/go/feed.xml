@@ -22,7 +22,7 @@
 これが参考になった。
 ただ、このケースで上げているのは interface がどの struct で評価されればいいかわかっているケースだった。 例えば、これをキーに持つ JSON だった場合は struct A で、このキーがなかったら struct B で、みたいなケースは自分で JSON の中を読みにいって判別して Unmarshal する他ない。
 具体例を示す。
-type Module struct { Name string `json:&amp;quot;name&amp;quot;` Resources []Resource `json:&amp;quot;resources&amp;quot;` } // ちなみにメソッドを持っていない場合は // interface{} として Unmarshal されるのでエラーにならない type Resource interface { Get() // ... } type AWSModule struct { Name string `json:&amp;quot;name&amp;quot;` } func (m AWSModule) Get() {} type GCPModule struct { Name string `json:&amp;quot;name&amp;quot;` Project string `json:&amp;quot;project&amp;quot;` } func (m GCPModule) Get() {}  こういう状況だと上のブログにもある通り、</description>
+type State struct { Modules []Module `json:&amp;quot;modules&amp;quot;` } type Module struct { Name string `json:&amp;quot;name&amp;quot;` Resources []Resource `json:&amp;quot;resources&amp;quot;` } // ちなみにメソッドを持っていない場合は // interface{} として Unmarshal されるのでエラーにならない type Resource interface { Get() // ... } type AWSModule struct { Name string `json:&amp;quot;name&amp;quot;` } func (m AWSModule) Get() {} type GCPModule struct { Name string `json:&amp;quot;name&amp;quot;` Project string `json:&amp;quot;project&amp;quot;` } func (m GCPModule) Get() {}  こういう状況だと上のブログにもある通り、</description>
     </item>
     
     <item>

@@ -73,7 +73,11 @@
 
 <p>具体例を示す。</p>
 
-<pre><code class="language-go">type Module struct {
+<pre><code class="language-go">type State struct {
+	Modules []Module `json:&quot;modules&quot;`
+}
+
+type Module struct {
 	Name      string     `json:&quot;name&quot;`
 	Resources []Resource `json:&quot;resources&quot;`
 }
@@ -101,7 +105,7 @@ func (m GCPModule) Get() {}
 
 <p>こういう状況だと上のブログにもある通り、</p>
 
-<pre><code class="language-go">err := json.NewDecoder(f).Decode(&amp;s)
+<pre><code class="language-go">err := json.NewDecoder(file).Decode(&amp;state)  // state contains Module
 // json: cannot unmarshal object into Go struct field Module.resources of type main.Resource
 </code></pre>
 

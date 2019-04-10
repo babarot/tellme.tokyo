@@ -20,6 +20,10 @@ tags:
 具体例を示す。
 
 ```go
+type State struct {
+	Modules []Module `json:"modules"`
+}
+
 type Module struct {
 	Name      string     `json:"name"`
 	Resources []Resource `json:"resources"`
@@ -49,7 +53,7 @@ func (m GCPModule) Get() {}
 こういう状況だと上のブログにもある通り、
 
 ```go
-err := json.NewDecoder(f).Decode(&s)
+err := json.NewDecoder(file).Decode(&state)  // state contains Module
 // json: cannot unmarshal object into Go struct field Module.resources of type main.Resource
 ```
 
