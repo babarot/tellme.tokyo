@@ -16,33 +16,30 @@ tags: ["tokyo", "life"]
 # 衣
 
 - AURALEE
-- JieDa
+- DAIRIKU
 - NEEDLES
 - NEON SIGN
-- Sasquatchfabrix.
+- UNUSED
 - URU
 - bukht
 - crepuscule
-- dairiku
-- doublet
-- kolor
 
 # 食
 
 - BUZEN
-- 丸香
-- 八兵衛
 - 山半
 - 山長 (恵比寿)
 - 源八 (北澤)
 - 珈琲コーラル
 
+(Swarm 保存済みから一部)
+
 # 住
 
-- 三田、芝
 - 上野、稲荷町、入谷
 - 下北沢
 - 中目黒
+- 代官山
 - 広尾
 - 新江古田
 - 江ノ島 (神奈川県)
