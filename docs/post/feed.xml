@@ -18,8 +18,7 @@
       <pubDate>Tue, 27 Aug 2019 22:14:34 +0900</pubDate>
       
       <guid>https://tellme.tokyo/post/2019/08/27/sd1909/</guid>
-      <description>[![]()]()
-
+      <description>
 およそ1週間ほど前に、Software Design 2019年9月号に寄稿しました。
 Twitter では告知したのですが前に2017年7月号を書かせていただいたとき、ブログを更新していたことを思い出したのでこちらでも書いておきます。
 明日発売のSoftware Design 2019年9月号に寄稿しました。「作品で魅せるGoプログラミング」というテーマで、YAMLなどの設定ファイルに対してカスタムルールでlintできるsteinというツールについて紹介しました。ぜひご覧ください。
@@ -451,7 +450,8 @@ Spinnaker は「デプロイ先のクラスタ」と「どのイメージを撒�
       <pubDate>Sat, 05 Aug 2017 19:03:28 +0900</pubDate>
       
       <guid>https://tellme.tokyo/post/2017/08/05/sd1707/</guid>
-      <description>およそ1ヶ月ほど前に、Software Design 2017年7月号に寄稿しました。
+      <description>
+およそ1ヶ月ほど前に、Software Design 2017年7月号に寄稿しました。
 すっかり告知や宣伝を忘れていたのですが、バックナンバーとしてまだ購入できるようですので、気になった方はお手にとっていただけると幸いです。
 担当させていただいた章は、
  第2章：理論編2 シェルスクリプト初心者から中級者への次の一歩
