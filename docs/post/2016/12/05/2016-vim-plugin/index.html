@@ -284,11 +284,12 @@ dein.vim の README.md か bin/installer.sh で吐き出されるミニマル vi
 <li>どちらも最大限に遅延読み込みを利用</li>
 </ul></li>
 <li>100 回計測する (<a href="https://gist.github.com/b4b4r07/3eccb4f8dd9438c706fe7950ef2f669f">使ったスクリプト</a>)</li>
-<li>dein.vim はキャッシュを使わない (後付条件です)</li>
-</ul>
+
+<li><p>dein.vim はキャッシュを使わない (後付条件です)</p>
 
 <pre><code class="language-console">$ vim --startup-time=time.log +q
-</code></pre>
+</code></pre></li>
+</ul>
 
 <p><strong>結果:</strong></p>
 
@@ -458,7 +459,7 @@ dein.vim の最大時間より vim-plug の最小時間のほうが大きいこ�
 <script>hljs.initHighlightingOnLoad();</script>
 
 
-<script>
+<script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {
 	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;

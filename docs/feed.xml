@@ -7,10 +7,29 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Wed, 10 Apr 2019 23:42:51 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 27 Aug 2019 22:14:34 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Software Design 2019年9月号に寄稿しました</title>
+      <link>https://tellme.tokyo/post/2019/08/27/sd1909/</link>
+      <pubDate>Tue, 27 Aug 2019 22:14:34 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2019/08/27/sd1909/</guid>
+      <description>[![]()]()
+
+およそ1週間ほど前に、Software Design 2019年9月号に寄稿しました。
+Twitter では告知したのですが前に2017年7月号を書かせていただいたとき、ブログを更新していたことを思い出したのでこちらでも書いておきます。
+明日発売のSoftware Design 2019年9月号に寄稿しました。「作品で魅せるGoプログラミング」というテーマで、YAMLなどの設定ファイルに対してカスタムルールでlintできるsteinというツールについて紹介しました。ぜひご覧ください。
+Software Design 2019年9月号｜技術評論社 https://t.co/kP4N2SdxEG
+&amp;mdash; @babarot 🌉 (@b4b4r07) August 16, 2019  担当させていただいた章は、
+ 作品で魅せるGoプログラミング 【8】Kubernetesなどの設定ファイルをテストするCLIツール
+ になります（連載パート）。
+前回に引き続き2回目です。Goは好きな言語であり、なおかつ自作ツールの紹介だったのでとても嬉しいです。ありがとうございました。
+ </description>
+    </item>
     
     <item>
       <title>メソッドを持った interface を要素に持つ struct への JSON Unmarshal</title>

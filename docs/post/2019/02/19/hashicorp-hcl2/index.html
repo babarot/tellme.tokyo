@@ -160,15 +160,16 @@ HCL はその特性上ファイル分割されていても一つにマージし�
 
 <ul>
 <li><a href="https://www.terraform.io/docs/configuration/interpolation.html">Interpolation Syntax</a></li>
-<li><a href="https://github.com/hashicorp/terraform/blob/master/lang/functions.go">lang/functions.go - hashicorp/terraform</a></li>
-</ul>
+
+<li><p><a href="https://github.com/hashicorp/terraform/blob/master/lang/functions.go">lang/functions.go - hashicorp/terraform</a></p>
 
 <pre><code class="language-hcl">resource &quot;aws_instance&quot; &quot;app&quot; {
-  count = &quot;3&quot;
-  private_ip = &quot;${lookup(var.instance_ips, count.index)}&quot;
-  # ...
+count = &quot;3&quot;
+private_ip = &quot;${lookup(var.instance_ips, count.index)}&quot;
+# ...
 }
-</code></pre>
+</code></pre></li>
+</ul>
 
 <p>Terraform では <a href="https://www.terraform.io/docs/configuration/interpolation.html#lookup-map-key-default-">lookup</a> などが Terraform が提供する組み込み関数として定義されており、デコードする前に、つまりスキーマに対応する構造体などに変換される前にこれらがコンテキストとして渡されて評価されるため、実際には以下のような Go 関数が実行されるので、lookup があたかも関数であるかのように HCL ファイル内で作用させることができます。</p>
 
@@ -392,7 +393,7 @@ An argument named &quot;foo&quot; is not expected here.
 <script>hljs.initHighlightingOnLoad();</script>
 
 
-<script>
+<script type="application/javascript">
 var doNotTrack = false;
 if (!doNotTrack) {
 	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
