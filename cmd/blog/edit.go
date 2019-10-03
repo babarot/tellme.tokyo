@@ -9,7 +9,6 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
-	"sort"
 
 	finder "github.com/b4b4r07/go-finder"
 )
@@ -28,7 +27,6 @@ type EditOption struct {
 
 func (c *EditCommand) flagSet() *flag.FlagSet {
 	flags := flag.NewFlagSet("edit", flag.ExitOnError)
-	flags.BoolVar(&c.Option.Tag, "tag", false, "edit article with tag")
 	flags.BoolVar(&c.Option.Open, "open", false, "open article with browser when editing")
 	return flags
 }
@@ -40,13 +38,7 @@ func (c *EditCommand) Run(args []string) int {
 		return c.exit(err)
 	}
 
-	var files []string
-	var err error
-	if c.Option.Tag {
-		files, err = c.selectFilesWithTag()
-	} else {
-		files, err = c.selectFiles()
-	}
+	files, err := c.selectFiles()
 	if err != nil {
 		return c.exit(err)
 	}
@@ -68,37 +60,6 @@ func (c *EditCommand) Help() string {
 	return fmt.Sprintf(
 		"Usage of %s:\n\nOptions:\n%s", flags.Name(), b.String(),
 	)
-}
-
-func (c *EditCommand) selectFilesWithTag() ([]string, error) {
-	var files []string
-	post := Post{
-		Path:  filepath.Join(c.Config.BlogDir, "content", "post"),
-		Depth: 1,
-	}
-	err := post.walk()
-	if err != nil {
-		return files, err
-	}
-
-	var tags []string
-	for _, article := range post.Articles {
-		tags = append(tags, article.Body.Tags...)
-	}
-	sort.Strings(tags)
-
-	items := finder.NewItems()
-	for _, tag := range uniqSlice(tags) {
-		items.Add(tag, post.Articles.Filter(tag))
-	}
-
-	selectedItems, err := c.Finder.Select(items)
-	for _, item := range selectedItems {
-		for _, article := range item.(Articles) {
-			files = append(files, article.Path)
-		}
-	}
-	return files, nil
 }
 
 func (c *EditCommand) selectFiles() ([]string, error) {
