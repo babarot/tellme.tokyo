@@ -87,11 +87,17 @@ type Post struct {
 
 func (p *Post) walk() error {
 	return filepath.Walk(p.Path, func(path string, info os.FileInfo, err error) error {
+		if info == nil {
+			return err
+		}
 		if path == p.Path {
 			return nil
 		}
-		if info == nil {
-			return err
+		switch filepath.Ext(path) {
+		case ".md", ".mkd", ".markdown":
+			// ok
+		default:
+			return nil
 		}
 		content, err := readFrontMatter(path)
 		if err != nil {
@@ -110,36 +116,6 @@ func (p *Post) walk() error {
 		})
 		return nil
 	})
-}
-
-func walk(base string, depth int) (Articles, error) {
-	var articles Articles
-	err := filepath.Walk(base, func(path string, info os.FileInfo, err error) error {
-		if path == base {
-			return nil
-		}
-		if info == nil {
-			return err
-		}
-		content, err := readFrontMatter(path)
-		if err != nil {
-			return err
-		}
-		var body Body
-		if err = yaml.Unmarshal(content, &body); err != nil {
-			return err
-		}
-		date, _ := time.Parse("2006-01-02T15:04:05-07:00", body.Date)
-		articles = append(articles, Article{
-			Date: date,
-			File: filepath.Base(path),
-			Path: path,
-			Body: body,
-		})
-		return nil
-	})
-
-	return articles, err
 }
 
 // // SortByDate sorts by the date of the article
