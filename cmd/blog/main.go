@@ -12,7 +12,7 @@ import (
 // Inforamtion for this app
 const (
 	AppName = "blog"
-	Version = "0.1.0"
+	Version = "0.1.1"
 
 	envContentPath = "content/post"
 	envHostURL     = "http://localhost:1313"
