@@ -9,9 +9,11 @@ import (
 	"github.com/mitchellh/cli"
 )
 
+// Inforamtion for this app
 const (
-	envAppName     = "blog"
-	envAppVersion  = "0.1.0"
+	AppName = "blog"
+	Version = "0.1.0"
+
 	envContentPath = "content/post"
 	envHostURL     = "http://localhost:1313"
 	envBlog        = "tellme.tokyo"
@@ -35,7 +37,7 @@ func (c CLI) exit(msg interface{}) int {
 		fmt.Fprintf(c.Stdout, "%s\n", m)
 		return 0
 	case error:
-		fmt.Fprintf(c.Stderr, "[ERROR] %s: %s\n", envAppName, m.Error())
+		fmt.Fprintf(c.Stderr, "[ERROR] %s: %s\n", AppName, m.Error())
 		return 1
 	default:
 		panic(msg)
@@ -45,7 +47,7 @@ func (c CLI) exit(msg interface{}) int {
 func main() {
 	var cfg Config
 	if err := cfg.LoadFile(); err != nil {
-		fmt.Fprintf(os.Stderr, "[ERROR] %s: %v\n", envAppName, err)
+		fmt.Fprintf(os.Stderr, "[ERROR] %s: %v\n", AppName, err)
 		os.Exit(1)
 	}
 	// TODO
@@ -58,7 +60,7 @@ func main() {
 		Finder: finder,
 	}
 
-	app := cli.NewCLI(envAppName, envAppVersion)
+	app := cli.NewCLI(AppName, Version)
 	app.Args = os.Args[1:]
 	app.Commands = map[string]cli.CommandFactory{
 		"edit": func() (cli.Command, error) {
@@ -73,7 +75,7 @@ func main() {
 	}
 	exitStatus, err := app.Run()
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "[ERROR] %s: %v\n", envAppName, err)
+		fmt.Fprintf(os.Stderr, "[ERROR] %s: %v\n", AppName, err)
 	}
 	os.Exit(exitStatus)
 }
