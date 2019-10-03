@@ -1,7 +1,10 @@
 package main
 
 import (
+	"bytes"
+	"context"
 	"errors"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -15,11 +18,58 @@ import (
 type Config struct {
 	FinderCommands []string `yaml:"finder_commands"`
 	BlogDir        string   `yaml:"blog_dir"`
+
+	Path string
+}
+
+// ConfigCommand is one of the subcommands
+type ConfigCommand struct {
+	CLI
+	Config Config
+	Option ConfigOption
+}
+
+// ConfigOption is the options for ConfigCommand
+type ConfigOption struct {
+}
+
+func (c *ConfigCommand) flagSet() *flag.FlagSet {
+	flags := flag.NewFlagSet("config", flag.ExitOnError)
+	return flags
+}
+
+// Run run edit command
+func (c *ConfigCommand) Run(args []string) int {
+	flags := c.flagSet()
+	if err := flags.Parse(args); err != nil {
+		return c.exit(err)
+	}
+
+	status := newShell("vim", c.Config.Path).Run(context.Background())
+	return c.exit(status)
+}
+
+// Synopsis returns synopsis
+func (c *ConfigCommand) Synopsis() string {
+	return "Configure your blog command config file"
+}
+
+// Help returns help message
+func (c *ConfigCommand) Help() string {
+	var b bytes.Buffer
+	flags := c.flagSet()
+	flags.SetOutput(&b)
+	flags.PrintDefaults()
+	return fmt.Sprintf(
+		"Usage of %s:\n\nOptions:\n%s", flags.Name(), b.String(),
+	)
 }
 
 // LoadFile loads Config
 func (cfg *Config) LoadFile() error {
 	configPath, _ := getConfigPath()
+	cfg.Path = configPath
+
 	_, err := os.Stat(configPath)
 	if err == nil {
 		buf, err := ioutil.ReadFile(configPath)
