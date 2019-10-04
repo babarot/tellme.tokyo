@@ -118,13 +118,6 @@ func (p *Post) walk() error {
 	})
 }
 
-// // SortByDate sorts by the date of the article
-// func (p *Post) SortByDate() {
-// 	sort.Slice(p.Articles, func(i, j int) bool {
-// 		return p.Articles[i].Date.After(p.Articles[j].Date)
-// 	})
-// }
-
 // SortByDate sorts by the date of the article
 func (as *Articles) SortByDate() {
 	sort.Slice(*as, func(i, j int) bool {

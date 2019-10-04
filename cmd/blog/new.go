@@ -28,8 +28,6 @@ type NewOption struct {
 
 func (c *NewCommand) flagSet() *flag.FlagSet {
 	flags := flag.NewFlagSet("new", flag.ExitOnError)
-	// flags.BoolVar(&c.Option.Tag, "tag", false, "edit article with tag")
-	// flags.BoolVar(&c.Option.Open, "open", false, "open article with browser when editing")
 	return flags
 }
 
@@ -82,7 +80,11 @@ func (c *NewCommand) new(args []string) error {
 		}
 		return tags
 	}()
-	return article.Save()
+	if err := article.Save(); err != nil {
+		return err
+	}
+	vim := newShell("vim", article.Path)
+	return vim.Run(context.Background())
 }
 
 func ask(prompt string) bool {

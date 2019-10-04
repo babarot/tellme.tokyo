@@ -25,7 +25,6 @@ type Config struct {
 // ConfigCommand is one of the subcommands
 type ConfigCommand struct {
 	CLI
-	Config Config
 	Option ConfigOption
 }
 

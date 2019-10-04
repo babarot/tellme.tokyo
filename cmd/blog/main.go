@@ -70,7 +70,7 @@ func main() {
 			return &NewCommand{CLI: blog}, nil
 		},
 		"config": func() (cli.Command, error) {
-			return &ConfigCommand{CLI: blog, Config: cfg}, nil
+			return &ConfigCommand{CLI: blog}, nil
 		},
 	}
 	exitStatus, err := app.Run()
