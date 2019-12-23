@@ -16,6 +16,7 @@
 <title>Kubernetes 上で Credentials を扱う | tellme.tokyo</title>
 <link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
 <link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
 <link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -82,18 +83,16 @@
 <p>実際にハードコードされたアプリケーションから環境変数に移し、それらをコンテナ化し Kubernetes に載せ替えてくステップを追う。</p>
 
 <h2 id="アプリ側にハードコードされた例">アプリ側にハードコードされた例</h2>
-
-<pre><code class="language-js">var http = require('http');
-var server = http.createServer(function (request, response) {
-  const language = 'English';
-  const API_KEY = '123-456-789';
-  response.write(`Language: ${language}\n`);
-  response.write(`API Key: ${API_KEY}\n`);
-  response.end(`\n`);
-});
-server.listen(3000);
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="nx">language</span> <span class="o">=</span> <span class="s1">&#39;English&#39;</span><span class="p">;</span>
+  <span class="k">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="s1">&#39;123-456-789&#39;</span><span class="p">;</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`Language: </span><span class="si">${</span><span class="nx">language</span><span class="si">}</span><span class="err">\</span><span class="sb">n`</span><span class="p">);</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`API Key: </span><span class="si">${</span><span class="nx">API_KEY</span><span class="si">}</span><span class="err">\</span><span class="sb">n`</span><span class="p">);</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="sb">`</span><span class="err">\</span><span class="sb">n`</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+</code></pre></div>
 <p>language やAPI キーを変更する場合は、コードを編集する必要がある。
 またバグやセキュリティリーク、ソースコードの履歴を汚すアプローチである。</p>
 
@@ -102,75 +101,61 @@ server.listen(3000);
 <h2 id="環境変数を使うパターン">環境変数を使うパターン</h2>
 
 <h3 id="step-1-環境変数を読み込む">Step 1: 環境変数を読み込む</h3>
-
-<pre><code class="language-js">var http = require('http');
-var server = http.createServer(function (request, response) {
-  const language = process.env.LANGUAGE;
-  const API_KEY = process.env.API_KEY;
-  response.write(`Language: ${language}\n`);
-  response.write(`API Key: ${API_KEY}\n`);
-  response.end(`\n`);
-});
-server.listen(3000);
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="nx">language</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">LANGUAGE</span><span class="p">;</span>
+  <span class="k">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">API_KEY</span><span class="p">;</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`Language: </span><span class="si">${</span><span class="nx">language</span><span class="si">}</span><span class="err">\</span><span class="sb">n`</span><span class="p">);</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`API Key: </span><span class="si">${</span><span class="nx">API_KEY</span><span class="si">}</span><span class="err">\</span><span class="sb">n`</span><span class="p">);</span>
+  <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="sb">`</span><span class="err">\</span><span class="sb">n`</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+</code></pre></div>
 <p>環境変数を設定できるので、アプリケーションのコードに触れる必要はなくなる。</p>
 
 <p>次のようにして現在のセッションの環境変数を設定できる。</p>
-
-<pre><code class="language-bash">export LANGUAGE=&quot;English&quot;
-export API_KEY=&quot;123-456-789&quot;
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">LANGUAGE</span><span class="o">=</span><span class="s2">&#34;English&#34;</span>
+<span class="nb">export</span> <span class="nv">API_KEY</span><span class="o">=</span><span class="s2">&#34;123-456-789&#34;</span></code></pre></div>
 <h3 id="step-2-docker-の環境変数にする">Step 2: Docker の環境変数にする</h3>
 
 <p>アプリケーションがコンテナ化されると、ホストの環境変数に依存しなくなる。
 逆に言うとコンテナに閉じた環境内で正しく設定される必要がある。
 これは Dockerfile の <code>ENV</code> ディレクティブで指定できる。</p>
-
-<pre><code class="language-dockerfile">FROM node:6-onbuild
-EXPOSE 3000
-ENV LANGUAGE English
-ENV API_KEY 123-456-789
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="k">FROM</span><span class="s"> node:6-onbuild</span><span class="err">
+</span><span class="err"></span><span class="k">EXPOSE</span><span class="s"> 3000</span><span class="err">
+</span><span class="err"></span><span class="k">ENV</span><span class="s"> LANGUAGE English</span><span class="err">
+</span><span class="err"></span><span class="k">ENV</span><span class="s"> API_KEY 123-456-789</span></code></pre></div>
 <p>これを Dockerfile として保存してコードと同じディレクトリに置いてビルドする。</p>
-
-<pre><code class="language-bash"># ビルド
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ビルド</span>
 docker build -t envtest .
-# 実行
-docker run -p 3000:3000 -ti envtest
-</code></pre>
-
+<span class="c1"># 実行</span>
+docker run -p <span class="m">3000</span>:3000 -ti envtest</code></pre></div>
 <h3 id="step-3-kubernetes-の環境変数にする">Step 3: Kubernetes の環境変数にする</h3>
 
 <p>Docker コンテナを Kubernetes に移す。</p>
 
 <p>Dockerfile と同様に、Kubernetes Deployment の YAML ファイルに直接環境変数を指定できる。</p>
-
-<pre><code class="language-yaml">apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: envtest
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        name: envtest
-    spec:
-      containers:
-      - name: envtest
-        image: gcr.io/&lt;PROJECT_ID&gt;/envtest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: LANGUAGE
-          value: &quot;English&quot;
-        - name: API_KEY
-          value: &quot;123-456-789&quot;
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">apiVersion<span class="p">:</span><span class="w"> </span>extensions/v1beta1<span class="w">
+</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>Deployment<span class="w">
+</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
+</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>envtest<span class="w">
+</span><span class="w"></span>spec<span class="p">:</span><span class="w">
+</span><span class="w">  </span>replicas<span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">  </span>template<span class="p">:</span><span class="w">
+</span><span class="w">    </span>metadata<span class="p">:</span><span class="w">
+</span><span class="w">      </span>labels<span class="p">:</span><span class="w">
+</span><span class="w">        </span>name<span class="p">:</span><span class="w"> </span>envtest<span class="w">
+</span><span class="w">    </span>spec<span class="p">:</span><span class="w">
+</span><span class="w">      </span>containers<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>envtest<span class="w">
+</span><span class="w">        </span>image<span class="p">:</span><span class="w"> </span>gcr.io/&lt;PROJECT_ID&gt;/envtest<span class="w">
+</span><span class="w">        </span>ports<span class="p">:</span><span class="w">
+</span><span class="w">        </span>-<span class="w"> </span>containerPort<span class="p">:</span><span class="w"> </span><span class="m">3000</span><span class="w">
+</span><span class="w">        </span>env<span class="p">:</span><span class="w">
+</span><span class="w">        </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>LANGUAGE<span class="w">
+</span><span class="w">          </span>value<span class="p">:</span><span class="w"> </span><span class="s2">&#34;English&#34;</span><span class="w">
+</span><span class="w">        </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>API_KEY<span class="w">
+</span><span class="w">          </span>value<span class="p">:</span><span class="w"> </span><span class="s2">&#34;123-456-789&#34;</span></code></pre></div>
 <h3 id="step-4-kubernetes-secrets-と-configmaps">Step 4: Kubernetes Secrets と ConfigMaps</h3>
 
 <p>Docker コンテナや Kubernetes での環境変数から設定を行う場合、コンテナや Deployment でのやり方に縛られてしまうという欠点がある。
@@ -181,56 +166,47 @@ spec:
 
 <p>Secrets と ConfigMaps の大きな違いは、Secrets は Base64 エンコーディングで難読化されていること。
 今後、Kubernetes のアップデートによって違いが出てくるかも知れないが、機密データ（API キーなど）は Secret に、非機密データ（ポート番号など）は ConfigMap という使い分けでいいと思う。</p>
-
-<pre><code class="language-bash"># API_KEY を Secret に保存する
-kubectl create secret generic apikey --from-literal=API_KEY=123–456
-# LANGUAGE を ConfigMap に保存する
-kubectl create configmap language --from-literal=LANGUAGE=English
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># API_KEY を Secret に保存する</span>
+kubectl create secret generic apikey --from-literal<span class="o">=</span><span class="nv">API_KEY</span><span class="o">=</span><span class="m">123</span>–456
+<span class="c1"># LANGUAGE を ConfigMap に保存する</span>
+kubectl create configmap language --from-literal<span class="o">=</span><span class="nv">LANGUAGE</span><span class="o">=</span>English</code></pre></div>
 <p>次のコマンドでこれらが作成されていることを確認できる。</p>
-
-<pre><code class="language-bash">$ kubectl get secret
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ kubectl get secret
 NAME                  TYPE                                  DATA      AGE
-apikey                Opaque                                0         45s
-default-token-gfzcr   kubernetes.io/service-account-token   3         11d
+apikey                Opaque                                <span class="m">0</span>         45s
+default-token-gfzcr   kubernetes.io/service-account-token   <span class="m">3</span>         11d
 
 $ kubectl get configmap
 NAME       DATA     AGE
-language   1        1m
-</code></pre>
-
+language   <span class="m">1</span>        1m</code></pre></div>
 <p>こうすることで Deployment の YAML にハードコードする必要がなくなる。</p>
-
-<pre><code class="language-yaml">apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: envtest
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        name: envtest
-    spec:
-      containers:
-      - name: envtest
-        image: gcr.io/&lt;PROJECT_ID&gt;/envtest
-        ports:
-        - containerPort: 3000
-        env:
-        - name: API_KEY
-          valueFrom:
-            secretKeyRef:
-              name: apikey
-              key: API_KEY
-        - name: LANGUAGE
-          valueFrom:
-            configMapKeyRef:
-              name: language
-              key: LANGUAGE
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">apiVersion<span class="p">:</span><span class="w"> </span>extensions/v1beta1<span class="w">
+</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>Deployment<span class="w">
+</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
+</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>envtest<span class="w">
+</span><span class="w"></span>spec<span class="p">:</span><span class="w">
+</span><span class="w">  </span>replicas<span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">  </span>template<span class="p">:</span><span class="w">
+</span><span class="w">    </span>metadata<span class="p">:</span><span class="w">
+</span><span class="w">      </span>labels<span class="p">:</span><span class="w">
+</span><span class="w">        </span>name<span class="p">:</span><span class="w"> </span>envtest<span class="w">
+</span><span class="w">    </span>spec<span class="p">:</span><span class="w">
+</span><span class="w">      </span>containers<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>envtest<span class="w">
+</span><span class="w">        </span>image<span class="p">:</span><span class="w"> </span>gcr.io/&lt;PROJECT_ID&gt;/envtest<span class="w">
+</span><span class="w">        </span>ports<span class="p">:</span><span class="w">
+</span><span class="w">        </span>-<span class="w"> </span>containerPort<span class="p">:</span><span class="w"> </span><span class="m">3000</span><span class="w">
+</span><span class="w">        </span>env<span class="p">:</span><span class="w">
+</span><span class="w">        </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>API_KEY<span class="w">
+</span><span class="w">          </span>valueFrom<span class="p">:</span><span class="w">
+</span><span class="w">            </span>secretKeyRef<span class="p">:</span><span class="w">
+</span><span class="w">              </span>name<span class="p">:</span><span class="w"> </span>apikey<span class="w">
+</span><span class="w">              </span>key<span class="p">:</span><span class="w"> </span>API_KEY<span class="w">
+</span><span class="w">        </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>LANGUAGE<span class="w">
+</span><span class="w">          </span>valueFrom<span class="p">:</span><span class="w">
+</span><span class="w">            </span>configMapKeyRef<span class="p">:</span><span class="w">
+</span><span class="w">              </span>name<span class="p">:</span><span class="w"> </span>language<span class="w">
+</span><span class="w">              </span>key<span class="p">:</span><span class="w"> </span>LANGUAGE</code></pre></div>
 <h2 id="secrets-と-configmaps-の更新">Secrets と ConfigMaps の更新</h2>
 
 <p>Secret や ConfigMap を使って Kubernetes に環境変数を管理させれば、変数の値を変更するときにコードを変更したりコンテナを再ビルドしたりする必要がなくなる。</p>
@@ -238,19 +214,13 @@ spec:
 <p>環境変数の変更は、Secret または ConfigMap を更新したあとに、Pod を再起動することでできる (Pod は起動時に環境変数の値をキャッシュしているため)。</p>
 
 <p>まず、値を更新する。</p>
-
-<pre><code class="language-bash">kubectl create configmap language --from-literal=LANGUAGE=Spanish -o yaml --dry-run \
-    | kubectl replace -f -
-kubectl create secret generic apikey --from-literal=API_KEY=098765 -o yaml --dry-run \
-    | kubectl replace -f -
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl create configmap language --from-literal<span class="o">=</span><span class="nv">LANGUAGE</span><span class="o">=</span>Spanish -o yaml --dry-run <span class="se">\
+</span><span class="se"></span>    <span class="p">|</span> kubectl replace -f -
+kubectl create secret generic apikey --from-literal<span class="o">=</span><span class="nv">API_KEY</span><span class="o">=</span><span class="m">098765</span> -o yaml --dry-run <span class="se">\
+</span><span class="se"></span>    <span class="p">|</span> kubectl replace -f -</code></pre></div>
 <p>次に、Pod を再起動する。
 これは、新しい Deployment を展開するなどがあるが、Pod を手動で削除することで Deployment に新しい Pod を自動で Rollout させるのが手っ取り早い。</p>
-
-<pre><code class="language-bash">kubectl delete pod -l name=envtest
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">kubectl delete pod -l <span class="nv">name</span><span class="o">=</span>envtest</code></pre></div>
 <h2 id="設定をファイルから読む">設定をファイルから読む</h2>
 
 <p>設定項目が多くない場合は環境変数は適しているが、アプリケーションに渡す必要のあるデータがたくさんあるときには向かない。
@@ -259,32 +229,27 @@ kubectl create secret generic apikey --from-literal=API_KEY=098765 -o yaml --dry
 <p>Kubernetes は ConfigMaps とSecrets をファイルとしてマウントさせることができる。
 環境変数とは異なり、これらのファイルが変更されると、新しいファイルは再起動を必要とせずに実行中の Pod にプッシュされる。
 また、複数の Config が置かれたディレクトリをマウントし、Secret/ConfigMap とすることもできる。</p>
-
-<pre><code class="language-bash">mkdir config &amp;&amp; mkdir secret
-echo '{&quot;LANGUAGE&quot;:&quot;English&quot;}' &gt; ./config/config.json
-echo '{&quot;API_KEY&quot;:&quot;123-456-789&quot;}' &gt; ./secret/secret.json
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">mkdir config <span class="o">&amp;&amp;</span> mkdir secret
+<span class="nb">echo</span> <span class="s1">&#39;{&#34;LANGUAGE&#34;:&#34;English&#34;}&#39;</span> &gt; ./config/config.json
+<span class="nb">echo</span> <span class="s1">&#39;{&#34;API_KEY&#34;:&#34;123-456-789&#34;}&#39;</span> &gt; ./secret/secret.json</code></pre></div>
 <p>これに合わせて環境変数ではなくファイルから設定を読むようにアプリケーション側を変更しておく。</p>
-
-<pre><code class="language-js">var http = require('http');
-var fs = require('fs');
-var server = http.createServer(function (request, response) {
-  fs.readFile('./config/config.json', function (err, config) {
-    if (err) return console.log(err);
-    const language = JSON.parse(config).LANGUAGE;
-    fs.readFile('./secret/secret.json', function (err, secret) {
-      if (err) return console.log(err);
-      const API_KEY = JSON.parse(secret).API_KEY;
-      response.write(`Language: ${language}\n`);
-      response.write(`API Key: ${API_KEY}\n`);
-      response.end(`\n`);
-    });
-  });
-});
-server.listen(3000);
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;./config/config.json&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">config</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+    <span class="k">const</span> <span class="nx">language</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">config</span><span class="p">).</span><span class="nx">LANGUAGE</span><span class="p">;</span>
+    <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">&#39;./secret/secret.json&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">secret</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+      <span class="k">const</span> <span class="nx">API_KEY</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">secret</span><span class="p">).</span><span class="nx">API_KEY</span><span class="p">;</span>
+      <span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`Language: </span><span class="si">${</span><span class="nx">language</span><span class="si">}</span><span class="err">\</span><span class="sb">n`</span><span class="p">);</span>
+      <span class="nx">response</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="sb">`API Key: </span><span class="si">${</span><span class="nx">API_KEY</span><span class="si">}</span><span class="err">\</span><span class="sb">n`</span><span class="p">);</span>
+      <span class="nx">response</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="sb">`</span><span class="err">\</span><span class="sb">n`</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+<span class="nx">server</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+</code></pre></div>
 <blockquote>
 <p><em>注: このコードはすべてのリクエストに対してファイルを再読み込みする。プログラムの起動時に一度ファイルを読み込むようにするとファイルの更新は取得されず、ファイルを更新するためにコンテナを再起動する必要がでてくる</em></p>
 </blockquote>
@@ -292,16 +257,13 @@ server.listen(3000);
 <h2 id="docker-volumes-を使ってファイルをマウントする">Docker volumes を使ってファイルをマウントする</h2>
 
 <p>ローカルで簡単に試す方法として Docker ボリュームを使って ConfigMaps と Secrets をシミュレートできる。</p>
-
-<pre><code class="language-bash"># ビルド
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ビルド</span>
 docker build -t envtest .
-# 実行
-docker run -p 3000:3000 -ti \
-  -v $(pwd)/secret/:/usr/src/app/secret/ \
-  -v $(pwd)/config/:/usr/src/app/config/ \
-  envtest
-</code></pre>
-
+<span class="c1"># 実行</span>
+docker run -p <span class="m">3000</span>:3000 -ti <span class="se">\
+</span><span class="se"></span>  -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/secret/:/usr/src/app/secret/ <span class="se">\
+</span><span class="se"></span>  -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/config/:/usr/src/app/config/ <span class="se">\
+</span><span class="se"></span>  envtest</code></pre></div>
 <blockquote>
 <p><em>注: <a href="https://github.com/nodejs/docker-node/blob/master/6/onbuild/Dockerfile#4">onbuild コンテナ</a>は、コードを <code>/usr/src/app</code> ディレクトリに置くため、そこに対してマウントしている</em></p>
 </blockquote>
@@ -311,72 +273,60 @@ docker run -p 3000:3000 -ti \
 <p><img src="https://cdn-images-1.medium.com/max/800/1*qqUtUpXoe9DRiMUtcrf0kw.png" alt="" /></p>
 
 <p>ファイルはコンテナにマウントされており、コードはリクエストごとにファイルを再読み込みするため、ファイルを変更して再起動せずに変更を確認できる。</p>
-
-<pre><code class="language-bash">echo '{&quot;LANGUAGE&quot;:&quot;Spanish&quot;}' &gt; ./config/config.json
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s1">&#39;{&#34;LANGUAGE&#34;:&#34;Spanish&#34;}&#39;</span> &gt; ./config/config.json</code></pre></div>
 <p><img src="https://cdn-images-1.medium.com/max/800/1*j_sIOIcnmgevdo7zI__XEA.png" alt="" /></p>
 
 <h2 id="ファイルから-secret-と-configmap-を作成する">ファイルから Secret と ConfigMap を作成する</h2>
 
 <p>値から Secret/ConfigMap を作成したように、ファイルをデータソースとして作成することもできる。</p>
-
-<pre><code class="language-bash"># ファイルから Secret を作成
-kubectl create secret generic my-secret --from-file=./secret/secret.json
-# ファイルから ConfigMap を作成
-kubectl create configmap my-config --from-file=./config/config.json
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># ファイルから Secret を作成</span>
+kubectl create secret generic my-secret --from-file<span class="o">=</span>./secret/secret.json
+<span class="c1"># ファイルから ConfigMap を作成</span>
+kubectl create configmap my-config --from-file<span class="o">=</span>./config/config.json</code></pre></div>
 <h2 id="secret-と-configmap-をファイルとして使う">Secret と ConfigMap をファイルとして使う</h2>
 
 <p>最後に環境変数の代わりに Secret と ConfigMap をファイルとして使用する Deployment を作成する。</p>
 
 <p>Deployment YAML では、Secret と ConfigMap をボリュームとして使用できる。
 これにより、Docker の場合と同様に、コンテナ内のディレクトリにマウントされる。</p>
-
-<pre><code class="language-yaml">apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: envtest
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        name: envtest
-    spec:
-      containers:
-      - name: envtest
-        image: gcr.io/smart-spark-93622/envtest:file5
-        ports:
-        - containerPort: 3000
-        volumeMounts:
-          - name: my-config
-            mountPath: /usr/src/app/config
-          - name: my-secret
-            mountPath: /usr/src/app/secret
-      volumes:
-      - name: my-config
-        configMap:
-          name: my-config
-      - name: my-secret
-        secret:
-          secretName: my-secret
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">apiVersion<span class="p">:</span><span class="w"> </span>extensions/v1beta1<span class="w">
+</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>Deployment<span class="w">
+</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
+</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>envtest<span class="w">
+</span><span class="w"></span>spec<span class="p">:</span><span class="w">
+</span><span class="w">  </span>replicas<span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">  </span>template<span class="p">:</span><span class="w">
+</span><span class="w">    </span>metadata<span class="p">:</span><span class="w">
+</span><span class="w">      </span>labels<span class="p">:</span><span class="w">
+</span><span class="w">        </span>name<span class="p">:</span><span class="w"> </span>envtest<span class="w">
+</span><span class="w">    </span>spec<span class="p">:</span><span class="w">
+</span><span class="w">      </span>containers<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>envtest<span class="w">
+</span><span class="w">        </span>image<span class="p">:</span><span class="w"> </span>gcr.io/smart-spark<span class="m">-93622</span>/envtest<span class="p">:</span>file5<span class="w">
+</span><span class="w">        </span>ports<span class="p">:</span><span class="w">
+</span><span class="w">        </span>-<span class="w"> </span>containerPort<span class="p">:</span><span class="w"> </span><span class="m">3000</span><span class="w">
+</span><span class="w">        </span>volumeMounts<span class="p">:</span><span class="w">
+</span><span class="w">          </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>my-config<span class="w">
+</span><span class="w">            </span>mountPath<span class="p">:</span><span class="w"> </span>/usr/src/app/config<span class="w">
+</span><span class="w">          </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>my-secret<span class="w">
+</span><span class="w">            </span>mountPath<span class="p">:</span><span class="w"> </span>/usr/src/app/secret<span class="w">
+</span><span class="w">      </span>volumes<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>my-config<span class="w">
+</span><span class="w">        </span>configMap<span class="p">:</span><span class="w">
+</span><span class="w">          </span>name<span class="p">:</span><span class="w"> </span>my-config<span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>my-secret<span class="w">
+</span><span class="w">        </span>secret<span class="p">:</span><span class="w">
+</span><span class="w">          </span>secretName<span class="p">:</span><span class="w"> </span>my-secret</code></pre></div>
 <h2 id="動的に更新">動的に更新</h2>
 
 <p>ボリュームを使うことで動的に再マウントすることができる。
 これは実行中のプロセスを再起動することなく、新しい Secret 値と ConfigMap 値がコンテナで使用可能になる。</p>
 
 <p>たとえば、LANGUAGE を Klingon に変更し、ConfigMap を更新する。</p>
-
-<pre><code class="language-bash">echo '{&quot;LANGUAGE&quot;:&quot;Klingon&quot;}' &gt; ./config/config.json
-kubectl create configmap my-config \
-  --from-file=./config/config.json \
-  -o yaml --dry-run | kubectl replace -f -
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">echo</span> <span class="s1">&#39;{&#34;LANGUAGE&#34;:&#34;Klingon&#34;}&#39;</span> &gt; ./config/config.json
+kubectl create configmap my-config <span class="se">\
+</span><span class="se"></span>  --from-file<span class="o">=</span>./config/config.json <span class="se">\
+</span><span class="se"></span>  -o yaml --dry-run <span class="p">|</span> kubectl replace -f -</code></pre></div>
 <p>数秒（キャッシュに応じて最大1分）で新しいファイルが自動的に実行中のコンテナにプッシュされる。</p>
 
 <p><img src="https://cdn-images-1.medium.com/max/800/1*wGebNWPZ_I_x0ruXA0ttrQ.gif" alt="" /></p>

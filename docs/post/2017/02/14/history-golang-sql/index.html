@@ -16,6 +16,7 @@
 <title>golang で zsh history を SQL 的に活用する | tellme.tokyo</title>
 <link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
 <link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
 <link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -243,73 +244,61 @@
 <h3 id="インストール">インストール</h3>
 
 <p>内部で golang 製の zhist というコマンドを使用します。ビルドが必要です。</p>
-
-<pre><code class="language-bash">$ git clone https://github.com/b4b4r07/zsh-history &amp;&amp; cd zsh-history
-$ make &amp;&amp; sudo make install
-$ source init.zsh
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ git clone https://github.com/b4b4r07/zsh-history <span class="o">&amp;&amp;</span> <span class="nb">cd</span> zsh-history
+$ make <span class="o">&amp;&amp;</span> sudo make install
+$ <span class="nb">source</span> init.zsh</code></pre></div>
 <h3 id="使い方">使い方</h3>
 
 <p>デフォルトでは既存のキーバインドを上書きしないように、何も設定されていません。
 以下の環境変数で設定できるようになっているので適宜変更してください。</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># DB パス</span>
+<span class="nb">export</span> <span class="nv">ZSH_HISTORY_FILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.zsh_history.db&#34;</span>
+<span class="c1"># コマンドラインセレクタ (先頭から順番に使われる)</span>
+<span class="nb">export</span> <span class="nv">ZSH_HISTORY_FILTER</span><span class="o">=</span><span class="s2">&#34;fzy:fzf:peco:percol&#34;</span>
 
-<pre><code class="language-zsh"># DB パス
-export ZSH_HISTORY_FILE=&quot;$HOME/.zsh_history.db&quot;
-# コマンドラインセレクタ (先頭から順番に使われる)
-export ZSH_HISTORY_FILTER=&quot;fzy:fzf:peco:percol&quot;
+<span class="c1"># peco などと組み合わせて検索するためのキーバインド</span>
+<span class="c1"># そのディレクトリで使用したコマンドしか候補に出さないか、</span>
+<span class="c1"># 今までの履歴を全部候補に出すか切り分けらる</span>
+<span class="nb">export</span> <span class="nv">ZSH_HISTORY_KEYBIND_GET_BY_DIR</span><span class="o">=</span><span class="s2">&#34;^r&#34;</span>
+<span class="nb">export</span> <span class="nv">ZSH_HISTORY_KEYBIND_GET_ALL</span><span class="o">=</span><span class="s2">&#34;^r^a&#34;</span>
 
-# peco などと組み合わせて検索するためのキーバインド
-# そのディレクトリで使用したコマンドしか候補に出さないか、
-# 今までの履歴を全部候補に出すか切り分けらる
-export ZSH_HISTORY_KEYBIND_GET_BY_DIR=&quot;^r&quot;
-export ZSH_HISTORY_KEYBIND_GET_ALL=&quot;^r^a&quot;
+<span class="c1"># 専用のセレクタ I/F から SQL を実行する</span>
+<span class="nb">export</span> <span class="nv">ZSH_HISTORY_KEYBIND_SCREEN</span><span class="o">=</span><span class="s2">&#34;^r^r&#34;</span>
 
-# 専用のセレクタ I/F から SQL を実行する
-export ZSH_HISTORY_KEYBIND_SCREEN=&quot;^r^r&quot;
-
-# substring 系のキーバインド
-# BUFFER (コマンドライン) に何もなければ通常の動作
-export ZSH_HISTORY_KEYBIND_ARROW_UP=&quot;^p&quot;
-export ZSH_HISTORY_KEYBIND_ARROW_DOWN=&quot;^n&quot;
-</code></pre>
-
+<span class="c1"># substring 系のキーバインド</span>
+<span class="c1"># BUFFER (コマンドライン) に何もなければ通常の動作</span>
+<span class="nb">export</span> <span class="nv">ZSH_HISTORY_KEYBIND_ARROW_UP</span><span class="o">=</span><span class="s2">&#34;^p&#34;</span>
+<span class="nb">export</span> <span class="nv">ZSH_HISTORY_KEYBIND_ARROW_DOWN</span><span class="o">=</span><span class="s2">&#34;^n&#34;</span></code></pre></div>
 <p>また、zsh-history では DB のバックアップをサポートしています (これが飛んだらおじゃんなので&hellip;)。
 一日一回コマンド実行時に、そのときの時点の DB ファイルを昨日付けのデータとして <code>$ZSH_HISTORY_BACKUP_DIR</code> に保存します。</p>
-
-<pre><code class="language-bash">$ tree $ZSH_HISTORY_BACKUP_DIR
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ tree <span class="nv">$ZSH_HISTORY_BACKUP_DIR</span>
 /Users/b4b4r07/.zsh/history/backup
-`-- 2017
-    `-- 02
-        |-- 13.db
-        `-- 14.db
+<span class="sb">`</span>-- <span class="m">2017</span>
+    <span class="sb">`</span>-- <span class="m">02</span>
+        <span class="p">|</span>-- <span class="m">13</span>.db
+        <span class="sb">`</span>-- <span class="m">14</span>.db
 
-2 directories, 2 files
-</code></pre>
-
+<span class="m">2</span> directories, <span class="m">2</span> files</code></pre></div>
 <p>うっかり DB ファイルを消した際はここからリストアしてください (多少の差分ができることは悪しからず)。</p>
 
 <h4 id="zhist-について">zhist について</h4>
 
 <p>golang 製の CLI ツールです。zsh-history で使われており、sqlite3 とのつなぎ込みを行います。
 挙動は toml によって制御できます。</p>
-
-<pre><code class="language-toml"># -s (スクリーンモード) で起動したときのプロンプト
-prompt = &quot;sqlite3&gt; &quot;
-# -s で起動したときに最初に実行される SQL
-init_query = &quot;SELECT DISTINCT(command) FROM history WHERE command LIKE '%%' AND status = 0 ORDER BY id DESC&quot;
-# -s で起動したときのカーソル位置を制御する (% に移動)
-init_cursor = &quot;%&quot;
-# -s で ESC を押したときに Vim のノーマルモードに移行する
-# そのときに表示するシンボル
-vim_mode_prompt = &quot;VIM-MODE&quot;
-# DB に登録しない文字列とか
-ignore_words = [
-    &quot;false&quot;,
-    &quot;echo&quot;,
-]
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-toml" data-lang="toml"><span class="c"># -s (スクリーンモード) で起動したときのプロンプト</span>
+<span class="nx">prompt</span> <span class="p">=</span> <span class="s2">&#34;sqlite3&gt; &#34;</span>
+<span class="c"># -s で起動したときに最初に実行される SQL</span>
+<span class="nx">init_query</span> <span class="p">=</span> <span class="s2">&#34;SELECT DISTINCT(command) FROM history WHERE command LIKE &#39;%%&#39; AND status = 0 ORDER BY id DESC&#34;</span>
+<span class="c"># -s で起動したときのカーソル位置を制御する (% に移動)</span>
+<span class="nx">init_cursor</span> <span class="p">=</span> <span class="s2">&#34;%&#34;</span>
+<span class="c"># -s で ESC を押したときに Vim のノーマルモードに移行する</span>
+<span class="c"># そのときに表示するシンボル</span>
+<span class="nx">vim_mode_prompt</span> <span class="p">=</span> <span class="s2">&#34;VIM-MODE&#34;</span>
+<span class="c"># DB に登録しない文字列とか</span>
+<span class="nx">ignore_words</span> <span class="p">=</span> <span class="p">[</span>
+    <span class="s2">&#34;false&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;echo&#34;</span><span class="p">,</span>
+<span class="p">]</span></code></pre></div>
 <p><code>~/.config/zhist/config.toml</code> が使われます。存在しない場合は、上記の内容をデフォルト値として toml を作成します。</p>
 
 <p>ただし、これから変更される可能性があります。</p>
@@ -317,10 +306,7 @@ ignore_words = [
 <h3 id="マイグレーション">マイグレーション</h3>
 
 <p>申し訳程度にマイグレーションスクリプトを同梱しているので、標準のヒストリーを使っている方は以下を実行して <code>~/.zsh_history</code> からインポートしてください (既存のヒストリーが壊れることはありません)。</p>
-
-<pre><code class="language-console">$ source misc/migrations.zsh | sqlite3 $ZSH_HISTORY_FILE
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-console" data-lang="console">$ source misc/migrations.zsh | sqlite3 $ZSH_HISTORY_FILE</code></pre></div>
 <p>(横着して書いたため <code>sqlite3</code> が必要です)</p>
 
 <h2 id="まとめ">まとめ</h2>

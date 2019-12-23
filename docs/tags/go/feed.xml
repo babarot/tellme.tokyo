@@ -22,7 +22,7 @@
 これが参考になった。
 ただ、このケースで上げているのは interface がどの struct で評価されればいいかわかっているケースだった。 例えば、これをキーに持つ JSON だった場合は struct A で、このキーがなかったら struct B で、みたいなケースは自分で JSON の中を読みにいって判別して Unmarshal する他ない。
 具体例を示す。
-type State struct { Modules []Module `json:&amp;quot;modules&amp;quot;` } type Module struct { Name string `json:&amp;quot;name&amp;quot;` Resources []Resource `json:&amp;quot;resources&amp;quot;` } // ちなみにメソッドを持っていない場合は // interface{} として Unmarshal されるのでエラーにならない type Resource interface { Get() // ... } type AWSModule struct { Name string `json:&amp;quot;name&amp;quot;` } func (m AWSModule) Get() {} type GCPModule struct { Name string `json:&amp;quot;name&amp;quot;` Project string `json:&amp;quot;project&amp;quot;` } func (m GCPModule) Get() {}  こういう状況だと上のブログにもある通り、</description>
+type State struct { Modules []Module `json:&amp;#34;modules&amp;#34;` } type Module struct { Name string `json:&amp;#34;name&amp;#34;` Resources []Resource `json:&amp;#34;resources&amp;#34;` } // ちなみにメソッドを持っていない場合は // interface{} として Unmarshal されるのでエラーにならない type Resource interface { Get() // ... } type AWSModule struct { Name string `json:&amp;#34;name&amp;#34;` } func (m AWSModule) Get() {} type GCPModule struct { Name string `json:&amp;#34;name&amp;#34;` Project string `json:&amp;#34;project&amp;#34;` } func (m GCPModule) Get() {} こういう状況だと上のブログにもある通り、</description>
     </item>
     
     <item>
@@ -86,7 +86,7 @@ https://github.com/b4b4r07/go-finder
 go-finder というパッケージを作りました。
 使い方は次のようになります。
 finder - GoDoc
-fzf, err := finder.New(&amp;quot;fzf&amp;quot;, &amp;quot;--reverse&amp;quot;, &amp;quot;--height&amp;quot;, &amp;quot;40&amp;quot;) if err != nil { panic(err) } fzf.Run()  peco, err := finder.New(&amp;quot;peco&amp;quot;, &amp;quot;--layout=bottom-up&amp;quot;) if err !</description>
+fzf, err := finder.New(&amp;#34;fzf&amp;#34;, &amp;#34;--reverse&amp;#34;, &amp;#34;--height&amp;#34;, &amp;#34;40&amp;#34;) if err != nil { panic(err) } fzf.Run()peco, err := finder.New(&amp;#34;peco&amp;#34;, &amp;#34;--layout=bottom-up&amp;#34;) if err != nil { panic(err) } peco.</description>
     </item>
     
     <item>
@@ -97,8 +97,8 @@ fzf, err := finder.New(&amp;quot;fzf&amp;quot;, &amp;quot;--reverse&amp;quot;, &
       <guid>https://tellme.tokyo/post/2018/04/02/golang-shell-exit-code/</guid>
       <description>CLI ツールはよく golang で書く。 (golang でなくとも) ちゃんとした CLI ツールを書こうとすると、Exit code とそのエラーの取り回しについて悩むことが多い。 今回は、何回か遭遇したこの悩みに対する現時点における自分的ベストプラクティスをまとめておく。
 ToC
- Exit code とは golang における Exit code 高次での取り回し  CLI 側 処理側  まとめ  Exit code とは $ ./script/something.sh $ echo $? 0  $? で参照できる値で、0 は成功を表し、0 以外は失敗を含む別の意味を表す。取りうる範囲は 0 - 255 (シェルによって違うことがあるかも知れない)。
-$ true $ echo $? 0 $ false $ echo $? 1  詳しくは、コマンドラインツールを書くなら知っておきたい Bash の 予約済み Exit Code - Qiita
+ Exit code とは golang における Exit code 高次での取り回し  CLI 側 処理側  まとめ  Exit code とは $ ./script/something.sh $ echo $? 0 $? で参照できる値で、0 は成功を表し、0 以外は失敗を含む別の意味を表す。取りうる範囲は 0 - 255 (シェルによって違うことがあるかも知れない)。
+$ true $ echo $? 0 $ false $ echo $? 1 詳しくは、コマンドラインツールを書くなら知っておきたい Bash の 予約済み Exit Code - Qiita
 CLI ツールとはいわゆる UNIX コマンドであることが多いので、その慣習にならって実装するのよい。 成功したら 0 を、失敗したらエラーメッセージとともに非 0 を返すといった感じ。</description>
     </item>
     
@@ -109,16 +109,17 @@ CLI ツールとはいわゆる UNIX コマンドであることが多いので�
       
       <guid>https://tellme.tokyo/post/2018/04/01/req/</guid>
       <description>ヘルスチェックのときの問題点 あるウェブサービスの動作確認をとっているとき、curl などを使ってリクエストを送ると思いますが、場合によっては環境変数が必要だったり、エンドポイントのパスが長かったり、Cloud IAP といった認証機構があったりします。 動作確認中はだいたい複数回実行するので実行しやすいように（また履歴で追いやすいように）、書き捨て用のシェルスクリプトにまとめたり、再利用しやすいようにワンライナーにしたりします。
-#!/bin/bash GOOGLE_APPLICATION_CREDENTIALS=&amp;quot;/path/to/google-credentials.json&amp;quot; CLIENT_ID=&amp;quot;sample.apps.googleusercontent.com&amp;quot; curl &amp;quot;https://iap-protected-app-url&amp;quot;  （再利用性が高く変数をスクリプト内のプロセスに閉じられる上に編集はしやすいが、毎回このようなシェルスクリプトを書くのは面倒）
-$ GOOGLE_APPLICATION_CREDENTIALS=&amp;quot;/path/to/google-credentials.json&amp;quot; CLIENT_ID=&amp;quot;sample.apps.googleusercontent.com&amp;quot; curl &amp;quot;https://iap-protected-app-url&amp;quot;  （再利用性も高く変数はコマンドのプロセスにしか影響しないが、長くて見づらく編集しづらい）
+#!/bin/bash GOOGLE_APPLICATION_CREDENTIALS=&amp;#34;/path/to/google-credentials.json&amp;#34; CLIENT_ID=&amp;#34;sample.apps.googleusercontent.com&amp;#34; curl &amp;#34;https://iap-protected-app-url&amp;#34; （再利用性が高く変数をスクリプト内のプロセスに閉じられる上に編集はしやすいが、毎回このようなシェルスクリプトを書くのは面倒）
+$ GOOGLE_APPLICATION_CREDENTIALS=&amp;#34;/path/to/google-credentials.json&amp;#34; CLIENT_ID=&amp;#34;sample.apps.googleusercontent.com&amp;#34; curl &amp;#34;https://iap-protected-app-url&amp;#34; （再利用性も高く変数はコマンドのプロセスにしか影響しないが、長くて見づらく編集しづらい）
 環境変数を含むワンライナーだとあまりにも長いので、以下のように環境変数の宣言部分だけコマンドラインから先に実行してしまえば curl と URL のみの実行で済みますが、特定のエンドポイント用の環境変数が実行シェルに記録されてしまうのは好ましくありません。
-# 記録される $ GOOGLE_APPLICATION_CREDENTIALS=&amp;quot;/path/to/google-credentials.json&amp;quot; $ CLIENT_ID=&amp;quot;sample.apps.googleusercontent.com&amp;quot; $ curl &amp;quot;https://iap-protected-app-url&amp;quot;  （変数部分だけコマンドラインから定義してしまえば curl からの実行で済むが、シェルを再起動するまでは変数が実行プロセスに記録されてしまう）
+# 記録される $ GOOGLE_APPLICATION_CREDENTIALS=&amp;#34;/path/to/google-credentials.json&amp;#34; $ CLIENT_ID=&amp;#34;sample.apps.googleusercontent.com&amp;#34; $ curl &amp;#34;https://iap-protected-app-url&amp;#34; （変数部分だけコマンドラインから定義してしまえば curl からの実行で済むが、シェルを再起動するまでは変数が実行プロセスに記録されてしまう）
 問題はこれだけではありません。 開発環境の動作確認が終わったら本番環境の動作確認です（critical なサービスではない場合、初動の動作確認はカジュアルに curl でヘルスチェックを取ることも多いです）。
 今度は本番環境に変わるのでURLや環境変数を書き換える必要があります。 また、開発環境と本番環境のヘルスチェックの行き来をしなきゃいけない場合もあります。 流石にここまでくると面倒くさくて、確認が終わったら削除するであろう取り急ぎなスクリプトにしちゃうことが多いです。
 あとからまたヘルスチェックをとりたいと思ったとき これまでは上記の方法でなんとかお茶を濁していたのですが、最近厳しくなってきました。 見ているサービスが多くなってきたためです。
 例えばあるサービスの Dev の様子がおかしいとなったとき、開発者が修正をデプロイしたとしても、場合によっては SRE や基盤チームがその後の疎通やサービスの状態をみたりします。 上にあるようなその場しのぎのスクリプトやワンライナーでやっていると、すでにスクリプトを削除していたり履歴を追うのが面倒で、こういうときにヘルスチェック用のパスが何だったのか（/health ? /status ?）、そもそもリクエストすべきサービスの URL がなんだったのか正確に思い出せません。
 ツール https://github.com/b4b4r07/req
-前に Cloud IAP で保護されたエンドポイントに対して簡単にリクエストを送るために作った CLI ツールの iap_curl が便利だったので、基本的な挙動はそのままに少し手を加えて汎用化しました。</description>
+前に Cloud IAP で保護されたエンドポイントに対して簡単にリクエストを送るために作った CLI ツールの iap_curl が便利だったので、基本的な挙動はそのままに少し手を加えて汎用化しました。
+Cloud Identity-Aware Proxy を使って GCP backend を保護する | tellme.</description>
     </item>
     
     <item>

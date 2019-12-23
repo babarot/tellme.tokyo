@@ -16,6 +16,7 @@
 <title>Cloud Identity-Aware Proxy を使って GCP backend を保護する | tellme.tokyo</title>
 <link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
 <link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
 <link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -243,11 +244,8 @@ IAP を有効にすると次のような Credentials が作成されています
 <p>本記事では簡単に <code>curl</code> を使ってリクエストするフローだけ説明します。</p>
 
 <p>まず、GCP の Credentials から Other タイプで機密情報を作成します。</p>
-
-<pre><code class="language-bash">OTHER_CLIENT_ID=&quot;324403170728-gt3eoa75t6acdto8higo2opr18m8b6bd.apps.googleusercontent.com&quot;
-open &quot;https://accounts.google.com/o/oauth2/v2/auth?client_id=$OTHER_CLIENT_ID&amp;response_type=code&amp;scope=openid%20email&amp;access_type=offline&amp;redirect_uri=urn:ietf:wg:oauth:2.0:oob&quot;
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">OTHER_CLIENT_ID</span><span class="o">=</span><span class="s2">&#34;324403170728-gt3eoa75t6acdto8higo2opr18m8b6bd.apps.googleusercontent.com&#34;</span>
+open <span class="s2">&#34;https://accounts.google.com/o/oauth2/v2/auth?client_id=</span><span class="nv">$OTHER_CLIENT_ID</span><span class="s2">&amp;response_type=code&amp;scope=openid%20email&amp;access_type=offline&amp;redirect_uri=urn:ietf:wg:oauth:2.0:oob&#34;</span></code></pre></div>
 <p>上記 URL を開くと認証コードを取得できます。</p>
 
 
@@ -265,41 +263,35 @@ open &quot;https://accounts.google.com/o/oauth2/v2/auth?client_id=$OTHER_CLIENT_
 
 
 <p>これが <code>AUTH_CODE</code> になります。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">OTHER_CLIENT_ID</span><span class="o">=</span><span class="s2">&#34;324403170728-gt3eoa75t6acdto8higo2opr18m8b6bd.apps.googleusercontent.com&#34;</span>
+<span class="nv">OTHER_CLIENT_SECRET</span><span class="o">=</span><span class="s2">&#34;6wRMEKNTpHCJA4jz3M4v0O-P&#34;</span>
+<span class="nv">AUTH_CODE</span><span class="o">=</span><span class="s2">&#34;4/OQcxiB3JZo8rTIPOmlRNo1m9q2V9CQY6Y343BFWlYLU&#34;</span>
 
-<pre><code class="language-bash">OTHER_CLIENT_ID=&quot;324403170728-gt3eoa75t6acdto8higo2opr18m8b6bd.apps.googleusercontent.com&quot;
-OTHER_CLIENT_SECRET=&quot;6wRMEKNTpHCJA4jz3M4v0O-P&quot;
-AUTH_CODE=&quot;4/OQcxiB3JZo8rTIPOmlRNo1m9q2V9CQY6Y343BFWlYLU&quot;
-
-REFRESH_TOKEN=$(
-curl --verbose \
-    --data client_id=$OTHER_CLIENT_ID \
-    --data client_secret=$OTHER_CLIENT_SECRET \
-    --data code=$AUTH_CODE \
-    --data redirect_uri=urn:ietf:wg:oauth:2.0:oob \
-    --data grant_type=authorization_code \
-    https://www.googleapis.com/oauth2/v4/token
-)
-</code></pre>
-
+<span class="nv">REFRESH_TOKEN</span><span class="o">=</span><span class="k">$(</span>
+curl --verbose <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">client_id</span><span class="o">=</span><span class="nv">$OTHER_CLIENT_ID</span> <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">client_secret</span><span class="o">=</span><span class="nv">$OTHER_CLIENT_SECRET</span> <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">code</span><span class="o">=</span><span class="nv">$AUTH_CODE</span> <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">redirect_uri</span><span class="o">=</span>urn:ietf:wg:oauth:2.0:oob <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">grant_type</span><span class="o">=</span>authorization_code <span class="se">\
+</span><span class="se"></span>    https://www.googleapis.com/oauth2/v4/token
+<span class="k">)</span></code></pre></div>
 <p>上記スクリプトを使用して <code>REFRESH_TOKEN</code> を取得します。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">REFRESH_TOKEN</span><span class="o">=</span><span class="s2">&#34;1/2NR2PjGdKnIOw5oYacdOt7EszfkgB_MEEuOMpcLzzd4TdDtqiCUH__GEMQX20nji&#34;</span>
 
-<pre><code class="language-bash">REFRESH_TOKEN=&quot;1/2NR2PjGdKnIOw5oYacdOt7EszfkgB_MEEuOMpcLzzd4TdDtqiCUH__GEMQX20nji&quot;
+<span class="nv">token</span><span class="o">=</span><span class="k">$(</span>
+curl --verbose <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">client_id</span><span class="o">=</span><span class="nv">$OTHER_CLIENT_ID</span> <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">client_secret</span><span class="o">=</span><span class="nv">$OTHER_CLIENT_SECRET</span> <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">refresh_token</span><span class="o">=</span><span class="nv">$REFRESH_TOKEN</span> <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">grant_type</span><span class="o">=</span>refresh_token <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">audience</span><span class="o">=</span><span class="nv">$IAP_CLIENT_ID</span> <span class="se">\
+</span><span class="se"></span>    https://www.googleapis.com/oauth2/v4/token <span class="p">|</span> jq -r .id_token
+<span class="k">)</span>
 
-token=$(
-curl --verbose \
-    --data client_id=$OTHER_CLIENT_ID \
-    --data client_secret=$OTHER_CLIENT_SECRET \
-    --data refresh_token=$REFRESH_TOKEN \
-    --data grant_type=refresh_token \
-    --data audience=$IAP_CLIENT_ID \
-    https://www.googleapis.com/oauth2/v4/token | jq -r .id_token
-)
-
-curl \
-    -H &quot;Authorization: Bearer $token&quot; \
-    &quot;https://myserver.tellme.tokyo&quot;
-</code></pre>
-
+curl <span class="se">\
+</span><span class="se"></span>    -H <span class="s2">&#34;Authorization: Bearer </span><span class="nv">$token</span><span class="s2">&#34;</span> <span class="se">\
+</span><span class="se"></span>    <span class="s2">&#34;https://myserver.tellme.tokyo&#34;</span></code></pre></div>
 <p>取得した <code>REFRESH_TOKEN</code> を元にトークンを生成し、Bearer につけてバックエンドサービスにリクエストします。
 これでようやく IAP で保護されたアプリケーションにリクエストすることができました。</p>
 
@@ -336,18 +328,12 @@ Go や Python、PHP といった各種言語での具体例については以下
 
 <p>こんな感じでリクエストすることができます。
 Client ID (<code>IAP_CLIENT_ID</code>) は IAP に紐付いている Credentials から、サービスアカウント (<code>GOOGLE_APPLICATION_CREDENTIALS</code>) はどの GCP プロジェクトでもいいのでメニュータブから作成した後に IAP のコンソールのアクセスリストにそのメールアドレスを追加してください。</p>
-
-<pre><code class="language-bash">IAP_CLIENT_ID=&quot;342624545358-asdfd8fas9df8sd7ga0sdguadfpvqp69.apps.googleusercontent.com&quot;
-GOOGLE_APPLICATION_CREDENTIALS=&quot;/path/to/service-account.json&quot;
-iap_curl &quot;https://myserver.your-iap-protected-app.com&quot;
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">IAP_CLIENT_ID</span><span class="o">=</span><span class="s2">&#34;342624545358-asdfd8fas9df8sd7ga0sdguadfpvqp69.apps.googleusercontent.com&#34;</span>
+<span class="nv">GOOGLE_APPLICATION_CREDENTIALS</span><span class="o">=</span><span class="s2">&#34;/path/to/service-account.json&#34;</span>
+iap_curl <span class="s2">&#34;https://myserver.your-iap-protected-app.com&#34;</span></code></pre></div>
 <p>内部で実行するコマンドは <code>curl</code> ですが、<code>httpstat</code> <sup class="footnote-ref" id="fnref:4"><a href="#fn:4">4</a></sup> を使ってベンチマークを取ることも可能です。</p>
-
-<pre><code class="language-bash">IAP_CURL_BIN=&quot;httpstat&quot;
-iap_curl &quot;https://myserver.your-iap-protected-app.com&quot;
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">IAP_CURL_BIN</span><span class="o">=</span><span class="s2">&#34;httpstat&#34;</span>
+iap_curl <span class="s2">&#34;https://myserver.your-iap-protected-app.com&#34;</span></code></pre></div>
 <h1 id="iap-の仕組み">IAP の仕組み</h1>
 
 <p>最後に IAP がどのように実装されているのか説明します。</p>

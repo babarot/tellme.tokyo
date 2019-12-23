@@ -16,6 +16,7 @@
 <title>最近の Vim のプラグイン管理について考える | tellme.tokyo</title>
 <link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
 <link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
 <link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -83,10 +84,7 @@ Vim script で拡張の機能を書いたらそのスクリプトを <a href="ht
 おそらくコレが所謂「プラグイン管理」の始まりなのですが、このときはまだ手動で行われていたようです (残念ながら、このときはまだ Vim に出会っていなかったためその肌感は分かりません&hellip;)。</p>
 
 <p>例えば、こんな機能も Vim script で書いた拡張です (autogroup などは考慮してません)。</p>
-
-<pre><code class="language-vim">autocmd BufWritePre * %s/\s\+$//e
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">autocmd</span> <span class="nx">BufWritePre</span> * %<span class="nx">s</span><span class="sr">/\s\+$/</span>/<span class="nx">e</span></code></pre></div>
 <p>Vim 7 から Vimball という機能が Vim 本体に同梱されて、それからはこれを利用するユーザもいたようです。
 vim.org からアーカイブされたスクリプトを持ってきて、<code>:so %</code> したり、気に入ったら runtimepath 以下に置いて自動読み込みしたり。
 その頃の plugins ディレクトリは混沌としていたようです。
@@ -286,9 +284,7 @@ dein.vim の README.md か bin/installer.sh で吐き出されるミニマル vi
 <li>100 回計測する (<a href="https://gist.github.com/b4b4r07/3eccb4f8dd9438c706fe7950ef2f669f">使ったスクリプト</a>)</li>
 
 <li><p>dein.vim はキャッシュを使わない (後付条件です)</p>
-
-<pre><code class="language-console">$ vim --startup-time=time.log +q
-</code></pre></li>
+<div class="highlight"><pre class="chroma"><code class="language-console" data-lang="console">$ vim --startup-time=time.log +q</code></pre></div></li>
 </ul>
 
 <p><strong>結果:</strong></p>

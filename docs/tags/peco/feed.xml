@@ -26,7 +26,7 @@ https://github.com/b4b4r07/go-finder
 go-finder というパッケージを作りました。
 使い方は次のようになります。
 finder - GoDoc
-fzf, err := finder.New(&amp;quot;fzf&amp;quot;, &amp;quot;--reverse&amp;quot;, &amp;quot;--height&amp;quot;, &amp;quot;40&amp;quot;) if err != nil { panic(err) } fzf.Run()  peco, err := finder.New(&amp;quot;peco&amp;quot;, &amp;quot;--layout=bottom-up&amp;quot;) if err !</description>
+fzf, err := finder.New(&amp;#34;fzf&amp;#34;, &amp;#34;--reverse&amp;#34;, &amp;#34;--height&amp;#34;, &amp;#34;40&amp;#34;) if err != nil { panic(err) } fzf.Run()peco, err := finder.New(&amp;#34;peco&amp;#34;, &amp;#34;--layout=bottom-up&amp;#34;) if err != nil { panic(err) } peco.</description>
     </item>
     
   </channel>

@@ -16,6 +16,7 @@
 <title>GitHub のラベルを宣言的に管理する | tellme.tokyo</title>
 <link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
 <link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
 <link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -98,158 +99,138 @@
 <p>宣言的設定の手法をラベル管理に持ち込むために、GitHub ラベルの定義とそれを作るリポジトリについて「YAML に書いたとおりになる」ツールを書いた。</p>
 
 <p>例えば次のような YAML を書く。</p>
-
-<pre><code class="language-yaml">labels:
-  - name: area/security
-    description: Indicates an issue on security area.
-    color: 1d76db
-  - name: kind/bug
-    description: Categorizes issue or PR as related to a bug.
-    color: d93f0b
-  - name: kind/cleanup
-    description: Categorizes issue or PR as related to cleaning up code, process, or technical debt.
-    color: bfd4f2
-  - name: kind/design
-    description: Categorizes issue or PR as related to design.
-    color: bfd4f2
-  - name: kind/documentation
-    description: Categorizes issue or PR as related to documentation.
-    color: bfd4f2
-
-repos:
-  - name: org/repo1
-    labels:
-      - area/security
-      - kind/api-change
-      - kind/bug
-      - kind/cleanup
-      - kind/design
-  - name: org/repo2
-    labels:
-      - kind/api-change
-      - kind/bug
-      - kind/cleanup
-      - kind/design
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">labels<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>area/security<span class="w">
+</span><span class="w">    </span>description<span class="p">:</span><span class="w"> </span>Indicates<span class="w"> </span>an<span class="w"> </span>issue<span class="w"> </span>on<span class="w"> </span>security<span class="w"> </span>area.<span class="w">
+</span><span class="w">    </span>color<span class="p">:</span><span class="w"> </span>1d76db<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>kind/bug<span class="w">
+</span><span class="w">    </span>description<span class="p">:</span><span class="w"> </span>Categorizes<span class="w"> </span>issue<span class="w"> </span>or<span class="w"> </span>PR<span class="w"> </span>as<span class="w"> </span>related<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>bug.<span class="w">
+</span><span class="w">    </span>color<span class="p">:</span><span class="w"> </span>d93f0b<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>kind/cleanup<span class="w">
+</span><span class="w">    </span>description<span class="p">:</span><span class="w"> </span>Categorizes<span class="w"> </span>issue<span class="w"> </span>or<span class="w"> </span>PR<span class="w"> </span>as<span class="w"> </span>related<span class="w"> </span>to<span class="w"> </span>cleaning<span class="w"> </span>up<span class="w"> </span>code<span class="p">,</span><span class="w"> </span>process<span class="p">,</span><span class="w"> </span>or<span class="w"> </span>technical<span class="w"> </span>debt.<span class="w">
+</span><span class="w">    </span>color<span class="p">:</span><span class="w"> </span>bfd4f2<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>kind/design<span class="w">
+</span><span class="w">    </span>description<span class="p">:</span><span class="w"> </span>Categorizes<span class="w"> </span>issue<span class="w"> </span>or<span class="w"> </span>PR<span class="w"> </span>as<span class="w"> </span>related<span class="w"> </span>to<span class="w"> </span>design.<span class="w">
+</span><span class="w">    </span>color<span class="p">:</span><span class="w"> </span>bfd4f2<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>kind/documentation<span class="w">
+</span><span class="w">    </span>description<span class="p">:</span><span class="w"> </span>Categorizes<span class="w"> </span>issue<span class="w"> </span>or<span class="w"> </span>PR<span class="w"> </span>as<span class="w"> </span>related<span class="w"> </span>to<span class="w"> </span>documentation.<span class="w">
+</span><span class="w">    </span>color<span class="p">:</span><span class="w"> </span>bfd4f2<span class="w">
+</span><span class="w">
+</span><span class="w"></span>repos<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>org/repo1<span class="w">
+</span><span class="w">    </span>labels<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>area/security<span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>kind/api-change<span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>kind/bug<span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>kind/cleanup<span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>kind/design<span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>org/repo2<span class="w">
+</span><span class="w">    </span>labels<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>kind/api-change<span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>kind/bug<span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>kind/cleanup<span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>kind/design</code></pre></div>
 <p>この YAML をもとに github-labeler を実行すると、こんな感じになる。</p>
-
-<pre><code class="language-bash">$ github-labeler
-2018/11/19 18:30:40 create &quot;area/security&quot; in org/repo1
-2018/11/19 18:30:40 create &quot;kind/api-change&quot; in org/repo1
-2018/11/19 18:30:40 create &quot;kind/bug&quot; in org/repo1
-2018/11/19 18:30:40 create &quot;kind/cleanup&quot; in org/repo1
-2018/11/19 18:30:40 create &quot;kind/design&quot; in org/repo1
-2018/11/19 18:30:41 create &quot;kind/documentation&quot; in org/repo1
-2018/11/19 18:30:42 delete &quot;bug&quot; in org/repo1
-2018/11/19 18:30:42 delete &quot;deplicate&quot; in org/repo1
-2018/11/19 18:30:42 delete &quot;enhancement&quot; in org/repo1
-2018/11/19 18:30:42 delete &quot;good first issue&quot; in org/repo1
-2018/11/19 18:30:42 delete &quot;help wanted&quot; in org/repo1
-2018/11/19 18:30:42 delete &quot;invalid&quot; in org/repo1
-2018/11/19 18:30:42 delete &quot;question&quot; in org/repo1
-2018/11/19 18:30:42 delete &quot;wontfix&quot; in org/repo1
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ github-labeler
+<span class="m">2018</span>/11/19 <span class="m">18</span>:30:40 create <span class="s2">&#34;area/security&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:30:40 create <span class="s2">&#34;kind/api-change&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:30:40 create <span class="s2">&#34;kind/bug&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:30:40 create <span class="s2">&#34;kind/cleanup&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:30:40 create <span class="s2">&#34;kind/design&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:30:41 create <span class="s2">&#34;kind/documentation&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:30:42 delete <span class="s2">&#34;bug&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:30:42 delete <span class="s2">&#34;deplicate&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:30:42 delete <span class="s2">&#34;enhancement&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:30:42 delete <span class="s2">&#34;good first issue&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:30:42 delete <span class="s2">&#34;help wanted&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:30:42 delete <span class="s2">&#34;invalid&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:30:42 delete <span class="s2">&#34;question&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:30:42 delete <span class="s2">&#34;wontfix&#34;</span> in org/repo1</code></pre></div>
 <p><img src="/images/github-label-management.png" alt="" /></p>
 
 <p>定義されたラベル (<code>.labels</code>) が各リポジトリに存在しなければ作成し (<code>.repos[].labels</code>)、ここに羅列されていないラベルがある場合は削除するようになっている。
 例えば、<code>org/repo2</code> にも <code>area/security</code> を追加したかったら、</p>
-
-<pre><code class="language-diff">  repos:
+<div class="highlight"><pre class="chroma"><code class="language-diff" data-lang="diff">  repos:
     - name: org/repo2
       labels:
-+       - area/security
-        - kind/api-change
+<span class="gi">+       - area/security
+</span><span class="gi"></span>        - kind/api-change
         - kind/bug
         - kind/cleanup
         - kind/design
-</code></pre>
-
+</code></pre></div>
 <p>として再実行すればいいし、逆に <code>kind/api-change</code> が要らなくなったら、</p>
-
-<pre><code class="language-diff">  repos:
+<div class="highlight"><pre class="chroma"><code class="language-diff" data-lang="diff">  repos:
     - name: org/repo2
       labels:
         - area/security
--       - kind/api-change
-        - kind/bug
+<span class="gd">-       - kind/api-change
+</span><span class="gd"></span>        - kind/bug
         - kind/cleanup
         - kind/design
-</code></pre>
-
+</code></pre></div>
 <p>として再実行すればよい。
 ラベルの色や説明を更新したい場合も同様である。</p>
-
-<pre><code class="language-diff">  labels:
+<div class="highlight"><pre class="chroma"><code class="language-diff" data-lang="diff">  labels:
     - name: area/security
       description: Indicates an issue on security area.
--     color: 1d76db
-+     color: 94cde8
-</code></pre>
-
+<span class="gd">-     color: 1d76db
+</span><span class="gd"></span><span class="gi">+     color: 94cde8
+</span></code></pre></div>
 <p>既存のラベル名を変更する場合は、以下のように設定すれば良い。</p>
 
 <p>(こうせずに作り直すと、GitHub 的にラベル名の変更のつながりがなくなるので、紐付いている previous label が剥がされてしまう)</p>
-
-<pre><code class="language-diff">  labels:
--   - name: area/security
-+   - name: area/new-name
-      description: Indicates an issue on security area.
+<div class="highlight"><pre class="chroma"><code class="language-diff" data-lang="diff">  labels:
+<span class="gd">-   - name: area/security
+</span><span class="gd"></span><span class="gi">+   - name: area/new-name
+</span><span class="gi"></span>      description: Indicates an issue on security area.
       color: 1d76db
-+     previous_name: area/security
-</code></pre>
-
+<span class="gi">+     previous_name: area/security
+</span></code></pre></div>
 <p>実行を終えてラベル名が <code>area/new-name</code> に変更されたら <code>previous_name:</code> は不要になるので、2回目以降の実行のときには消しても問題ない。</p>
 
 <h2 id="ci-と組み合わせる">CI と組み合わせる</h2>
 
 <p>宣言的設定のいいところの一つに設定をレビューしあうことができる点がある。
 github-labeler には dry run の機能があるので、P-R が出されたときにレビューしつつ実行計画を見ることができる。</p>
-
-<pre><code class="language-yaml">version: 2
-jobs:
-  plan:
-    steps:
-      - checkout
-      - run:
-          name: Run github-labeler (dry-run)
-          command: |
-            github-labeler -manifest labels_config.yaml -dry-run
-  apply:
-    steps:
-      - checkout
-      - run:
-          name: Run github-labeler
-          command: |
-            github-labeler -manifest labels_config.yaml
-
-workflows:
-  version: 2
-  github-labeler:
-    jobs:
-      - plan:
-          filters:
-            branches:
-              ignore: master
-      - apply:
-          filters:
-            branches:
-              only: master
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">version<span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w">
+</span><span class="w"></span>jobs<span class="p">:</span><span class="w">
+</span><span class="w">  </span>plan<span class="p">:</span><span class="w">
+</span><span class="w">    </span>steps<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>checkout<span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>run<span class="p">:</span><span class="w">
+</span><span class="w">          </span>name<span class="p">:</span><span class="w"> </span>Run<span class="w"> </span>github-labeler<span class="w"> </span>(dry-run)<span class="w">
+</span><span class="w">          </span>command<span class="p">:</span><span class="w"> </span><span class="sd">|
+</span><span class="sd">            github-labeler -manifest labels_config.yaml -dry-run</span><span class="w">
+</span><span class="w">  </span>apply<span class="p">:</span><span class="w">
+</span><span class="w">    </span>steps<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>checkout<span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>run<span class="p">:</span><span class="w">
+</span><span class="w">          </span>name<span class="p">:</span><span class="w"> </span>Run<span class="w"> </span>github-labeler<span class="w">
+</span><span class="w">          </span>command<span class="p">:</span><span class="w"> </span><span class="sd">|
+</span><span class="sd">            github-labeler -manifest labels_config.yaml</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span>workflows<span class="p">:</span><span class="w">
+</span><span class="w">  </span>version<span class="p">:</span><span class="w"> </span><span class="m">2</span><span class="w">
+</span><span class="w">  </span>github-labeler<span class="p">:</span><span class="w">
+</span><span class="w">    </span>jobs<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>plan<span class="p">:</span><span class="w">
+</span><span class="w">          </span>filters<span class="p">:</span><span class="w">
+</span><span class="w">            </span>branches<span class="p">:</span><span class="w">
+</span><span class="w">              </span>ignore<span class="p">:</span><span class="w"> </span>master<span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>apply<span class="p">:</span><span class="w">
+</span><span class="w">          </span>filters<span class="p">:</span><span class="w">
+</span><span class="w">            </span>branches<span class="p">:</span><span class="w">
+</span><span class="w">              </span>only<span class="p">:</span><span class="w"> </span>master</code></pre></div>
 <p>上のような CI 設定 (Circle CI) を書くことで、より Infra as Code をプラクティスを持ち込むことができる。</p>
-
-<pre><code class="language-bash">$ github-labeler -manifest labels_config.yaml -dry-run
-2018/11/19 18:45:42 create &quot;lifecycle/stale&quot; in org/repo1
-2018/11/19 18:45:42 create &quot;lifecycle/rotten&quot; in org/repo1
-2018/11/19 18:45:43 edit &quot;kind/api-change&quot; in org/repo1
-2018/11/19 18:45:43 edit &quot;kind/bug&quot; in org/repo1
-2018/11/19 18:45:44 edit &quot;kind/cleanup&quot; in org/repo1
-2018/11/19 18:45:44 edit &quot;kind/design&quot; in org/repo1
-2018/11/19 18:45:51 delete &quot;kind/documentation&quot; in org/repo1
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ github-labeler -manifest labels_config.yaml -dry-run
+<span class="m">2018</span>/11/19 <span class="m">18</span>:45:42 create <span class="s2">&#34;lifecycle/stale&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:45:42 create <span class="s2">&#34;lifecycle/rotten&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:45:43 edit <span class="s2">&#34;kind/api-change&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:45:43 edit <span class="s2">&#34;kind/bug&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:45:44 edit <span class="s2">&#34;kind/cleanup&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:45:44 edit <span class="s2">&#34;kind/design&#34;</span> in org/repo1
+<span class="m">2018</span>/11/19 <span class="m">18</span>:45:51 delete <span class="s2">&#34;kind/documentation&#34;</span> in org/repo1</code></pre></div>
 <h2 id="まとめ">まとめ</h2>
 
 <p>宣言的設定をソフトウェア以外にも応用すると、レビューができるようになったり設定の状態をコードでみることができるので、とても便利になる。

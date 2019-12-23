@@ -16,6 +16,7 @@
 <title>hashicorp/hcl2 を使って独自 DSL を定義する | tellme.tokyo</title>
 <link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
 <link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
 <link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -125,70 +126,56 @@ HCL はその特性上ファイル分割されていても一つにマージし�
 
 <p>ここからが hcl2 の面白い部分の一つです。中間表現をもつことで、デコード前にいろいろな処理を挟むことができるようになっています。
 そのひとつに <a href="https://godoc.org/github.com/hashicorp/hcl2/hcl#EvalContext">hcl.EvalContext</a> があります。</p>
-
-<pre><code class="language-go">type EvalContext struct {
-	Variables map[string]cty.Value
-	Functions map[string]function.Function
-	parent    *EvalContext
-}
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">EvalContext</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">Variables</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">cty</span><span class="p">.</span><span class="nx">Value</span>
+	<span class="nx">Functions</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">function</span><span class="p">.</span><span class="nx">Function</span>
+	<span class="nx">parent</span>    <span class="o">*</span><span class="nx">EvalContext</span>
+<span class="p">}</span></code></pre></div>
 <p>hcl.EvalContext は変数マップと関数マップを定義した構造体になっていて、<code>gohcl.DecodeBody()</code> にわたすことができます。
 これによって任意の文字列をデコードのときにスキーマ側で定義済みの変数、もしくは関数として展開することができます。
 つまり以下のようなコンテキスト情報をもとに、デコードのときに文字列 (&ldquo;upper&rdquo; など) を置換して map の value として評価することができます。</p>
-
-<pre><code class="language-go">ctx := &amp;hcl.EvalContext{
-	Variables: map[string]cty.Value{
-		&quot;name&quot;: cty.StringVal(&quot;Ermintrude&quot;),
-	},
-	Functions: map[string]function.Function{
-		&quot;upper&quot;:  stdlib.UpperFunc,
-		&quot;lower&quot;:  stdlib.LowerFunc,
-		&quot;min&quot;:    stdlib.MinFunc,
-		&quot;max&quot;:    stdlib.MaxFunc,
-		&quot;strlen&quot;: stdlib.StrlenFunc,
-		&quot;substr&quot;: stdlib.SubstrFunc,
-	},
-}
-</code></pre>
-
-<pre><code class="language-hcl">message = &quot;HELLO, ${upper(name)}!&quot;
-# ==&gt; &quot;HELLO, ERMINTRUDE!&quot;
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">ctx</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">hcl</span><span class="p">.</span><span class="nx">EvalContext</span><span class="p">{</span>
+	<span class="nx">Variables</span><span class="p">:</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">cty</span><span class="p">.</span><span class="nx">Value</span><span class="p">{</span>
+		<span class="s">&#34;name&#34;</span><span class="p">:</span> <span class="nx">cty</span><span class="p">.</span><span class="nf">StringVal</span><span class="p">(</span><span class="s">&#34;Ermintrude&#34;</span><span class="p">),</span>
+	<span class="p">},</span>
+	<span class="nx">Functions</span><span class="p">:</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">function</span><span class="p">.</span><span class="nx">Function</span><span class="p">{</span>
+		<span class="s">&#34;upper&#34;</span><span class="p">:</span>  <span class="nx">stdlib</span><span class="p">.</span><span class="nx">UpperFunc</span><span class="p">,</span>
+		<span class="s">&#34;lower&#34;</span><span class="p">:</span>  <span class="nx">stdlib</span><span class="p">.</span><span class="nx">LowerFunc</span><span class="p">,</span>
+		<span class="s">&#34;min&#34;</span><span class="p">:</span>    <span class="nx">stdlib</span><span class="p">.</span><span class="nx">MinFunc</span><span class="p">,</span>
+		<span class="s">&#34;max&#34;</span><span class="p">:</span>    <span class="nx">stdlib</span><span class="p">.</span><span class="nx">MaxFunc</span><span class="p">,</span>
+		<span class="s">&#34;strlen&#34;</span><span class="p">:</span> <span class="nx">stdlib</span><span class="p">.</span><span class="nx">StrlenFunc</span><span class="p">,</span>
+		<span class="s">&#34;substr&#34;</span><span class="p">:</span> <span class="nx">stdlib</span><span class="p">.</span><span class="nx">SubstrFunc</span><span class="p">,</span>
+	<span class="p">},</span>
+<span class="p">}</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="n">message</span> <span class="o">=</span> <span class="s2">&#34;HELLO, ${upper(name)}!&#34;</span>
+<span class="n">#</span> <span class="o">==</span><span class="err">&gt;</span> <span class="s2">&#34;HELLO, ERMINTRUDE!&#34;</span></code></pre></div>
 <p>Terraform ユーザは分かると思いますが、Terraform の tf ファイルでさまざまな組み込み関数がサポートされているのもこの機能によって実現されています。</p>
 
 <ul>
 <li><a href="https://www.terraform.io/docs/configuration/interpolation.html">Interpolation Syntax</a></li>
 
 <li><p><a href="https://github.com/hashicorp/terraform/blob/master/lang/functions.go">lang/functions.go - hashicorp/terraform</a></p>
-
-<pre><code class="language-hcl">resource &quot;aws_instance&quot; &quot;app&quot; {
-count = &quot;3&quot;
-private_ip = &quot;${lookup(var.instance_ips, count.index)}&quot;
-# ...
-}
-</code></pre></li>
+<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;aws_instance&#34; &#34;app&#34;</span> {
+<span class="n">count</span> <span class="o">=</span> <span class="s2">&#34;3&#34;</span>
+<span class="n">private_ip</span> <span class="o">=</span> <span class="s2">&#34;${lookup(var.instance_ips, count.index)}&#34;</span><span class="c1">
+</span><span class="c1"># ...
+</span><span class="c1"></span>}</code></pre></div></li>
 </ul>
 
 <p>Terraform では <a href="https://www.terraform.io/docs/configuration/interpolation.html#lookup-map-key-default-">lookup</a> などが Terraform が提供する組み込み関数として定義されており、デコードする前に、つまりスキーマに対応する構造体などに変換される前にこれらがコンテキストとして渡されて評価されるため、実際には以下のような Go 関数が実行されるので、lookup があたかも関数であるかのように HCL ファイル内で作用させることができます。</p>
-
-<pre><code class="language-go">var LookupFunc = function.New(&amp;function.Spec{
-	Params: []function.Parameter{
-		...
-	},
-	VarParam: &amp;function.Parameter{
-		...
-	},
-	Type: func(args []cty.Value) (ret cty.Type, err error) {
-		...
-	},
-	Impl: func(args []cty.Value, retType cty.Type) (ret cty.Value, err error) {
-		...
-	},
-})
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">LookupFunc</span> <span class="p">=</span> <span class="nx">function</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">function</span><span class="p">.</span><span class="nx">Spec</span><span class="p">{</span>
+	<span class="nx">Params</span><span class="p">:</span> <span class="p">[]</span><span class="nx">function</span><span class="p">.</span><span class="nx">Parameter</span><span class="p">{</span>
+		<span class="o">...</span>
+	<span class="p">},</span>
+	<span class="nx">VarParam</span><span class="p">:</span> <span class="o">&amp;</span><span class="nx">function</span><span class="p">.</span><span class="nx">Parameter</span><span class="p">{</span>
+		<span class="o">...</span>
+	<span class="p">},</span>
+	<span class="nx">Type</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">args</span> <span class="p">[]</span><span class="nx">cty</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span> <span class="p">(</span><span class="nx">ret</span> <span class="nx">cty</span><span class="p">.</span><span class="nx">Type</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+		<span class="o">...</span>
+	<span class="p">},</span>
+	<span class="nx">Impl</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">args</span> <span class="p">[]</span><span class="nx">cty</span><span class="p">.</span><span class="nx">Value</span><span class="p">,</span> <span class="nx">retType</span> <span class="nx">cty</span><span class="p">.</span><span class="nx">Type</span><span class="p">)</span> <span class="p">(</span><span class="nx">ret</span> <span class="nx">cty</span><span class="p">.</span><span class="nx">Value</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+		<span class="o">...</span>
+	<span class="p">},</span>
+<span class="p">})</span></code></pre></div>
 <p>これ以外にも面白い機能がたくさんあります。</p>
 
 <p><a href="https://github.com/hashicorp/hcl2/tree/master/guide">hcl2/guide at master · hashicorp/hcl2</a></p>
@@ -206,21 +193,18 @@ private_ip = &quot;${lookup(var.instance_ips, count.index)}&quot;
 
 <p>例えば、rule というスキーマを定義したとします。
 あとはそのスキーマを含めて提供する DSL の中で必要な関数や変数をデザインしてコンテキストとして織り込むだけで、拡張可能な設定ファイルを作り上げることができます。</p>
+<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">rule</span> <span class="s2">&#34;replicas&#34;</span> {
+<span class="n">  description</span> <span class="o">=</span> <span class="s2">&#34;Check the number of replicas is sufficient&#34;</span>
 
-<pre><code class="language-hcl">rule &quot;replicas&quot; {
-  description = &quot;Check the number of replicas is sufficient&quot;
+<span class="n">  conditions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&#34;${jsonpath(&#34;.spec.replicas&#34;) &gt; 3}&#34;</span><span class="p">,</span>
+  <span class="p">]</span>
 
-  conditions = [
-    &quot;${jsonpath(&quot;.spec.replicas&quot;) &gt; 3}&quot;,
-  ]
-
-  report {
-    level   = &quot;ERROR&quot;
-    message = &quot;Too few replicas&quot;
+  <span class="k">report</span> {
+<span class="n">    level</span>   <span class="o">=</span> <span class="s2">&#34;ERROR&#34;</span>
+<span class="n">    message</span> <span class="o">=</span> <span class="s2">&#34;Too few replicas&#34;</span>
   }
-}
-</code></pre>
-
+}</code></pre></div>
 <p>上の例では、jsonpath を取得する関数を定義しています。</p>
 
 <p>ここからは実際の例を見ていきます。
@@ -244,55 +228,46 @@ graph TB;
 このレイヤーでは &ldquo;DSL レベル&rdquo; でのバリデーションを設けることができます。
 例えば、「config ブロックは label (ブロック横の名付け) を取らない」や「rule ブロック内の report ブロックの level 属性は必須項目である」など。
 これに違反した場合、hcl.Diagnostic としてレポートすることができます。</p>
-
-<pre><code class="language-go">var policySchema = &amp;hcl.BodySchema{
-	Blocks: []hcl.BlockHeaderSchema{
-		{
-			Type:       &quot;rule&quot;,
-			LabelNames: []string{&quot;name&quot;},
-		},
-		{
-			Type: &quot;config&quot;,
-		},
-		{
-			Type:       &quot;function&quot;,
-			LabelNames: []string{&quot;name&quot;},
-		},
-		{
-			Type:       &quot;variable&quot;,
-			LabelNames: []string{&quot;name&quot;},
-		},
-	},
-}
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">policySchema</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">hcl</span><span class="p">.</span><span class="nx">BodySchema</span><span class="p">{</span>
+	<span class="nx">Blocks</span><span class="p">:</span> <span class="p">[]</span><span class="nx">hcl</span><span class="p">.</span><span class="nx">BlockHeaderSchema</span><span class="p">{</span>
+		<span class="p">{</span>
+			<span class="nx">Type</span><span class="p">:</span>       <span class="s">&#34;rule&#34;</span><span class="p">,</span>
+			<span class="nx">LabelNames</span><span class="p">:</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;name&#34;</span><span class="p">},</span>
+		<span class="p">},</span>
+		<span class="p">{</span>
+			<span class="nx">Type</span><span class="p">:</span> <span class="s">&#34;config&#34;</span><span class="p">,</span>
+		<span class="p">},</span>
+		<span class="p">{</span>
+			<span class="nx">Type</span><span class="p">:</span>       <span class="s">&#34;function&#34;</span><span class="p">,</span>
+			<span class="nx">LabelNames</span><span class="p">:</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;name&#34;</span><span class="p">},</span>
+		<span class="p">},</span>
+		<span class="p">{</span>
+			<span class="nx">Type</span><span class="p">:</span>       <span class="s">&#34;variable&#34;</span><span class="p">,</span>
+			<span class="nx">LabelNames</span><span class="p">:</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;name&#34;</span><span class="p">},</span>
+		<span class="p">},</span>
+	<span class="p">},</span>
+<span class="p">}</span></code></pre></div>
 <p>次に、<code>gohcl.DecodeBody()</code> の部分です。</p>
 
 <p>スキーマをもとに <code>hclparse.ParseHCL()</code> によってパースされた HCL は *hcl.File になります。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// https://github.com/b4b4r07/stein/blob/fc9549f9db0f982f2756ef97a643ca9394de337e/lint/lint.go#L112-L117
+</span><span class="c1"></span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">diags</span> <span class="o">:=</span> <span class="nx">l</span><span class="p">.</span><span class="nx">policy</span><span class="p">.</span><span class="nf">BuildContext</span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span> <span class="nx">file</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span> <span class="nx">file</span><span class="p">.</span><span class="nx">Data</span><span class="p">)</span>
+<span class="k">if</span> <span class="nx">diags</span><span class="p">.</span><span class="nf">HasErrors</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nx">policy</span><span class="p">,</span> <span class="nx">diags</span>
+<span class="p">}</span>
 
-<pre><code class="language-go">// https://github.com/b4b4r07/stein/blob/fc9549f9db0f982f2756ef97a643ca9394de337e/lint/lint.go#L112-L117
-ctx, diags := l.policy.BuildContext(l.body, file.Path, file.Data)
-if diags.HasErrors() {
-	return policy, diags
-}
-
-decodeDiags := gohcl.DecodeBody(l.body, ctx, &amp;policy)
-</code></pre>
-
+<span class="nx">decodeDiags</span> <span class="o">:=</span> <span class="nx">gohcl</span><span class="p">.</span><span class="nf">DecodeBody</span><span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">body</span><span class="p">,</span> <span class="nx">ctx</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">policy</span><span class="p">)</span></code></pre></div>
 <p>*hcl.File は hcl.EvalContext とともに <code>gohcl.DecodeBody()</code> によって Policy (<code>&amp;policy</code>) 構造体にデコードされます。</p>
 
 <p>ここのレイヤーでもバリデーションが実施されます。
 他のパーサでいう Marshal/Unmarshal に相当する部分です。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// https://github.com/b4b4r07/stein/blob/fc9549f9db0f982f2756ef97a643ca9394de337e/lint/policy.go#L10-L18
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Policy</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">Config</span>  <span class="o">*</span><span class="nx">Config</span>  <span class="s">`hcl:&#34;config,block&#34;`</span>
+	<span class="nx">Rules</span>   <span class="nx">Rules</span>    <span class="s">`hcl:&#34;rule,block&#34;`</span>
 
-<pre><code class="language-go">// https://github.com/b4b4r07/stein/blob/fc9549f9db0f982f2756ef97a643ca9394de337e/lint/policy.go#L10-L18
-type Policy struct {
-	Config  *Config  `hcl:&quot;config,block&quot;`
-	Rules   Rules    `hcl:&quot;rule,block&quot;`
-
-	Remain hcl.Body `hcl:&quot;,remain&quot;`
-}
-</code></pre>
-
+	<span class="nx">Remain</span> <span class="nx">hcl</span><span class="p">.</span><span class="nx">Body</span> <span class="s">`hcl:&#34;,remain&#34;`</span>
+<span class="p">}</span></code></pre></div>
 <p>この Policy 構造体が実際に Go プログラム内で扱うものになります。JSON/YAML などで使う struct tag でバインドの設定をしていきます。</p>
 
 <p>ちなみに、optional の tag もありますが、block と併用する場合ポインタにして nil として扱う必要があります。</p>
@@ -303,8 +278,7 @@ type Policy struct {
 </ul>
 
 <p>これらの流れを踏まえて stein では、</p>
-
-<pre><code class="language-console">$ tree -d ./lint
+<div class="highlight"><pre class="chroma"><code class="language-console" data-lang="console">$ tree -d ./lint
 lint/
 ├── args.go
 ├── lint.go                  &lt;---- (2) gohcl.DecodeBody() の実行
@@ -318,9 +292,7 @@ lint/
           ├── context.go
           ├── policy.go      &lt;---- * スキーマの定義
           ├── rule.go
-          └── variable.go
-</code></pre>
-
+          └── variable.go</code></pre></div>
 <p>という形でパッケージングしています。</p>
 
 <h2 id="まとめ">まとめ</h2>

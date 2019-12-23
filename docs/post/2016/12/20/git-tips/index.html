@@ -16,6 +16,7 @@
 <title>かゆいところに手が届く系の Git Tips 話 | tellme.tokyo</title>
 <link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
 <link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
 <link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -112,61 +113,55 @@
 
 <pre><code>$ git url-ssh
 </code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh"><span class="cp">#!/bin/bash
+</span><span class="cp"></span>
+<span class="nv">url</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>git remote -v <span class="p">|</span> awk <span class="s1">&#39;$1==&#34;origin&#34;{print $2;exit}&#39;</span><span class="k">)</span><span class="s2">&#34;</span>
 
-<pre><code class="language-sh">#!/bin/bash
+<span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$url</span><span class="s2">&#34;</span> <span class="o">=</span>~ ^https?:// <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="c1"># reconstruct url</span>
+    <span class="nv">url</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$url</span><span class="s2">&#34;</span> <span class="p">|</span> <span class="se">\
+</span><span class="se"></span>        perl -pe <span class="s1">&#39;s#^https?://(github\.com)/([A-z0-9._-]+)/([A-z0-9._-]+)(\.git)?$#git\@$1:$2/$3#&#39;</span>
+    <span class="k">)</span><span class="s2">&#34;</span>
 
-url=&quot;$(git remote -v | awk '$1==&quot;origin&quot;{print $2;exit}')&quot;
+    <span class="c1"># to replace git protocol in remote URL with http protocol</span>
+    git remote set-url origin <span class="s2">&#34;</span><span class="si">${</span><span class="nv">url</span><span class="si">}</span><span class="s2">.git&#34;</span> <span class="m">2</span>&gt;/dev/null
+    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> !<span class="o">=</span> <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> <span class="s2">&#34;Failed to change remote URL&#34;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
+        <span class="nb">exit</span> <span class="m">1</span>
+    <span class="k">fi</span>
 
-if [[ &quot;$url&quot; =~ ^https?:// ]]; then
-    # reconstruct url
-    url=&quot;$(echo &quot;$url&quot; | \
-        perl -pe 's#^https?://(github\.com)/([A-z0-9._-]+)/([A-z0-9._-]+)(\.git)?$#git\@$1:$2/$3#'
-    )&quot;
-
-    # to replace git protocol in remote URL with http protocol
-    git remote set-url origin &quot;${url}.git&quot; 2&gt;/dev/null
-    if [[ $? != 0 ]]; then
-        echo &quot;Failed to change remote URL&quot; &gt;&amp;2
-        exit 1
-    fi
-
-    # Show a remote URL
-    echo &quot;Changed!&quot;
+    <span class="c1"># Show a remote URL</span>
+    <span class="nb">echo</span> <span class="s2">&#34;Changed!&#34;</span>
     git remote -v
-else
-    echo &quot;Do nothing&quot;
+<span class="k">else</span>
+    <span class="nb">echo</span> <span class="s2">&#34;Do nothing&#34;</span>
     git remote -v
-fi
-</code></pre>
-
+<span class="k">fi</span></code></pre></div>
 <p>[f:id:b4b4r07:20161220023143p:plain:w600]</p>
 
 <h1 id="git-status-を簡単にする">git status を簡単にする</h1>
 
 <p>僕は常にワークスペースの状態を確認しておきたい派です。エイリアスをしたりして打つ文字数を減らすなどは良い案ではありますが、最速は空エンターです。zsh ユーザなら簡単にセットアップできるのでおすすめです。</p>
-
-<pre><code class="language-sh">do_enter() {
-    if [[ -n $BUFFER ]]; then
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">do_enter<span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">[[</span> -n <span class="nv">$BUFFER</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
         zle accept-line
-        return $status
-    fi
+        <span class="k">return</span> <span class="nv">$status</span>
+    <span class="k">fi</span>
 
-    echo
-    if [[ -d .git ]]; then
-        if [[ -n &quot;$(git status --short)&quot; ]]; then
+    <span class="nb">echo</span>
+    <span class="k">if</span> <span class="o">[[</span> -d .git <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="k">if</span> <span class="o">[[</span> -n <span class="s2">&#34;</span><span class="k">$(</span>git status --short<span class="k">)</span><span class="s2">&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
             git status
-        fi
-    else
-        # do nothing
+        <span class="k">fi</span>
+    <span class="k">else</span>
+        <span class="c1"># do nothing</span>
         :
-    fi
+    <span class="k">fi</span>
 
     zle reset-prompt
-}
+<span class="o">}</span>
 zle -N do_enter
-bindkey '^m' do_enter
-</code></pre>
-
+bindkey <span class="s1">&#39;^m&#39;</span> do_enter</code></pre></div>
 <p>これもよくある Tips な気がするのですが (空エンターで <code>ls</code> など) ぶっちゃけ「画面数行確保したい」と思って空エンターすることが多い気がします。そうなるといつでもどこでも <code>ls</code> やら <code>git status</code> が発動してほしくないわけで、なので僕の場合、git リポジトリでなおかつワーキングスペースに何らかの変更が加えられているときのみ <code>git status</code> するようにしています。もちろん、ラインバッファに文字があるときはそれが <code>accept-line</code> されます。</p>
 
 <p><img src="https://cl.ly/1E0F0S0w3I2S/git_st.gif" alt="" /></p>
@@ -174,13 +169,10 @@ bindkey '^m' do_enter
 <h1 id="スペルチェックしてから-push-する">スペルチェックしてから push する</h1>
 
 <p>タイポが蔓延するのを未然に防ぎます。プルリク用のブランチの CI で落としてもいいのですが、リモートにコミット積む前に防ぎたかった (rebase し直すのも面倒ですよね) のと、ローカルだと <code>--amend</code> し直せるので pre-push の hook を使います。git では <code>.git/hooks/</code> ディレクトリ配下に様々な hook scripts がサンプルとして配置されているので、<code>.sample</code> をリネームして書いていきます。終了ステータス (<code>$?</code>) が非ゼロで終われば hook 失敗となりそのタスクは実行されません (pre-push hook であれば push が実行されません)。</p>
-
-<pre><code class="language-sh">#!/bin/bash
-
-find . -type f | xargs misspell -locale US -error
-exit $?
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh"><span class="cp">#!/bin/bash
+</span><span class="cp"></span>
+find . -type f <span class="p">|</span> xargs misspell -locale US -error
+<span class="nb">exit</span> <span class="nv">$?</span></code></pre></div>
 <p>今回、スペルチェッカーには <a href="https://github.com/client9/misspell">misspell</a> を使いました。<code>-error</code> オプションを渡せば、タイポを見つけたときに非ゼロで終了してくれるので今回の要件にマッチしていたので使いました。気に入ったスペルチェッカーがあればそれを使って非ゼロで終わるようにすれば misspell にかぎらず使用できます。</p>
 
 <p>[<a href="https://github.com/client9/misspell:title">https://github.com/client9/misspell:title</a>]</p>

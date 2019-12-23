@@ -71,10 +71,10 @@ Software Design 2019年9月号｜技術評論社 https://t.co/kP4N2SdxEG
       <description>公開鍵認証はとても便利ですが、他のマシンに移ったり Vagrant などで仮想開発環境をつくったときなど GitHub に公開鍵をアップロードするの面倒ではないですか？
 ssh-keygen で作成された 公開鍵.pub の中身をコピーしてブラウザに貼り付けて ssh -T git@github.com できるかチェック．．．
 面倒なので簡略化したプラグインをつくりました。利用者が打ち込むコマンドは以下のみです。
-$ # (antigen bundle b4b4r07/ssh-keyreg) $ ssh-keygen $ ssh-keyreg  はやい！！！
+$ # (antigen bundle b4b4r07/ssh-keyreg) $ ssh-keygen $ ssh-keyreg はやい！！！
 
  b4b4r07/ssh-keyreg - GitHub  上では、antigen でインストールすると書いていますが、このプラグインは bash でも動きます（補完は zsh のみです。ごめんなさい）。
-インストール $ # for zsh $ antigen bundle b4b4r07/ssh-keyreg $ # for bash $ sudo sh -c &amp;quot;curl https://raw.githubusercontent.com/b4b4r07/ssh-keyreg/master/bin/ssh-keyreg -o /usr/local/bin/ssh-keyreg &amp;amp;&amp;amp; chmod +x /usr/local/bin/ssh-keyreg&amp;quot;  使い方 $ ssh-keyreg usage: ssh-keyreg [-h|--help][[-d|--desc &amp;lt;desc&amp;gt;][-u|--user &amp;lt;user[:pass]&amp;gt;][-p|--path &amp;lt;path&amp;gt;]] [github|bitbucket] command line method or programmatically add ssh key to github.</description>
+インストール $ # for zsh $ antigen bundle b4b4r07/ssh-keyreg $ # for bash $ sudo sh -c &amp;#34;curl https://raw.githubusercontent.com/b4b4r07/ssh-keyreg/master/bin/ssh-keyreg -o /usr/local/bin/ssh-keyreg &amp;amp;&amp;amp; chmod +x /usr/local/bin/ssh-keyreg&amp;#34; 使い方 $ ssh-keyreg usage: ssh-keyreg [-h|--help][[-d|--desc &amp;lt;desc&amp;gt;][-u|--user &amp;lt;user[:pass]&amp;gt;][-p|--path &amp;lt;path&amp;gt;]] [github|bitbucket] command line method or programmatically add ssh key to github.</description>
     </item>
     
     <item>
@@ -88,8 +88,8 @@ $ # (antigen bundle b4b4r07/ssh-keyreg) $ ssh-keygen $ ssh-keyreg  はやい！�
  Jxck/dotfiles - GitHub  このまま参考にさせてもらおう、と思ったのですがすべて登録するのもな、と思いコマンドで用意しました1。
 
  b4b4r07/http_code - GitHub  antigen で簡単にインストールできます。
-$ antigen bundle b4b4r07/http_code  antigen でない場合は、
-sudo sh -c &amp;quot;curl https://raw.githubusercontent.com/b4b4r07/http_code/master/bin/http_code -o /usr/local/bin/http_code &amp;amp;&amp;amp; chmod +x /usr/local/bin/http_code&amp;quot;  しかし、antigen でインストールしたほうが、補完ファイルなども使用できるようになります。
+$ antigen bundle b4b4r07/http_code antigen でない場合は、
+sudo sh -c &amp;#34;curl https://raw.githubusercontent.com/b4b4r07/http_code/master/bin/http_code -o /usr/local/bin/http_code &amp;amp;&amp;amp; chmod +x /usr/local/bin/http_code&amp;#34; しかし、antigen でインストールしたほうが、補完ファイルなども使用できるようになります。
 使い方は gif アニメにもある通り、-a/--all オプションをつけると一覧表示、引数に数字を渡すとそれに対する説明を返します。
  番号が変わるものでもないので一度登録して変更することになる心配がないためエイリアスもいいと思います [return]   </description>
     </item>
@@ -101,7 +101,7 @@ sudo sh -c &amp;quot;curl https://raw.githubusercontent.com/b4b4r07/http_code/ma
       
       <guid>https://tellme.tokyo/post/2015/01/18/curl-sh-install/</guid>
       <description>dotfiles をインストールする際に、
-$ curl -L https://raw.githubusercontent.com/{YOUR_ACCOUNT}/dotfiles/master/install.sh | bash  といった具合にウェブを介してスクリプトを実行することが一般的になりつつあると思いますが、この方法にはひとつ問題がありそれは URL 部分が長いということです。これは結構厄介で長すぎるがゆえに暗記できないので、いちいちブラウザを起動してコピペしないといけなかったり、そもそもブラウザなどないようなどこかのサーバにデプロイするときなど、暗記していたほうがいい場面が結構あります。
+$ curl -L https://raw.githubusercontent.com/{YOUR_ACCOUNT}/dotfiles/master/install.sh | bash といった具合にウェブを介してスクリプトを実行することが一般的になりつつあると思いますが、この方法にはひとつ問題がありそれは URL 部分が長いということです。これは結構厄介で長すぎるがゆえに暗記できないので、いちいちブラウザを起動してコピペしないといけなかったり、そもそもブラウザなどないようなどこかのサーバにデプロイするときなど、暗記していたほうがいい場面が結構あります。
  curl -sL dot.hoge.com | sh で自分専用環境を構築する方法（かっこいい）
  そんなとき、このエントリを発見しました。 独自ドメインを取得して、そのサブドメインに自分で立ち上げた Nginx で dotfiles リポジトリへリダイレクトしてやるようにする方法です。こうすることで、github の URL 部分を自分のドメインを使った好きな URL にすることができるようになります。
 しかし、この方法はサーバと独自ドメインの2つを用意しなければなりません。エンジニアたるものサーバやドメインは持っていたほうがいいのかもしれませんが、持っていなかった場合 dotfiles の URL 短縮のためだけに維持費に数千円／年を支払うのはもったいないですよね。

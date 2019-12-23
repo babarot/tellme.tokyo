@@ -16,6 +16,7 @@
 <title>特定のワードで Twitter を監視して、検知したら Slack に投げる | tellme.tokyo</title>
 <link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
 <link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
 <link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -121,12 +122,9 @@ Slack への GitHub の通知は、Slack のインテグレーション機能 (i
 
 <p>インストールはひとまず <code>git clone</code> して <code>make install</code> です。
 詳しい利用は <a href="https://github.com/b4b4r07/twistd/blob/master/Makefile"><code>Makefile</code></a> を見てください。</p>
-
-<pre><code class="language-sh">$ git clone https://github.com/b4b4r07/twistd; cd twistd
-$ $EDITOR config.toml    # トークンとか書く
-$ sudo make install      # ビルドして /etc 以下に config 置く
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">$ git clone https://github.com/b4b4r07/twistd<span class="p">;</span> <span class="nb">cd</span> twistd
+$ <span class="nv">$EDITOR</span> config.toml    <span class="c1"># トークンとか書く</span>
+$ sudo make install      <span class="c1"># ビルドして /etc 以下に config 置く</span></code></pre></div>
 <p><code>twist -c config.toml</code> で起動できます (config を指定しないと <code>/etc/twistd.conf</code> を読みに行きます)。
 コマンド名は <code>twist</code> です。
 末尾に <code>d</code> つかないです。</p>

@@ -54,7 +54,7 @@ Software Design 2019年9月号｜技術評論社 https://t.co/kP4N2SdxEG
 これが参考になった。
 ただ、このケースで上げているのは interface がどの struct で評価されればいいかわかっているケースだった。 例えば、これをキーに持つ JSON だった場合は struct A で、このキーがなかったら struct B で、みたいなケースは自分で JSON の中を読みにいって判別して Unmarshal する他ない。
 具体例を示す。
-type State struct { Modules []Module `json:&amp;quot;modules&amp;quot;` } type Module struct { Name string `json:&amp;quot;name&amp;quot;` Resources []Resource `json:&amp;quot;resources&amp;quot;` } // ちなみにメソッドを持っていない場合は // interface{} として Unmarshal されるのでエラーにならない type Resource interface { Get() // ... } type AWSModule struct { Name string `json:&amp;quot;name&amp;quot;` } func (m AWSModule) Get() {} type GCPModule struct { Name string `json:&amp;quot;name&amp;quot;` Project string `json:&amp;quot;project&amp;quot;` } func (m GCPModule) Get() {}  こういう状況だと上のブログにもある通り、</description>
+type State struct { Modules []Module `json:&amp;#34;modules&amp;#34;` } type Module struct { Name string `json:&amp;#34;name&amp;#34;` Resources []Resource `json:&amp;#34;resources&amp;#34;` } // ちなみにメソッドを持っていない場合は // interface{} として Unmarshal されるのでエラーにならない type Resource interface { Get() // ... } type AWSModule struct { Name string `json:&amp;#34;name&amp;#34;` } func (m AWSModule) Get() {} type GCPModule struct { Name string `json:&amp;#34;name&amp;#34;` Project string `json:&amp;#34;project&amp;#34;` } func (m GCPModule) Get() {} こういう状況だと上のブログにもある通り、</description>
     </item>
     
     <item>
@@ -117,7 +117,8 @@ GitHub のラベルは Issues/P-Rs を管理するために便利な機能であ
 github-labeler の紹介 https://github.com/b4b4r07/github-labeler
 宣言的設定の手法をラベル管理に持ち込むために、GitHub ラベルの定義とそれを作るリポジトリについて「YAML に書いたとおりになる」ツールを書いた。
 例えば次のような YAML を書く。
-labels: - name: area/security description: Indicates an issue on security area.</description>
+labels:-name:area/securitydescription:Indicatesanissueonsecurityarea.color:1d76db-name:kind/bugdescription:CategorizesissueorPRasrelatedtoabug.color:d93f0b-name:kind/cleanupdescription:CategorizesissueorPRasrelatedtocleaningupcode,process,ortechnicaldebt.color:bfd4f2-name:kind/designdescription:CategorizesissueorPRasrelatedtodesign.color:bfd4f2-name:kind/documentationdescription:CategorizesissueorPRasrelatedtodocumentation.color:bfd4f2repos:-name:org/repo1labels:-area/security-kind/api-change-kind/bug-kind/cleanup-kind/design-name:org/repo2labels:-kind/api-change-kind/bug-kind/cleanup-kind/design この YAML をもとに github-labeler を実行すると、こんな感じになる。
+$ github-labeler 2018/11/19 18:30:40 create &amp;#34;area/security&amp;#34; in org/repo1 2018/11/19 18:30:40 create &amp;#34;kind/api-change&amp;#34; in org/repo1 2018/11/19 18:30:40 create &amp;#34;kind/bug&amp;#34; in org/repo1 2018/11/19 18:30:40 create &amp;#34;kind/cleanup&amp;#34; in org/repo1 2018/11/19 18:30:40 create &amp;#34;kind/design&amp;#34; in org/repo1 2018/11/19 18:30:41 create &amp;#34;kind/documentation&amp;#34; in org/repo1 2018/11/19 18:30:42 delete &amp;#34;bug&amp;#34; in org/repo1 2018/11/19 18:30:42 delete &amp;#34;deplicate&amp;#34; in org/repo1 2018/11/19 18:30:42 delete &amp;#34;enhancement&amp;#34; in org/repo1 2018/11/19 18:30:42 delete &amp;#34;good first issue&amp;#34; in org/repo1 2018/11/19 18:30:42 delete &amp;#34;help wanted&amp;#34; in org/repo1 2018/11/19 18:30:42 delete &amp;#34;invalid&amp;#34; in org/repo1 2018/11/19 18:30:42 delete &amp;#34;question&amp;#34; in org/repo1 2018/11/19 18:30:42 delete &amp;#34;wontfix&amp;#34; in org/repo1 定義されたラベル (.</description>
     </item>
     
     <item>
@@ -155,7 +156,7 @@ labels: - name: area/security description: Indicates an issue on security area.<
  リアルタイムに記事のプレビューが見たいとなると、hugo server -D する必要があり、都度別コンソールで立ち上げるのが面倒 記事をあたらしく書き始めるとき hugo new post/&amp;lt;filename&amp;gt;.md を打つのが面倒 過去記事を編集するのが面倒 hugo を実行すると draft の記事も生成されてしまう (index には載らないが、生成されるので commit してしまう)  いろいろ面倒なので、Hugo でブログを書くだけのツール (hugo wrapper) を書いた。 hugo の上位互換というわけではなく、必要な機能の不便な部分だけを Override しているだけのツールなので合わせて使っていく。
 tellme.tokyo/cmd/blog at master · b4b4r07/tellme.tokyo
 Usage: blog [--version] [--help] &amp;lt;command&amp;gt; [&amp;lt;args&amp;gt;] Available commands are: edit Edit blog articles new Create new blog article  簡単な CLI ツールになっていて、ブログを編集するときに blog edit とすれば fzf が立ち上がって記事を選択できるようになっている。
-$ blog edit &amp;gt; 39/39 &amp;gt; スムーズに Hugo ブログを書くツール Windows 時代の使用ソフト晒し Bind Address で少しハマった話 Hugo で PlantUML のようなシーケンス図を描画する Kubernetes 上で Credentials を扱う HashiCorp Vault の Unseal と Rekey 東京衣食住 Microservices Platform Meetupで話した 『ルポ川崎』を読んだ  fzf との連携は b4b4r07/go-finder でやっている1。</description>
+$ blog edit &amp;gt; 39/39 &amp;gt; スムーズに Hugo ブログを書くツール Windows 時代の使用ソフト晒し Bind Address で少しハマった話 Hugo で PlantUML のようなシーケンス図を描画する Kubernetes 上で Credentials を扱う HashiCorp Vault の Unseal と Rekey 東京衣食住 Microservices Platform Meetupで話した 『ルポ川崎』を読んだ fzf との連携は b4b4r07/go-finder でやっている1。</description>
     </item>
     
     <item>
@@ -180,7 +181,7 @@ $ blog edit &amp;gt; 39/39 &amp;gt; スムーズに Hugo ブログを書くツ�
  GCE インスタンスに :1313 でつなぎに行けるようにポートを開ける (ファイアウォールの設定) ポートフォワードは使えないので、グローバル IP を取る (とりあえず Ephemeral)  以下を参考に Firewall rule を設定して、GCE インスタンスにアプライした。
 How to open a specific port such as 9090 in Google Compute Engine - Stack Overflow
 動作確認として適当に Serve するスクリプトで :1313 を LISTEN して nmap してみた。
-package main import ( &amp;quot;net/http&amp;quot; &amp;quot;io&amp;quot; ) func helloHandler(w http.ResponseWriter, r *http.Request) { io.WriteString(w, &amp;quot;Hello world!</description>
+package main import ( &amp;#34;net/http&amp;#34; &amp;#34;io&amp;#34; ) func helloHandler(w http.ResponseWriter, r *http.Request) { io.WriteString(w, &amp;#34;Hello world!</description>
     </item>
     
     <item>
@@ -206,9 +207,9 @@ vjeantet/hugo-theme-docdock にあったディレクトリ構成を真似て以�
 しかしこれらは往々にしてアプリケーションにハードコードされがちである (ロジックが書かれたファイル外に定義されたとしてもそれはハードコードに等しい)。 そうすると設定変更のたびにデプロイを必要とするし、言わずもがなセキュリティ的には厳しい。
 またこの問題は、コンテナとマイクロサービスの領域において更に顕著になる。 同じデータを2つの異なるコンテナで参照する必要がある場合や、ホストマシンが使えないのでどうやってコンテナ内に渡すべきかを考える必要が出てくる。
 実際にハードコードされたアプリケーションから環境変数に移し、それらをコンテナ化し Kubernetes に載せ替えてくステップを追う。
-アプリ側にハードコードされた例 var http = require(&#39;http&#39;); var server = http.createServer(function (request, response) { const language = &#39;English&#39;; const API_KEY = &#39;123-456-789&#39;; response.write(`Language: ${language}\n`); response.write(`API Key: ${API_KEY}\n`); response.end(`\n`); }); server.listen(3000);  language やAPI キーを変更する場合は、コードを編集する必要がある。 またバグやセキュリティリーク、ソースコードの履歴を汚すアプローチである。
+アプリ側にハードコードされた例 var http = require(&amp;#39;http&amp;#39;); var server = http.createServer(function (request, response) { const language = &amp;#39;English&amp;#39;; const API_KEY = &amp;#39;123-456-789&amp;#39;; response.write(`Language: ${language}\n`); response.write(`API Key: ${API_KEY}\n`); response.end(`\n`); }); server.listen(3000);  language やAPI キーを変更する場合は、コードを編集する必要がある。 またバグやセキュリティリーク、ソースコードの履歴を汚すアプローチである。
 これの代わりに環境変数を使う。
-環境変数を使うパターン Step 1: 環境変数を読み込む var http = require(&#39;http&#39;); var server = http.createServer(function (request, response) { const language = process.env.LANGUAGE; const API_KEY = process.</description>
+環境変数を使うパターン Step 1: 環境変数を読み込む var http = require(&amp;#39;http&amp;#39;); var server = http.createServer(function (request, response) { const language = process.env.LANGUAGE; const API_KEY = process.</description>
     </item>
     
     <item>
@@ -283,7 +284,7 @@ https://github.com/b4b4r07/go-finder
 go-finder というパッケージを作りました。
 使い方は次のようになります。
 finder - GoDoc
-fzf, err := finder.New(&amp;quot;fzf&amp;quot;, &amp;quot;--reverse&amp;quot;, &amp;quot;--height&amp;quot;, &amp;quot;40&amp;quot;) if err != nil { panic(err) } fzf.Run()  peco, err := finder.New(&amp;quot;peco&amp;quot;, &amp;quot;--layout=bottom-up&amp;quot;) if err !</description>
+fzf, err := finder.New(&amp;#34;fzf&amp;#34;, &amp;#34;--reverse&amp;#34;, &amp;#34;--height&amp;#34;, &amp;#34;40&amp;#34;) if err != nil { panic(err) } fzf.Run()peco, err := finder.New(&amp;#34;peco&amp;#34;, &amp;#34;--layout=bottom-up&amp;#34;) if err != nil { panic(err) } peco.</description>
     </item>
     
     <item>
@@ -294,8 +295,8 @@ fzf, err := finder.New(&amp;quot;fzf&amp;quot;, &amp;quot;--reverse&amp;quot;, &
       <guid>https://tellme.tokyo/post/2018/04/02/golang-shell-exit-code/</guid>
       <description>CLI ツールはよく golang で書く。 (golang でなくとも) ちゃんとした CLI ツールを書こうとすると、Exit code とそのエラーの取り回しについて悩むことが多い。 今回は、何回か遭遇したこの悩みに対する現時点における自分的ベストプラクティスをまとめておく。
 ToC
- Exit code とは golang における Exit code 高次での取り回し  CLI 側 処理側  まとめ  Exit code とは $ ./script/something.sh $ echo $? 0  $? で参照できる値で、0 は成功を表し、0 以外は失敗を含む別の意味を表す。取りうる範囲は 0 - 255 (シェルによって違うことがあるかも知れない)。
-$ true $ echo $? 0 $ false $ echo $? 1  詳しくは、コマンドラインツールを書くなら知っておきたい Bash の 予約済み Exit Code - Qiita
+ Exit code とは golang における Exit code 高次での取り回し  CLI 側 処理側  まとめ  Exit code とは $ ./script/something.sh $ echo $? 0 $? で参照できる値で、0 は成功を表し、0 以外は失敗を含む別の意味を表す。取りうる範囲は 0 - 255 (シェルによって違うことがあるかも知れない)。
+$ true $ echo $? 0 $ false $ echo $? 1 詳しくは、コマンドラインツールを書くなら知っておきたい Bash の 予約済み Exit Code - Qiita
 CLI ツールとはいわゆる UNIX コマンドであることが多いので、その慣習にならって実装するのよい。 成功したら 0 を、失敗したらエラーメッセージとともに非 0 を返すといった感じ。</description>
     </item>
     
@@ -306,16 +307,17 @@ CLI ツールとはいわゆる UNIX コマンドであることが多いので�
       
       <guid>https://tellme.tokyo/post/2018/04/01/req/</guid>
       <description>ヘルスチェックのときの問題点 あるウェブサービスの動作確認をとっているとき、curl などを使ってリクエストを送ると思いますが、場合によっては環境変数が必要だったり、エンドポイントのパスが長かったり、Cloud IAP といった認証機構があったりします。 動作確認中はだいたい複数回実行するので実行しやすいように（また履歴で追いやすいように）、書き捨て用のシェルスクリプトにまとめたり、再利用しやすいようにワンライナーにしたりします。
-#!/bin/bash GOOGLE_APPLICATION_CREDENTIALS=&amp;quot;/path/to/google-credentials.json&amp;quot; CLIENT_ID=&amp;quot;sample.apps.googleusercontent.com&amp;quot; curl &amp;quot;https://iap-protected-app-url&amp;quot;  （再利用性が高く変数をスクリプト内のプロセスに閉じられる上に編集はしやすいが、毎回このようなシェルスクリプトを書くのは面倒）
-$ GOOGLE_APPLICATION_CREDENTIALS=&amp;quot;/path/to/google-credentials.json&amp;quot; CLIENT_ID=&amp;quot;sample.apps.googleusercontent.com&amp;quot; curl &amp;quot;https://iap-protected-app-url&amp;quot;  （再利用性も高く変数はコマンドのプロセスにしか影響しないが、長くて見づらく編集しづらい）
+#!/bin/bash GOOGLE_APPLICATION_CREDENTIALS=&amp;#34;/path/to/google-credentials.json&amp;#34; CLIENT_ID=&amp;#34;sample.apps.googleusercontent.com&amp;#34; curl &amp;#34;https://iap-protected-app-url&amp;#34; （再利用性が高く変数をスクリプト内のプロセスに閉じられる上に編集はしやすいが、毎回このようなシェルスクリプトを書くのは面倒）
+$ GOOGLE_APPLICATION_CREDENTIALS=&amp;#34;/path/to/google-credentials.json&amp;#34; CLIENT_ID=&amp;#34;sample.apps.googleusercontent.com&amp;#34; curl &amp;#34;https://iap-protected-app-url&amp;#34; （再利用性も高く変数はコマンドのプロセスにしか影響しないが、長くて見づらく編集しづらい）
 環境変数を含むワンライナーだとあまりにも長いので、以下のように環境変数の宣言部分だけコマンドラインから先に実行してしまえば curl と URL のみの実行で済みますが、特定のエンドポイント用の環境変数が実行シェルに記録されてしまうのは好ましくありません。
-# 記録される $ GOOGLE_APPLICATION_CREDENTIALS=&amp;quot;/path/to/google-credentials.json&amp;quot; $ CLIENT_ID=&amp;quot;sample.apps.googleusercontent.com&amp;quot; $ curl &amp;quot;https://iap-protected-app-url&amp;quot;  （変数部分だけコマンドラインから定義してしまえば curl からの実行で済むが、シェルを再起動するまでは変数が実行プロセスに記録されてしまう）
+# 記録される $ GOOGLE_APPLICATION_CREDENTIALS=&amp;#34;/path/to/google-credentials.json&amp;#34; $ CLIENT_ID=&amp;#34;sample.apps.googleusercontent.com&amp;#34; $ curl &amp;#34;https://iap-protected-app-url&amp;#34; （変数部分だけコマンドラインから定義してしまえば curl からの実行で済むが、シェルを再起動するまでは変数が実行プロセスに記録されてしまう）
 問題はこれだけではありません。 開発環境の動作確認が終わったら本番環境の動作確認です（critical なサービスではない場合、初動の動作確認はカジュアルに curl でヘルスチェックを取ることも多いです）。
 今度は本番環境に変わるのでURLや環境変数を書き換える必要があります。 また、開発環境と本番環境のヘルスチェックの行き来をしなきゃいけない場合もあります。 流石にここまでくると面倒くさくて、確認が終わったら削除するであろう取り急ぎなスクリプトにしちゃうことが多いです。
 あとからまたヘルスチェックをとりたいと思ったとき これまでは上記の方法でなんとかお茶を濁していたのですが、最近厳しくなってきました。 見ているサービスが多くなってきたためです。
 例えばあるサービスの Dev の様子がおかしいとなったとき、開発者が修正をデプロイしたとしても、場合によっては SRE や基盤チームがその後の疎通やサービスの状態をみたりします。 上にあるようなその場しのぎのスクリプトやワンライナーでやっていると、すでにスクリプトを削除していたり履歴を追うのが面倒で、こういうときにヘルスチェック用のパスが何だったのか（/health ? /status ?）、そもそもリクエストすべきサービスの URL がなんだったのか正確に思い出せません。
 ツール https://github.com/b4b4r07/req
-前に Cloud IAP で保護されたエンドポイントに対して簡単にリクエストを送るために作った CLI ツールの iap_curl が便利だったので、基本的な挙動はそのままに少し手を加えて汎用化しました。</description>
+前に Cloud IAP で保護されたエンドポイントに対して簡単にリクエストを送るために作った CLI ツールの iap_curl が便利だったので、基本的な挙動はそのままに少し手を加えて汎用化しました。
+Cloud Identity-Aware Proxy を使って GCP backend を保護する | tellme.</description>
     </item>
     
     <item>
@@ -327,7 +329,7 @@ $ GOOGLE_APPLICATION_CREDENTIALS=&amp;quot;/path/to/google-credentials.json&amp;
       <description>生の何かをそのままリポジトリの置いておくのが微妙ということで特定のファイルを ansible-vault で暗号化してプッシュする、ということはよくあると思います。
 例えば、Kubernetes の Secret を管理した YAML ファイルとかですね (例として正しいかは別の話ですが)。
 その場合、こんな感じで暗号化する必要があります。
-$ ansible-vault encrypt --vault-password-file=~/.vault_password secret.yaml  初回だけで済むならそこまで不便ではないのですが、このファイルを編集し再度リポジトリに上げるには復号と暗号化のセットも必要になります。 これがとても面倒です。 編集が必要ということは Vim なりのエディタで開くわけなので、そこでこのセットもいっぺんにできたら便利なわけです。
+$ ansible-vault encrypt --vault-password-file=~/.vault_password secret.yaml 初回だけで済むならそこまで不便ではないのですが、このファイルを編集し再度リポジトリに上げるには復号と暗号化のセットも必要になります。 これがとても面倒です。 編集が必要ということは Vim なりのエディタで開くわけなので、そこでこのセットもいっぺんにできたら便利なわけです。
 というわけで開いているファイル (バッファ) に対して ansible-vault (encrypt|decrypt) を実行するプラグインをつくりました。
  GIF イメージにある Credentials はサンプルです。
  filetype が ansible-vault であれば yes/no で復号するかどうか聞いてあげると、もう一手間省けるのでさらに便利な気もしますが、とりあえずの不便さは解消されたので現状使える Vim コマンドと機能はこれだけです。
@@ -486,7 +488,7 @@ Spinnaker は「デプロイ先のクラスタ」と「どのイメージを撒�
 目次
  移行のためにやったこと  ブログ用の Docker コンテナを作成 kubernetes cluster を構築 コンテナの入った Pod を動かす HTTPS 化する  記事の配信まで  Circle CI による継続的インテグレーション Spinnaker による継続的デリバリ  所感など  移行のためにやったこと 今回の移行に際し、移行周りのスクリプトや kubernetes のマニフェストファイル、及び記事自体を管理するために GitHub にリポジトリを作りました。
  1. ブログ用の Docker コンテナを作成 まずはブログを配信するためのサーバを載せたコンテナを作成します。静的サイトジェネレーターには Hugo を利用しました。
-FROM golang:1.8-alpine AS hugo RUN apk add --update --no-cache git &amp;amp;&amp;amp; \ go get -v github.</description>
+FROMgolang:1.8-alpine AS hugoRUN apk add --update --no-cache git &amp;amp;&amp;amp; \  go get -v github.</description>
     </item>
     
     <item>
@@ -587,7 +589,7 @@ SSH に切り替える pull や push には HTTPS と SSH が選べると思い�
 以前、neobundle.vim と vim-plug の比較記事を書きました。 それから数ヶ月後、dein.vim が登場し、再び比較記事を書こうと思っていたのですが、気づけばあれから 1 年が経っていました。 この記事は半年前 (&amp;lsquo;16年8月頃) に大枠だけ書き Qiita の限定共有に投稿していたのものを Advent Calendar 向けに書き下ろしたものです。
 Vim プラグインの歴史 GitHub 以前 (〜2008年) 昔の話です。 Vim script で拡張の機能を書いたらそのスクリプトを vim.org にアップして開発者同士で共有したり、ユーザがダウンロードして使っていたようです。 おそらくコレが所謂「プラグイン管理」の始まりなのですが、このときはまだ手動で行われていたようです (残念ながら、このときはまだ Vim に出会っていなかったためその肌感は分かりません&amp;hellip;)。
 例えば、こんな機能も Vim script で書いた拡張です (autogroup などは考慮してません)。
-autocmd BufWritePre * %s/\s\+$//e  Vim 7 から Vimball という機能が Vim 本体に同梱されて、それからはこれを利用するユーザもいたようです。 vim.org からアーカイブされたスクリプトを持ってきて、:so % したり、気に入ったら runtimepath 以下に置いて自動読み込みしたり。 その頃の plugins ディレクトリは混沌としていたようです。 ペライチのスクリプトが無造作に転がっており、同名ファイルに気をつけたりアップデートの情報は自分でキャッチしなければなりませんでした。
+autocmd BufWritePre * %s/\s\+$//e Vim 7 から Vimball という機能が Vim 本体に同梱されて、それからはこれを利用するユーザもいたようです。 vim.org からアーカイブされたスクリプトを持ってきて、:so % したり、気に入ったら runtimepath 以下に置いて自動読み込みしたり。 その頃の plugins ディレクトリは混沌としていたようです。 ペライチのスクリプトが無造作に転がっており、同名ファイルに気をつけたりアップデートの情報は自分でキャッチしなければなりませんでした。
 GitHub 以降 (2008年〜) GitHub は 2008 年頃発のサービスですが、翌年には最大の Git のホスティングサービスになっていたようです。 本格的に流行りだしたのは 2011 年ころの印象を受けますが、このソーシャルコーディング時代の新風は Vim プラグイン界にも訪れ、席巻したようです。</description>
     </item>
     
@@ -667,10 +669,10 @@ tl;dr  新卒でメルカリに入社しました メルカリでは新卒採用
       <description>公開鍵認証はとても便利ですが、他のマシンに移ったり Vagrant などで仮想開発環境をつくったときなど GitHub に公開鍵をアップロードするの面倒ではないですか？
 ssh-keygen で作成された 公開鍵.pub の中身をコピーしてブラウザに貼り付けて ssh -T git@github.com できるかチェック．．．
 面倒なので簡略化したプラグインをつくりました。利用者が打ち込むコマンドは以下のみです。
-$ # (antigen bundle b4b4r07/ssh-keyreg) $ ssh-keygen $ ssh-keyreg  はやい！！！
+$ # (antigen bundle b4b4r07/ssh-keyreg) $ ssh-keygen $ ssh-keyreg はやい！！！
 
  b4b4r07/ssh-keyreg - GitHub  上では、antigen でインストールすると書いていますが、このプラグインは bash でも動きます（補完は zsh のみです。ごめんなさい）。
-インストール $ # for zsh $ antigen bundle b4b4r07/ssh-keyreg $ # for bash $ sudo sh -c &amp;quot;curl https://raw.githubusercontent.com/b4b4r07/ssh-keyreg/master/bin/ssh-keyreg -o /usr/local/bin/ssh-keyreg &amp;amp;&amp;amp; chmod +x /usr/local/bin/ssh-keyreg&amp;quot;  使い方 $ ssh-keyreg usage: ssh-keyreg [-h|--help][[-d|--desc &amp;lt;desc&amp;gt;][-u|--user &amp;lt;user[:pass]&amp;gt;][-p|--path &amp;lt;path&amp;gt;]] [github|bitbucket] command line method or programmatically add ssh key to github.</description>
+インストール $ # for zsh $ antigen bundle b4b4r07/ssh-keyreg $ # for bash $ sudo sh -c &amp;#34;curl https://raw.githubusercontent.com/b4b4r07/ssh-keyreg/master/bin/ssh-keyreg -o /usr/local/bin/ssh-keyreg &amp;amp;&amp;amp; chmod +x /usr/local/bin/ssh-keyreg&amp;#34; 使い方 $ ssh-keyreg usage: ssh-keyreg [-h|--help][[-d|--desc &amp;lt;desc&amp;gt;][-u|--user &amp;lt;user[:pass]&amp;gt;][-p|--path &amp;lt;path&amp;gt;]] [github|bitbucket] command line method or programmatically add ssh key to github.</description>
     </item>
     
     <item>
@@ -684,8 +686,8 @@ $ # (antigen bundle b4b4r07/ssh-keyreg) $ ssh-keygen $ ssh-keyreg  はやい！�
  Jxck/dotfiles - GitHub  このまま参考にさせてもらおう、と思ったのですがすべて登録するのもな、と思いコマンドで用意しました1。
 
  b4b4r07/http_code - GitHub  antigen で簡単にインストールできます。
-$ antigen bundle b4b4r07/http_code  antigen でない場合は、
-sudo sh -c &amp;quot;curl https://raw.githubusercontent.com/b4b4r07/http_code/master/bin/http_code -o /usr/local/bin/http_code &amp;amp;&amp;amp; chmod +x /usr/local/bin/http_code&amp;quot;  しかし、antigen でインストールしたほうが、補完ファイルなども使用できるようになります。
+$ antigen bundle b4b4r07/http_code antigen でない場合は、
+sudo sh -c &amp;#34;curl https://raw.githubusercontent.com/b4b4r07/http_code/master/bin/http_code -o /usr/local/bin/http_code &amp;amp;&amp;amp; chmod +x /usr/local/bin/http_code&amp;#34; しかし、antigen でインストールしたほうが、補完ファイルなども使用できるようになります。
 使い方は gif アニメにもある通り、-a/--all オプションをつけると一覧表示、引数に数字を渡すとそれに対する説明を返します。
  番号が変わるものでもないので一度登録して変更することになる心配がないためエイリアスもいいと思います [return]   </description>
     </item>
@@ -714,7 +716,7 @@ sudo sh -c &amp;quot;curl https://raw.githubusercontent.com/b4b4r07/http_code/ma
       
       <guid>https://tellme.tokyo/post/2015/01/18/curl-sh-install/</guid>
       <description>dotfiles をインストールする際に、
-$ curl -L https://raw.githubusercontent.com/{YOUR_ACCOUNT}/dotfiles/master/install.sh | bash  といった具合にウェブを介してスクリプトを実行することが一般的になりつつあると思いますが、この方法にはひとつ問題がありそれは URL 部分が長いということです。これは結構厄介で長すぎるがゆえに暗記できないので、いちいちブラウザを起動してコピペしないといけなかったり、そもそもブラウザなどないようなどこかのサーバにデプロイするときなど、暗記していたほうがいい場面が結構あります。
+$ curl -L https://raw.githubusercontent.com/{YOUR_ACCOUNT}/dotfiles/master/install.sh | bash といった具合にウェブを介してスクリプトを実行することが一般的になりつつあると思いますが、この方法にはひとつ問題がありそれは URL 部分が長いということです。これは結構厄介で長すぎるがゆえに暗記できないので、いちいちブラウザを起動してコピペしないといけなかったり、そもそもブラウザなどないようなどこかのサーバにデプロイするときなど、暗記していたほうがいい場面が結構あります。
  curl -sL dot.hoge.com | sh で自分専用環境を構築する方法（かっこいい）
  そんなとき、このエントリを発見しました。 独自ドメインを取得して、そのサブドメインに自分で立ち上げた Nginx で dotfiles リポジトリへリダイレクトしてやるようにする方法です。こうすることで、github の URL 部分を自分のドメインを使った好きな URL にすることができるようになります。
 しかし、この方法はサーバと独自ドメインの2つを用意しなければなりません。エンジニアたるものサーバやドメインは持っていたほうがいいのかもしれませんが、持っていなかった場合 dotfiles の URL 短縮のためだけに維持費に数千円／年を支払うのはもったいないですよね。

@@ -23,7 +23,7 @@
  GCE インスタンスに :1313 でつなぎに行けるようにポートを開ける (ファイアウォールの設定) ポートフォワードは使えないので、グローバル IP を取る (とりあえず Ephemeral)  以下を参考に Firewall rule を設定して、GCE インスタンスにアプライした。
 How to open a specific port such as 9090 in Google Compute Engine - Stack Overflow
 動作確認として適当に Serve するスクリプトで :1313 を LISTEN して nmap してみた。
-package main import ( &amp;quot;net/http&amp;quot; &amp;quot;io&amp;quot; ) func helloHandler(w http.ResponseWriter, r *http.Request) { io.WriteString(w, &amp;quot;Hello world!</description>
+package main import ( &amp;#34;net/http&amp;#34; &amp;#34;io&amp;#34; ) func helloHandler(w http.ResponseWriter, r *http.Request) { io.WriteString(w, &amp;#34;Hello world!</description>
     </item>
     
     <item>

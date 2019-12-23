@@ -16,6 +16,7 @@
 <title>Go のコマンドラインツールを簡単にリリースする | tellme.tokyo</title>
 <link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
 <link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
 <link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -85,12 +86,10 @@
 <p>使い方は簡単で raw のスクリプトを curl などで取ってきて bash にわたすようにする。</p>
 
 <p>実際は Makefile なんかに書いておくとより便利になる。</p>
-
-<pre><code class="language-make">.PHONY: release
-release:
-	@bash &lt;(wget -o /dev/null -qO - https://git.io/release-go)
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-make" data-lang="make"><span class="nf">.PHONY</span><span class="o">:</span> <span class="n">release</span>
+<span class="nf">release</span><span class="o">:</span>
+	@bash &lt;<span class="o">(</span>wget -o /dev/null -qO - https://git.io/release-go<span class="o">)</span>
+</code></pre></div>
 <p>これを実行すると、</p>
 
 <ul>

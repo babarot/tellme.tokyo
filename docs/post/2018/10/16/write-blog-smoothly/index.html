@@ -16,6 +16,7 @@
 <title>スムーズに Hugo でブログを書くツール | tellme.tokyo</title>
 <link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
 <link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
 <link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -91,8 +92,7 @@ Available commands are:
 </code></pre>
 
 <p>簡単な CLI ツールになっていて、ブログを編集するときに <code>blog edit</code> とすれば <a href="https://github.com/junegunn/fzf">fzf</a> が立ち上がって記事を選択できるようになっている。</p>
-
-<pre><code class="language-console">$ blog edit
+<div class="highlight"><pre class="chroma"><code class="language-console" data-lang="console">$ blog edit
 &gt;
   39/39
 &gt; スムーズに Hugo ブログを書くツール
@@ -103,32 +103,27 @@ Available commands are:
   HashiCorp Vault の Unseal と Rekey
   東京衣食住
   Microservices Platform Meetupで話した
-  『ルポ川崎』を読んだ
-</code></pre>
-
+  『ルポ川崎』を読んだ</code></pre></div>
 <p>fzf との連携は <a href="https://github.com/b4b4r07/go-finder">b4b4r07/go-finder</a> でやっている<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup>。</p>
 
 <p>選択するとエディタ (Vim) が立ち上がり、バックグラウンドでは <code>hugo server</code> が立ち上がるようになっている。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go">	<span class="nx">ctx</span><span class="p">,</span> <span class="nx">cancel</span> <span class="o">:=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">WithCancel</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">())</span>
+	<span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Signal</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+	<span class="nx">signal</span><span class="p">.</span><span class="nf">Notify</span><span class="p">(</span><span class="nx">ch</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Interrupt</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="nx">signal</span><span class="p">.</span><span class="nf">Stop</span><span class="p">(</span><span class="nx">ch</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="nf">cancel</span><span class="p">()</span>
+	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">select</span> <span class="p">{</span>
+		<span class="k">case</span> <span class="o">&lt;-</span><span class="nx">ch</span><span class="p">:</span>
+			<span class="nf">cancel</span><span class="p">()</span>
+		<span class="k">case</span> <span class="o">&lt;-</span><span class="nx">ctx</span><span class="p">.</span><span class="nf">Done</span><span class="p">():</span>
+		<span class="p">}</span>
+	<span class="p">}()</span>
 
-<pre><code class="language-go">	ctx, cancel := context.WithCancel(context.Background())
-	ch := make(chan os.Signal, 1)
-	signal.Notify(ch, os.Interrupt)
-	defer signal.Stop(ch)
-	defer cancel()
-	go func() {
-		select {
-		case &lt;-ch:
-			cancel()
-		case &lt;-ctx.Done():
-		}
-	}()
+	<span class="k">go</span> <span class="nf">newHugo</span><span class="p">(</span><span class="s">&#34;server&#34;</span><span class="p">,</span> <span class="s">&#34;-D&#34;</span><span class="p">).</span><span class="nf">setDir</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">Config</span><span class="p">.</span><span class="nx">BlogDir</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span>
 
-	go newHugo(&quot;server&quot;, &quot;-D&quot;).setDir(c.Config.BlogDir).Run(ctx)
-
-	vim := newShell(&quot;vim&quot;, files...)
-	return vim.Run(context.Background())
-</code></pre>
-
+	<span class="nx">vim</span> <span class="o">:=</span> <span class="nf">newShell</span><span class="p">(</span><span class="s">&#34;vim&#34;</span><span class="p">,</span> <span class="nx">files</span><span class="o">...</span><span class="p">)</span>
+	<span class="k">return</span> <span class="nx">vim</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nf">Background</span><span class="p">())</span></code></pre></div>
 <p>そのため、すぐに <a href="http://localhost:1313">http://localhost:1313</a> でプレビューを見ることができる。
 このプロセスが閉じると hugo のプロセスも閉じるため、記事の編集が終わるとプレビューは終わる。</p>
 

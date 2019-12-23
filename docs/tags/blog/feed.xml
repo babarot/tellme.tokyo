@@ -23,7 +23,7 @@
  リアルタイムに記事のプレビューが見たいとなると、hugo server -D する必要があり、都度別コンソールで立ち上げるのが面倒 記事をあたらしく書き始めるとき hugo new post/&amp;lt;filename&amp;gt;.md を打つのが面倒 過去記事を編集するのが面倒 hugo を実行すると draft の記事も生成されてしまう (index には載らないが、生成されるので commit してしまう)  いろいろ面倒なので、Hugo でブログを書くだけのツール (hugo wrapper) を書いた。 hugo の上位互換というわけではなく、必要な機能の不便な部分だけを Override しているだけのツールなので合わせて使っていく。
 tellme.tokyo/cmd/blog at master · b4b4r07/tellme.tokyo
 Usage: blog [--version] [--help] &amp;lt;command&amp;gt; [&amp;lt;args&amp;gt;] Available commands are: edit Edit blog articles new Create new blog article  簡単な CLI ツールになっていて、ブログを編集するときに blog edit とすれば fzf が立ち上がって記事を選択できるようになっている。
-$ blog edit &amp;gt; 39/39 &amp;gt; スムーズに Hugo ブログを書くツール Windows 時代の使用ソフト晒し Bind Address で少しハマった話 Hugo で PlantUML のようなシーケンス図を描画する Kubernetes 上で Credentials を扱う HashiCorp Vault の Unseal と Rekey 東京衣食住 Microservices Platform Meetupで話した 『ルポ川崎』を読んだ  fzf との連携は b4b4r07/go-finder でやっている1。</description>
+$ blog edit &amp;gt; 39/39 &amp;gt; スムーズに Hugo ブログを書くツール Windows 時代の使用ソフト晒し Bind Address で少しハマった話 Hugo で PlantUML のようなシーケンス図を描画する Kubernetes 上で Credentials を扱う HashiCorp Vault の Unseal と Rekey 東京衣食住 Microservices Platform Meetupで話した 『ルポ川崎』を読んだ fzf との連携は b4b4r07/go-finder でやっている1。</description>
     </item>
     
   </channel>

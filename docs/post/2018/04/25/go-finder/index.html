@@ -16,6 +16,7 @@
 <title>Go から peco する | tellme.tokyo</title>
 <link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
 <link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
 <link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -86,72 +87,57 @@ CLI として作られている以上、シェルコマンドとして使うべ�
 <p>使い方は次のようになります。</p>
 
 <p><a href="https://godoc.org/github.com/b4b4r07/go-finder">finder - GoDoc</a></p>
-
-<pre><code class="language-go">fzf, err := finder.New(&quot;fzf&quot;, &quot;--reverse&quot;, &quot;--height&quot;, &quot;40&quot;)
-if err != nil {
-	panic(err)
-}
-fzf.Run()
-</code></pre>
-
-<pre><code class="language-go">peco, err := finder.New(&quot;peco&quot;, &quot;--layout=bottom-up&quot;)
-if err != nil {
-	panic(err)
-}
-peco.Run()
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">fzf</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">finder</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;fzf&#34;</span><span class="p">,</span> <span class="s">&#34;--reverse&#34;</span><span class="p">,</span> <span class="s">&#34;--height&#34;</span><span class="p">,</span> <span class="s">&#34;40&#34;</span><span class="p">)</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">fzf</span><span class="p">.</span><span class="nf">Run</span><span class="p">()</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">peco</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">finder</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;peco&#34;</span><span class="p">,</span> <span class="s">&#34;--layout=bottom-up&#34;</span><span class="p">)</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">peco</span><span class="p">.</span><span class="nf">Run</span><span class="p">()</span></code></pre></div>
 <p>デフォルトでは <code>os.Stdin</code> からの入力をデータソースとして使用します。
 <code>finder.New()</code> が返す <code>*finder.Finder</code> には <code>Source</code> というフィールドが定義されていて、自由にデータソースを設定することができます。
 以下のようなよく使用されるソースに関しては、パッケージでメソッドを提供しています。</p>
-
-<pre><code class="language-go">peco, _ := finder.New(&quot;peco&quot;)
-peco.FromFile(&quot;some-file.txt&quot;)
-peco.FromText(&quot;sample\ntext\nfoo&quot;)
-peco.FromCommand(&quot;cat&quot;, &quot;some-file.txt&quot;)
-peco.FromStdin() // デフォルト
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">peco</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">finder</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;peco&#34;</span><span class="p">)</span>
+<span class="nx">peco</span><span class="p">.</span><span class="nf">FromFile</span><span class="p">(</span><span class="s">&#34;some-file.txt&#34;</span><span class="p">)</span>
+<span class="nx">peco</span><span class="p">.</span><span class="nf">FromText</span><span class="p">(</span><span class="s">&#34;sample\ntext\nfoo&#34;</span><span class="p">)</span>
+<span class="nx">peco</span><span class="p">.</span><span class="nf">FromCommand</span><span class="p">(</span><span class="s">&#34;cat&#34;</span><span class="p">,</span> <span class="s">&#34;some-file.txt&#34;</span><span class="p">)</span>
+<span class="nx">peco</span><span class="p">.</span><span class="nf">FromStdin</span><span class="p">()</span> <span class="o">//</span> <span class="nx">デフォルト</span></code></pre></div>
 <p>また、以下のように独自のデータソースも定義できます。</p>
-
-<pre><code class="language-go">peco.From(func(out io.WriteCloser) error {
-		lines := []string{&quot;line 1&quot;, &quot;line 2&quot;, &quot;line 3&quot;}
-		for _, line := range lines {
-			fmt.Fprintln(out, line)
-		}
-		return nil
-	}
-})
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">peco</span><span class="p">.</span><span class="nf">From</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">out</span> <span class="nx">io</span><span class="p">.</span><span class="nx">WriteCloser</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+		<span class="nx">lines</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;line 1&#34;</span><span class="p">,</span> <span class="s">&#34;line 2&#34;</span><span class="p">,</span> <span class="s">&#34;line 3&#34;</span><span class="p">}</span>
+		<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">line</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">lines</span> <span class="p">{</span>
+			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintln</span><span class="p">(</span><span class="nx">out</span><span class="p">,</span> <span class="nx">line</span><span class="p">)</span>
+		<span class="p">}</span>
+		<span class="k">return</span> <span class="kc">nil</span>
+	<span class="p">}</span>
+<span class="p">})</span></code></pre></div>
 <p>peco か fzf か <a href="https://github.com/mooz/percol">percol</a> といったフィルタコマンドのうち、何が使われるかわからないケースについても Go で書くことができます。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">opts</span> <span class="p">[]</span><span class="kt">string</span>
+<span class="nx">command</span> <span class="o">:=</span> <span class="nx">finder</span><span class="p">.</span><span class="nf">Command</span><span class="p">(</span><span class="s">&#34;fzf&#34;</span><span class="p">,</span> <span class="s">&#34;peco&#34;</span><span class="p">,</span> <span class="s">&#34;percol&#34;</span><span class="p">,</span> <span class="s">&#34;zaw&#34;</span><span class="p">)</span>
+<span class="k">switch</span> <span class="nx">command</span> <span class="p">{</span>
+<span class="k">case</span> <span class="s">&#34;fzf&#34;</span><span class="p">:</span>
+	<span class="nx">opts</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span>
+		<span class="s">&#34;--reverse&#34;</span><span class="p">,</span>
+		<span class="s">&#34;--height&#34;</span><span class="p">,</span> <span class="s">&#34;40&#34;</span><span class="p">,</span>
+	<span class="p">}</span>
+<span class="k">case</span> <span class="s">&#34;peco&#34;</span><span class="p">:</span>
+	<span class="nx">opts</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span>
+		<span class="s">&#34;--layout=bottom-up&#34;</span><span class="p">,</span>
+	<span class="p">}</span>
+<span class="p">}</span>
 
-<pre><code class="language-go">var opts []string
-command := finder.Command(&quot;fzf&quot;, &quot;peco&quot;, &quot;percol&quot;, &quot;zaw&quot;)
-switch command {
-case &quot;fzf&quot;:
-	opts = []string{
-		&quot;--reverse&quot;,
-		&quot;--height&quot;, &quot;40&quot;,
-	}
-case &quot;peco&quot;:
-	opts = []string{
-		&quot;--layout=bottom-up&quot;,
-	}
-}
+<span class="nx">cli</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">finder</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">command</span><span class="p">,</span> <span class="nx">opts</span><span class="o">...</span><span class="p">)</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
 
-cli, err := finder.New(command, opts...)
-if err != nil {
-	panic(err)
-}
-
-items, err := cli.Run()
-if err != nil {
-	panic(err)
-}
-fmt.Printf(&quot;%#v\n&quot;, items)
-</code></pre>
-
+<span class="nx">items</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">cli</span><span class="p">.</span><span class="nf">Run</span><span class="p">()</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%#v\n&#34;</span><span class="p">,</span> <span class="nx">items</span><span class="p">)</span></code></pre></div>
 <p><code>finder.Command()</code> は引数にとったコマンドのうち、使用できる (PATH が通っている) コマンドを教えてくれるのでそれに合わせてオプションを定義します。</p>
 
 <p>以上のように、go-finder ではこれらのフィルタコマンドをラップしてあげることで Go から扱いやすくなりました。</p>

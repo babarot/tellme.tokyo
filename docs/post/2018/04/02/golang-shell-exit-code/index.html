@@ -16,6 +16,7 @@
 <title>golang でシェルの Exit code を扱う | tellme.tokyo</title>
 <link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
 <link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
 <link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -87,22 +88,16 @@
 </ul>
 
 <h2 id="exit-code-とは">Exit code とは</h2>
-
-<pre><code class="language-bash">$ ./script/something.sh
-$ echo $?
-0
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ ./script/something.sh
+$ <span class="nb">echo</span> <span class="nv">$?</span>
+<span class="m">0</span></code></pre></div>
 <p><code>$?</code> で参照できる値で、0 は成功を表し、0 以外は失敗を含む別の意味を表す。取りうる範囲は 0 - 255 (シェルによって違うことがあるかも知れない)。</p>
-
-<pre><code class="language-bash">$ true
-$ echo $?
-0
-$ false
-$ echo $?
-1
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ <span class="nb">true</span>
+$ <span class="nb">echo</span> <span class="nv">$?</span>
+<span class="m">0</span>
+$ <span class="nb">false</span>
+$ <span class="nb">echo</span> <span class="nv">$?</span>
+<span class="m">1</span></code></pre></div>
 <p>詳しくは、<a href="https://qiita.com/Linda_pp/items/1104d2d9a263b60e104b">コマンドラインツールを書くなら知っておきたい Bash の 予約済み Exit Code - Qiita</a></p>
 
 <p>CLI ツールとはいわゆる UNIX コマンドであることが多いので、その慣習にならって実装するのよい。
@@ -111,35 +106,29 @@ $ echo $?
 <h2 id="golang-における-exit-code">golang における Exit code</h2>
 
 <p>golang だとこんなイメージだと思う。</p>
-
-<pre><code class="language-go">func main() {
-	// ...
-	if err != nil {
-		fmt.Fprintf(os.Stderr, &quot;[ERROR] %v\n&quot;, err)
-		os.Exit(1)
-	}
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">// ...
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stderr</span><span class="p">,</span> <span class="s">&#34;[ERROR] %v\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+		<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+	<span class="p">}</span></code></pre></div>
 <p>これをもう少し扱いやすくした例が以下。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">run</span><span class="p">(</span><span class="nx">args</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stderr</span><span class="p">,</span> <span class="s">&#34;[ERROR] too few arguments\n&#34;</span><span class="p">)</span>
+		<span class="k">return</span> <span class="mi">1</span>
+	<span class="p">}</span>
+	<span class="c1">// ...
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stderr</span><span class="p">,</span> <span class="s">&#34;[ERROR] %v\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+		<span class="k">return</span> <span class="mi">1</span>
+	<span class="p">}</span>
+	<span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span>
 
-<pre><code class="language-go">func run(args []string) int {
-	if len(args) == 0 {
-		fmt.Fprintf(os.Stderr, &quot;[ERROR] too few arguments\n&quot;)
-		return 1
-	}
-	// ...
-	if err != nil {
-		fmt.Fprintf(os.Stderr, &quot;[ERROR] %v\n&quot;, err)
-		return 1
-	}
-	// ...
-}
-
-func main() {
-	os.Exit(run(os.Args[1:]))
-}
-</code></pre>
-
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="nf">run</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+<span class="p">}</span></code></pre></div>
 <p><code>run()</code> はひたすら「err」や「エラーとして扱いたいケース」をひろって標準エラー出力に表示して、Exit code を return する役割に徹する。
 <code>main()</code> はその Exit code で <code>os.Exit()</code> するだけ。</p>
 
@@ -162,58 +151,52 @@ golang において、Exit code 周りで扱いたい要素は以下だと思っ
 <h3 id="cli-側">CLI 側</h3>
 
 <p>main 関数に近い部分、つまりコマンドラインインターフェイスを提供する側 (user に近いレイヤ) は以下の実装をしておく。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">ExitError</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">exitCode</span> <span class="kt">int</span>
+	<span class="nx">err</span>      <span class="kt">error</span>
+<span class="p">}</span>
 
-<pre><code class="language-go">type ExitError struct {
-	exitCode int
-	err      error
-}
+<span class="kd">func</span> <span class="p">(</span><span class="nx">ee</span> <span class="o">*</span><span class="nx">ExitError</span><span class="p">)</span> <span class="nf">Error</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">ee</span><span class="p">.</span><span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="s">&#34;&#34;</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%v&#34;</span><span class="p">,</span> <span class="nx">ee</span><span class="p">.</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
 
-func (ee *ExitError) Error() string {
-	if ee.err == nil {
-		return &quot;&quot;
-	}
-	return fmt.Sprintf(&quot;%v&quot;, ee.err)
-}
-
-func NewExitError(exitCode int, err error) *ExitError {
-	return &amp;ExitError{
-		exitCode: exitCode,
-		err:      err,
-	}
-}
-</code></pre>
-
+<span class="kd">func</span> <span class="nf">NewExitError</span><span class="p">(</span><span class="nx">exitCode</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="o">*</span><span class="nx">ExitError</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">ExitError</span><span class="p">{</span>
+		<span class="nx">exitCode</span><span class="p">:</span> <span class="nx">exitCode</span><span class="p">,</span>
+		<span class="nx">err</span><span class="p">:</span>      <span class="nx">err</span><span class="p">,</span>
+	<span class="p">}</span>
+<span class="p">}</span></code></pre></div>
 <p>error と Exit code を一緒くたに扱うための構造体を定義して、error interface を満たすために <code>Error()</code> メソッドを定義する。</p>
 
 <p>Primitive な error 型はそもそも message をもっているので、メッセージについてはこれが使える。</p>
 
 <p>あとは ExitError をハンドリングする関数を追加する。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">HandleExit</span><span class="p">(</span><span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">ExitCodeOK</span>
+	<span class="p">}</span>
 
-<pre><code class="language-go">func HandleExit(err error) int {
-	if err == nil {
-		return ExitCodeOK
-	}
+	<span class="k">if</span> <span class="nx">exitErr</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">err</span><span class="p">.(</span><span class="nx">ExitCoder</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">()</span> <span class="o">!=</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
+			<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">exitErr</span><span class="p">.(</span><span class="nx">ErrorFormatter</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+				<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stderr</span><span class="p">,</span> <span class="s">&#34;%+v\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+			<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+				<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintln</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stderr</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">return</span> <span class="nx">exitErr</span><span class="p">.</span><span class="nf">ExitCode</span><span class="p">()</span>
+	<span class="p">}</span>
 
-	if exitErr, ok := err.(ExitCoder); ok {
-		if err.Error() != &quot;&quot; {
-			if _, ok := exitErr.(ErrorFormatter); ok {
-				fmt.Fprintf(os.Stderr, &quot;%+v\n&quot;, err)
-			} else {
-				fmt.Fprintln(os.Stderr, err)
-			}
-		}
-		return exitErr.ExitCode()
-	}
+	<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">err</span><span class="p">.(</span><span class="kt">error</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stderr</span><span class="p">,</span> <span class="s">&#34;%v\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+		<span class="k">return</span> <span class="nx">ExitCodeError</span>
+	<span class="p">}</span>
 
-	if _, ok := err.(error); ok {
-		fmt.Fprintf(os.Stderr, &quot;%v\n&quot;, err)
-		return ExitCodeError
-	}
-
-	return ExitCodeOK
-}
-</code></pre>
-
+	<span class="k">return</span> <span class="nx">ExitCodeOK</span>
+<span class="p">}</span></code></pre></div>
 <p>これがやっていることは、err が nil なら 0 を返し、ExitCoder (あとで全コードを載せるが ExitError が満たしているインタフェース) が実装されていればエラーを表示して、任意の Exit code で抜ける。
 それでもなければ Primitive な error が実装されていればエラーを表示して非 0 で抜ける。
 どれにも属さなければエラーではなく、0 で抜ける。</p>
@@ -221,76 +204,67 @@ func NewExitError(exitCode int, err error) *ExitError {
 <h3 id="処理側">処理側</h3>
 
 <p>main から実行される実処理を担う部分は以下のような実装をしておく。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Result でなくてもよい
+</span><span class="c1">// 実装側から CLI 側に伝播させたい情報を入れた構造体を定義する
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Result</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">Response</span> <span class="kt">string</span>
 
-<pre><code class="language-go">// Result でなくてもよい
-// 実装側から CLI 側に伝播させたい情報を入れた構造体を定義する
-type Result struct {
-	Response string
-
-	ExitCode int
-	Error    error
-}
-</code></pre>
-
+	<span class="nx">ExitCode</span> <span class="kt">int</span>
+	<span class="nx">Error</span>    <span class="kt">error</span>
+<span class="p">}</span></code></pre></div>
 <p>CLI ツールが担うメイン処理の実行を記録する構造体を定義する。
 この Result は Response (<code>string</code>) を返す処理を表した構造体である。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">doSomething</span><span class="p">()</span> <span class="nx">Result</span> <span class="p">{</span>
+	<span class="c1">// ...
+</span><span class="c1"></span>
+	<span class="c1">// エラーをエラーとして扱い、Exit code を非 0 とするケース
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">Result</span><span class="p">{</span>
+			<span class="nx">Response</span><span class="p">:</span> <span class="s">&#34;no response&#34;</span><span class="p">,</span>
+			<span class="nx">ExitCode</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+			<span class="nx">Error</span><span class="p">:</span> <span class="nx">err</span><span class="p">,</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
 
-<pre><code class="language-go">func doSomething() Result {
-	// ...
+	<span class="c1">// エラーをエラーとして扱うが、Exit code は 0 でいいケース
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">Result</span><span class="p">{</span>
+			<span class="nx">Response</span><span class="p">:</span> <span class="s">&#34;some responses&#34;</span><span class="p">,</span>
+			<span class="nx">ExitCode</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+			<span class="nx">Error</span><span class="p">:</span> <span class="nx">err</span><span class="p">,</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
 
-	// エラーをエラーとして扱い、Exit code を非 0 とするケース
-	if err != nil {
-		return Result{
-			Response: &quot;no response&quot;,
-			ExitCode: 1,
-			Error: err,
-		}
-	}
-
-	// エラーをエラーとして扱うが、Exit code は 0 でいいケース
-	if err != nil {
-		return Result{
-			Response: &quot;some responses&quot;,
-			ExitCode: 0,
-			Error: err,
-		}
-	}
-
-	// Result のおかげでこの実処理を担う部分で Exit code を決めることができる
-	// あとはこれが main まで正しく伝播されるように書いていく
-}
-</code></pre>
-
+	<span class="c1">// Result のおかげでこの実処理を担う部分で Exit code を決めることができる
+</span><span class="c1"></span>	<span class="c1">// あとはこれが main まで正しく伝播されるように書いていく
+</span><span class="c1"></span><span class="p">}</span></code></pre></div>
 <p>こうすることで、先程の例に照らし合わせてみると、error と Exit code の取り回しを以下のように表すことができる。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">doSomethingWrapper</span><span class="p">()</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">result</span> <span class="o">:=</span> <span class="nf">doSomething</span><span class="p">()</span>
+	<span class="k">if</span> <span class="nx">result</span><span class="p">.</span><span class="nx">Error</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">result</span><span class="p">.</span><span class="nx">ExitCode</span><span class="p">,</span> <span class="nx">result</span><span class="p">.</span><span class="nx">Error</span>
+	<span class="p">}</span>
+	<span class="c1">// ...
+</span><span class="c1"></span>	<span class="c1">// cope with result.Response
+</span><span class="c1"></span><span class="p">}</span>
 
-<pre><code class="language-go">func doSomethingWrapper() (int, error) {
-	result := doSomething()
-	if result.Error != nil {
-		return result.ExitCode, result.Error
-	}
-	// ...
-	// cope with result.Response
-}
+<span class="kd">func</span> <span class="nf">run</span><span class="p">(</span><span class="nx">args</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;too few arguments&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="c1">// ...
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">err</span>
+	<span class="p">}</span>
+	<span class="c1">// ...
+</span><span class="c1"></span>	<span class="nx">exitCode</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">doSomethingWrapper</span><span class="p">()</span>
+	<span class="k">return</span> <span class="nf">NewExitError</span><span class="p">(</span><span class="nx">exitCode</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
 
-func run(args []string) error {
-	if len(args) == 0 {
-		return errors.New(&quot;too few arguments&quot;)
-	}
-	// ...
-	if err != nil {
-		return err
-	}
-	// ...
-	exitCode, err := doSomethingWrapper()
-	return NewExitError(exitCode, err)
-}
-
-func main() {
-	err := run(os.Args[1:])
-	os.Exit(HandleExit(err))
-}
-</code></pre>
-
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">err</span> <span class="o">:=</span> <span class="nf">run</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+	<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="nf">HandleExit</span><span class="p">(</span><span class="nx">err</span><span class="p">))</span>
+<span class="p">}</span></code></pre></div>
 <p><code>run()</code> では error を返すことに徹することができる (<code>run()</code> で error に Exit code を含めたい場合は ExitError 型に変換して抜ける)。
 「Exit code を何にするか」はさらにそのさきの処理 (<code>doSomethingWrapper()</code>、実際の値を決定するのは <code>doSomething()</code>) に委ねることができている。
 最終的に <code>main()</code> のレイヤで、そのエラーを咀嚼して Exit code を取り出して <code>os.Exit()</code> にわたすことができる。</p>

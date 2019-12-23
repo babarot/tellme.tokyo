@@ -16,6 +16,7 @@
 <title>ブログをGKEで運用し、Spinnakerでデプロイする | tellme.tokyo</title>
 <link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
 <link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
 <link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -127,19 +128,16 @@
 <h3 id="1-ブログ用の-docker-コンテナを作成">1. ブログ用の Docker コンテナを作成</h3>
 
 <p>まずはブログを配信するためのサーバを載せたコンテナを作成します。静的サイトジェネレーターには <a href="https://gohugo.io/">Hugo</a> を利用しました。</p>
-
-<pre><code class="language-dockerfile">FROM golang:1.8-alpine AS hugo
-RUN apk add --update --no-cache git &amp;&amp; \
-    go get -v github.com/spf13/hugo &amp;&amp; \
-    apk del --purge git
-COPY . /app
-WORKDIR /app
-RUN hugo
-
-FROM nginx:alpine AS nginx
-COPY --from=hugo /app/public /usr/share/nginx/html
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="k">FROM</span><span class="s"> golang:1.8-alpine AS hugo</span><span class="err">
+</span><span class="err"></span><span class="k">RUN</span> apk add --update --no-cache git <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>    go get -v github.com/spf13/hugo <span class="o">&amp;&amp;</span> <span class="se">\
+</span><span class="se"></span>    apk del --purge git<span class="err">
+</span><span class="err"></span>COPY . /app<span class="err">
+</span><span class="err"></span><span class="k">WORKDIR</span><span class="s"> /app</span><span class="err">
+</span><span class="err"></span><span class="k">RUN</span> hugo<span class="err">
+</span><span class="err">
+</span><span class="err"></span><span class="k">FROM</span><span class="s"> nginx:alpine AS nginx</span><span class="err">
+</span><span class="err"></span>COPY --from<span class="o">=</span>hugo /app/public /usr/share/nginx/html</code></pre></div>
 <p>hugo コンテナ側で生成した記事一式が入った public ディレクトリを Nginx コンテナで配信する Dockerfile です (<a href="https://docs.docker.com/engine/userguide/eng-image/multistage-build/#before-multi-stage-builds">multi-stage builds</a>)。</p>
 
 <p>参考:</p>
@@ -150,74 +148,62 @@ COPY --from=hugo /app/public /usr/share/nginx/html
 </ul>
 
 <p>Docker のレジストラには <a href="https://hub.docker.com/">Docker Hub</a> を利用しました。料金的に <a href="https://cloud.google.com/container-registry/">Google Container Registry</a> を使っても安そうなのでいいかもしれません。</p>
-
-<pre><code class="language-console">$ docker build -t b4b4r07/tellme.tokyo .
-$ docker push b4b4r07/tellme.tokyo
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-console" data-lang="console">$ docker build -t b4b4r07/tellme.tokyo .
+$ docker push b4b4r07/tellme.tokyo</code></pre></div>
 <h3 id="2-kubernetes-cluster-を構築">2. kubernetes cluster を構築</h3>
 
 <p>Google Cloud Platform (GCP) の Web コンソールからプロジェクトを作成し、kubernetes cluster を作成しました。cluster の作成もコンソールからもできますが、以下のように <code>gcloud</code> コマンドからもできます。</p>
-
-<pre><code class="language-bash">#!/bin/bash
-PROJECT_ID=&quot;tellme-tokyo&quot;
-ZONE=&quot;asia-east1-b&quot;
-CLUSTER=&quot;culster-1&quot;
-gcloud alpha container clusters create ${CLUSTER} \
-       --project=&quot;${PROJECT_ID}&quot; \
-       --zone=&quot;${ZONE}&quot; \
-       --machine-type=n1-standard-8 \
-       --enable-autoscaling \
-       --max-nodes=20 \
-       --min-nodes=1 \
-       --enable-cloud-logging \
-       --enable-cloud-monitoring
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
+</span><span class="cp"></span><span class="nv">PROJECT_ID</span><span class="o">=</span><span class="s2">&#34;tellme-tokyo&#34;</span>
+<span class="nv">ZONE</span><span class="o">=</span><span class="s2">&#34;asia-east1-b&#34;</span>
+<span class="nv">CLUSTER</span><span class="o">=</span><span class="s2">&#34;culster-1&#34;</span>
+gcloud alpha container clusters create <span class="si">${</span><span class="nv">CLUSTER</span><span class="si">}</span> <span class="se">\
+</span><span class="se"></span>       --project<span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">PROJECT_ID</span><span class="si">}</span><span class="s2">&#34;</span> <span class="se">\
+</span><span class="se"></span>       --zone<span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">ZONE</span><span class="si">}</span><span class="s2">&#34;</span> <span class="se">\
+</span><span class="se"></span>       --machine-type<span class="o">=</span>n1-standard-8 <span class="se">\
+</span><span class="se"></span>       --enable-autoscaling <span class="se">\
+</span><span class="se"></span>       --max-nodes<span class="o">=</span><span class="m">20</span> <span class="se">\
+</span><span class="se"></span>       --min-nodes<span class="o">=</span><span class="m">1</span> <span class="se">\
+</span><span class="se"></span>       --enable-cloud-logging <span class="se">\
+</span><span class="se"></span>       --enable-cloud-monitoring</code></pre></div>
 <h3 id="3-コンテナの入った-pod-を動かす">3. コンテナの入った Pod を動かす</h3>
 
 <p>Docker Hub からイメージを取得して Service を構成します。Pod は Deployment で撒きます。</p>
 
 <p><a href="https://github.com/b4b4r07/tellme.tokyo/blob/master/kubernetes/deployment.yaml"><em>kubernetes/deployment.yaml</em></a></p>
-
-<pre><code class="language-yaml">apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: blog
-spec:
-  replicas: 3
-  template:
-    metadata:
-      labels:
-        app: blog
-    spec:
-      containers:
-      - image: b4b4r07/tellme.tokyo
-        name: blog
-        ports:
-        - containerPort: 80
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">apiVersion<span class="p">:</span><span class="w"> </span>extensions/v1beta1<span class="w">
+</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>Deployment<span class="w">
+</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
+</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>blog<span class="w">
+</span><span class="w"></span>spec<span class="p">:</span><span class="w">
+</span><span class="w">  </span>replicas<span class="p">:</span><span class="w"> </span><span class="m">3</span><span class="w">
+</span><span class="w">  </span>template<span class="p">:</span><span class="w">
+</span><span class="w">    </span>metadata<span class="p">:</span><span class="w">
+</span><span class="w">      </span>labels<span class="p">:</span><span class="w">
+</span><span class="w">        </span>app<span class="p">:</span><span class="w"> </span>blog<span class="w">
+</span><span class="w">    </span>spec<span class="p">:</span><span class="w">
+</span><span class="w">      </span>containers<span class="p">:</span><span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>image<span class="p">:</span><span class="w"> </span>b4b4r07/tellme.tokyo<span class="w">
+</span><span class="w">        </span>name<span class="p">:</span><span class="w"> </span>blog<span class="w">
+</span><span class="w">        </span>ports<span class="p">:</span><span class="w">
+</span><span class="w">        </span>-<span class="w"> </span>containerPort<span class="p">:</span><span class="w"> </span><span class="m">80</span></code></pre></div>
 <p>Service は Ingress でロードバランサをつくるために <a href="https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport">NodePort</a> を指定していますが、証明書やドメインをあてるまえにデバッグする場合には <a href="https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer">LoadBalancer</a> を指定するのがいいと思います。</p>
 
 <p>SSL ターミネートは <a href="https://github.com/jetstack/kube-lego">kube-lego</a> というパッケージを用いるため、blog コンテナでは 80 番ポートを受け付けます。</p>
 
 <p><a href="https://github.com/b4b4r07/tellme.tokyo/blob/master/kubernetes/service.yaml"><em>kubernetes/service.yaml</em></a></p>
-
-<pre><code class="language-yaml">apiVersion: v1
-kind: Service
-metadata:
-  name: blog
-spec:
-  ports:
-  - name: http
-    port: 80
-    targetPort: 80
-  selector:
-    app: blog
-  type: NodePort
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">apiVersion<span class="p">:</span><span class="w"> </span>v1<span class="w">
+</span><span class="w"></span>kind<span class="p">:</span><span class="w"> </span>Service<span class="w">
+</span><span class="w"></span>metadata<span class="p">:</span><span class="w">
+</span><span class="w">  </span>name<span class="p">:</span><span class="w"> </span>blog<span class="w">
+</span><span class="w"></span>spec<span class="p">:</span><span class="w">
+</span><span class="w">  </span>ports<span class="p">:</span><span class="w">
+</span><span class="w">  </span>-<span class="w"> </span>name<span class="p">:</span><span class="w"> </span>http<span class="w">
+</span><span class="w">    </span>port<span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span><span class="w">    </span>targetPort<span class="p">:</span><span class="w"> </span><span class="m">80</span><span class="w">
+</span><span class="w">  </span>selector<span class="p">:</span><span class="w">
+</span><span class="w">    </span>app<span class="p">:</span><span class="w"> </span>blog<span class="w">
+</span><span class="w">  </span>type<span class="p">:</span><span class="w"> </span>NodePort</code></pre></div>
 <h3 id="4-https-化する">4. HTTPS 化する</h3>
 
 <p>kube-lego を使うと、Let&rsquo;s Encrypt からの証明書の取得の自動化を行い、サービスの HTTPS / HTTP2 対応が簡単にできます。</p>
@@ -229,18 +215,12 @@ spec:
 <p><a href="https://github.com/kubernetes/charts/tree/master/stable/kube-lego">charts/stable/kube-lego at master · kubernetes/charts</a></p>
 
 <p>これを用いることで kube-lego のマニフェストファイルの管理については、自分で行う必要がなくなり、またマニフェストの一部の変更 (例えば email を自分のものに差し替えたりなど) をコード化することができます。</p>
-
-<pre><code class="language-console">$ helm init
-$ helm install stable/kube-lego -n lego -f kubernetes/lego.yaml
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-console" data-lang="console">$ helm init
+$ helm install stable/kube-lego -n lego -f kubernetes/lego.yaml</code></pre></div>
 <p><code>helm</code> に指定する <code>-n</code> ネームスペースは任意のものを (与えないと自動でジェネレートした文字列があてがわれる)、<code>-f</code> ファイルは自分の設定を書いたものを与えます。</p>
-
-<pre><code class="language-console">$ helm list
+<div class="highlight"><pre class="chroma"><code class="language-console" data-lang="console">$ helm list
 NAME            REVISION        UPDATED                         STATUS          CHART                   NAMESPACE
-lego      1               Fri Jul 28 15:28:06 2017        DEPLOYED        kube-lego-0.1.10        default
-</code></pre>
-
+lego      1               Fri Jul 28 15:28:06 2017        DEPLOYED        kube-lego-0.1.10        default</code></pre></div>
 <p>これにて、GCE Load Balancer の health check が通れば HTTPS 化されたサイトが公開されるはずです。</p>
 
 <h2 id="記事の配信まで">記事の配信まで</h2>
@@ -274,22 +254,19 @@ lego      1               Fri Jul 28 15:28:06 2017        DEPLOYED        kube-l
 <p>参考: <a href="http://astap.hatenablog.jp/entry/2017/06/11/184611">CircleCI2.0でRailsアプリをdocker multi stage buildをする - あすたぴのブログ</a></p>
 
 <p><a href="https://github.com/b4b4r07/tellme.tokyo/blob/master/.circleci/config.yml"><em>.circleci/config.yml</em></a></p>
-
-<pre><code class="language-yaml">...
-      - run:
-          name: Build docker image and push to Docker Hub
-          command: |
-            cp -f scripts/Dockerfile-hugo .
-            cp -f scripts/Dockerfile .
-            docker build -t b4b4r07/tellme.tokyo:hugo -f Dockerfile-hugo .
-            docker cp $(docker run -d b4b4r07/tellme.tokyo:hugo):/app/public .
-            docker build -t b4b4r07/tellme.tokyo .
-            docker tag b4b4r07/tellme.tokyo b4b4r07/tellme.tokyo:latest
-            docker login -u $DOCKER_USER -p $DOCKER_PASS
-            docker push b4b4r07/tellme.tokyo:latest
-...
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">...<span class="w">
+</span><span class="w">      </span>-<span class="w"> </span>run<span class="p">:</span><span class="w">
+</span><span class="w">          </span>name<span class="p">:</span><span class="w"> </span>Build<span class="w"> </span>docker<span class="w"> </span>image<span class="w"> </span>and<span class="w"> </span>push<span class="w"> </span>to<span class="w"> </span>Docker<span class="w"> </span>Hub<span class="w">
+</span><span class="w">          </span>command<span class="p">:</span><span class="w"> </span><span class="sd">|
+</span><span class="sd">            cp -f scripts/Dockerfile-hugo .</span><span class="w">
+</span><span class="w">            </span>cp<span class="w"> </span>-f<span class="w"> </span>scripts/Dockerfile<span class="w"> </span>.<span class="w">
+</span><span class="w">            </span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>b4b4r07/tellme.tokyo<span class="p">:</span>hugo<span class="w"> </span>-f<span class="w"> </span>Dockerfile-hugo<span class="w"> </span>.<span class="w">
+</span><span class="w">            </span>docker<span class="w"> </span>cp<span class="w"> </span>$(docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>b4b4r07/tellme.tokyo<span class="p">:</span>hugo)<span class="p">:</span>/app/public<span class="w"> </span>.<span class="w">
+</span><span class="w">            </span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>b4b4r07/tellme.tokyo<span class="w"> </span>.<span class="w">
+</span><span class="w">            </span>docker<span class="w"> </span>tag<span class="w"> </span>b4b4r07/tellme.tokyo<span class="w"> </span>b4b4r07/tellme.tokyo<span class="p">:</span>latest<span class="w">
+</span><span class="w">            </span>docker<span class="w"> </span>login<span class="w"> </span>-u<span class="w"> </span>$DOCKER_USER<span class="w"> </span>-p<span class="w"> </span>$DOCKER_PASS<span class="w">
+</span><span class="w">            </span>docker<span class="w"> </span>push<span class="w"> </span>b4b4r07/tellme.tokyo<span class="p">:</span>latest<span class="w">
+</span><span class="w"></span>...</code></pre></div>
 <p>上にある通り、初回のイメージ作成では不要だったファイルコピーと <code>docker cp</code> が発生しているのはそのためです。</p>
 
 <h3 id="spinnaker-による継続的デリバリ">Spinnaker による継続的デリバリ</h3>
@@ -303,42 +280,30 @@ lego      1               Fri Jul 28 15:28:06 2017        DEPLOYED        kube-l
 <p>まずは、Spinnaker が入った GCE インスタンスを用意します。面倒なので <a href="https://cloud.google.com/launcher/">Google Cloud Launcher</a> を使います。GCP の Web コンソールから GUI で選択していくだけで Spinnaker を立てることができます。Spinnaker を操作する <a href="https://www.spinnaker.io/setup/install/halyard/">Halyard</a> というツールは現在、Ubuntu Server 14.04 LTS のみのサポートなので、諸々のセットアップを考えると Cloud Launcher 経由が楽だなと思ったからです。</p>
 
 <p>Spinnaker では Web UI にてデプロイのパイプラインを書いていきます。そのために、一旦 Spinnaker をローカルにポートフォワードしてやる必要があります。</p>
-
-<pre><code class="language-console">$ gcloud compute ssh --project=tellme-tokyo --zone=asia-east1-b spinnaker-1 -- -L9000:localhost:9000 -L8084:localhost:8084
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-console" data-lang="console">$ gcloud compute ssh --project=tellme-tokyo --zone=asia-east1-b spinnaker-1 -- -L9000:localhost:9000 -L8084:localhost:8084</code></pre></div>
 <p>これで、localhost:9000 から Spinnaker の画面にアクセスできます。</p>
 
 <p>このままだと、トリガーとなる Docker Hub の情報も、デプロイ先の kubernetes cluster の情報も持っていないので、Spinnaker インスタンスに ssh して Halyard (<code>hal</code>) を使って設定します。</p>
-
-<pre><code class="language-console">b4b4r07@spinnaker-1$ hal config provider docker-registry account add my-docker-registry \
+<div class="highlight"><pre class="chroma"><code class="language-console" data-lang="console">b4b4r07@spinnaker-1$ hal config provider docker-registry account add my-docker-registry \
     --address index.docker.io \
     --repositories b4b4r07/tellme.tokyo \
     --username b4b4r07 \
     --password
 b4b4r07@spinnaker-1$ gcloud container clusters get-credentials --project hogehoge --zone asia-east1-a cluster-1
 b4b4r07@spinnaker-1$ hal config provider kubernetes account add my-k8s-account \
-    --docker-registries my-docker-registry
-</code></pre>
-
+    --docker-registries my-docker-registry</code></pre></div>
 <p>うまく行ったらリスタートします。再度 localhost:9000 にいくと、今度は Server Group にデプロイ先の kubernetes のクラスタが表示され、トリガーに <code>tellme.tokyo</code> のイメージが表示されるようになります。</p>
-
-<pre><code class="language-console">b4b4r07@spinnaker-1$ restart spinnaker
-</code></pre>
-
+<div class="highlight"><pre class="chroma"><code class="language-console" data-lang="console">b4b4r07@spinnaker-1$ restart spinnaker</code></pre></div>
 <p>パイプラインが書けると、<code>docker push</code> を契機として Pod の更新 (マニフェストファイルの再配布) が始まるはずです。</p>
 
 <h2 id="所感など">所感など</h2>
 
 <p>移行から 2 週間ほどたちました。色々思うところもありますが、とくに問題もなく運用できています。</p>
-
-<pre><code class="language-console">$ kubectl get pods
+<div class="highlight"><pre class="chroma"><code class="language-console" data-lang="console">$ kubectl get pods
 NAME                    READY     STATUS    RESTARTS   AGE
 blog-3067350122-db9mr   1/1       Running   0          15d
 blog-3067350122-m53g6   1/1       Running   0          15d
-blog-3067350122-tkzlh   1/1       Running   0          15d
-</code></pre>
-
+blog-3067350122-tkzlh   1/1       Running   0          15d</code></pre></div>
 <p><strong>Pros</strong></p>
 
 <ul>
