@@ -18,6 +18,7 @@
 <title>{{ .Title }}{{ if eq .IsHome false }} | {{ .Site.Title }}{{ end }}</title>
 <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/style.css">
 <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/custom.css">
+<link rel="stylesheet" href="{{ .Site.BaseURL }}/css/highlight-solarized-light.css">
 <link rel="shortcut icon" href="{{ .Site.BaseURL }}/favicon.ico">
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 {{ with .Site.Params.highlight.style }}

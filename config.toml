@@ -5,6 +5,9 @@ copyright = "BABAROT All Right Reserved."
 googleAnalytics = "UA-44183504-2"
 publishDir = "docs"
 
+pygmentsUseClasses = true
+pygmentsCodefences = true
+
 [taxonomies]
 tag = "tags"
 category = "categories"
