@@ -11,7 +11,7 @@ tags:
   - hashiconf
 ---
 
-{{< img src="session.png" width="600" >}}
+{{< img src="/images/hashiconf2019/session.png" width="600" >}}
 
 [HashConf '19](https://hashiconf.com/) (9/9 - 9/11) に行ってきた。
 HashiConf とは HashiCorp 製品自体の発表であったりそれと使って構築したアーキテクチャやノウハウについて共有するカンファレンスになっている。
@@ -41,9 +41,9 @@ HashiConf とは HashiCorp 製品自体の発表であったりそれと使っ�
 
 ホテルは [Cielo](https://www.berkshirecommunities.com/apartments/wa/seattle/cielo/) に泊まった。アパートメントタイプで AirBnb みたいな宿だった。何階建てなのか知らないけど泊まったのは 21 階で見晴らしも良かった。会場まではまっすぐ歩いて 8 ~ 10 分だったのはいいんだけどやっぱり寒かったのでしんどかった。
 
-{{< img src="cielo.png" width="600" >}}
+{{< img src="/images/hashiconf2019/cielo.png" width="600" >}}
 
-{{< img src="morning.png" width="600" >}}
+{{< img src="/images/hashiconf2019/morning.png" width="600" >}}
 
 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2689.8440658912423!2d-122.33170618436932!3d47.609721679184844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54906ab5d0ed2ac7%3A0xc4e458c75a4728a7!2sCielo!5e0!3m2!1sja!2sjp!4v1570093520291!5m2!1sja!2sjp" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
 
