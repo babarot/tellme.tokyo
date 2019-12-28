@@ -3,6 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://tellme.tokyo/post/2019/12/28/2019-books-movies/</loc>
+    <lastmod>2019-12-28T19:01:59+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/post/</loc>
+    <lastmod>2019-12-28T19:01:59+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/</loc>
+    <lastmod>2019-12-28T19:01:59+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/tags/hashiconf/</loc>
     <lastmod>2019-10-03T17:15:22+09:00</lastmod>
   </url>
@@ -18,17 +33,7 @@
   </url>
   
   <url>
-    <loc>https://tellme.tokyo/post/</loc>
-    <lastmod>2019-10-03T17:15:22+09:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://tellme.tokyo/tags/</loc>
-    <lastmod>2019-10-03T17:15:22+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tellme.tokyo/</loc>
     <lastmod>2019-10-03T17:15:22+09:00</lastmod>
   </url>
   
