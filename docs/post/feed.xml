@@ -7,10 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Sat, 28 Dec 2019 19:01:59 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 31 Dec 2019 23:59:04 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/post/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>2019年振り返り</title>
+      <link>https://tellme.tokyo/post/2019/12/31/2019-review/</link>
+      <pubDate>Tue, 31 Dec 2019 23:59:04 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2019/12/31/2019-review/</guid>
+      <description>仕事  1月からはメルペイの仕事に積極的に関わる機会があり、そのときに HashiCorp Vault を深ぼることから始まった。 Vault のドキュメントを漁って Vault on GKE のデザインからやることができた。しかしまだまだVaultビギナーなのでもっと追えるようにしようと思っている。
+それからのちの GoCon Fukuoka で発表することにもなるが、Cloud Functions をもちいた Microservices の成果の観測を始める Project を作った。 Cloud Functions を大量に作ったのだけど、これを効率的に扱ういい方法がまだ見つかっていない。Serverless framework はあるのだけど、Lambda でさえそこまでアクティブにメンテナンスされていないようで、ここらへんはコントリビューションのしがいがあるかなーと睨んでいる。
+そのあとは、Platform (主に Terraform 管理レポジトリ) の US 対応をしたりした。 Platform のグローバル化は Platform チームの目指すべきところでもあり、メルカリチームの悲願でもあるのでそこに貢献できたのはグッド。
+10月からはバタバタしているうちに12月になってた。
+コントリビューション  Software Design 2019年9月号 12 OSS projects (incl. private repos)  b4b4r07/stein https://github.com/b4b4r07/stein/   海外カンファレンス  HashiCorp &amp;lsquo;19 re:Invent &amp;lsquo;19  登壇  (mercari.go#6) Testing with YAML - Speaker Deck (GoConference &amp;lsquo;19 Summer in Fukuoka) Cloud Functions in Go at Mercari - Speaker Deck (Kubernetes Meetup Tokyo #18) Kubernetes manifests management and operation in Mercari - Speaker Deck (未来大×企業エンジニア 春のLT大会) Insert an Example of Software Engineer Here - Speaker Deck  プライベート  越して2年を迎えた。そろそろ引っ越したいなぁ</description>
+    </item>
     
     <item>
       <title>2019年に読んだ本、観た映画</title>
