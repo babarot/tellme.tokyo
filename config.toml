@@ -13,11 +13,11 @@ tag = "tags"
 category = "categories"
 
 [params]
-description = "tellme.tokyo"
+description = "Masaki ISHIYAMA"
 keywords = ["b4b4r07", "babarot"]
 author = "b4b4r07"
 profile = "profile.jpg"
-website = "https://tellme.tokyo"
+website = "https://b4b4r07.github.io"
 sharingicons = true
 displayauthor = false
 displayoldlink = true
