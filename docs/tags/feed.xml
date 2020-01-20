@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Thu, 03 Oct 2019 17:15:22 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 20 Jan 2020 19:58:54 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/tags/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>blog</title>
+      <link>https://tellme.tokyo/tags/blog/</link>
+      <pubDate>Mon, 20 Jan 2020 19:58:54 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/blog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>github-pages</title>
+      <link>https://tellme.tokyo/tags/github-pages/</link>
+      <pubDate>Mon, 20 Jan 2020 19:58:54 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/github-pages/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>hashiconf</title>
@@ -126,15 +144,6 @@
       <pubDate>Thu, 08 Nov 2018 22:37:54 +0900</pubDate>
       
       <guid>https://tellme.tokyo/tags/fashion/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>blog</title>
-      <link>https://tellme.tokyo/tags/blog/</link>
-      <pubDate>Tue, 16 Oct 2018 13:18:07 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/tags/blog/</guid>
       <description></description>
     </item>
     

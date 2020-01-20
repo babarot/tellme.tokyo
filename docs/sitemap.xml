@@ -3,17 +3,37 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://tellme.tokyo/post/2019/12/31/2019-review/</loc>
-    <lastmod>2019-12-31T23:59:04+09:00</lastmod>
+    <loc>https://tellme.tokyo/tags/blog/</loc>
+    <lastmod>2020-01-20T19:58:54+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/post/2020/01/20/github-pages-with-https/</loc>
+    <lastmod>2020-01-20T19:58:54+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/tags/github-pages/</loc>
+    <lastmod>2020-01-20T19:58:54+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://tellme.tokyo/post/</loc>
-    <lastmod>2019-12-31T23:59:04+09:00</lastmod>
+    <lastmod>2020-01-20T19:58:54+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/tags/</loc>
+    <lastmod>2020-01-20T19:58:54+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://tellme.tokyo/</loc>
+    <lastmod>2020-01-20T19:58:54+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/post/2019/12/31/2019-review/</loc>
     <lastmod>2019-12-31T23:59:04+09:00</lastmod>
   </url>
   
@@ -34,11 +54,6 @@
   
   <url>
     <loc>https://tellme.tokyo/tags/hashicorp/</loc>
-    <lastmod>2019-10-03T17:15:22+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tellme.tokyo/tags/</loc>
     <lastmod>2019-10-03T17:15:22+09:00</lastmod>
   </url>
   
@@ -130,11 +145,6 @@
   <url>
     <loc>https://tellme.tokyo/post/2018/11/08/the-inoue-brothers/</loc>
     <lastmod>2018-11-08T22:37:54+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tellme.tokyo/tags/blog/</loc>
-    <lastmod>2018-10-16T13:18:07+09:00</lastmod>
   </url>
   
   <url>
