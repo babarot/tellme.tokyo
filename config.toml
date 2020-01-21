@@ -8,6 +8,9 @@ publishDir = "docs"
 pygmentsUseClasses = true
 pygmentsCodefences = true
 
+# default is 10
+paginate = 10
+
 [taxonomies]
 tag = "tags"
 category = "categories"
