@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="ログのタイムスタンプで UNIX 時間なのはツライって話 - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2016/12/06/211226/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>ログのタイムスタンプで UNIX 時間なのはツライって話 | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">ログのタイムスタンプで UNIX 時間なのはツライって話</h1>
+    <h2 class="subtitle is-5">December 6, 2016 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/go">go</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      
+        <a href="https://b4b4r07.hatenadiary.com/entry/2016/12/06/211226">元記事</a><br><br>
+      
+      
+
+<h2 id="tl-dr">tl;dr</h2>
+
+<p><a href="https://github.com/b4b4r07/epoch-cat">https://github.com/b4b4r07/epoch-cat</a></p>
+
+<ul>
+<li>UNIX 時間は読めないのでログファイル丸ごと食わせて、該当部分を変換するフィルタ作った</li>
+</ul>
+
+<h2 id="やり方は色々ある">やり方は色々ある</h2>
+
+<p>JSON とか LTSV とか combine とか、それらの複合で記録されてることの多いログファイルですが、たまにタイムスタンプが <a href="https://ja.wikipedia.org/wiki/UNIX時間">UNIX 時間</a>になってることがあります。</p>
+
+<p>これめっちゃつらくないですかね？&hellip;とても普通の人間が読める形式じゃないです。素の JSON であれば、<a href="https://stedolan.github.io/jq/">jq</a> に食わせて <a href="https://stedolan.github.io/jq/manual/v1.5/#Builtinoperatorsandfunctions">Dates 系の関数</a> などで加工することは可能ですが、jq 1.5 以上((現在 2016/12/06 最新の安定版は v1.5))が必須で、かつ jq 構文を覚えたり都度調べる必要があります (jq は好きだけどあまり使わない構文を覚えるのは個人的に面倒)。</p>
+
+<p>そもそもログファイルが JSON じゃない形式の場合は、以下のリンクにあるようなやり方を組み合わせて調べたり、もはや UNIX 時間になっている該当部分をコピペして date コマンドに投げたりして JST (や UTC) に変換することが多いです。</p>
+
+<iframe
+  class="hatenablogcard"
+  style="width:100%;height:155px;max-width:420px;"
+  src="https://hatenablog-parts.com/embed?url=https%3a%2f%2fponkotuy.hatenadiary.org%2fentry%2f20140827%2f1409127514"
+  title=""
+  width="300"
+  height="150"
+  frameborder="0"
+  scrolling="no">
+</iframe>
+
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ date -d @1478745332.2113 +<span class="s2">&#34;%Y/%m/%d %T&#34;</span> <span class="c1"># GNU date</span></code></pre></div>
+<p>これ非常に面倒なんですよね。さらに言えば GNU date である必要があったり((<a href="http://qiita.com/albatross/items/b97df73dcfcedabb070d">GNU date コマンドで unix time 変換</a>))して、ただログの時間を読みたいだけなのに無駄に考えることが多いです。</p>
+
+<h2 id="こまけぇこたぁいいから">こまけぇこたぁいいから</h2>
+
+<p>時と場合であれこれ考えずに丸っとよしなにやってくれるフィルタあったら便利そう、ってことで書いてみました。</p>
+
+<ul>
+<li><a href="https://github.com/b4b4r07/epoch-cat">https://github.com/b4b4r07/epoch-cat</a></li>
+</ul>
+
+<p>別に難しいことはしてなく、cat コマンドの要領で UNIX 時間っぽい数字を <a href="https://www.ietf.org/rfc/rfc3339.txt">RFC3339 形式</a>に変換します。数値を何でもかんでも変換していたらとてもやってやれないので、誤爆を防ぐために <code>2000-01-01 00:00:00+00:00</code> 以降の UNIX 時間 (946684800) にのみ反応します。ロケールは TZ 環境変数に従ってローカライズされます。</p>
+
+<p>それでも誤爆する場合 (例えば、9桁以上のユーザ ID が頻繁に登場するなど) は、<code>-p</code> オプションで検索用のプレフィックスをつければ良いです。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ cat error_log <span class="p">|</span> epoch-cat -p <span class="s1">&#39;&#34;time&#34;:&#39;</span> -q <span class="p">|</span> jq .
+<span class="o">{</span>
+  <span class="s2">&#34;time&#34;</span>: <span class="s2">&#34;2016-12-05T21:51:26Z&#34;</span>,
+  <span class="s2">&#34;user_id&#34;</span>: <span class="m">987654321</span>,
+  <span class="s2">&#34;level&#34;</span>: <span class="s2">&#34;WARNING&#34;</span>,
+  <span class="s2">&#34;error&#34;</span>: <span class="o">{</span>
+    <span class="s2">&#34;message&#34;</span>: <span class="s2">&#34;見つかりませんでした&#34;</span>,
+    ...</code></pre></div>
+<p>どんな形式でも一旦このフィルタ噛ませばヒューマンリーダブルな時刻形式に変わってくれるので捗ります。</p>
+
+<h2 id="まとめ">まとめ</h2>
+
+<p>個人的に、ツールとしてはこんなんでいいんですよ。ログ漁ってるときはあれ探してみてこれ探してみて、とあれこれ考えてること多いので無駄なことは考えたくないなぁという話でした。</p>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/https://b4b4r07.hatenadiary.com/entry/2016/12/06/211226" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2020 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+

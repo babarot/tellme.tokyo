@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>SQL on tellme.tokyo</title>
+    <title>sql on tellme.tokyo</title>
     <link>https://tellme.tokyo/tags/sql/</link>
-    <description>Recent content in SQL on tellme.tokyo</description>
+    <description>Recent content in sql on tellme.tokyo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Tue, 14 Feb 2017 00:00:00 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 14 Feb 2017 21:42:31 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/tags/sql/feed.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>golang で zsh history を SQL 的に活用する</title>
-      <link>https://tellme.tokyo/post/2017/02/14/history-golang-sql/</link>
-      <pubDate>Tue, 14 Feb 2017 00:00:00 +0900</pubDate>
+      <link>https://tellme.tokyo/post/2017/02/14/214231/</link>
+      <pubDate>Tue, 14 Feb 2017 21:42:31 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2017/02/14/history-golang-sql/</guid>
+      <guid>https://tellme.tokyo/post/2017/02/14/214231/</guid>
       <description>僕は開発中、zsh のヒストリー補完の機能をよく使います。具体的には次のような場面が多いです。
  多用するコマンド  結局開発中に使うのはエディタ (vim) と git サブコマンドに集中する ちょちょいと ^N (↑) で履歴をさかのぼる  alias がイケてない場面  「エディタで .zshrc 開いて追加してリロード」が面倒で後回ししがち そして登録せずに終わる の繰り返し&amp;hellip; うろ覚え程度のコマンドの alias 名はもはや思い出せない 結局エディタ開いて見直したり、^R で遡ることに挑戦する  長いコマンド列になるとき  引数が多いとき、多段のパイプで繋いだとき 例えば、複数のパラメータを与えたときの curl コマンド   Ctrl-r (history-incremental-search-backward) よるヒストリーサーチが便利なのはよく知られたことですが、それに加えて peco のようなコマンドラインセレクタと zsh history を組み合わせて、過去に自分が入力したコマンドをその一部の記憶から引き出せるようにしたりして、便利になるようにカスタマイズしていました。
 しかし、それでも以下のような不満がありました。

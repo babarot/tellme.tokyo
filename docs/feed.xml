@@ -527,6 +527,18 @@ Spinnaker は「デプロイ先のクラスタ」と「どのイメージを撒�
     </item>
     
     <item>
+      <title>ブログを GKE #k8s に移した</title>
+      <link>https://tellme.tokyo/post/2017/08/03/015238/</link>
+      <pubDate>Thu, 03 Aug 2017 01:52:38 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2017/08/03/015238/</guid>
+      <description>このはてなブログで使っていたドメインを続用するため、移行後も tellme.tokyo です。
+移行した背景や技術的な言及は移行先のエントリに書きました。
+ブログをGKEで運用し、Spinnakerでデプロイする | tellme.tokyo
+おそらくこっちのブログに記事を載せる機会は少なくなりますが、削除する予定は今のところありません。</description>
+    </item>
+    
+    <item>
       <title>ブログをGKEで運用し、Spinnakerでデプロイする</title>
       <link>https://tellme.tokyo/post/2017/07/30/blog-on-gke-deployed-by-spinnaker/</link>
       <pubDate>Sun, 30 Jul 2017 12:37:33 +0900</pubDate>
@@ -542,18 +554,16 @@ FROMgolang:1.8-alpine AS hugoRUN apk add --update --no-cache git &amp;amp;&amp;a
     
     <item>
       <title>最強のヒストリ補完を作りました</title>
-      <link>https://tellme.tokyo/post/2017/06/13/history/</link>
-      <pubDate>Tue, 13 Jun 2017 00:00:00 +0900</pubDate>
+      <link>https://tellme.tokyo/post/2017/06/13/233305/</link>
+      <pubDate>Tue, 13 Jun 2017 23:33:05 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2017/06/13/history/</guid>
-      <description>最強のヒストリ補完を求めて シェルヒストリに不満を持っていたので自作しました。 今の自分にとっては必要な機能を盛り込んでいて便利に使えていますが、誰かにとっては、もしくは数カ月後の自分にとってはぜんぜん最強じゃないかもしれないです。
+      <guid>https://tellme.tokyo/post/2017/06/13/233305/</guid>
+      <description>最強のヒストリ補完を求めて シェルヒストリに不満を持っていたので自作しました。今の自分にとっては必要な機能を盛り込んでいて便利に使えていますが、誰かにとっては、もしくは数カ月後の自分にとってはぜんぜん最強じゃないかもしれないです。
 以前このようなエントリを書きました。
-[http://www.tellme.tokyo/entry/2017/02/14/214231:embed:cite]
+http://www.tellme.tokyo/entry/2017/02/14/214231
 このころから (いやもっと前から) シェルのヒストリ補完に不満を持っていました。
  単純にデフォルトの C-r だと目的のものを探しづらい  例えばコマンド名の一部だけだとノイズが多すぎる けどディレクトリは覚えているからそれでもフィルタしたい、とか   他にも色々あって (その理由について先のエントリを見てもらうとして) zsh-history というツールを書きました。
-https://github.com/b4b4r07/zsh-history
-このときは最強のヒストリ補完ができたと、嬉々として先程のエントリを書いたのです。
-しかし、まあ数ヶ月使っていると不便な点が見えてきて、
+ このときは最強のヒストリ補完ができたと、嬉々として先程のエントリを書いたのです。 しかし、まあ数ヶ月使っていると不便な点が見えてきて、
  複数ホスト間でもヒストリ共有したい ディレクトリだけではなくブランチごとに履歴を持ちたい カジュアルに履歴を消したい などなどの変更を加えるときに SQLite3 だとめんどい パフォーマンスは落ちるかもしれないけどテキストで持ってたほうが何かと便利かも  みたいなことが相まって作り直そうと思ったわけです。
 新しく作った 特徴など 前回のネーミングセンスなさから変わらず、単に history となっています (そもそも前回のときのも zsh- prefix をつける必要性なかったので)。
  何ができるかというと、
@@ -562,30 +572,30 @@ https://github.com/b4b4r07/zsh-history
     
     <item>
       <title>Crowi 用の API Client 書いて公式に取り込まれた</title>
-      <link>https://tellme.tokyo/post/2017/04/04/go-crowi/</link>
-      <pubDate>Tue, 04 Apr 2017 00:00:00 +0900</pubDate>
+      <link>https://tellme.tokyo/post/2017/04/04/023351/</link>
+      <pubDate>Tue, 04 Apr 2017 02:33:51 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2017/04/04/go-crowi/</guid>
+      <guid>https://tellme.tokyo/post/2017/04/04/023351/</guid>
       <description>Crowi というオープンソースソフトウェアの wiki があります。
  Markdown で書ける wiki で、
  Markdown をオートプレビュー URL (パス構造) でページを作成/表現できる リビジョンヒストリ (差分を管理してくれる) いいね、ブックマーク、ポータル機能、&amp;hellip;  などの特徴があって、とても便利なサービスです。
 簡単に Heroku to deploy できるので気になる方は試してみてください。開発者向けにはオールインワンの Docker が有志によってメンテされているので、そちらを試してみても良いかもしれません。
 go-crowi Crowi 用の API Client を Go で書きました。
-https://github.com/crowi/go-crowi
-Go で API Client は初めて書いたのですが、@deeeet さんの記事が参考になりました。
-GolangでAPI Clientを実装する | SOTA
+ Go で API Client は初めて書いたのですが、@deeeet さんの記事が参考になりました。
+https://deeeet.com/writing/2016/11/01/go-api-client/
 もともと、Qiita:Team からの移行ツールを Go で書いていたのですが、Crowi API と通信する部分は外部パッケージとして切り出したほうが汎用的に良いなと、go-crowi を作りました。
 https://github.com/b4b4r07/qiita2crowi
 このツールは Qiita:Team からのエクスポート用の JSON を食わすと、指定した Crowi に記事を作成してくれるものです。Qiita から画像を取ってきてアッタチメントしたり、コメントなども移行してくれます。
-Transfer to Crowi そして今日、Crowi のメインメンテナの @sotarok さんから公式においても良いかも、というお話をいただき transfer しました。</description>
+Transfer to Crowi そして今日、Crowi のメインメンテナの @sotarok さんから公式においても良いかも、というお話をいただき transfer しました。
+welcome to official go client for Crowi / “GitHub - crowi/go-crowi: A Go client for Crowi APIs” https://t.</description>
     </item>
     
     <item>
       <title>golang で zsh history を SQL 的に活用する</title>
-      <link>https://tellme.tokyo/post/2017/02/14/history-golang-sql/</link>
-      <pubDate>Tue, 14 Feb 2017 00:00:00 +0900</pubDate>
+      <link>https://tellme.tokyo/post/2017/02/14/214231/</link>
+      <pubDate>Tue, 14 Feb 2017 21:42:31 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2017/02/14/history-golang-sql/</guid>
+      <guid>https://tellme.tokyo/post/2017/02/14/214231/</guid>
       <description>僕は開発中、zsh のヒストリー補完の機能をよく使います。具体的には次のような場面が多いです。
  多用するコマンド  結局開発中に使うのはエディタ (vim) と git サブコマンドに集中する ちょちょいと ^N (↑) で履歴をさかのぼる  alias がイケてない場面  「エディタで .zshrc 開いて追加してリロード」が面倒で後回ししがち そして登録せずに終わる の繰り返し&amp;hellip; うろ覚え程度のコマンドの alias 名はもはや思い出せない 結局エディタ開いて見直したり、^R で遡ることに挑戦する  長いコマンド列になるとき  引数が多いとき、多段のパイプで繋いだとき 例えば、複数のパラメータを与えたときの curl コマンド   Ctrl-r (history-incremental-search-backward) よるヒストリーサーチが便利なのはよく知られたことですが、それに加えて peco のようなコマンドラインセレクタと zsh history を組み合わせて、過去に自分が入力したコマンドをその一部の記憶から引き出せるようにしたりして、便利になるようにカスタマイズしていました。
 しかし、それでも以下のような不満がありました。
@@ -593,11 +603,22 @@ Transfer to Crowi そして今日、Crowi のメインメンテナの @sotarok �
     </item>
     
     <item>
-      <title>かゆいところに手が届く系の Git Tips 話</title>
-      <link>https://tellme.tokyo/post/2016/12/20/git-tips/</link>
-      <pubDate>Tue, 20 Dec 2016 00:00:00 +0900</pubDate>
+      <title>今年を振り返る</title>
+      <link>https://tellme.tokyo/post/2016/12/31/204112/</link>
+      <pubDate>Sat, 31 Dec 2016 20:41:12 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2016/12/20/git-tips/</guid>
+      <guid>https://tellme.tokyo/post/2016/12/31/204112/</guid>
+      <description>去年は「つくったものリスト」を書きました。今年は、つくったものベースよりもやったことベースで話したほうが膨らみそうなので、今年の振り返りとしてメモしておこうと思います。
+[http://www.tellme.tokyo/entry/2015/12/31/005300:embed:cite]
+振り返り と思ったんですけど特に思い浮かばなかったので、ここで締めさせていただきます。</description>
+    </item>
+    
+    <item>
+      <title>かゆいところに手が届く系の Git Tips 話</title>
+      <link>https://tellme.tokyo/post/2016/12/20/110000/</link>
+      <pubDate>Tue, 20 Dec 2016 11:00:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/12/20/110000/</guid>
       <description>この記事は Git Advent Calendar 2016 の 20 日目です。git コマンドを日常的に実行するわけですが、外部スクリプトなどで個人的に日々改善しているお話についてまとめてみました。
 ブランチ切り替えを手早くする git オペレーションで add,commit 並に多用すると思うのがブランチ切り替えで、特に remote にある branch の切り替えなどをショートカットしたくスクリプトを書きました。
 $ git br  で fzf/peco などのフィルタで切り替えてくれます。ブランチ切り替え系はよくある tips なのですが、何が便利かというと、remotes/origin/HOGE などのリモートにしかないブランチは git checkout -b HOGE remote/origin/HOGE してくれるようになっているので気にせずに checkout できます。
@@ -613,41 +634,56 @@ SSH に切り替える pull や push には HTTPS と SSH が選べると思い�
     
     <item>
       <title>実用 Slack bot ヤマト編</title>
-      <link>https://tellme.tokyo/post/2016/12/12/yamato-bot/</link>
-      <pubDate>Mon, 12 Dec 2016 00:00:00 +0900</pubDate>
+      <link>https://tellme.tokyo/post/2016/12/12/002116/</link>
+      <pubDate>Mon, 12 Dec 2016 00:21:16 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2016/12/12/yamato-bot/</guid>
+      <guid>https://tellme.tokyo/post/2016/12/12/002116/</guid>
       <description>この記事は Slack Advent Calendar 2016 - Qiita の 12 日目です。
-はじめに 最近のエンジニアは Slack に常駐していることが多くなってきたと思います。ゆえに bot が便利であることはご存知かと思います。受け取った文字列を echo する bot や、ランダムに画像を返す bot もその練習としてはいいですが、次のステップに bot を書くとしたら実用的なものを書きたいですよね1。
+はじめに 最近のエンジニアは Slack に常駐していることが多くなってきたと思います。ゆえに bot が便利であることはご存知かと思います。受け取った文字列を echo する bot や、ランダムに画像を返す bot もその練習としてはいいですが、次のステップに bot を書くとしたら実用的なものを書きたいですよね ((記事の導入に関してはこの記事が LGTM なので併せて))。
 配送状況を通知する そこで書いたのが、荷物 (ヤマト) の配送状況が変わったら通知してくれる bot です。
- 次のような機能を持ちます。
+https://github.com/b4b4r07/yamato-bot
+次のような機能を持ちます。
  bot yamato 追跡番号 とすると bot が追跡番号を監視するようになります 現在の配送ステータスを記憶するので変わったら通知してくれます  とりあえず、注文した荷物の追跡番号が発番されたら bot に向かって教えてやればよいです。すると bot は定期的に配送状況をチェックしてくれるようになります。
 配送ステータスが変わると以下のように教えてくれるので、ユーザは荷物に対して受け身でいることができます。便利！
  まだ、積み残しも多いですがこれだけでも十分に便利でした。個人 Slack にでも通知してやりましょう。
 謝辞 この bot では nanoblog さんによるヤマト運輸の配送状況を確認する API を使用しています。
- [WebAPI]ヤマト運輸の配送状況を確認するAPIを作ってみた [YamaTrack]ヤマト運輸の荷物問合せサイトを作成しました  終わりに この bot は Node.js で書いてます。Botkit のおかげでサクッと書けるのは良いのですが、デーモン化するにあたり forever を利用していると色々モヤることが多く、現在は Go 言語 (Supervisord) で書き直しています (本当は間に合わせるはずだった)。</description>
+ [WebAPI]ヤマト運輸の配送状況を確認するAPIを作ってみた [YamaTrack]ヤマト運輸の荷物問合せサイトを作成しました  終わりに この bot は Node.</description>
+    </item>
+    
+    <item>
+      <title>ログのタイムスタンプで UNIX 時間なのはツライって話</title>
+      <link>https://tellme.tokyo/post/2016/12/06/211226/</link>
+      <pubDate>Tue, 06 Dec 2016 21:12:26 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/12/06/211226/</guid>
+      <description>tl;dr https://github.com/b4b4r07/epoch-cat
+ UNIX 時間は読めないのでログファイル丸ごと食わせて、該当部分を変換するフィルタ作った  やり方は色々ある JSON とか LTSV とか combine とか、それらの複合で記録されてることの多いログファイルですが、たまにタイムスタンプが UNIX 時間になってることがあります。
+これめっちゃつらくないですかね？&amp;hellip;とても普通の人間が読める形式じゃないです。素の JSON であれば、jq に食わせて Dates 系の関数 などで加工することは可能ですが、jq 1.5 以上((現在 2016/12/06 最新の安定版は v1.5))が必須で、かつ jq 構文を覚えたり都度調べる必要があります (jq は好きだけどあまり使わない構文を覚えるのは個人的に面倒)。
+そもそもログファイルが JSON じゃない形式の場合は、以下のリンクにあるようなやり方を組み合わせて調べたり、もはや UNIX 時間になっている該当部分をコピペして date コマンドに投げたりして JST (や UTC) に変換することが多いです。
+ $ date -d @1478745332.2113 +&amp;#34;%Y/%m/%d %T&amp;#34; # GNU date これ非常に面倒なんですよね。さらに言えば GNU date である必要があったり((GNU date コマンドで unix time 変換))して、ただログの時間を読みたいだけなのに無駄に考えることが多いです。
+こまけぇこたぁいいから 時と場合であれこれ考えずに丸っとよしなにやってくれるフィルタあったら便利そう、ってことで書いてみました。
+ https://github.com/b4b4r07/epoch-cat  別に難しいことはしてなく、cat コマンドの要領で UNIX 時間っぽい数字を RFC3339 形式に変換します。数値を何でもかんでも変換していたらとてもやってやれないので、誤爆を防ぐために 2000-01-01 00:00:00+00:00 以降の UNIX 時間 (946684800) にのみ反応します。ロケールは TZ 環境変数に従ってローカライズされます。</description>
     </item>
     
     <item>
       <title>最近の Vim のプラグイン管理について考える</title>
-      <link>https://tellme.tokyo/post/2016/12/05/2016-vim-plugin/</link>
-      <pubDate>Mon, 05 Dec 2016 00:00:00 +0900</pubDate>
+      <link>https://tellme.tokyo/post/2016/12/05/021806/</link>
+      <pubDate>Mon, 05 Dec 2016 02:18:06 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2016/12/05/2016-vim-plugin/</guid>
+      <guid>https://tellme.tokyo/post/2016/12/05/021806/</guid>
       <description>この記事は Vim Advent Calendar 2016 の 5 日目の記事です。
-以前、neobundle.vim と vim-plug の比較記事を書きました。 それから数ヶ月後、dein.vim が登場し、再び比較記事を書こうと思っていたのですが、気づけばあれから 1 年が経っていました。 この記事は半年前 (&amp;lsquo;16年8月頃) に大枠だけ書き Qiita の限定共有に投稿していたのものを Advent Calendar 向けに書き下ろしたものです。
-Vim プラグインの歴史 GitHub 以前 (〜2008年) 昔の話です。 Vim script で拡張の機能を書いたらそのスクリプトを vim.org にアップして開発者同士で共有したり、ユーザがダウンロードして使っていたようです。 おそらくコレが所謂「プラグイン管理」の始まりなのですが、このときはまだ手動で行われていたようです (残念ながら、このときはまだ Vim に出会っていなかったためその肌感は分かりません&amp;hellip;)。
+以前、neobundle.vim と vim-plug の比較記事を書きました((おい、NeoBundle もいいけど vim-plug 使えよ))。それから数ヶ月後、dein.vim が登場し、再び比較記事を書こうと思っていたのですが、気づけばあれから 1 年が経っていました((dein.vim リリース前に Shougo さんから記事を書いてほしいといった DM を受け取っていた))。この記事は半年前 (&amp;lsquo;16年8月頃) に大枠だけ書き Qiita の限定共有に投稿していたのものを Advent Calendar 向けに書き下ろしたものです((限定投稿していたのにも関わらず PV が多く、はてブが 12 付いていたので大部分を踏襲しつつ Shougo さんのインタビューを加えました))。
+Vim プラグインの歴史 GitHub 以前 (〜2008年) 昔の話です。Vim script で拡張の機能を書いたらそのスクリプトを vim.org にアップして開発者同士で共有したり、ユーザがダウンロードして使っていたようです。おそらくコレが所謂「プラグイン管理」の始まりなのですが、このときはまだ手動で行われていたようです (残念ながら、このときはまだ Vim に出会っていなかったためその肌感は分かりません&amp;hellip;)。
 例えば、こんな機能も Vim script で書いた拡張です (autogroup などは考慮してません)。
-autocmd BufWritePre * %s/\s\+$//e Vim 7 から Vimball という機能が Vim 本体に同梱されて、それからはこれを利用するユーザもいたようです。 vim.org からアーカイブされたスクリプトを持ってきて、:so % したり、気に入ったら runtimepath 以下に置いて自動読み込みしたり。 その頃の plugins ディレクトリは混沌としていたようです。 ペライチのスクリプトが無造作に転がっており、同名ファイルに気をつけたりアップデートの情報は自分でキャッチしなければなりませんでした。
-GitHub 以降 (2008年〜) GitHub は 2008 年頃発のサービスですが、翌年には最大の Git のホスティングサービスになっていたようです。 本格的に流行りだしたのは 2011 年ころの印象を受けますが、このソーシャルコーディング時代の新風は Vim プラグイン界にも訪れ、席巻したようです。</description>
+autocmd BufWritePre * %s/\s\+$//e Vim 7 から Vimball という機能が Vim 本体に同梱されて、それからはこれを利用するユーザもいたようです。vim.org からアーカイブされたスクリプトを持ってきて、:so % したり、気に入ったら runtimepath 以下に置いて自動読み込みしたり。その頃の plugins ディレクトリは混沌としていたようです。ペライチのスクリプトが無造作に転がっており、同名ファイルに気をつけたりアップデートの情報は自分でキャッチしなければなりませんでした。</description>
     </item>
     
     <item>
       <title>builderscon tokyo 2016 に参加してきました</title>
-      <link>https://tellme.tokyo/post/2016/12/04/builderscon2016/</link>
-      <pubDate>Sun, 04 Dec 2016 00:00:00 +0900</pubDate>
+      <link>https://tellme.tokyo/post/2016/12/04/154846/</link>
+      <pubDate>Sun, 04 Dec 2016 15:48:46 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2016/12/04/builderscon2016/</guid>
+      <guid>https://tellme.tokyo/post/2016/12/04/154846/</guid>
       <description>引用
  buildersconは「知らなかった、を聞く」をテーマとした技術を愛する全てのギーク達のお祭りです
  tl;dr  builderscon tokyo 2016 に参加して、  裸で登壇された生 mattn さんを見て、 みんなを楽しませる技術力に凄いなぁと改めて思わされ、 自分も何か作りたい衝動に駆られた   Opening 牧さんによるオープニングでした。いきなり第2回開催予定の告知からスタートし会場が少しざわめきました。まだ、第1回の builderscon すら終わってないのに、このタイミングでの告知は、サプライズ感だけでなく絶対成功させるぞという気概を感じさせるとともに、コンセプトにもあるお祭りっぽさがあってとてもワクワクさせられました。
@@ -657,64 +693,231 @@ php.ini について知る @uzulla さんによる発表でした。PHP を書�
     
     <item>
       <title>運営として VimConf 2016 に参加してきた</title>
-      <link>https://tellme.tokyo/post/2016/11/06/vimconf2016/</link>
-      <pubDate>Sun, 06 Nov 2016 00:00:00 +0900</pubDate>
+      <link>https://tellme.tokyo/post/2016/11/06/230902/</link>
+      <pubDate>Sun, 06 Nov 2016 23:09:02 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2016/11/06/vimconf2016/</guid>
-      <description>株式会社ミクシィさんにて行われた VimConf 2016 の参加レポートです。自分は一般参加者としてではなく、一部運営に携わったのでその点について主に書ければなと思います。
+      <guid>https://tellme.tokyo/post/2016/11/06/230902/</guid>
+      <description>と、仰々しいタイトルにしましたが、株式会社ミクシィさんにて行われた VimConf 2016 の参加レポートです。自分は一般参加者としてではなく、一部運営に携わったのでその点について主に書ければなと思います。
 tl;dr   VimConf 2016 のまとめ役として参加しました スライドの感想や資料については他の方のレポートを見てください 「ババロットさん、アイコン変えた方がいいよ」  まとめ役として参画した背景 ある日突然、社内 Slack の個人チャンネル (分報的なアレ) にてこんなポストが投げられました (リンクだけ)。
-  二つ返事で参加レスをしたわけですが、これはノリで運営やってみました、とかでは全くないです。日々、Vim を使い vim-jp やその界隈の人たちのプラグインなどを使ったりし感謝していくうちに、いつかコミュニティに携わりたい・還元したいという気持ちが芽生えていたためです。たまたまこの煽りポストがいい後押しとなり、運営への参画を踏み出すきっかけになったのでした。
+ [https://github.com/vim-jp/vimconf/issues/106:title]
+二つ返事で参加レスをしたわけですが、これはノリで運営やってみました、とかでは全くないです。日々、Vim を使い vim-jp やその界隈の人たちのプラグインなどを使ったりし感謝していくうちに、いつかコミュニティに携わりたい・還元したいという気持ちが芽生えていたためです。たまたまこの煽りポストがいい後押しとなり、運営への参画を踏み出すきっかけになったのでした。
 ひとり KPT まとめ役という肩書きで参加したわけですが、色々振り返ってみるとやり残したことや課題感、続けたいことなどが見えたのでまとめてみます。
  KEEP  VimConf 2017 への参画  せっかく自分の中に溜まったノウハウをここで途絶えさせるのは勿体無いので、次回も何らかの形で携わりたい。貢献し続けることも大切  参加率の良さ  9 割近くの参加率、総勢約 120 名での VimConf は初のこと。募集開始を遅らせたりなどの工夫があった。果たしてこれが功を奏したかは来年も試してテストしてみないとだけど  ケータリングの量  多すぎず少なすぎずで懇親会終わる頃にちょうど綺麗になくなった感。廃棄もほとんどなかったんじゃないかな。ここは自分ががっつり噛んでいたところなので見事な新卒力を発揮できた  交流が活発に見えた  誰とも話せない、という人はいなかった気がします。それとドリンク島がドリンクを求めた立ち寄った人との交流の場になっていたのは良かった   PROBLEM  コミットが足りなかった  TRY: 忙し月と準備が被った。次回も参加することで乗り越えていきたいところ  意外とバタバタ@懇親会準備1  TRY: 各種業者に当日リマインダを掛けられたのはよかった。ただ、一部到着連絡をもらえず開場まで運ばれたのには焦った (受付に人がいて気づいてくれた. いなかったらと思う図ちょっとゾッとする)。  意外とバタバタ@懇親会準備2  TRY: 皿や紙コップ、醤油や小皿のデプロイに手間取った。これは前々からその準備が必要だなって思った。発表中にごそごそするわけにもいかないだろうし。    印象に残ったこと # TODO: ババロットさんに中年エンジニアと誤認していたことを謝る。https://t.</description>
     </item>
     
     <item>
       <title>特定のワードで Twitter を監視して、検知したら Slack に投げる</title>
-      <link>https://tellme.tokyo/post/2016/10/17/twistd/</link>
-      <pubDate>Mon, 17 Oct 2016 00:24:32 +0900</pubDate>
+      <link>https://tellme.tokyo/post/2016/10/17/205021/</link>
+      <pubDate>Mon, 17 Oct 2016 20:50:21 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2016/10/17/twistd/</guid>
-      <description>&amp;hellip; というツールを書きました。 Twitter Streaming Daemon なので twistd です。 最近話題の名前衝突ですが、こっちは個人のツールだし一旦気にしないことにします (リポジトリ作ってから気づいた)。
+      <guid>https://tellme.tokyo/post/2016/10/17/205021/</guid>
+      <description>&amp;hellip; というツールを書きました。Twitter Streaming Daemon なので twistd です。最近話題の名前衝突ですが、こっちは個人のツールだし一旦気にしないことにします (リポジトリ作ってから気づいた)。
  tl;dr  Twitter Streaming API を利用してツイートを監視する 特定のワードで引っかかったら Slack に通知する 2つをいっぺんに行うコマンドを書いた (デーモンとして利用しましょう)  
 ※ [&#39;tomato&#39;, &#39;potato&#39;] で引っ掛けてる例
-モチベーション zplug (GitHub Organization) ではオーナーの他に数名のコラボレーターの方たちがいます。 開発者同士のコミュニケーションには Slack を用い、GitHub Issues で issue トラッキングをしています。 Slack への GitHub の通知は、Slack のインテグレーション機能 (issue が作られたり P-R が投げられると通知される) を使っています。 これはよくあるスタイルだと思います。
-ところが、数ヶ月 Organization を運用して気づいたのが GitHub Issues に上がってこないバグレポートや機能改善、機能要望も結構あるということです。 その多くは Twitter 上でつぶやかれていて、それからは時折 zplug -RT とかで Twitter 検索をしていたのですが、それを他のコラボレーターに共有するのが面倒なことと、定期的なエゴサーチが面倒 (見逃すということもある) で、Twitter を常時監視して zplug についてつぶやかれていたら Slack にポストしてくれるツールはないかと探しておりました。 ちょうど良さそうなツールはないようなので作ることにしました。</description>
+モチベーション zplug (GitHub Organization) ではオーナーの他に数名のコラボレーターの方たちがいます。開発者同士のコミュニケーションには Slack を用い、GitHub Issues で issue トラッキングをしています。Slack への GitHub の通知は、Slack のインテグレーション機能 (issue が作られたり P-R が投げられると通知される) を使っています。これはよくあるスタイルだと思います。
+ところが、数ヶ月 Organization を運用して気づいたのが GitHub Issues に上がってこないバグレポートや機能改善、機能要望も結構あるということです。その多くは Twitter 上でつぶやかれていて、それからは時折 zplug -RT とかで Twitter 検索をしていたのですが、それを他のコラボレーターに共有するのが面倒なことと、定期的なエゴサーチが面倒 (見逃すということもある) で、Twitter を常時監視して zplug についてつぶやかれていたら Slack にポストしてくれるツールはないかと探しておりました。ちょうど良さそうなツールはないようなので、じゃあ作りましょうかとなった次第です (すでにあったらごめんなさい。そして twistd より優れていたら教えてください)。</description>
     </item>
     
     <item>
       <title>新卒でメルカリに入社した話</title>
-      <link>https://tellme.tokyo/post/2016/10/01/mercari/</link>
-      <pubDate>Sat, 01 Oct 2016 00:00:00 +0900</pubDate>
+      <link>https://tellme.tokyo/post/2016/10/01/191546/</link>
+      <pubDate>Sat, 01 Oct 2016 19:15:46 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2016/10/01/mercari/</guid>
-      <description>タイトルの通りです。 16年卒の学部卒新卒として株式会社メルカリに入社しました。 入社したのは今年の 4&amp;frasl;1 なので半年前のことです。 なぜ今頃になって入社エントリを書くのかというと、先日新しいメディア立ち上げにともなう記事一発目としてインタビューを受けたのですが、その記事が 10&amp;frasl;3 に公開されるとのことで、他者に明らかにされるならばその前に自分から入社エントリを書こうと思ったことと、タイミング的にも今日という日はちょうどいいなと思ったからです。
-tl;dr  新卒でメルカリに入社しました メルカリでは新卒採用もしているので興味があれば言ってください  メルカリという会社  https://www.mercari.com
-メルカリが新卒採用を始めたのは今年からなので、僕は第一期新卒ということになります。 最近ではとても有名なアプリ・会社になってきて、国内での勢いはもちろんのことアメリカでも急成長してきており、今後の動向にワクワクしつつ日々携わっております。
-16 新卒は 6 人いて、今は 17&amp;frasl;18 卒の新卒採用に向けて動いています。 採用会食など、まずは話から聞いてみたいなという方がいましたら、僕経由で繋ぐことができるかもしれませんので興味があれば Twitter DM でもいいですし、コンタクトいただければなと思います。 新卒・中途採用どちらでも OK ですし、時期に関しても関係ないと思います（次の新卒がこの時期に連絡しても問題ないのかという意味で）。
-入社までの経緯 プログラミングといえるようなことは大学に入ってからはじめました。 C 言語の開発環境 (bash on Linux) に慣れなかったことから、色々改善しようと .bashrc のカスタマイズにのめり込み、シェルスクリプトを覚えるようになりました。 同時に Emacs に慣れずにエディタには Vim を使うようになり、同じく .vimrc のカスタマイズ (Vim script) にハマりました。 夢中になって気づいたら朝ということも何度かあった気がします。
-もともと、Windows を使っており、当時 AutoHotkey と超低機能 2 画面ファイラの「あふｗ」 (敬意を込めて) のカスタマイズにハマっていたことから、Linux でのカスタマイズについても夢中になることは明白でした。 これを機にと macOS (当時の表記で言う Mac OS X。 途中から OS X) に乗り換えたことで、更にそれは加速したような気がします。 しかし、シェルスクリプト力とエディタ力は上がれど、なかなか他の言語を集中して覚えることがなく、しばしば悩んでおりました。</description>
+      <guid>https://tellme.tokyo/post/2016/10/01/191546/</guid>
+      <description>タイトルの通りです。16年卒の学部卒新卒として株式会社メルカリに入社しました。入社したのは今年の 4&amp;frasl;1 なので半年前のことです。なぜ今頃になって入社エントリを書くのかというと、先日新しいメディア立ち上げにともなう記事一発目としてインタビューを受けたのですが、その記事が 10&amp;frasl;3 に公開されるとのことで、他者に明らかにされるならばその前に自分から入社エントリを書こうと思ったことと、タイミング的にも今日という日はちょうどいいなと思ったからです。
+tl;dr  新卒でメルカリに入社しました メルカリでは新卒採用もしているので興味があれば言ってください  メルカリという会社  メルカリが新卒採用を始めたのは今年からなので、僕は第一期新卒ということになります。最近ではとても有名なアプリ・会社になってきて、国内での勢いはもちろんのことアメリカでも急成長してきており、今後の動向にワクワクしつつ日々携わっております。
+16 新卒は 6 人いて、今は 17&amp;frasl;18 卒の新卒採用に向けて動いています。採用会食など、まずは話から聞いてみたいなという方がいましたら、僕経由で繋ぐことができるかもしれませんので興味があれば Twitter DM でもいいですし、コンタクトいただければなと思います。新卒・中途採用どちらでも OK ですし、時期に関しても関係ないと思います（次の新卒がこの時期に連絡しても問題ないのかという意味で）。
+入社までの経緯 プログラミングといえるようなことは大学に入ってからはじめました。C 言語の開発環境 (bash on Linux) に慣れなかったことから、色々改善しようと .bashrc のカスタマイズにのめり込み、シェルスクリプトを覚えるようになりました。同時に Emacs に慣れずにエディタには Vim を使うようになり、同じく .vimrc のカスタマイズ (Vim script) にハマりました。夢中になって気づいたら朝ということも何度かあった気がします。
+もともと、Windows を使っており、当時 AutoHotkey と超低機能 2 画面ファイラの「あふｗ」 (敬意を込めて) のカスタマイズにハマっていたことから、Linux でのカスタマイズについても夢中になることは明白でした。これを機にと macOS (当時の表記で言う Mac OS X。途中から OS X) に乗り換えたことで、更にそれは加速したような気がします。しかし、シェルスクリプト力とエディタ力は上がれど、なかなか他の言語を集中して覚えることがなく、しばしば悩んでおりました。
+今も当時もインターンが流行っていて、「強い意志もなく流行りにのってインターンに行くくらいなら、家や大学に篭って自分の好きなツールを作ったり OSS 活動をしていたほうがマシだ」((今となってはインターンに行かなかったことを少し後悔しています))と思っていた僕の GitHub / Qiita は、このとき大変活発でした。
+  そんな僕でも就職活動についてはせざるを得ないので、どうせなら自分のやり方でやろうと思い、大学で推奨されていた「マイナビ・リクナビ・研究室のコネ」は使わずに GitHub、Qiita を用いて行いました。自分の気になる・尊敬するエンジニアなどの Qiita 記事やブログ記事、GitHub の Bio からその会社を受けたり、Qiita Organization から興味を持った記事を書いているエンジニアのいる会社のウェブサイトを通して直接エントリしたりです。面接では必ず GitHub を見せ、「インターンは行ってないけどこれ作りましたよ」と言うことで、今まで作ってきたものベースで話を進めることができました。そのため就活は、自分の作ったものについてレビューをもらったり褒められたりして楽しかったな、という記憶しかないです。</description>
     </item>
     
     <item>
       <title>最近、httpstat なるものが流行っているらしい</title>
-      <link>https://tellme.tokyo/post/2016/09/25/httpstat/</link>
-      <pubDate>Sun, 25 Sep 2016 00:00:00 +0900</pubDate>
+      <link>https://tellme.tokyo/post/2016/09/25/213810/</link>
+      <pubDate>Sun, 25 Sep 2016 21:38:10 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2016/09/25/httpstat/</guid>
+      <guid>https://tellme.tokyo/post/2016/09/25/213810/</guid>
       <description>おそらく先行実装は python で書かれたこれです。
-  curl にはウェブサイトの応答時間を計測する機能が搭載されており、このツールではそれを利用して出力結果をグラフィカルに表示させています。 単なる curl のラッパーのようなツールなのですが、見た目がリッチになるのに加えて、単一ファイルで実行でき python のバージョンに影響されないような工夫がされているのが、受けているポイントのような気がします。
+ curl にはウェブサイトの応答時間を計測する機能が搭載されており、このツールではそれを利用して出力結果をグラフィカルに表示させています。単なる curl のラッパーのようなツールなのですが、見た目がリッチになるのに加えて、単一ファイルで実行でき python のバージョンに影響されないような工夫がされているのが、受けているポイントのような気がします。
 このツールを見たとき「Go で書いてみるの良さそう！（この手のツールで単一バイナリになるのは嬉しいですよね）」と思い、休憩時間やお昼休みなどにちまちま書いていたら、二日前に先を越されてしまいました（そりゃそうですよね。なんでもスピードが大事だと痛感）。
-  また、ついこの間まで 800 Stars くらいだったのですが、ここ1週間で爆発的に伸びています（記事投稿時 1,100 Stars）。 これを機になのか、色々な実装を見るようになりました。知らないだけで他にもあるかもしれません。
- yosuke-furukawa/httpstat (JavaScript) tcnksm/go-httpstat (Go package) talhasch/php-httpstat (PHP)  Go で先を越され少し悔しい気もするので、curl のラッパーだしシェルスクリプトでも書いてみようと思い、書いてみました。 なんのメリットがあるかは分かりませんが、bash オンリーで書いているので bash のある環境であれば動くはずです。
+  また、ついこの間まで 800 Stars くらいだったのですが、ここ1週間で爆発的に伸びています（記事投稿時 1,100 Stars）。 これを機になのか、色々な実装を見るようになりました（Go 実装は Library として）。知らないだけで他にもあるかもしれません。
+ https://github.com/yosuke-furukawa/httpstat https://github.com/tcnksm/go-httpstat https://github.com/talhasch/php-httpstat  Go で先を越され少し悔しい気もするので、curl のラッパーだしシェルスクリプトでも書いてみようと思い、書いてみました。なんのメリットがあるかは分かりませんが、bash オンリーで書いているので bash のある環境であれば動くはずです。
  次に時間があるときは Vim script で書こうかな。</description>
     </item>
     
     <item>
-      <title>ほんの 1分で GitHub に公開鍵を登録して SSH 接続する</title>
-      <link>https://tellme.tokyo/post/2015/11/11/ssh-keyreg/</link>
-      <pubDate>Wed, 11 Nov 2015 00:36:02 +0900</pubDate>
+      <title>zplug では Collaborators を募集しています</title>
+      <link>https://tellme.tokyo/post/2016/09/22/003448/</link>
+      <pubDate>Thu, 22 Sep 2016 00:34:48 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2015/11/11/ssh-keyreg/</guid>
+      <guid>https://tellme.tokyo/post/2016/09/22/003448/</guid>
+      <description>zplug は A next-generation plugin manager for zsh と謳い、絶賛開発中の zsh 向けのプラグインマネージャです。設計当初の目標通りフルスタックなツールになってきており、もはや zsh で書かれたというだけの、単なるパッケージマネージャとして使うことができるほどの機能を持ちはじめています。
+どんな機能があるか、どんな使い方ができるかなどは公式の README をご覧ください。最近では、ドキュメントの多言語化にも取り組んでおり、日本語版の README も追加しました。お気に入りの機能として特筆すると、例えば C 言語で書かれたツールの管理もできます:
+# インストール、アップデートに反応してビルドが走る zplug &amp;#34;jhawthorn/fzy&amp;#34;, \  as:command, \  rename-to:fzy, \  hook-build:&amp;#34; { make sudo make install }&amp;#34; 現在、zplug では @b4b4r07 と @NigoroJr さんの2人で開発・メンテナンスしております。@zplug-man は bot メンバーです。zplug ではコミュニケーション用に Slack を導入しており、Slack から zplug-man に作業させたりしています。
+ Join us!  そんな zplug では Collaborators を募集しています。記述する言語は Shell Script (zsh) です。zsh では黒魔術みたいな記述がたくさん出てきます。例えば:
+if (( $#unclassified_plugins == 0 )); then # If $tags[use] is a regular file, # expect to expand to $tags[dir]/*.</description>
+    </item>
+    
+    <item>
+      <title>今まで作っていた tellme.tokyo というブログ</title>
+      <link>https://tellme.tokyo/post/2016/09/20/004203/</link>
+      <pubDate>Tue, 20 Sep 2016 00:42:03 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/09/20/004203/</guid>
+      <description>200X年頃からいわゆるブログをやっておりますが、消しては作りを繰り返し、記事が残らないという残念なことをしてきました。なので、たとえブログが消えても記事がファイルとして残るように、Hugo &amp;amp; GitHub でブログを運営していました。それが、tellme.tokyo でした。しかし、その自作ブログと、このはてなブログと、そこそこのコントリビューションがある Qiita との住み分けに辟易して、ひとつ閉じることにしました。これからは、このはてなブログ（前 blog.b4b4r07.com）に書いていくようにします。ついでにドメイン変更しました（本当は tellme.tokyo としたかったがサブドメイン www. をつけた）。</description>
+    </item>
+    
+    <item>
+      <title>Vim 8.0 がリリースされた</title>
+      <link>https://tellme.tokyo/post/2016/09/12/232337/</link>
+      <pubDate>Mon, 12 Sep 2016 23:23:37 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/09/12/232337/</guid>
+      <description>本日 (2016-09-12 21:24:19 +09:00)、Vim 8.0 がリリースされました。
+メジャーアップデートは 2006 年 5 月の Vim 7.0 以来なのでおよそ 10 年ぶりです。おめでとうございます！
+ [https://github.com/vim/vim/commit/bb76f24af2010943387ce696a7092175b4ecccf2:embed:cite]
+Vim は GitHub に移行したので最新の Vim 8.0 をインストールするには、
+$ git clone https://github.com/vim/vim $ cd vim $ ./configure #好きな引数 $ make &amp;amp;&amp;amp; sudo make install でよいです。めっちゃ簡単
+変更点はリリースノートを見ましょう。私は絶賛試している最中です。
+ Happy Vimming!
+[https://github.com/vim/vim:embed:cite]</description>
+    </item>
+    
+    <item>
+      <title>今年つくったものリスト 2015</title>
+      <link>https://tellme.tokyo/post/2015/12/31/005300/</link>
+      <pubDate>Thu, 31 Dec 2015 00:53:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/12/31/005300/</guid>
+      <description>今年はたくさんのプロダクト・ツール・プラグインなどを作った。すべてを GitHub に公開し、git コマンドの操作体系や GitHub などのソーシャルコーディングについても少し詳しくなれた気がする。SNS ライクにやり取りできる GitHub はとても楽しい。
+GitHub Advanced search で検索してみた結果、
+ 総リポジトリ数が90なので、今年つくったものだけで全体の89%にあたる。ゆえに今年は結構活動した年だったといえるようだ。この結果は Twitter のツイートのアナライジングからも見て取れる。
+2015年に@b4b4r07がよく使った言葉は? #まとめ2015 https://t.co/NEwUKvjQmY pic.twitter.com/aOaIWqaNY3
+&amp;mdash; ババロットさん (@b4b4r07) 2015, 12月 17 
+https://twitter.com/b4b4r07/status/677389940095713280
+たくさんリポジトリを構えてものづくりに取り組んだ2015年であったが、今回はそんな中でも個人的に有用または多くのスターを獲得できたリポジトリを中心に振り返っていこうかと思う。
+zplug zplug はおそらく 2015 年で最も注力したプロダクトだ。「zsh 用のプラグインマネージャを作りたい」といった野望や、「自分が作るならこんな設計にしたい」といった構想などは結構前からあったのだけど、実際につくりはじめたのは11月末からだった。1ヶ月をしないで100スターを獲得し、自分の中ではとてもお気に入りである。
+zplug の生い立ちは少し特殊で既存の zsh プラグインマネージャ（Antigen や zgen など）の影響はほとんど受けず、Vim のプラグインマネージャを参考に設計された。そのためか neobundle.vim の作者（Shougo さん）や vim-plug の作者（junegunn さん）からスターやコメントをもらえたり、嬉しかった思い出がある。
+詳しくは以下のエントリで。
+ おい、Antigen もいいけど zplug 使えよ zplug カテゴリーの記事一覧 - tellme.tokyo  enhancd v2 cd コマンドの拡張を書いた。zsh では cdr という標準機能があり、peco や fzf と組み合わせる術が流行ったように思う。個人的にこの類の他のツールや cdr は合わなかった or 細部が気に食わなかったのでシェルプラグインとして新たに作り直した。カスタマイザブルなのがいいところで fzf や peco など自分が使いたいフィルタを選べるようになっている。また、初めて200スターを超えた作品となった。</description>
+    </item>
+    
+    <item>
+      <title>シェルスクリプトで git gc してまわるやつ</title>
+      <link>https://tellme.tokyo/post/2015/12/26/164141/</link>
+      <pubDate>Sat, 26 Dec 2015 16:41:41 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/12/26/164141/</guid>
+      <description>GOPATH の git リポジトリを全部 git gc してまわるやつ。要 ghq https://t.co/c4igqWnWR0
+&amp;mdash; mattn (@mattn_jp) 2015, 12月 11 
+じゃかじゃかと git gc していってる。 pic.twitter.com/MPuXHKzkrt
+&amp;mdash; mattn (@mattn_jp) 2015, 12月 11 
+ほほう。Go による非同期処理でじゃがじゃが git gc ですか、シェルスクリプトでも非同期でやってみよう。
+#!/bin/bash  find ${GOPATH%%:*}/src/github.com \  -follow \  -maxdepth 2 \  -mindepth 2 \  -type d | while read repo; do cd &amp;#34;$repo&amp;#34; &amp;amp;&amp;amp; git gc &amp;amp; done wait  いい感じやで。
+@lestrrat @mattn_jp 良くよく考えたらたしかにワンライナーでしたな！ ghq list -p | xargs -P 10 -n 1 — bash -c ‘cd $0; git gc;’</description>
+    </item>
+    
+    <item>
+      <title>最近の zplug の変更について</title>
+      <link>https://tellme.tokyo/post/2015/12/21/122701/</link>
+      <pubDate>Mon, 21 Dec 2015 12:27:01 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/12/21/122701/</guid>
+      <description>テック系でも Qiita ってところはブログではないので書けないことがある。しかしブログはそういうことが書けるのがいいなと思う。自分の庭みたいなもの。
+ローカルプラグインを管理できるようになった 先日の issue（#54）によってローカルリポジトリをロード対象とすることが可能になった。neobundle.vim や vim-plug にもあるお馴染みの機能だ。
+zplug &amp;#34;~/.zsh&amp;#34;, from:local from タグを使って指定する。自分の場合、~/.zsh 以下で zsh の設定ファイルを次のように分割しているため、この機能はとても便利に働く。デフォルトでは &amp;quot;*.zsh&amp;quot; が読み込み対象になっているので ~/.zsh 以下の zsh ファイルを簡単に zplug で管理できる
+$ tree ~/.zsh /Users/b4b4r07/.zsh ├── 10_utils.zsh ├── 20_keybinds.zsh ├── 30_aliases.zsh ├── 40_prompt.zsh ├── 50_setopt.zsh ├── 60_export.zsh ├── Completion │ ├── _ack │ ├── _add-sshkey-remote │ ├── _ag ... │ └── _path ├── Makefile └── README.md  フルパスでない場合は $ZPLUG_HOME を基準にパス解決される。
+zplug &amp;#34;repos/user/repo&amp;#34;, from:local 読み込むファイルを一部無視できるようになった これもまた issue（#56）によって導入された機能で、of タグと逆の指定をするためのタグ ignore が使用できるようになった。</description>
+    </item>
+    
+    <item>
+      <title>zplug 流 zsh プラグイン管理術</title>
+      <link>https://tellme.tokyo/post/2015/12/13/174209/</link>
+      <pubDate>Sun, 13 Dec 2015 17:42:09 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/12/13/174209/</guid>
+      <description>とある引用から。
+ 技術者であればだれでも経験することでしょうけれども、自分が作ったものを他人に理解させるというのは存外に難しく、なぜかというと開発者自身はどうしても開発した時の思考の流れを重視してしまい、読者にとって理解しやすい話の流れで話すという思考の大転換が困難だからです。そういえば、開発者自身による解説書の名著って意外なくらい少ないと思いませんか？
+ 私は先月末に zplug という zsh 用のプラグインマネージャーをリリースした。以下の記事では、zplug が生まれた背景やその周辺事情を導入として書いたため、もしかするとユーザ目線からでは分かりづらかったかもしれない。
+ おい、Antigen もいいけど zplug 使えよ  そこで今回は開発者としての記事ではなく、いちユーザとして（といっても開発者がユーザ目線でプロダクトを語るのは冒頭の引用にもある通りひどく難しいことである）使い方を紹介していく。
+特徴 
+ 何でも管理できる（コマンド、Gist、oh-my-zsh のプラグイン、GitHub Releases のバイナリ） 非同期インストール/アップデート ブランチロック・リビジョンロック インストール後の コマンド実行 hook あり oh-my-zsh などの外部プラグインをサポート バイナリを管理できる（GitHub Releases） shallow clone できる（オン・オフ） 依存関係の記述ができる ユーザはプラグインマネージャのことを考えなくていい（*.plugin.zsh 不必要） 選択的インターフェイスとの連携（fzf, peco, percol, zaw）  書き方 zplug はタグという概念を持っている。タグとはプラグインの属性情報を表したもので、タグ:値 のセットで記述していく。
+$ zplug &amp;#34;foo/bar&amp;#34;, as:command, of:&amp;#34;*.sh&amp;#34; こんな具合である。各タグ間はカンマと一つ以上のスペース（,　）で区切る必要がある。タグの値は必ずしもクォートで括る必要はないが、ワイルドカードなどファイルグロブを値と指定する場合、シェルに展開されないようにクォーティングする。
+タグ一覧 現在利用できるタグは以下のとおり。
+   タグ 説明 値 (デフォルト値) 例     as コマンドかプラグインかを指定する plugin,command (plugin) as:command   of source するファイルへの相対パスかパスを通すコマンドへの相対パスを指定する（glob パターンでも可） - (&amp;quot;*.</description>
+    </item>
+    
+    <item>
+      <title>プラグインマネージャ zplug リリース前夜</title>
+      <link>https://tellme.tokyo/post/2015/12/01/113422/</link>
+      <pubDate>Tue, 01 Dec 2015 11:34:22 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/12/01/113422/</guid>
+      <description>ここしばらく zplug という zsh 用のプラグインマネージャを作っていた（GitHub でも開発を始めたのは 11/22）。これは、Antigen alternative としてではなく、イチから作ったもので、今までよりも簡単に不都合が少なく高速に管理が可能になる予定（予定）。
+一応、正式リリース（RC 版？）を明日に公開しようかなと。
+そして昨日今日ではバージョンテストをしていて、5.x 系では問題なく動いている。4.x 系になると一部で動かなくなる。zsh の場合 4.x から 4.2.7 までが安定版ブランチのようになっていて（見る限り）、4.3.4 から 4.3.17 までが開発版ブランチのような分かれ方をしていた（5.x に移行するためのテストなのかな？とか）。zplug では 4.3.9 以上での動作を確認した。ひとつ下のバージョンの 4.3.6 では無名関数がうまく動いていなかった（修正すれば動いたんだけどリリースノートに無名関数のことが記載されていないし、深堀りするのも面倒なのでサポートはここで区切ろうと思った次第）
+あとは「テスト」を書いていきたい（1500 Lines な zsh script のテスト誰が書きたいんだ…）
+P.S. 公式の wiki を編集してくれる方いないですかね。他のプラグインマネージャからの乗り換え方法など
+zsh のプラグインマネージャ - tellme.tokyo</description>
+    </item>
+    
+    <item>
+      <title>zsh のプラグインマネージャ</title>
+      <link>https://tellme.tokyo/post/2015/11/24/142143/</link>
+      <pubDate>Tue, 24 Nov 2015 14:21:43 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/11/24/142143/</guid>
+      <description>antigen ですよね、やっぱり。最近は antigen の軽量バージョンである zgen もアツいようです。
+僕も同様に、最初は antigen 使っていたんですが、まずプラグインの読み込みが遅い（tmux でペインを頻繁に開いたりする身からするとローディングが遅いのはツライ）のと、antigen 自体の機能が貧弱で困ってました。例えば、antigen はプラグインしか管理してくれませんよね。コマンドも管理しようとすると一工夫するしかありません（例: b4b4r07/http_code）。それに、fzf や jq など CLI ツールとしては有用でもコンパイルする必要があるものの管理は不可能でした。
+zplug すべての要望に応えるプラグインマネージャをスクラッチから作っています。
+ b4b4r07/zplug
+
+ 並列インストール（擬似マルチスレッド） ブランチ/タグ指定 コマンド管理（言語は問わない） バイナリ管理（GitHub Releases 限定） ビルド機能（インストール時に任意のコマンドを実行） 限定インストール（条件が真のときのみインストール） 依存関係の管理   まだまだアルファ版でトータルの完成度でいうと antigen には及ばないのでこれからです。 年内のリリース（あわよくば Advent Calender でリリースしたい）を目指して開発中です。
+設定は以下のような感じで書けるようにしています。
+source ~/.zplug/zplug # Make sure you use double quotes zplug &amp;#34;zsh-users/zsh-syntax-highlighting&amp;#34; zplug &amp;#34;zsh-users/zsh-substring-search&amp;#34; # shell commands zplug &amp;#34;holman/spark&amp;#34;, as:cmd # shell commands (specify export directory path using `of` specifier) zplug &amp;#34;b4b4r07/http_code&amp;#34;, as:cmd, of:bin # shell commands (whatever language is OK; e.</description>
+    </item>
+    
+    <item>
+      <title>アドベントカレンダーに登録した</title>
+      <link>https://tellme.tokyo/post/2015/11/13/233649/</link>
+      <pubDate>Fri, 13 Nov 2015 23:36:49 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/11/13/233649/</guid>
+      <description>Shell Script Advent Calendar 2015 zsh Advent Calendar 2015 Vim Advent Calendar 2015  登録したカレンダーは3つ。特に上2つは空席が多いため、複数回参加する（できる）可能性が高いため、3つに留めた。 幸か不幸か、在学中のほとんどはシェル弄りに費やしたため、その集大成として Shell Script Advent Calendar 2015 の1日目に望む予定だ。
+ネタは考えていて、チューリング完全についてだ。なぜなら新規カレンダーの作成を申請するときに、カテゴリ選択する必要があるのだが、プログラミング言語にしていいのかどうか迷ったから((結局「運営に任せる」にした))。じゃあチューリング完全かどうか検証して、それを記事のネタにすればいいよねと。
+ Shell Script Advent Calendar 2015  まだまだ空席あるのでみなさん、参加よろしくお願いします。</description>
+    </item>
+    
+    <item>
+      <title>やったー！GitHub にスターが 200★ 付いた</title>
+      <link>https://tellme.tokyo/post/2015/11/12/170536/</link>
+      <pubDate>Thu, 12 Nov 2015 17:05:36 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/11/12/170536/</guid>
+      <description>ありがとうございます。素直に嬉しい。GitHub アカウント開設して初めての 3 桁以上（100 超えたときは観測していなかった）のスターを頂いた。
+ つくったもの 
+b4b4r07/enhancd ディレクトリ移動の支援プラグインをつくった。よくあるタイプのプラグインだけど、個人的に以下 2 つの特徴がある。
+ peco, fzf を使ったインタラクティブ性 レーベンシュタイン距離による曖昧検索  インタラクティブフィルタで候補を絞り込める（peco を使うか fzf を使うかはユーザが選べる）のと、編集距離を計算して誤字脱字を無視してくれるのが好印象だと思ってる。それと、bash/zsh/fish をサポートしているのもよさ。
+
+使い方とかインストールとか、前に一度記事にしたので興味ある方はどうぞ！
+[http://qiita.com/b4b4r07/items/2cf90da00a4c2c7b7e60:embed:cite]
+評価とか 結構嬉しいコメントが付いたり。もちろん、（載せてないけど）良くないコメントもある。ソフトウェアの受け取り方・印象・使い勝手は人それぞれで違って当たり前なので、そこは問題じゃなくって、使ってくれて便利、いいねとか思ってくれている人が少しでもいるってことに喜びを感じている。
+A next-generation cd command with an interactive filter&amp;#10;https://t.co/XrFBXmlhR8&amp;#10;&amp;#10;無駄な機能はないし，直感的だし，awesomeとしか言いようがない
+&amp;mdash; RED FAT だるま (@red_fat_daruma) 2015, 8月 13 
+『A next-generation cd command with an interactive filter』&amp;#10;ネーミングとロゴいいなぁ&amp;#10;&amp;#10;RT b4b4r07/enhancd https://t.co/0qWmyuGA58
+&amp;mdash; ζ (@zetamatta) 2015, 8月 17 
+enhancdめっちゃべんりなので、peco-cdrいらないかな
+&amp;mdash; ｽﾀｲﾘｯｼｭﾀﾌｶﾞｲ (@upamune) 2015, 8月 17</description>
+    </item>
+    
+    <item>
+      <title>ほんの 1分で GitHub に公開鍵を登録して SSH 接続する</title>
+      <link>https://tellme.tokyo/post/2015/11/11/230138/</link>
+      <pubDate>Wed, 11 Nov 2015 23:01:38 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/11/11/230138/</guid>
       <description>公開鍵認証はとても便利ですが、他のマシンに移ったり Vagrant などで仮想開発環境をつくったときなど GitHub に公開鍵をアップロードするの面倒ではないですか？
 ssh-keygen で作成された 公開鍵.pub の中身をコピーしてブラウザに貼り付けて ssh -T git@github.com できるかチェック．．．
 面倒なので簡略化したプラグインをつくりました。利用者が打ち込むコマンドは以下のみです。
@@ -725,68 +928,228 @@ $ # (antigen bundle b4b4r07/ssh-keyreg) $ ssh-keygen $ ssh-keyreg はやい！�
     </item>
     
     <item>
-      <title>HTTP のステータスコードを簡単に調べる</title>
-      <link>https://tellme.tokyo/post/2015/11/07/http_code/</link>
-      <pubDate>Sat, 07 Nov 2015 00:32:23 +0900</pubDate>
+      <title>私の fzf 活用事例</title>
+      <link>https://tellme.tokyo/post/2015/11/08/013526/</link>
+      <pubDate>Sun, 08 Nov 2015 01:35:26 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2015/11/07/http_code/</guid>
-      <description> HTTPステータスコードは、HTTPにおいてWebサーバからのレスポンスの意味を表現する3桁の数字からなるコードで、RFC 2616、RFC 7231等によって定められている。via HTTPステータスコード - Wikipedia
- 403とか404はよく目にもするので覚えていますが、300番台は？500番台は？とかとなると思い出せないことが多いです。 いちいちググり直すのも手間。 そんなときに、bash なりのシェルにてエイリアスとして登録しているハックを目にしました。
- Jxck/dotfiles - GitHub  このまま参考にさせてもらおう、と思ったのですがすべて登録するのもな、と思いコマンドで用意しました1。
+      <guid>https://tellme.tokyo/post/2015/11/08/013526/</guid>
+      <description>peco、使ってますか。この記事を見ている人なら peco 知っていると思います。fzf は、peco と同じようなツールでこちらも同じく Go 言語で書かれています。
+以前、Qiita に以下のような記事を書いたところ、意外にも良い反応を得られたので今回はその続編といきます。
+ おい、peco もいいけど fzf 使えよ - Qiita  タイトルは id:k0kubun さんの私のpeco活用事例のオマージュです。
+fzf を酷使する 最近開いたファイル 最近使ったファイル（MRU; Most Recently Used）にアクセスしたい、なんて局面ありません？僕はしょっちゅうです。Vim では mru.vim や neomru などがあるので困りませんが、それをコマンドラインから操作するには意外と手段がありませんでした。そこで、Vim で使われている MRU の履歴ファイルをシェルから開いてうまいことやろうとなりました。
+GIF アニメを見ればどんな具合か一発でわかります。mru とすると Vim の MRU プラグインで使用されている履歴ファイルを開き、fzf 上で Ctrl-l とすると less で開き、Ctrl-v とすると Vim で開きます。GIF には出ていませんが、Ctrl-x を 2 回押すとカーソル下のファイルを削除します。Ctrl-r を押せば、その親ディレクトリを表示します。Tab を押せば複数選択もできます。
+
+cp $(mru) . とコマンドラインから指定してやって、最近開いたファイルをコピーしてくるとかも簡単です。これはライフチェンジングです。また、less に色が付いているのは Pygments を通しているからです。pygmentize がインストールされている環境ならソースコードに色がつきます。
+mru() { local -a f f=( ~/.</description>
+    </item>
+    
+    <item>
+      <title>HTTP のステータスコードを簡単に調べる</title>
+      <link>https://tellme.tokyo/post/2015/11/07/165928/</link>
+      <pubDate>Sat, 07 Nov 2015 16:59:28 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/11/07/165928/</guid>
+      <description>HTTPステータスコードは、HTTPにおいてWebサーバからのレスポンスの意味を表現する3桁の数字からなるコードで、RFC 2616、RFC 7231等によって定められている。via HTTPステータスコード - Wikipedia
+ 403とか404はよく目にもするので覚えていますが、300番台は？500番台は？とかとなると思い出せないことが多いです。いちいちググり直すのも手間。そんなときに、bash なりのシェルにてエイリアスとして登録しているハックを目にしました。
+ Jxck/dotfiles - GitHub  このまま参考にさせてもらおう、と思ったのですがすべて登録するのもな、と思いコマンドで用意しました（番号が変わるものでもないので一度登録して変更することになる心配がないためエイリアスもいいと思います）。
 
  b4b4r07/http_code - GitHub  antigen で簡単にインストールできます。
 $ antigen bundle b4b4r07/http_code antigen でない場合は、
 sudo sh -c &amp;#34;curl https://raw.githubusercontent.com/b4b4r07/http_code/master/bin/http_code -o /usr/local/bin/http_code &amp;amp;&amp;amp; chmod +x /usr/local/bin/http_code&amp;#34; しかし、antigen でインストールしたほうが、補完ファイルなども使用できるようになります。
-使い方は gif アニメにもある通り、-a/--all オプションをつけると一覧表示、引数に数字を渡すとそれに対する説明を返します。
- 番号が変わるものでもないので一度登録して変更することになる心配がないためエイリアスもいいと思います [return]   </description>
+使い方は gif アニメにもある通り、-a/--all オプションをつけると一覧表示、引数に数字を渡すとそれに対する説明を返します。</description>
+    </item>
+    
+    <item>
+      <title>ディレクトリ移動系プラグイン「enhancd」の実装</title>
+      <link>https://tellme.tokyo/post/2015/08/16/092849/</link>
+      <pubDate>Sun, 16 Aug 2015 09:28:49 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/08/16/092849/</guid>
+      <description>まえがき  という記事を Qiita に投稿してみるやいなや、予想以上の反響がありとても焦りました。これは「自分はディレクトリ移動に関してこんな効率化を行っているよ」という Tips なのですが、その際に使ったプラグイン（と言っても自分で作ったのですが）の使い方などをまとめてあるだけの記事です。
+Qiita に投稿するときに enhancd についてたくさんを書きすぎても、そもそも ehancd をまず知りもしない人が見るときに困惑するだけだなと思い
+、その基本的な動き方（ギミックなど）と使い方の紹介にとどめていました。ところが、これも驚いたことに、予想以上のプルリクエストが来たり、バグレポートがあがったりして「これは実装部分についても言及したいぞ」と思い、ここにまとめることにしました。
+注意（以下である体になるのは仕様です）
+enhancd の構想 enhancd は基本的にシンプルな機能しか持ち合わせていない。これは長きに渡りシェルスクリプトを書いてみてよくわかったことがあってのことで、それは「ミニマルでイナフがシンプルへの一番の最適解」であるということ。この考えは UNIX の思想にも似通う。
+まず欲しい機能を列挙した。
+ 今っぽく（というか今流行の）peco とか percol でディレクトリ選択したい きちんとしたパスじゃなくても、移動履歴からよしなに補完して移動を可能にしたい  この2つは互いに相乗効果が見込めるし、この方向性で詰めるて問題はなさそうだ。それともう一つ。既存の何かを強化するときに大事にしていることは、既にあるその機能をきちんと「強化する」方向性であるかどうかということ。例えば、cd -（一つ前のディレクトリに戻る）が「戻る」系の機能ではなく、全く違う別の何かに成り果てることはユーザを戸惑わせるだけだし、とてもナンセンスかなと。cd の名前を背負うのだから、既にある機能を尊重しつつ高めるものでなければならない。全く別の機能で塗り替えちゃうことはよくない。
+enhancd の実装 enhancd には現在、23の関数が定義されていて、それらは2つに大別できる。
+ enhancd 以外でも使えるような一般的なユーティリティ関数 enhancd の機能やそれを補佐するような専用の関数  前者と後者を見分けるために、後者の関数名のプレフィックスには cd:: が付いている。
+次は専用関数の実装について言及する。
+cd::cd これはユーザが実質の cd として呼ぶ関数だ（実は cd はこれのエイリアスになっている）。
+きちんと経路が辿れ、すでに存在している場合は通常の cd として振る舞う。辿れない場合こそが…enhancd の本領発揮である。
+cd::cd() { # ... 中略 if [ -d &amp;#34;$1&amp;#34; ]; then builtin cd &amp;#34;$1&amp;#34; else # t という変数にリストを作る # cd::cd が引数なしで実行されたとき、既存の cd を尊重した動きをする if empty &amp;#34;$1&amp;#34;; then t=&amp;#34;$({ cd::cat_log; echo &amp;#34;$HOME&amp;#34;; } | cd::list)&amp;#34; else t=&amp;#34;$(cd::list | cd::narrow &amp;#34;$1&amp;#34;)&amp;#34; fi # t を cd::interfaece に渡す # t が空（リストなし）のときは $1 を渡す cd::interface &amp;#34;${t:-$1}&amp;#34; fi # .</description>
     </item>
     
     <item>
       <title>MacBook 12 inch を買った</title>
-      <link>https://tellme.tokyo/post/2015/08/14/macbook/</link>
-      <pubDate>Fri, 14 Aug 2015 00:57:24 +0900</pubDate>
+      <link>https://tellme.tokyo/post/2015/08/14/120049/</link>
+      <pubDate>Fri, 14 Aug 2015 12:00:49 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2015/08/14/macbook/</guid>
+      <guid>https://tellme.tokyo/post/2015/08/14/120049/</guid>
       <description>来ました pic.twitter.com/nwUUZSogN6
 &amp;mdash; BABAROT (@b4b4r07) May 20, 2015 
- 5&amp;frasl;20 に「新しい MacBook」が届いた．Apple のオンラインの Store で，実際にポチったのは4/12なので届くのには1ヶ月以上かかったことになる．
+MacBook 12 inch を買った  5&amp;frasl;20 に「新しい MacBook」が届いた．Apple のオンラインの Store で，実際にポチったのは4/12なので届くのには1ヶ月以上かかったことになる．
 スペックはこの通りだ．
  CPU を最大の 1.3GHz に引き上げた．処理スピードは速いに越したことはない．それと，ここに載っていない変更点として，キーボードを US 配列にした．これはデザイン的な動機もあるが，主として私の用途がプログラミング関連だからだ．デスクトップ PC にも US 配列のキーボードを使用している．
  Why なぜ，この賛否両輪ある新しい無印の MacBook を買ったかというと，それまで使っていた MacBook Air (13 inch, Mid 2012) に不満が溜まってきていたからだ．
  13インチはモバイル機としては大きすぎる メモリが 4GB（初のモバイル Mac だったため勝手がわからなかった） キーボード（特にスペースキー）の反応が悪くなり始めた MacBook がかっこ良すぎた  上2つが特に大きな動機だった．MacBook が発表される前，一度 MacBook Air 11 inch を検討していたくらいに軽さ・小ささを求めていた．
-以前，iPad（Airの前）を所有していた．買った当初は頻繁に持ち歩いていたもの，その重さや大きさからか徐々に持ち運ばなくなっていた．そこで，それを売っぱらって iPad mini を買うことにした．iPad mini にしてからは持ち歩くことが増え，また片手でひょいと持ちやすかったため，トイレやらキッチンやら隙間時間を生み出しそうなところには常に連れ歩いた．この携帯性がノート PC にも欲しかった．出かけるとき，ひょいと「PC 使うかわかんないけど持っていくか」となりたかったのだ．
-いざ買ってみて 満足か，後悔か．もちろん大満足である．とにかく軽くて小さい Mac PC（UNIX 端末）が欲しい人にはピッタリなノート PC だと思う．賛否両論あるポイントを中心にレビューしてみる．</description>
+以前，iPad（Airの前）を所有していた．買った当初は頻繁に持ち歩いていたもの，その重さや大きさからか徐々に持ち運ばなくなっていた．そこで，それを売っぱらって iPad mini を買うことにした．iPad mini にしてからは持ち歩くことが増え，また片手でひょいと持ちやすかったため，トイレやらキッチンやら隙間時間を生み出しそうなところには常に連れ歩いた．この携帯性がノート PC にも欲しかった．出かけるとき，ひょいと「PC 使うかわかんないけど持っていくか」となりたかったのだ．</description>
+    </item>
+    
+    <item>
+      <title>ターミナルのディレクトリ移動を高速化するプラグイン「enhancd」のその後</title>
+      <link>https://tellme.tokyo/post/2015/08/12/183523/</link>
+      <pubDate>Wed, 12 Aug 2015 18:35:23 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/08/12/183523/</guid>
+      <description>事の発端はこのツイート（であろう）。
+“ShellScript - ターミナルのディレクトリ移動を高速化する - Qiita” http://t.co/Q3AUMcNwnN
+&amp;mdash; mattn (@mattn_jp) 2015, 8月 7 
+そうしたらバズり始めた。
+#bookmark ShellScript - ターミナルのディレクトリ移動を高速化する - Qiita http://t.co/SNZ4gRTo1N 良さがある。試そう。
+&amp;mdash; OGATA Tetsuji (@xtetsuji) &amp;lt;a href=&amp;ldquo;https://twitter.com/xtetsuji/status/629834467046215680&amp;rdquo;&amp;gt;2015, 8月 8 
+これは使いたい&amp;#10;ShellScript - ターミナルのディレクトリ移動を高速化する by @b4b4r07 on @Qiita http://t.co/V593HCtuH0
+&amp;mdash; あきこ (@Akiko_4628) 2015, 8月 8 
+つこてみよう &amp;quot;ShellScript - ターミナルのディレクトリ移動を高速化する - Qiita&amp;quot; - http://t.co/cwMwCEktfX
+&amp;mdash; フェリス・シルヴェストリス・カトゥス (@anekos) 2015, 8月 8 
+よさげ / ShellScript - ターミナルのディレクトリ移動を高速化する - Qiita http://t.co/0hjpHGTMnU</description>
+    </item>
+    
+    <item>
+      <title>ブログや Qiita の使い分け</title>
+      <link>https://tellme.tokyo/post/2015/07/22/110317/</link>
+      <pubDate>Wed, 22 Jul 2015 11:03:17 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/07/22/110317/</guid>
+      <description>https://qiita.com/b4b4r07
+いままで Qiita でブログっぽいことをしてきた。といっても完全プライベートなことじゃなくって技術系のアウトプットに使うっていうこと。そもそも Qiita ってテック系のなんかだし。
+なんかやってて得たこととか、忘れたくないなってこと、いわゆる備忘録的なことをローカルマシンに Markdown でも置いてても見返さないし、忘れちゃうってのが最初の動機で Qiita を始めた。だから最初の方の投稿は「見られる」ことを意識しないで「じぶんのため」に見返すようとして書いて投稿してた。でも Qiita が有名になったからか、はたまた SEO 対策がいいからか、はたまたたまたま書いた記事がいい記事だったからかは分からないけど、ストックたくさんついたりはてブや Tweet など SNS でシェアされるようになってからは「見られる」ことに意識して、備忘録的な使い方は自然とかつ必然的にできなくなっていた。それに Qiita っていうテック系の知見集合サービスだから、「ヨソ」で自分の記事垂れ流してるっているヒトノイエ感覚が強くってあんまり適当な事やってると「ブログでやれよ」って言われそうだからブログはじめた。それがこのはてなブログ。まあエンジニアはよく使うブログだし、企業のエンジニアブログにも使われるし。
+追記1｛｛ なんでもここまで綺麗に書きたいとかきっちり書こうかってやっぱり見られるってことは多くの人に自分言葉が行き届くってこと。非対話的なコミュニケーションで人をはかるとき文章遣い言葉遣いって大事。誤字脱字してたり、日本語変だと頭悪いのかって思われる。というより、実際に頭悪いのが問題なんじゃなくって見られているってことに気を配っていないことが問題。そういう努力をしていないとガサツだとかすら思われるかもしれない。それはいやだ。｝｝
+https://b4b4r07.hatenadiary.com
+Qiita よりも前か同じ頃か忘れたけど、一度「Bash と Vim が好き」みたいなタイトルではてなブログやってたんだけど、誤操作か意図的かも忘れたけど消しちゃった過去があるので実はこれが2度め。しかも今より読者もついてて、といっても2人だけど。
+はてなブログ再開してからは、「作ったよ」系の記事（自分のツール紹介）とかしてたんだけど、まあ見られない。それより Qiita が順調でなんか書いてもストックたまるしはてブつくしなんか気持ちいい。だから作ってみた系の記事も Qiita に書くようになった（なってしまった。あんまり良くないと思っている）。こうなっちゃうと住み分け不可。
+もう一つ問題点あって、「見られる」ことを意識してからの記事って結構慎重になっていて、書き上げるのに2〜3日つかう。下調べも入れるともっとだけど、とりあえず見直しに時間が掛かる。書きながら前後の文章と合わせて変じゃないかとか、基本的な誤字脱字はないかとか、挿入する写真をベストになるまで撮り直ししたりとか、とにかく神経を使う。さっと書いてサッと投稿！ができない。要は昔みたいな使い方ができない。基本何かやってて得たことをアウトプットするのに、そんなに神経と時間使っていてはただの Yak Shaving で他の作業に集中できないという本末転倒。そこでこのはてなブログじゃん。と思いついたのが昨日（遅い）。だから、文章ちょっと変でもいいやって感覚で、とりあえず書く、とりあえず投稿する、をやろうと思う。
+それともう一つ。実は他のブログもあってこれも住み分けに頭を悩ませてた問題の一つ。
+https://tellme.tokyo
+CSS からなにから全て自分で（といっても Hugo のテンプレート）やったブログで、これは「じぶんの」ブログが持ちたいって動機で始めた（割と最近。半年たってない気がする）。Qiita とはてなブログの住み分けができていないときに作ったってんだから完全に頭おかしい。けど作りたかった。で、こっちはもっともっと神経使っていて、Qiita のごとく入念に書くのはもちろんのこと、ネタの厳選もしてる。要は流す情報の制限。
+見られてないくせに頑張って神経使ってるとかちょっとおかしい。
+ちょっとごちゃごちゃしてきたからここらへんでまとめ。
+まとめ 私には記事をかけるブログチックなものが 3 つある。
+ Qiita はてなブログ TELLME.TOKYO  使い分けはこう。
+Qiita 技術系のアウトプットをする場所。投稿する記事の種類は、テック系オンリー。プライベートな投稿はしない。しっかり入念に書き、事実関係の調査的なことも怠らない。「見られる」ことを意識する。ですます・である調で丁寧に
+はてなブログ 私の職業？上、技術寄りになるだろうけど何でも書く。プライベートなこととかも。MacBook 買ったんだけどさ〜みたいなやつ。話し言葉みたいに書いたり、誤字脱字の過度なチェックもしないし、気軽に投稿するため、文章が変な時があるかも。でも気にしない
+TELLME.TOKYO こいつはちょっとまだ未定。でも入念に書くなどは Qiita に同じ。結局は個人のブログだから好きなことを書いていいというのがあるから、プライベートなことは書くかもしれない。というより既にそんな投稿がある。
+https://tellme.tokyo/post/2015/06/03/macbook
+英語系のアウトプットもしたいって考えてたからそれに使うかも。とりあえず自由に厳かにいこうと思う。</description>
+    </item>
+    
+    <item>
+      <title>拡張版 cd コマンドの enhancd が生まれ変わった</title>
+      <link>https://tellme.tokyo/post/2015/07/21/142826/</link>
+      <pubDate>Tue, 21 Jul 2015 14:28:26 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/07/21/142826/</guid>
+      <description>b4b4r07/enhancd ❤ GitHub  以前、シェルスクリプトの勉強の集大成として enhancd というプラグインちっくなものを書いた。これは cd コマンドのラッパー関数を提供するもので、通常のビルドインにはないメリットがたくさんある。cd コマンドはよく使われるコマンドの一つにも関わらず、その使い勝手はあまり良くない。たとえば、フルパスもしくは相対パスで辿れるディレクトリにしか移動できない。当たり前ではあるけど、すべてのパスを覚えているわけではないし、間違ったパスや単にディレクトリ名だけを与えても、よしなにやってくれるコマンドが欲しかったのだ（grep だって使いやすさを向上させた ack, ag, pt といったコマンドがある）。
+次に「どの言語で実装するか」、になるのだが（シェルスクリプトの勉強というのはさておき）、シェルスクリプトでなければならない理由というのがあって、それはディレクトリ移動に関する拡張を実装するからだ。ディレクトリ移動は基本的にカレントシェルである必要がある。ユーザがログインしてインタラクティブに実行しているシェル上で移動しなければ、もちろんのことながら見た目上、移動しない。 よくある（悪い）例が、
+$ cat cd.sh #!/bin/bash cd ~/src pwd $ ./cd.sh /home/lisa/src $ pwd /home/lisa シェルスクリプトで cd を実行し pwd した後、コマンドラインから pwd してもパスが変わっていないというやつだ。これはシェルスクリプトを実行するとき、別のプロセスの bash 上で cd が実行されているんだけど、シェルスクリプトが終了するとそのプロセスも終了するから見た目上 cd してないように感じる。これを回避するにはカレントシェルで実行するほかないのだ。
+シェルには source というコマンドがあって、これは誤解があるようにいえばカレントシェルでスクリプトを実行することを意味する。これを使うことで先ほどの構想は実現できる。別言語で書いても無理やりカレントシェルに反映させる方法もある（exec $SHELL）が、これは結構雑な方法でバックグランプロセスとかも消し去ってしまうので避けたかったということもある。
+なぜ生まれ変わったか 先代の enhancd（v1.0）は約 600 行だったが、シェルスクリプトの 600 行は結構メンテナンスが大変。シェルスクリプトの性質上、可読性も悪い上に、行指向な記述が多くなるためさらにそれに拍車をかけた。カスタマイザブルにしたかったため、たくさんの環境変数で操作できるような UI にしてたことと、途中から Zsh でも動作するように書き換えていったため、非常に煩雑になっていた。既知のバグもあったが、それらが影響してなかなかに取りづらく機能も拡張しづらくまさにスパゲッティ状態だった。エブリデイで使っているくせにこんな汚いものを使いたくないと、cdinterface という別プロジェクトで簡素化したプラグインを立ち上げた。個人的にこれで満足していた。 が、しかし。 最近になり enhancd にやたらスターがつくようになり（といっても記事執筆時 8 stars）見られていると思うとなんだか恥ずかしくなったので久しぶりにメンテナンスを…と思い立ったのだがやはり厳しいものがあった。時間も無駄になりそうだし更にスターが付いちゃう前にメジャーバージョンアップという名の下 cdinterface と統合しようとなった。</description>
+    </item>
+    
+    <item>
+      <title>Golang でコマンドラインにゴミ箱を実装した話</title>
+      <link>https://tellme.tokyo/post/2015/05/22/103912/</link>
+      <pubDate>Fri, 22 May 2015 10:39:12 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/05/22/103912/</guid>
+      <description>Golang でコマンドラインにゴミ箱を実装した話 - TELLME.TOKYO
+移設しました。</description>
+    </item>
+    
+    <item>
+      <title>書くのが面倒な zsh 補完関数を簡単に生成するツール「zgencomp」つくった</title>
+      <link>https://tellme.tokyo/post/2015/03/24/171218/</link>
+      <pubDate>Tue, 24 Mar 2015 17:12:18 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/03/24/171218/</guid>
+      <description>b4b4r07/zgencomp・GitHub
+zgencomp を使えば、Zsh コマンドの補完関数を簡単に生成することができます。
+背景 Zsh の醍醐味のひとつが補完機能であるのは言わずもがなですね。
+この補完について、基本的なコマンドや有名プロジェクトのコマンドなどの多くは提供されているのですが、自作コマンドもちろんのこと、マイナーなコマンドは提供されていなかったりします。
+その場合、ユーザが Zsh スクリプトの記法で補完ファイルを記述しなければなりません。これが結構骨の折れる作業で、Zsh が提供する補完インターフェースは高機能ゆえに複雑怪奇で、並みのユーザはおろか熟練のシェルスクリプターでも投げ出したくなる様です。
+特に自作コマンドの場合、コマンドの作成で疲弊して、マニュアルやドキュメンテーションでも疲弊しているところにこの補完機能の作業となると、まず補完は諦めがちです。
+zgencomp を使う そこでこのツールです。
+まずはデモを。
+
+JSON ファイルに設定を記述し、それをもとに補完関数を生成します。JSON ファイルはある程度のテンプレートが用意されているので書き換える形で簡単に設定できます。
+JSON ファイルの書き方 &amp;ldquo;command&amp;rdquo; サンプルである JSON ファイルの書き換え方について紹介します。
+{ &amp;#34;command&amp;#34; : &amp;#34;mycmd&amp;#34;, &amp;#34;properties&amp;#34; : { &amp;#34;author&amp;#34; : &amp;#34;John Doe&amp;#34;, &amp;#34;license&amp;#34; : &amp;#34;MIT&amp;#34;, ここらへんはそのままですね。ただし、&amp;quot;command&amp;quot; が空白の場合、パースエラーになります。
+&amp;ldquo;properties&amp;rdquo; &amp;#34;help&amp;#34; : { &amp;#34;option&amp;#34; : [ &amp;#34;-h&amp;#34;, &amp;#34;--help&amp;#34; ], &amp;#34;description&amp;#34; : &amp;#34;show this help and exit&amp;#34; }, ヘルプやバージョンに関するオプションについては通常のオプションとしては扱わず、コマンドの属性情報（&amp;quot;properties&amp;quot;）として処理します。
+また、&amp;quot;option&amp;quot; について指定できるオプションは - または -- から始まる文字列です（ショート／ロング オプション）。加えて、1つ以上のオプション指定が必須です。1つも指定されていない場合は、補完が実行されません。 これは &amp;quot;help&amp;quot; の &amp;quot;option&amp;quot; だけではなくすべての &amp;quot;option&amp;quot; に当てはまります。</description>
     </item>
     
     <item>
       <title>dotfiles を curl -L dot.hoge.com | sh でインストールする方法</title>
-      <link>https://tellme.tokyo/post/2015/01/18/curl-sh-install/</link>
-      <pubDate>Sun, 18 Jan 2015 00:39:49 +0900</pubDate>
+      <link>https://tellme.tokyo/post/2015/01/18/235212/</link>
+      <pubDate>Sun, 18 Jan 2015 23:52:12 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2015/01/18/curl-sh-install/</guid>
+      <guid>https://tellme.tokyo/post/2015/01/18/235212/</guid>
       <description>dotfiles をインストールする際に、
-$ curl -L https://raw.githubusercontent.com/{YOUR_ACCOUNT}/dotfiles/master/install.sh | bash といった具合にウェブを介してスクリプトを実行することが一般的になりつつあると思いますが、この方法にはひとつ問題がありそれは URL 部分が長いということです。これは結構厄介で長すぎるがゆえに暗記できないので、いちいちブラウザを起動してコピペしないといけなかったり、そもそもブラウザなどないようなどこかのサーバにデプロイするときなど、暗記していたほうがいい場面が結構あります。
+curl -L https://raw.githubusercontent.com/{YOUR_ACCOUNT}/dotfiles/master/install.sh | bash  といった具合にウェブを介してスクリプトを実行することが一般的になりつつあると思いますが、この方法にはひとつ問題がありそれは URL 部分が長いということです。これは結構厄介で長すぎるがゆえに暗記できないので、いちいちブラウザを起動してコピペしないといけなかったり、そもそもブラウザなどないようなどこかのサーバにデプロイするときなど、暗記していたほうがいい場面が結構あります。
  curl -sL dot.hoge.com | sh で自分専用環境を構築する方法（かっこいい）
  そんなとき、このエントリを発見しました。 独自ドメインを取得して、そのサブドメインに自分で立ち上げた Nginx で dotfiles リポジトリへリダイレクトしてやるようにする方法です。こうすることで、github の URL 部分を自分のドメインを使った好きな URL にすることができるようになります。
 しかし、この方法はサーバと独自ドメインの2つを用意しなければなりません。エンジニアたるものサーバやドメインは持っていたほうがいいのかもしれませんが、持っていなかった場合 dotfiles の URL 短縮のためだけに維持費に数千円／年を支払うのはもったいないですよね。
 そこで、利用するのが短縮 URL サービスです。最近ではとても身近なものになり、スタンダードになりつつある Bitly をはじめ Amazon 専用の amzn.to や Google の goo.gl などとても増えてきています。
 その中でも、今回はカスタムドメインを指定できる Bitly を使用します。これでリダイレクトさせるウェブページを作成する必要がなくなり、サーバ代を浮かすことが出来ます（注：ただし独自ドメインは取得する必要があります）。
 事前準備 独自ドメインの取得  ムームードメイン お名前.com  有名どころですとサクッと取得することができます。 個人情報を入力し、年額を支払い、振込が確認された後、認証まで数時間たつとドメイン取得となります！
- ここらへんは100円／年台からなのでとても安価です。
+
+ここらへんは100円／年台からなのでとても安価です。
 Bitly アカウント作成 無料アカウントを作成します。最近までは Bitly Pro という有料サービスでカスタムドメインの設定を提供していましたが、今では無料アカウントに開放しています。
 カスタムドメインの設定 さて、ここからが本番です。ここからは筆者の環境（ ムームードメイン）で説明していきます。 ムームードメインのサイトにいき、</description>
     </item>
     
     <item>
-      <title>Vim からシェルコマンドを実行するプラグインを作った</title>
-      <link>https://tellme.tokyo/post/2014/10/05/vim-shellutils/</link>
-      <pubDate>Sun, 05 Oct 2014 00:52:51 +0900</pubDate>
+      <title>enhancd という autojump/z ライクな bash/zsh プラグインを書いた</title>
+      <link>https://tellme.tokyo/post/2014/11/20/134901/</link>
+      <pubDate>Thu, 20 Nov 2014 13:49:01 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2014/10/05/vim-shellutils/</guid>
-      <description>Vim の魅力の1つにシェルとの親和性が挙げられます。 GUIじゃない Vim を使っている時にどうしてもさっと ls したかったり、さっとファイルの中身を cat してみたかったりしたときに、Vim を終了したくない、なんてことはありませんか。 Ctrl-z で Vim を中断し、コマンドをタイプし処理して戻ってきた頃には、「あれ、、、なんだったっけ」なんてこともしばしば。 思いつきやアイデアは1分1秒が大事なのです。
-そこで Vim のコマンドライン領域からシェルコマンドもどきを実行できるプラグインを作成しました。 もどきと書いたのは call system() や !command の類を使用しないためです（シェルコマンドをエミュレート）。 どちらもシェルのコマンドに依存する上に一時的に Vim 画面が切り替わったり、あまり挙動が好みではありませんでした。 そこで純 Vim script で作成することで Vim さえあればシェルコマンドを実行出来るようにしました。
-詳しくは、
+      <guid>https://tellme.tokyo/post/2014/11/20/134901/</guid>
+      <description>【追記 2015-07-21】
+拡張版 cd コマンドの enhancd が生まれ変わった - tellme.tokyo
+enhancd v2.0 として生まれ変わりました。
+ enhancd [ɛnhǽn-síːdí] b4b4r07/enhancd.sh - GitHub  enhancd.sh とは autojump や z.sh などにインスパイアされて、後述する cdhist.sh をベースに作成されたディレクトリ移動をサポートするツールのことで、今回はそれらにも勝るとも劣らない機能を追加・拡張したので公開することにした。
+作った経緯 Bashの小枝集にて紹介されている cdhist.sh というものがある。これは説明にもある通り
+ ブラウザの「戻る」や「進む」のようにカレントディレクトリを行ったりきたりできるコマンド。これはリング状のディレクトリバッファを持っており以下の様な使われ方をする&amp;hellip;（※都合により引用を解釈の変わらない程度に変更）
+ yusuke ~[1]$ . cdhist.sh (cdhist を起動) yusuke ~[2]$ cd /tmp (カレントディレクトリが /tmp に移る) yusuke /tmp[3]$ cd /usr/bin (カレントディレクトリが /usr/bin に移る) yusuke /usr/bin[4]$ - (ひとつ前に戻る) yusuke /tmp[5]$ cd /etc (カレントディレクトリが /etc に移る) yusuke /etc[6]$ - (ひとつ前に戻る) yusuke /tmp[7]$ + (ひとつ後に進む) yusuke /etc[8]$ = (ディレクトリの履歴一覧表示) 3 /usr/bin 2 ~ 1 /tmp 0 /etc yusuke /etc[9]$ = 2 (リスト上のディレクトリを直接指定) yusuke ~[10]$  というスクリプトである。しばらくこれを満足して使っていたのだが、いくつかの不満点を抱くようになった。</description>
+    </item>
+    
+    <item>
+      <title>Vim からシェルコマンドを実行するプラグインを作った</title>
+      <link>https://tellme.tokyo/post/2014/10/05/234607/</link>
+      <pubDate>Sun, 05 Oct 2014 23:46:07 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2014/10/05/234607/</guid>
+      <description>GitHub・b4b4r07/vim-shellutils
+Vim の魅力の1つにシェルとの親和性が挙げられます。GUIじゃない Vim を使っている時にどうしてもさっと ls したかったり、さっとファイルの中身を cat してみたかったりしたときに、Vim を終了したくない、なんてことはありませんか。Ctrl-z で Vim を中断し、コマンドをタイプし処理して戻ってきた頃には、「あれ、、、なんだったっけ」なんてこともしばしば。思いつきやアイデアは1分1秒が大事なのです。
+そこで Vim のコマンドライン領域からシェルコマンドもどきを実行できるプラグインを作成しました。もどきと書いたのは call system() や !command の類を使用しないためです（シェルコマンドをエミュレート）。どちらもシェルのコマンドに依存する上に一時的に Vim 画面が切り替わったり、あまり挙動が好みではありませんでした。そこで純 Vim script で作成することで Vim さえあればシェルコマンドを実行出来るようにしました。
+詳しくは
  README.md doc/shellutils.txt  をご覧ください。</description>
+    </item>
+    
+    <item>
+      <title>Vimでcdしたときにそのディレクトリの中身を自動でリストアップするプラグイン作った</title>
+      <link>https://tellme.tokyo/post/2014/07/31/021941/</link>
+      <pubDate>Thu, 31 Jul 2014 02:19:41 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2014/07/31/021941/</guid>
+      <description> Vim 内で :cd したときに、そのディレクトリにあるファイル一覧を取得したくありませんか。:!ls でも解決できますが内部的に処理したかったので却下。イメージとしては、シェルなどでいうところの cd() { builtin cd &amp;quot;$@&amp;quot; &amp;amp;&amp;amp; ls -F; } です。Vim内で明示的に :cd したときに自動で ls します。もっと他に簡単なやり方があるかもしれませんが、当方としてはこのやり方で満足していますし、plugin 作成してみたかったという背景もあるので。
+b4b4r07/vim-autocdls インストール方法 NeoBundleの利用者は以下でいいです。
+NeoBundle &#39;b4b4r07/autocdls.vim&#39;  とりあえず、パスの通ったディレクトリに配置すればいいです。
+使い方 cd するだけです。すると勝手に ls されファイル一覧を取得出来ます。:cd だけでなく、:lcd や :chdir などでもいいです。もちろん、その省略形も可です。また、:Ls とすると、カレントディレクトリのファイル一覧が取得できます。引数を省略すればカレントディレクトリですが、与えてやれば存在する引数先のディレクトリ内のファイルを取得します。ここらへんは、シェルの ls と同じです。
+:Ls! とすると、ls -A と同様の働きをします。
+オプション シェルの ls よりすこしリッチになっていて、自動でファイル数も取得します。この機能を切りたい場合は、g:autocdls_show_filecounter = 0 とすればよいです（デフォルトでは1）。また、カレントディレクトリ情報（:pwd）も同時に欲しい場合は、g:autocdls_show_pwd = 1 としてください。
+以下に設定例を載せておきます。
+&amp;#34; コマンドラインの高さを上げる let g:autocdls_set_cmdheight = 2 &amp;#34; Ls したときにファイル数をカウントする let g:autocdls_show_filecounter = 1 &amp;#34; Ls したときに pwd を表示しない let g:autocdls_show_pwd = 0 &amp;#34; ls と打つと Ls に置換される let g:autocdls_alter_letter = 1 &amp;#34; 表示方法をスペース区切りから改行にしない let g:autocdls_newline_disp = 0</description>
     </item>
     
   </channel>

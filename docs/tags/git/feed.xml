@@ -7,17 +7,17 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Tue, 20 Dec 2016 00:00:00 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 20 Dec 2016 11:00:00 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/tags/git/feed.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>かゆいところに手が届く系の Git Tips 話</title>
-      <link>https://tellme.tokyo/post/2016/12/20/git-tips/</link>
-      <pubDate>Tue, 20 Dec 2016 00:00:00 +0900</pubDate>
+      <link>https://tellme.tokyo/post/2016/12/20/110000/</link>
+      <pubDate>Tue, 20 Dec 2016 11:00:00 +0900</pubDate>
       
-      <guid>https://tellme.tokyo/post/2016/12/20/git-tips/</guid>
+      <guid>https://tellme.tokyo/post/2016/12/20/110000/</guid>
       <description>この記事は Git Advent Calendar 2016 の 20 日目です。git コマンドを日常的に実行するわけですが、外部スクリプトなどで個人的に日々改善しているお話についてまとめてみました。
 ブランチ切り替えを手早くする git オペレーションで add,commit 並に多用すると思うのがブランチ切り替えで、特に remote にある branch の切り替えなどをショートカットしたくスクリプトを書きました。
 $ git br  で fzf/peco などのフィルタで切り替えてくれます。ブランチ切り替え系はよくある tips なのですが、何が便利かというと、remotes/origin/HOGE などのリモートにしかないブランチは git checkout -b HOGE remote/origin/HOGE してくれるようになっているので気にせずに checkout できます。

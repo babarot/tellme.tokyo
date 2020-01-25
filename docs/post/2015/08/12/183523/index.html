@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="ターミナルのディレクトリ移動を高速化するプラグイン「enhancd」のその後 - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2015/08/12/183523/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>ターミナルのディレクトリ移動を高速化するプラグイン「enhancd」のその後 | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">ターミナルのディレクトリ移動を高速化するプラグイン「enhancd」のその後</h1>
+    <h2 class="subtitle is-5">August 12, 2015 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/bash">bash</a>
+    
+        <a class="button is-link" href="/tags/zsh">zsh</a>
+    
+        <a class="button is-link" href="/tags/shellscript">shellscript</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      
+        <a href="https://b4b4r07.hatenadiary.com/entry/2015/08/12/183523">元記事</a><br><br>
+      
+      <p>事の発端はこのツイート（であろう）。</p>
+
+<p><blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr">“ShellScript - ターミナルのディレクトリ移動を高速化する - Qiita” <a href="http://t.co/Q3AUMcNwnN">http://t.co/Q3AUMcNwnN</a></p>&mdash; mattn (@mattn_jp) <a href="https://twitter.com/mattn_jp/status/629606937139679232">2015, 8月 7</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<p>そうしたらバズり始めた。</p>
+
+<p><blockquote class="twitter-tweet" data-cards="hidden" lang="ja"><p lang="ja" dir="ltr"><a href="https://twitter.com/hashtag/bookmark?src=hash">#bookmark</a> ShellScript - ターミナルのディレクトリ移動を高速化する - Qiita <a href="http://t.co/SNZ4gRTo1N">http://t.co/SNZ4gRTo1N</a> 良さがある。試そう。</p>&mdash; OGATA Tetsuji (@xtetsuji<em>) &lt;a href=&ldquo;<a href="https://twitter.com/xtetsuji">https://twitter.com/xtetsuji</a></em>/status/629834467046215680&rdquo;&gt;2015, 8月 8</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<p><blockquote class="twitter-tweet" data-cards="hidden" lang="ja"><p lang="ja" dir="ltr">これは使いたい&#10;ShellScript - ターミナルのディレクトリ移動を高速化する by <a href="https://twitter.com/b4b4r07">@b4b4r07</a> on <a href="https://twitter.com/Qiita">@Qiita</a> <a href="http://t.co/V593HCtuH0">http://t.co/V593HCtuH0</a></p>&mdash; あきこ (@Akiko_4628) <a href="https://twitter.com/Akiko_4628/status/629837248733679616">2015, 8月 8</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<p><blockquote class="twitter-tweet" data-cards="hidden" lang="ja"><p lang="ja" dir="ltr">つこてみよう &quot;ShellScript - ターミナルのディレクトリ移動を高速化する - Qiita&quot; - <a href="http://t.co/cwMwCEktfX">http://t.co/cwMwCEktfX</a></p>&mdash; フェリス・シルヴェストリス・カトゥス (@anekos) <a href="https://twitter.com/anekos/status/629870311949754368">2015, 8月 8</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<p><blockquote class="twitter-tweet" data-cards="hidden" lang="ja"><p lang="ja" dir="ltr">よさげ / ShellScript - ターミナルのディレクトリ移動を高速化する - Qiita <a href="http://t.co/0hjpHGTMnU">http://t.co/0hjpHGTMnU</a></p>&mdash; ぺっく (@peccul) <a href="https://twitter.com/peccul/status/629951168785985536">2015, 8月 8</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<p><blockquote class="twitter-tweet" data-cards="hidden" lang="ja"><p lang="ja" dir="ltr">これいいね…｜ShellScript - ターミナルのディレクトリ移動を高速化する by <a href="https://twitter.com/b4b4r07">@b4b4r07</a> on <a href="https://twitter.com/Qiita">@Qiita</a> <a href="http://t.co/WHotb2sM4F">http://t.co/WHotb2sM4F</a></p>&mdash; kazken3<em>(:3」∠)</em> (@kazken3) <a href="https://twitter.com/kazken3/status/630235488192847872">2015, 8月 9</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<p><blockquote class="twitter-tweet" data-cards="hidden" lang="ja"><p lang="ja" dir="ltr">ShellScript - ターミナルのディレクトリ移動を高速化する by <a href="https://twitter.com/b4b4r07">@b4b4r07</a> on <a href="https://twitter.com/Qiita">@Qiita</a> <a href="http://t.co/kU9bDKZgSC">http://t.co/kU9bDKZgSC</a>&#10;良さそう</p>&mdash; eau (@mint_0_rook) <a href="https://twitter.com/mint_0_rook/status/631326132105646081">2015, 8月 12</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<p><blockquote class="twitter-tweet" data-cards="hidden" lang="ja"><p lang="ja" dir="ltr">これはすごい／ShellScript - ターミナルのディレクトリ移動を高速化する by <a href="https://twitter.com/b4b4r07">@b4b4r07</a> on <a href="https://twitter.com/Qiita">@Qiita</a> <a href="http://t.co/syTH4VT9eG">http://t.co/syTH4VT9eG</a></p>&mdash; わ (@mwktk2) <a href="https://twitter.com/mwktk2/status/631378345691746305">2015, 8月 12</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<p><blockquote class="twitter-tweet" data-cards="hidden" lang="ja"><p lang="ja" dir="ltr">ちょっとこれステキすぎる気配がする。使ってみよう。&#10;ShellScript - ターミナルのディレクトリ移動を高速化する - Qiita&#10;<a href="http://t.co/r4qclbsa7Q">http://t.co/r4qclbsa7Q</a></p>&mdash; 睦月@インフラ技術…者？ (@mutsuki99) <a href="https://twitter.com/mutsuki99/status/631341614493929472">2015, 8月 12</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+<p><blockquote class="twitter-tweet" data-cards="hidden" lang="ja"><p lang="ja" dir="ltr">おお｜ ShellScript - ターミナルのディレクトリ移動を高速化する - Qiita&#10;<a href="http://t.co/D4MbbygY2W">http://t.co/D4MbbygY2W</a></p>&mdash; カズキック2 (@kzkick2nd) <a href="https://twitter.com/kzkick2nd/status/630721390937640960">2015, 8月 10</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></p>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/https://b4b4r07.hatenadiary.com/entry/2015/08/12/183523" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2020 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
