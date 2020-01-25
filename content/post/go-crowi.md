@@ -3,7 +3,7 @@ title: "Crowi 用の API Client 書いて公式に取り込まれた"
 date: "2017-04-04T00:00:00+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: "b4b4r07"
 oldlink: "http://b4b4r07.hatenadiary.com/entry/2017/04/04/023351"
 tags: ["crowi", "go"]

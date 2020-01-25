@@ -3,7 +3,7 @@ title: "Vim からシェルコマンドを実行するプラグインを作っ�
 date: "2014-10-05T00:52:51+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: "b4b4r07"
 oldlink: "http://b4b4r07.hatenadiary.com/entry/2014/10/05/234607"
 tags: ["vim"]

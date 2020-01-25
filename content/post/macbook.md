@@ -3,7 +3,7 @@ title: "MacBook 12 inch を買った"
 date: "2015-08-14T00:57:24+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: "b4b4r07"
 oldlink: "http://b4b4r07.hatenadiary.com/entry/2015/08/14/120049"
 tags: ["macbook", "apple"]

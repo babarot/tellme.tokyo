@@ -3,7 +3,7 @@ title: "新卒でメルカリに入社した話"
 date: "2016-10-01T00:00:00+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: "b4b4r07"
 oldlink: "http://b4b4r07.hatenadiary.com/entry/2016/10/01/191546"
 tags: ["mercari"]

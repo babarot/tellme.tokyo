@@ -3,7 +3,7 @@ title: "golang で zsh history を SQL 的に活用する"
 date: "2017-02-14T00:00:00+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: "b4b4r07"
 oldlink: "http://b4b4r07.hatenadiary.com/entry/2017/02/14/214231"
 tags: ["go", "zsh", "history", "SQL"]

@@ -3,7 +3,7 @@ title: "最近の Vim のプラグイン管理について考える"
 date: "2016-12-05T00:00:00+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: "b4b4r07"
 oldlink: "http://b4b4r07.hatenadiary.com/entry/2016/12/05/021806"
 tags: ["vim"]
