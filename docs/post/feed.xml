@@ -7,10 +7,31 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Mon, 20 Jan 2020 19:58:54 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jan 2020 00:11:10 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/post/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>はてなブログの記事をインポートした</title>
+      <link>https://tellme.tokyo/post/2020/01/28/import-hatena-blog/</link>
+      <pubDate>Tue, 28 Jan 2020 00:11:10 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2020/01/28/import-hatena-blog/</guid>
+      <description>動機はこれ。
+テキストの引越し
+今まで、
+ Qiita はてなブログ GitHub (このブログ)  に文章を書いてきた。
+Medium とか他にもどこかに書いていたような気もするけど気にしないことにした (といいつつ Note は使ってみたいと思っている)。
+はてなブログに関しては1度作って消してまたやり直している。 そのときに2014年頃以前のテキストを失った。 これからはすべて GitHub で管理しようと思っている。 自分のブログが1番落ち着くし、どんな話題でも好きに書けるし、サービス終了を気にする必要もないし、ホスティングの乗り換えも簡単にできる (今は GitHub Pages を使ってるけど Netlify にもいけるし適当なサーバでもよい)。
+そういえばこのブログ以外にも以前 GitHub でいくつか文章を書いていたこともあった。
+Qiita も以前はよく使っていたけどもう使っていないし、はてなブログも使っていない。 Qiita の記事も移行するかどうかは未定1だけど、はてなブログにある記事は愛着もあるので全部移行することにした。
+移行に使ったのはこれ。
+ これはもともとローカルに引っ張ってきて更新してブログに Sync するようなツールっぽいけど、これのおかげで自分で生 API 叩かずに手元に全エントリを引っ張ってこれたので使い勝手が良かった。
+そのあとは適当に YAML の Front matter をこのブログ用に書き換えて終わり。 画像は自力でダウンロードして GitHub のディレクトリに突っ込んだ。 数が少なかったのと一部の画像ははてなにアップロードせずに CloudApp を使って参照させていたので移行する必要がなかったのも大きい。
+とりあえず引っ越した記事に Front matter にはインポート元を書いて、こっちのページから辿れるようにはしてある (oldlink という Front matter 要素を作って、記事 Body に 元記事 というリンク href を埋め込む)。 けど、インポートも済んだことだし気が向いたらはてなブログ自体を消すかもしれない。
+手元でブログを書くためのツール2を書いたし、シュッと Vim でテキストを書いて HTML にしてアップロードすることができるようになったのでスッキリできた。 なんか問題とか不満なことがあったら Markdown で書かれた生テキストだけ持ってどっかに逃げれる状況にできたってのはやっぱり安心する。</description>
+    </item>
     
     <item>
       <title>GitHub Pages で HTTPS を有効にする</title>
