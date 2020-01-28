@@ -7,10 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Tue, 28 Jan 2020 00:11:10 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jan 2020 11:04:26 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ローカルからGistを編集する方法</title>
+      <link>https://tellme.tokyo/post/2020/01/28/gist-in-local/</link>
+      <pubDate>Tue, 28 Jan 2020 11:04:26 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2020/01/28/gist-in-local/</guid>
+      <description>コードスニペットなどの管理によく Gist を使う。 他にも特定の人にテキストを共有する目的で日本語を書いて置いておく場としても利用している。
+頻繁に読み書きするとなるとウェブから編集するのは少し手間に感じてくる。 構造化された文章を書くなら慣れたエディタで書きたい。 ローカルにコピペしてきてから編集してウェブ画面でペーストしていたこともあるが、頻繁にとなるとこれも結構面倒くさい。
+Gist はあくまでも git リポジトリなので git clone して手元で編集して push することもできる。 かといってそれをやるかというとそれもまた面倒。 テキスト編集するだけなのに git fetch も git commit もしたくない。 なるべくそういったことは隠蔽されていてほしい。 どこに clone するかといったことは ghq を使うことで考えなくてよくなるけど根本的な面倒くささは拭えない。
+こういったモチベーションからウェブから読み書きするのと同じ体験をローカルで再現するツールを書いた1。
+gist という Gist に対して簡単な CRUD 操作ができるツールを Go で書いた。
+ gistコマンドは次のサブコマンドを持つ。
+   コマンド 説明     new 引数に渡されたファイルを Gist にアップロードする。引数がない場合は tmp ファイルを開き、エディタを閉じたらその内容でアップロードする   open 記事一覧を表示して選択されたファイルの Gist ページをブラウザで開く   edit 記事一覧を表示して選択されたファイルをエディタで開く   delete 記事一覧を表示して選択されたファイルの Gist ページを消す    これらのコマンドは実際に new とか edit する前に内部で次のことをする。</description>
+    </item>
     
     <item>
       <title>はてなブログの記事をインポートした</title>
