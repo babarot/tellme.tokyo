@@ -7,15 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Tue, 28 Jan 2020 11:04:26 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jan 2020 22:04:26 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/tags/go/feed.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>ローカルからGistを編集する方法</title>
+      <title>ローカルから Gist を編集する方法</title>
       <link>https://tellme.tokyo/post/2020/01/28/gist-in-local/</link>
-      <pubDate>Tue, 28 Jan 2020 11:04:26 +0900</pubDate>
+      <pubDate>Tue, 28 Jan 2020 22:04:26 +0900</pubDate>
       
       <guid>https://tellme.tokyo/post/2020/01/28/gist-in-local/</guid>
       <description>コードスニペットなどの管理によく Gist を使う。 他にも特定の人にテキストを共有する目的で日本語を書いて置いておく場としても利用している。

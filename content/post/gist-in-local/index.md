@@ -1,7 +1,7 @@
 ---
-title: "ローカルからGistを編集する方法"
-date: "2020-01-28T11:04:26+09:00"
-description: ""
+title: "ローカルから Gist を編集する方法"
+date: "2020-01-28T22:04:26+09:00"
+description: "Gist をウェブから読み書きするのと同じ体験をローカルで再現する CLI ツールを書いた"
 categories: []
 draft: false
 author: "b4b4r07"
