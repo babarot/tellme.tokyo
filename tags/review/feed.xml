@@ -7,10 +7,51 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Fri, 14 Aug 2015 12:00:49 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 31 Dec 2019 23:59:04 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/tags/review/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>2019年振り返り</title>
+      <link>https://tellme.tokyo/post/2019/12/31/2019-review/</link>
+      <pubDate>Tue, 31 Dec 2019 23:59:04 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2019/12/31/2019-review/</guid>
+      <description>仕事  1月からはメルペイの仕事に積極的に関わる機会があり、そのときに HashiCorp Vault を深ぼることから始まった。 Vault のドキュメントを漁って Vault on GKE のデザインからやることができた。しかしまだまだVaultビギナーなのでもっと追えるようにしようと思っている。
+それからのちの GoCon Fukuoka で発表することにもなるが、Cloud Functions をもちいた Microservices の成果の観測を始める Project を作った。 Cloud Functions を大量に作ったのだけど、これを効率的に扱ういい方法がまだ見つかっていない。Serverless framework はあるのだけど、Lambda でさえそこまでアクティブにメンテナンスされていないようで、ここらへんはコントリビューションのしがいがあるかなーと睨んでいる。
+そのあとは、Platform (主に Terraform 管理レポジトリ) の US 対応をしたりした。 Platform のグローバル化は Platform チームの目指すべきところでもあり、メルカリチームの悲願でもあるのでそこに貢献できたのはグッド。
+10月からはバタバタしているうちに12月になってた。
+コントリビューション  Software Design 2019年9月号 12 OSS projects (incl. private repos)  b4b4r07/stein https://github.com/b4b4r07/stein/    海外カンファレンス  HashiCorp &amp;lsquo;19 re:Invent &amp;lsquo;19  登壇  (mercari.go#6) Testing with YAML - Speaker Deck (GoConference &amp;lsquo;19 Summer in Fukuoka) Cloud Functions in Go at Mercari - Speaker Deck (Kubernetes Meetup Tokyo #18) Kubernetes manifests management and operation in Mercari - Speaker Deck (未来大×企業エンジニア 春のLT大会) Insert an Example of Software Engineer Here - Speaker Deck  プライベート  越して2年を迎えた。そろそろ引っ越したいなぁ</description>
+    </item>
+    
+    <item>
+      <title>2017年振り返り</title>
+      <link>https://tellme.tokyo/post/2018/01/05/looking-back-on-2017/</link>
+      <pubDate>Fri, 05 Jan 2018 19:52:12 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/01/05/looking-back-on-2017/</guid>
+      <description>もう年も変わってしまったけれど、去年どのような1年を過ごしたのかを振り返る。
+1〜7月、SRE になったという記事でもある通り、環境や心境の変化もあってクォータの変わり目でもある7月のタイミングでチームを異動した。 それまでは JP チームでガイドだったり大型便向けの電話対応用の API を作ったり、配送周りで上がってくる問い合わせの技術対応をしていた。
+少し戻って6月は、US アプリの刷新チームにてバックエンド API のサーバサイドエンジニアをやっていた。 入社からずっと JP のことをやっていたので、US に関わったのはとても新鮮だった。
+7月、SRE になったのだけれど、まずなにをやるべきか、ということになった。 ちょうど全社的に Microservices 化に舵を切り出したころだったので、 「Microservices への技術転向を支える基盤づくりをする」SRE メンバーになることを当面の目標として、 そのために必要な技術の学習やキャッチアップを兼ねて、 社内ドキュメントツールとしてモノリシックに動いていた Crowi という Wiki サービスをコンテナ化して Kubernetes で構築してみることになった。
+ メルカリ社内ドキュメントツールの Crowi を Kubernetes に載せ替えました - Mercari Engineering Blog  コンテナや Kubernetes、Spinnaker といった技術やツールを勉強しつつ、ミドルウェア自体のキャッチアップもこのときにやった。 仕事でありながら勉強できるという環境にあったので、とても貴重な体験だったかなと思う。 また、(今回は) Crowi という、
+ Web アプリケーションを違うアーキテクチャに載せ替えるとしたときに考えるべきこと
+ にフォーカスしながらミドルウェアの勉強ができたのもいい体験だった1。 各種ミドルウェア、ソフトウェアはそれぞれのマニュアルや技術書を読むことで得られるが、 システムに落とし込んで構成を組むときに思慮するというのは今までに経験がなかったのでよかった。
+また、プライベートでははてなブログで書いていたブログをコンテナ化したり Kubernetes に載せたりして GKE の勉強をしていた (GCP のクーポンが切れたのでもう GKE には載っていない)。 ちなみにちょっとずつこっちにインポートしているが、以前のブログはまだ消してはいないので残っている。
+ ブログをGKEで運用し、Spinnakerでデプロイする | tellme.</description>
+    </item>
+    
+    <item>
+      <title>2016年振り返り</title>
+      <link>https://tellme.tokyo/post/2016/12/31/204112/</link>
+      <pubDate>Sat, 31 Dec 2016 20:41:12 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/12/31/204112/</guid>
+      <description>去年は「つくったものリスト」を書きました。今年は、つくったものベースよりもやったことベースで話したほうが膨らみそうなので、今年の振り返りとしてメモしておこうと思います。
+[http://www.tellme.tokyo/entry/2015/12/31/005300:embed:cite]
+振り返り と思ったんですけど特に思い浮かばなかったので、ここで締めさせていただきます。</description>
+    </item>
     
     <item>
       <title>MacBook 12 inch を買った</title>

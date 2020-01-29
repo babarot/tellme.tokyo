@@ -58,6 +58,15 @@
     </item>
     
     <item>
+      <title>review</title>
+      <link>https://tellme.tokyo/tags/review/</link>
+      <pubDate>Tue, 31 Dec 2019 23:59:04 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/review/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>hashiconf</title>
       <link>https://tellme.tokyo/tags/hashiconf/</link>
       <pubDate>Thu, 03 Oct 2019 17:15:22 +0900</pubDate>
@@ -495,15 +504,6 @@
       <pubDate>Fri, 14 Aug 2015 12:00:49 +0900</pubDate>
       
       <guid>https://tellme.tokyo/tags/mac/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>review</title>
-      <link>https://tellme.tokyo/tags/review/</link>
-      <pubDate>Fri, 14 Aug 2015 12:00:49 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/tags/review/</guid>
       <description></description>
     </item>
     
