@@ -8,7 +8,8 @@ author: b4b4r07
 oldlink: ""
 tags:
 - blog
-- golang
+- go
+- hugo
 ---
 
 このブログ ([b4b4r07/tellme.tokyo](https://github.com/b4b4r07/tellme.tokyo)) ではマークダウンで記事を書き、[Hugo](https://gohugo.io/) を使って静的ファイルを生成して GitHub Pages でホスティングしている。

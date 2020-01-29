@@ -148,11 +148,6 @@
   </url>
   
   <url>
-    <loc>https://tellme.tokyo/tags/golang/</loc>
-    <lastmod>2018-11-19T20:08:07+09:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://tellme.tokyo/tags/book/</loc>
     <lastmod>2018-11-08T22:37:54+09:00</lastmod>
   </url>
@@ -165,6 +160,11 @@
   <url>
     <loc>https://tellme.tokyo/post/2018/11/08/the-inoue-brothers/</loc>
     <lastmod>2018-11-08T22:37:54+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/tags/hugo/</loc>
+    <lastmod>2018-10-16T13:18:07+09:00</lastmod>
   </url>
   
   <url>
@@ -189,11 +189,6 @@
   
   <url>
     <loc>https://tellme.tokyo/tags/bind-address/</loc>
-    <lastmod>2018-08-16T00:55:17+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tellme.tokyo/tags/hugo/</loc>
     <lastmod>2018-08-16T00:55:17+09:00</lastmod>
   </url>
   

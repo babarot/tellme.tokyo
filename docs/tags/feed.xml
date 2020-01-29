@@ -139,15 +139,6 @@
     </item>
     
     <item>
-      <title>golang</title>
-      <link>https://tellme.tokyo/tags/golang/</link>
-      <pubDate>Mon, 19 Nov 2018 20:08:07 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/tags/golang/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>book</title>
       <link>https://tellme.tokyo/tags/book/</link>
       <pubDate>Thu, 08 Nov 2018 22:37:54 +0900</pubDate>
@@ -166,6 +157,15 @@
     </item>
     
     <item>
+      <title>hugo</title>
+      <link>https://tellme.tokyo/tags/hugo/</link>
+      <pubDate>Tue, 16 Oct 2018 13:18:07 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>windows</title>
       <link>https://tellme.tokyo/tags/windows/</link>
       <pubDate>Thu, 27 Sep 2018 20:06:55 +0900</pubDate>
@@ -180,15 +180,6 @@
       <pubDate>Thu, 16 Aug 2018 00:55:17 +0900</pubDate>
       
       <guid>https://tellme.tokyo/tags/bind-address/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>hugo</title>
-      <link>https://tellme.tokyo/tags/hugo/</link>
-      <pubDate>Thu, 16 Aug 2018 00:55:17 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/tags/hugo/</guid>
       <description></description>
     </item>
     

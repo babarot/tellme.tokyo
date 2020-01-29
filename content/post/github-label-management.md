@@ -8,7 +8,8 @@ author: b4b4r07
 oldlink: ""
 tags:
 - github
-- golang
+- go
+- yaml
 ---
 
 ## ソフトウェアの宣言的設定について

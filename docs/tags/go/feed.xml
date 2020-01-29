@@ -88,6 +88,37 @@ b4b4r07/release-go
     </item>
     
     <item>
+      <title>GitHub のラベルを宣言的に管理する</title>
+      <link>https://tellme.tokyo/post/2018/11/19/github-label-management/</link>
+      <pubDate>Mon, 19 Nov 2018 20:08:07 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/11/19/github-label-management/</guid>
+      <description>ソフトウェアの宣言的設定について &amp;ldquo;何かを管理する&amp;rdquo;となったときに、宣言的に設定できるようになっていると非常に便利である。 この宣言的設定 (Infrastructure as Code) とは、イミュータブルなインフラ (Immutable Infrastructure) を作るための基本的な考え方で、システムの状態を設定ファイルにて宣言するという考え方である。 具体的には Kubernetes のマニフェストファイル (YAML) だったり、Terraform のコード (HCL) が挙げられる。 この考え方は、インフラ領域に限らず、何らかの状態管理にはもってこいの手法である。
+GitHub のラベルは Issues/P-Rs を管理するために便利な機能である。 しかし、リポジトリの規模やラベルの数が増えてくると、ラベル自体も管理する必要が出てくる。 実際に Kubernetes 規模のリポジトリになると、ラベル管理なしにはやっていられない。 ラベルを管理するための bot やツールすら動いている。 実際に Kubernetes のコミュニティでは現在 180 個近くのラベルが定義されており、同様のラベルが導入されているリポジトリが数十個ある。
+ Labels - kubernetes/community  1つのリポジトリのラベルを管理するくらいならマニュアルでも可能だが、複数リポジトリとなるとリポジトリ間の同期が大変になってくる。 特に ZenHub などの GitHub Issues を使ったマネジメントをしている場合、ラベル名が一致されていることとその付随情報 (色や説明) の同期が必須になる。 人間が手で追加や変更をしていると、必ず差異が発生する。
+ここで、冒頭に挙げた宣言的設定が有効な手段になる。
+github-labeler の紹介 https://github.com/b4b4r07/github-labeler
+宣言的設定の手法をラベル管理に持ち込むために、GitHub ラベルの定義とそれを作るリポジトリについて「YAML に書いたとおりになる」ツールを書いた。
+例えば次のような YAML を書く。
+labels:-name:area/securitydescription:Indicatesanissueonsecurityarea.color:1d76db-name:kind/bugdescription:CategorizesissueorPRasrelatedtoabug.color:d93f0b-name:kind/cleanupdescription:CategorizesissueorPRasrelatedtocleaningupcode,process,ortechnicaldebt.color:bfd4f2-name:kind/designdescription:CategorizesissueorPRasrelatedtodesign.color:bfd4f2-name:kind/documentationdescription:CategorizesissueorPRasrelatedtodocumentation.color:bfd4f2repos:-name:org/repo1labels:-area/security-kind/api-change-kind/bug-kind/cleanup-kind/design-name:org/repo2labels:-kind/api-change-kind/bug-kind/cleanup-kind/design この YAML をもとに github-labeler を実行すると、こんな感じになる。
+$ github-labeler 2018/11/19 18:30:40 create &amp;#34;area/security&amp;#34; in org/repo1 2018/11/19 18:30:40 create &amp;#34;kind/api-change&amp;#34; in org/repo1 2018/11/19 18:30:40 create &amp;#34;kind/bug&amp;#34; in org/repo1 2018/11/19 18:30:40 create &amp;#34;kind/cleanup&amp;#34; in org/repo1 2018/11/19 18:30:40 create &amp;#34;kind/design&amp;#34; in org/repo1 2018/11/19 18:30:41 create &amp;#34;kind/documentation&amp;#34; in org/repo1 2018/11/19 18:30:42 delete &amp;#34;bug&amp;#34; in org/repo1 2018/11/19 18:30:42 delete &amp;#34;deplicate&amp;#34; in org/repo1 2018/11/19 18:30:42 delete &amp;#34;enhancement&amp;#34; in org/repo1 2018/11/19 18:30:42 delete &amp;#34;good first issue&amp;#34; in org/repo1 2018/11/19 18:30:42 delete &amp;#34;help wanted&amp;#34; in org/repo1 2018/11/19 18:30:42 delete &amp;#34;invalid&amp;#34; in org/repo1 2018/11/19 18:30:42 delete &amp;#34;question&amp;#34; in org/repo1 2018/11/19 18:30:42 delete &amp;#34;wontfix&amp;#34; in org/repo1 定義されたラベル (.</description>
+    </item>
+    
+    <item>
+      <title>スムーズに Hugo でブログを書くツール</title>
+      <link>https://tellme.tokyo/post/2018/10/16/write-blog-smoothly/</link>
+      <pubDate>Tue, 16 Oct 2018 13:18:07 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/10/16/write-blog-smoothly/</guid>
+      <description>このブログ (b4b4r07/tellme.tokyo) ではマークダウンで記事を書き、Hugo を使って静的ファイルを生成して GitHub Pages でホスティングしている。
+とても便利なのだが、いくつか面倒な点がある。
+ リアルタイムに記事のプレビューが見たいとなると、hugo server -D する必要があり、都度別コンソールで立ち上げるのが面倒 記事をあたらしく書き始めるとき hugo new post/&amp;lt;filename&amp;gt;.md を打つのが面倒 過去記事を編集するのが面倒 hugo を実行すると draft の記事も生成されてしまう (index には載らないが、生成されるので commit してしまう)  いろいろ面倒なので、Hugo でブログを書くだけのツール (hugo wrapper) を書いた。 hugo の上位互換というわけではなく、必要な機能の不便な部分だけを Override しているだけのツールなので合わせて使っていく。
+tellme.tokyo/cmd/blog at master · b4b4r07/tellme.tokyo
+Usage: blog [--version] [--help] &amp;lt;command&amp;gt; [&amp;lt;args&amp;gt;] Available commands are: edit Edit blog articles new Create new blog article  簡単な CLI ツールになっていて、ブログを編集するときに blog edit とすれば fzf が立ち上がって記事を選択できるようになっている。
+$ blog edit &amp;gt; 39/39 &amp;gt; スムーズに Hugo ブログを書くツール Windows 時代の使用ソフト晒し Bind Address で少しハマった話 Hugo で PlantUML のようなシーケンス図を描画する Kubernetes 上で Credentials を扱う HashiCorp Vault の Unseal と Rekey 東京衣食住 Microservices Platform Meetupで話した 『ルポ川崎』を読んだ fzf との連携は b4b4r07/go-finder でやっている1。</description>
+    </item>
+    
+    <item>
       <title>Go から peco する</title>
       <link>https://tellme.tokyo/post/2018/04/25/go-finder/</link>
       <pubDate>Wed, 25 Apr 2018 02:11:37 +0900</pubDate>
