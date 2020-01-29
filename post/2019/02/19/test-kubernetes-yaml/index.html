@@ -129,10 +129,10 @@ kube-lint は決められた Kind (現在は Pod のみ) の決められたフ�
 この中でルールを定義していく。
 Stein では <strong>rule の conditions にある評価式が一つでも false になった場合、rule が fail して report にもとづいてエラーが返る</strong> ようになっている。
 上の例では、spec.replicas が 3 以上を満たさない場合、この rule が失敗し標準出力にレポートされる。</p>
-<pre><code class="language-console" data-lang="console">$ stein apply
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ stein apply
 manifests/microservices/x-echo-jp/development/Deployment/test.yaml
-  [ERROR]  rule.replicas            Too few replicas
-</code></pre><p>各要素へのアクセス (spec.replicas) は <a href="https://kubernetes.io/docs/reference/kubectl/jsonpath/">JSONPATH 形式</a>で jsonpath 関数によって提供される。
+  <span class="o">[</span>ERROR<span class="o">]</span>  rule.replicas            Too few replicas
+</code></pre></div><p>各要素へのアクセス (spec.replicas) は <a href="https://kubernetes.io/docs/reference/kubectl/jsonpath/">JSONPATH 形式</a>で jsonpath 関数によって提供される。
 jsonpath 関数は Stein が提供する組み込み関数になっている。
 Stein では Terraform のように組み込み変数や組み込み関数を提供している。</p>
 <p><a href="https://b4b4r07.github.io/stein/configuration/syntax/interpolation/">Interpolation Syntax - Stein Documentations</a></p>
@@ -141,25 +141,25 @@ Stein では Terraform のように組み込み変数や組み込み関数を提
 <p>Stein を使うことで自由なルールをポリシーとして定義して、それをもとにテスト実行することができるようになる。
 HCL ベースとはいえ、Terraform のように少しの学習コストがあるので提供しているスキーマの使い方を示す。</p>
 <p>その前に、Stein のインターフェースを示すと、Stein は CLI コマンドとして動作する。</p>
-<pre><code class="language-console" data-lang="console">$ stein --help
-Usage: stein [--version] [--help] &lt;command&gt; [&lt;args&gt;]
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ stein --help
+Usage: stein <span class="o">[</span>--version<span class="o">]</span> <span class="o">[</span>--help<span class="o">]</span> &lt;command&gt; <span class="o">[</span>&lt;args&gt;<span class="o">]</span>
 
 Available commands are:
     apply    Applies a policy to arbitrary config files.
-    fmt      Formats a policy source to a canonical format.
+    fmt      Formats a policy <span class="nb">source</span> to a canonical format.
 
-</code></pre><p>apply と fmt をサブコマンドとして持つ。
+</code></pre></div><p>apply と fmt をサブコマンドとして持つ。
 apply は定義されたポリシーを元に引数に渡された YAML などに対してチェックを実行する。
 fmt は HCL のフォーマットチェックができる。</p>
 <p>ポリシーファイルは HCL で定義し、任意のディレクトリに置くことができる。</p>
-<pre><code class="language-console" data-lang="console">$ stein apply -policy rule.hcl manifests/microservices/x-echo-jp/development/Deployment/test.yaml
-</code></pre><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ <span class="nb">export</span> <span class="nv">STEIN_POLICY</span><span class="o">=</span>rule.hcl
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ stein apply -policy rule.hcl manifests/microservices/x-echo-jp/development/Deployment/test.yaml
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ <span class="nb">export</span> <span class="nv">STEIN_POLICY</span><span class="o">=</span>rule.hcl
 $ stein apply manifests/microservices/x-echo-jp/development/Deployment/test.yaml
 </code></pre></div><p>apply のフラグで指定するか環境変数で指定することができる。ちなみにカンマ区切りで複数指定できるので、Terraform のように自由な単位でファイル分割ができる。</p>
 <p>また、<code>.policy</code> ディレクトリをデフォルトのポリシーファイル置き場として認識するのでその場合は指定しなくて良い。
 <code>.policy</code> が認識されるのは引数に渡されたファイルが置かれているディレクトリの階層すべて、になる。
 上の例だと次のディレクトリが対象になる。</p>
-<pre><code class="language-console" data-lang="console">manifests/.policy/
+<pre><code>manifests/.policy/
 manifests/microservices/.policy/
 manifests/microservices/x-echo-jp/.policy/
 manifests/microservices/x-echo-jp/development/.policy/
@@ -235,7 +235,7 @@ manifests/microservices/x-echo-jp/development/Deployment/.policy/
 他の使い方やユースケースなどは公式ドキュメントとしてまとめているので参考になるかもしれない。</p>
 <p><a href="https://b4b4r07.github.io/stein/">Stein Documentations</a></p>
 <p>また、リポジトリにある <a href="https://github.com/b4b4r07/stein/tree/master/_examples">_examples</a> ディレクトリは実際のユースケースに則した形でのせたのでこれも参考になる。</p>
-<pre><code class="language-console" data-lang="console">$ tree -a _examples
+<pre><code>$ tree -a _examples
 _examples
 ├── .policy/
 │   ├── config.hcl
