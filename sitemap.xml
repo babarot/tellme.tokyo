@@ -3,6 +3,36 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://tellme.tokyo/tags/blog/</loc>
+    <lastmod>2020-01-29T23:21:50+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/post/2020/01/29/migrate-https-gh-pages-from-cloudflare/</loc>
+    <lastmod>2020-01-29T23:21:50+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/tags/github-pages/</loc>
+    <lastmod>2020-01-29T23:21:50+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/post/</loc>
+    <lastmod>2020-01-29T23:21:50+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/tags/</loc>
+    <lastmod>2020-01-29T23:21:50+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/</loc>
+    <lastmod>2020-01-29T23:21:50+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/tags/cli/</loc>
     <lastmod>2020-01-28T22:04:26+09:00</lastmod>
   </url>
@@ -18,28 +48,8 @@
   </url>
   
   <url>
-    <loc>https://tellme.tokyo/post/</loc>
-    <lastmod>2020-01-28T22:04:26+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tellme.tokyo/tags/</loc>
-    <lastmod>2020-01-28T22:04:26+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tellme.tokyo/</loc>
-    <lastmod>2020-01-28T22:04:26+09:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://tellme.tokyo/post/2020/01/28/gist-in-local/</loc>
     <lastmod>2020-01-28T22:04:26+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tellme.tokyo/tags/blog/</loc>
-    <lastmod>2020-01-28T00:11:10+09:00</lastmod>
   </url>
   
   <url>
@@ -49,11 +59,6 @@
   
   <url>
     <loc>https://tellme.tokyo/post/2020/01/20/github-pages-with-https/</loc>
-    <lastmod>2020-01-20T19:58:54+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tellme.tokyo/tags/github-pages/</loc>
     <lastmod>2020-01-20T19:58:54+09:00</lastmod>
   </url>
   

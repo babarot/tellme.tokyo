@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Tue, 28 Jan 2020 22:04:26 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 29 Jan 2020 23:21:50 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/tags/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>blog</title>
+      <link>https://tellme.tokyo/tags/blog/</link>
+      <pubDate>Wed, 29 Jan 2020 23:21:50 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/blog/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>github-pages</title>
+      <link>https://tellme.tokyo/tags/github-pages/</link>
+      <pubDate>Wed, 29 Jan 2020 23:21:50 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/github-pages/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>CLI</title>
@@ -36,24 +54,6 @@
       <pubDate>Tue, 28 Jan 2020 22:04:26 +0900</pubDate>
       
       <guid>https://tellme.tokyo/tags/go/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>blog</title>
-      <link>https://tellme.tokyo/tags/blog/</link>
-      <pubDate>Tue, 28 Jan 2020 00:11:10 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/tags/blog/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>github-pages</title>
-      <link>https://tellme.tokyo/tags/github-pages/</link>
-      <pubDate>Mon, 20 Jan 2020 19:58:54 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/tags/github-pages/</guid>
       <description></description>
     </item>
     

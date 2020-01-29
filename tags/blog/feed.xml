@@ -7,10 +7,27 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Tue, 28 Jan 2020 00:11:10 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 29 Jan 2020 23:21:50 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/tags/blog/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Cloudflare から GitHub Pages の HTTPS 機能に移行する</title>
+      <link>https://tellme.tokyo/post/2020/01/29/migrate-https-gh-pages-from-cloudflare/</link>
+      <pubDate>Wed, 29 Jan 2020 23:21:50 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2020/01/29/migrate-https-gh-pages-from-cloudflare/</guid>
+      <description>以前は GitHub Pages だけでは HTTPS 配信ができなかったので、Cloudflare をプロキシにして HTTPS 化させていた。
+カスタムドメインの GitHub Pages で HTTPS を使う - Qiita
+もう必要ないので Cloudflare を通さないようにする。
+Before:
+Domain-provider DNS -&amp;gt; Cloudflare DNS -&amp;gt; GitHub -&amp;gt; tellme.tokyo After:
+Domain-provider DNS -&amp;gt; GitHub -&amp;gt; tellme.tokyo 1. ドメインプロバイダの DNS 設定を Cloudflare からプロバイダ提供のものに変更する Cloudflare DNS を使っていたのを、
+ ムームードメインの DNS サーバを使うようにセットアップした。
+ 2. GitHub Pages への IP アドレスを A レコードに設定する GitHub Pages に向ける。
+ 参考: GitHub Pages で HTTPS を有効にする | tellme.</description>
+    </item>
     
     <item>
       <title>はてなブログの記事をインポートした</title>
