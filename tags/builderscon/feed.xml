@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>builderscon on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/builderscon/</link>
+    <description>Recent content in builderscon on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Sun, 04 Dec 2016 00:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/builderscon/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>builderscon tokyo 2016 に参加してきました</title>
+      <link>https://tellme.tokyo/post/2016/12/04/builderscon2016/</link>
+      <pubDate>Sun, 04 Dec 2016 00:00:00 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/12/04/builderscon2016/</guid>
+      <description>引用
+ buildersconは「知らなかった、を聞く」をテーマとした技術を愛する全てのギーク達のお祭りです
+ tl;dr  builderscon tokyo 2016 に参加して、  裸で登壇された生 mattn さんを見て、 みんなを楽しませる技術力に凄いなぁと改めて思わされ、 自分も何か作りたい衝動に駆られた   Opening 牧さんによるオープニングでした。いきなり第2回開催予定の告知からスタートし会場が少しざわめきました。まだ、第1回の builderscon すら終わってないのに、このタイミングでの告知は、サプライズ感だけでなく絶対成功させるぞという気概を感じさせるとともに、コンセプトにもあるお祭りっぽさがあってとてもワクワクさせられました。
+OSS は Windows で動いてこそ楽しい @mattn さんによる発表でした。僕ははじめてお目にかかりました。(見た目は) 普通以上に普通なのに、異常なエンジニアリング力です。改めて尊敬し直しました。Vimmer であり、時折 Go も書く自分としては一番楽しみにしていた発表でした。案の定、Go で Windows OSS 開発の未来が明るくなる話や、Vim の新作ネタプラグイン (畏敬の念を込めてネタプラグインと呼ぶ) などが発表されました。個人的に、Vim 界隈に長年貢献されてきた mattn さんと kaoriya さんのツーショットや、mattn さんの Vim 環境 (青っぽいリッチステータスラインに Solarized Dark なテーマ) を生で見られたことに感激しました。
+php.ini について知る @uzulla さんによる発表でした。PHP を書くことが多くなった自分としては聞いときたいなと思い、聞いていたのですがやはり思った以上に知らないことが多く (PHP が ini を解釈するときは想像以上にゆるふわ) とても勉強になりました。&amp;quot;true&amp;quot; って true じゃないとか、ini ファイルのパス解決順序で最後に読まれた ini が適用されるので気づかないでハマってたり、なんかつらそうだという印象でした。良くも悪くもそこが PHP の特徴なところもあるようで、うまく折り合いながら向き合っていく気合が必要とのことでした。発表終了間際に発言されていた「php.</description>
+    </item>
+    
+  </channel>
+</rss>

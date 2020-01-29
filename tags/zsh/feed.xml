@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>zsh on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/zsh/</link>
+    <description>Recent content in zsh on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Thu, 22 Sep 2016 00:34:48 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/zsh/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>zplug では Collaborators を募集しています</title>
+      <link>https://tellme.tokyo/post/2016/09/22/003448/</link>
+      <pubDate>Thu, 22 Sep 2016 00:34:48 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/09/22/003448/</guid>
+      <description>zplug は A next-generation plugin manager for zsh と謳い、絶賛開発中の zsh 向けのプラグインマネージャです。設計当初の目標通りフルスタックなツールになってきており、もはや zsh で書かれたというだけの、単なるパッケージマネージャとして使うことができるほどの機能を持ちはじめています。
+どんな機能があるか、どんな使い方ができるかなどは公式の README をご覧ください。最近では、ドキュメントの多言語化にも取り組んでおり、日本語版の README も追加しました。お気に入りの機能として特筆すると、例えば C 言語で書かれたツールの管理もできます:
+# インストール、アップデートに反応してビルドが走る zplug &amp;#34;jhawthorn/fzy&amp;#34;, \  as:command, \  rename-to:fzy, \  hook-build:&amp;#34; { make sudo make install }&amp;#34; 現在、zplug では @b4b4r07 と @NigoroJr さんの2人で開発・メンテナンスしております。@zplug-man は bot メンバーです。zplug ではコミュニケーション用に Slack を導入しており、Slack から zplug-man に作業させたりしています。
+ Join us!  そんな zplug では Collaborators を募集しています。記述する言語は Shell Script (zsh) です。zsh では黒魔術みたいな記述がたくさん出てきます。例えば:
+if (( $#unclassified_plugins == 0 )); then # If $tags[use] is a regular file, # expect to expand to $tags[dir]/*.</description>
+    </item>
+    
+    <item>
+      <title>最近の zplug の変更について</title>
+      <link>https://tellme.tokyo/post/2015/12/21/122701/</link>
+      <pubDate>Mon, 21 Dec 2015 12:27:01 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/12/21/122701/</guid>
+      <description>テック系でも Qiita ってところはブログではないので書けないことがある。しかしブログはそういうことが書けるのがいいなと思う。自分の庭みたいなもの。
+ローカルプラグインを管理できるようになった 先日の issue（#54）によってローカルリポジトリをロード対象とすることが可能になった。neobundle.vim や vim-plug にもあるお馴染みの機能だ。
+zplug &amp;#34;~/.zsh&amp;#34;, from:local from タグを使って指定する。自分の場合、~/.zsh 以下で zsh の設定ファイルを次のように分割しているため、この機能はとても便利に働く。デフォルトでは &amp;quot;*.zsh&amp;quot; が読み込み対象になっているので ~/.zsh 以下の zsh ファイルを簡単に zplug で管理できる
+$ tree ~/.zsh /Users/b4b4r07/.zsh ├── 10_utils.zsh ├── 20_keybinds.zsh ├── 30_aliases.zsh ├── 40_prompt.zsh ├── 50_setopt.zsh ├── 60_export.zsh ├── Completion │ ├── _ack │ ├── _add-sshkey-remote │ ├── _ag ... │ └── _path ├── Makefile └── README.md フルパスでない場合は $ZPLUG_HOME を基準にパス解決される。
+zplug &amp;#34;repos/user/repo&amp;#34;, from:local 読み込むファイルを一部無視できるようになった これもまた issue（#56）によって導入された機能で、of タグと逆の指定をするためのタグ ignore が使用できるようになった。</description>
+    </item>
+    
+    <item>
+      <title>zplug 流 zsh プラグイン管理術</title>
+      <link>https://tellme.tokyo/post/2015/12/13/174209/</link>
+      <pubDate>Sun, 13 Dec 2015 17:42:09 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/12/13/174209/</guid>
+      <description>とある引用から。
+ 技術者であればだれでも経験することでしょうけれども、自分が作ったものを他人に理解させるというのは存外に難しく、なぜかというと開発者自身はどうしても開発した時の思考の流れを重視してしまい、読者にとって理解しやすい話の流れで話すという思考の大転換が困難だからです。そういえば、開発者自身による解説書の名著って意外なくらい少ないと思いませんか？
+ 私は先月末に zplug という zsh 用のプラグインマネージャーをリリースした。以下の記事では、zplug が生まれた背景やその周辺事情を導入として書いたため、もしかするとユーザ目線からでは分かりづらかったかもしれない。
+ おい、Antigen もいいけど zplug 使えよ  そこで今回は開発者としての記事ではなく、いちユーザとして（といっても開発者がユーザ目線でプロダクトを語るのは冒頭の引用にもある通りひどく難しいことである）使い方を紹介していく。
+特徴 
+ 何でも管理できる（コマンド、Gist、oh-my-zsh のプラグイン、GitHub Releases のバイナリ） 非同期インストール/アップデート ブランチロック・リビジョンロック インストール後の コマンド実行 hook あり oh-my-zsh などの外部プラグインをサポート バイナリを管理できる（GitHub Releases） shallow clone できる（オン・オフ） 依存関係の記述ができる ユーザはプラグインマネージャのことを考えなくていい（*.plugin.zsh 不必要） 選択的インターフェイスとの連携（fzf, peco, percol, zaw）  書き方 zplug はタグという概念を持っている。タグとはプラグインの属性情報を表したもので、タグ:値 のセットで記述していく。
+$ zplug &amp;#34;foo/bar&amp;#34;, as:command, of:&amp;#34;*.sh&amp;#34; こんな具合である。各タグ間はカンマと一つ以上のスペース（,　）で区切る必要がある。タグの値は必ずしもクォートで括る必要はないが、ワイルドカードなどファイルグロブを値と指定する場合、シェルに展開されないようにクォーティングする。
+タグ一覧 現在利用できるタグは以下のとおり。
+   タグ 説明 値 (デフォルト値) 例     as コマンドかプラグインかを指定する plugin,command (plugin) as:command   of source するファイルへの相対パスかパスを通すコマンドへの相対パスを指定する（glob パターンでも可） - (&amp;quot;*.</description>
+    </item>
+    
+    <item>
+      <title>プラグインマネージャ zplug リリース前夜</title>
+      <link>https://tellme.tokyo/post/2015/12/01/113422/</link>
+      <pubDate>Tue, 01 Dec 2015 11:34:22 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/12/01/113422/</guid>
+      <description>ここしばらく zplug という zsh 用のプラグインマネージャを作っていた（GitHub でも開発を始めたのは 11/22）。これは、Antigen alternative としてではなく、イチから作ったもので、今までよりも簡単に不都合が少なく高速に管理が可能になる予定（予定）。
+一応、正式リリース（RC 版？）を明日に公開しようかなと。
+そして昨日今日ではバージョンテストをしていて、5.x 系では問題なく動いている。4.x 系になると一部で動かなくなる。zsh の場合 4.x から 4.2.7 までが安定版ブランチのようになっていて（見る限り）、4.3.4 から 4.3.17 までが開発版ブランチのような分かれ方をしていた（5.x に移行するためのテストなのかな？とか）。zplug では 4.3.9 以上での動作を確認した。ひとつ下のバージョンの 4.3.6 では無名関数がうまく動いていなかった（修正すれば動いたんだけどリリースノートに無名関数のことが記載されていないし、深堀りするのも面倒なのでサポートはここで区切ろうと思った次第）
+あとは「テスト」を書いていきたい（1500 Lines な zsh script のテスト誰が書きたいんだ…）
+P.S. 公式の wiki を編集してくれる方いないですかね。他のプラグインマネージャからの乗り換え方法など
+zsh のプラグインマネージャ - tellme.tokyo</description>
+    </item>
+    
+    <item>
+      <title>zsh のプラグインマネージャ</title>
+      <link>https://tellme.tokyo/post/2015/11/24/142143/</link>
+      <pubDate>Tue, 24 Nov 2015 14:21:43 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/11/24/142143/</guid>
+      <description>antigen ですよね、やっぱり。最近は antigen の軽量バージョンである zgen もアツいようです。
+僕も同様に、最初は antigen 使っていたんですが、まずプラグインの読み込みが遅い（tmux でペインを頻繁に開いたりする身からするとローディングが遅いのはツライ）のと、antigen 自体の機能が貧弱で困ってました。例えば、antigen はプラグインしか管理してくれませんよね。コマンドも管理しようとすると一工夫するしかありません（例: b4b4r07/http_code）。それに、fzf や jq など CLI ツールとしては有用でもコンパイルする必要があるものの管理は不可能でした。
+zplug すべての要望に応えるプラグインマネージャをスクラッチから作っています。
+  b4b4r07/zplug
+
+ 並列インストール（擬似マルチスレッド） ブランチ/タグ指定 コマンド管理（言語は問わない） バイナリ管理（GitHub Releases 限定） ビルド機能（インストール時に任意のコマンドを実行） 限定インストール（条件が真のときのみインストール） 依存関係の管理    まだまだアルファ版でトータルの完成度でいうと antigen には及ばないのでこれからです。 年内のリリース（あわよくば Advent Calender でリリースしたい）を目指して開発中です。
+設定は以下のような感じで書けるようにしています。
+source ~/.zplug/zplug # Make sure you use double quotes zplug &amp;#34;zsh-users/zsh-syntax-highlighting&amp;#34; zplug &amp;#34;zsh-users/zsh-substring-search&amp;#34; # shell commands zplug &amp;#34;holman/spark&amp;#34;, as:cmd # shell commands (specify export directory path using `of` specifier) zplug &amp;#34;b4b4r07/http_code&amp;#34;, as:cmd, of:bin # shell commands (whatever language is OK; e.</description>
+    </item>
+    
+    <item>
+      <title>やったー！GitHub にスターが 200★ 付いた</title>
+      <link>https://tellme.tokyo/post/2015/11/12/170536/</link>
+      <pubDate>Thu, 12 Nov 2015 17:05:36 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/11/12/170536/</guid>
+      <description>ありがとうございます。素直に嬉しい。GitHub アカウント開設して初めての 3 桁以上（100 超えたときは観測していなかった）のスターを頂いた。
+ つくったもの 
+b4b4r07/enhancd ディレクトリ移動の支援プラグインをつくった。よくあるタイプのプラグインだけど、個人的に以下 2 つの特徴がある。
+ peco, fzf を使ったインタラクティブ性 レーベンシュタイン距離による曖昧検索  インタラクティブフィルタで候補を絞り込める（peco を使うか fzf を使うかはユーザが選べる）のと、編集距離を計算して誤字脱字を無視してくれるのが好印象だと思ってる。それと、bash/zsh/fish をサポートしているのもよさ。
+
+使い方とかインストールとか、前に一度記事にしたので興味ある方はどうぞ！
+[http://qiita.com/b4b4r07/items/2cf90da00a4c2c7b7e60:embed:cite]
+評価とか 結構嬉しいコメントが付いたり。もちろん、（載せてないけど）良くないコメントもある。ソフトウェアの受け取り方・印象・使い勝手は人それぞれで違って当たり前なので、そこは問題じゃなくって、使ってくれて便利、いいねとか思ってくれている人が少しでもいるってことに喜びを感じている。
+まとめ コントリビューターの方、ありがとうございました。
+ 今後とも宜しくお願いします。
+関連記事  ターミナルのディレクトリ移動を高速化する - Qiita 拡張版cdコマンドのenhancdが生まれ変わった - tellme.tokyo ディレクトリ移動系プラグイン「enhancd」の実装 - tellme.tokyo  </description>
+    </item>
+    
+    <item>
+      <title>ほんの 1分で GitHub に公開鍵を登録して SSH 接続する</title>
+      <link>https://tellme.tokyo/post/2015/11/11/230138/</link>
+      <pubDate>Wed, 11 Nov 2015 23:01:38 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/11/11/230138/</guid>
+      <description>公開鍵認証はとても便利ですが、他のマシンに移ったり Vagrant などで仮想開発環境をつくったときなど GitHub に公開鍵をアップロードするの面倒ではないですか？
+ssh-keygen で作成された 公開鍵.pub の中身をコピーしてブラウザに貼り付けて ssh -T git@github.com できるかチェック．．．
+面倒なので簡略化したプラグインをつくりました。利用者が打ち込むコマンドは以下のみです。
+$ # (antigen bundle b4b4r07/ssh-keyreg) $ ssh-keygen $ ssh-keyreg はやい！！！
+
+ b4b4r07/ssh-keyreg - GitHub  上では、antigen でインストールすると書いていますが、このプラグインは bash でも動きます（補完は zsh のみです。ごめんなさい）。
+インストール $ # for zsh $ antigen bundle b4b4r07/ssh-keyreg $ # for bash $ sudo sh -c &amp;quot;curl https://raw.githubusercontent.com/b4b4r07/ssh-keyreg/master/bin/ssh-keyreg -o /usr/local/bin/ssh-keyreg &amp;amp;&amp;amp; chmod +x /usr/local/bin/ssh-keyreg&amp;quot; 使い方 $ ssh-keyreg usage: ssh-keyreg [-h|--help][[-d|--desc &amp;lt;desc&amp;gt;][-u|--user &amp;lt;user[:pass]&amp;gt;][-p|--path &amp;lt;path&amp;gt;]] [github|bitbucket] command line method or programmatically add ssh key to github.</description>
+    </item>
+    
+    <item>
+      <title>私の fzf 活用事例</title>
+      <link>https://tellme.tokyo/post/2015/11/08/013526/</link>
+      <pubDate>Sun, 08 Nov 2015 01:35:26 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/11/08/013526/</guid>
+      <description>peco、使ってますか。この記事を見ている人なら peco 知っていると思います。fzf は、peco と同じようなツールでこちらも同じく Go 言語で書かれています。
+以前、Qiita に以下のような記事を書いたところ、意外にも良い反応を得られたので今回はその続編といきます。
+ おい、peco もいいけど fzf 使えよ - Qiita  タイトルは id:k0kubun さんの私のpeco活用事例のオマージュです。
+fzf を酷使する 最近開いたファイル 最近使ったファイル（MRU; Most Recently Used）にアクセスしたい、なんて局面ありません？僕はしょっちゅうです。Vim では mru.vim や neomru などがあるので困りませんが、それをコマンドラインから操作するには意外と手段がありませんでした。そこで、Vim で使われている MRU の履歴ファイルをシェルから開いてうまいことやろうとなりました。
+GIF アニメを見ればどんな具合か一発でわかります。mru とすると Vim の MRU プラグインで使用されている履歴ファイルを開き、fzf 上で Ctrl-l とすると less で開き、Ctrl-v とすると Vim で開きます。GIF には出ていませんが、Ctrl-x を 2 回押すとカーソル下のファイルを削除します。Ctrl-r を押せば、その親ディレクトリを表示します。Tab を押せば複数選択もできます。
+
+cp $(mru) . とコマンドラインから指定してやって、最近開いたファイルをコピーしてくるとかも簡単です。これはライフチェンジングです。また、less に色が付いているのは Pygments を通しているからです。pygmentize がインストールされている環境ならソースコードに色がつきます。
+mru() { local -a f f=( ~/.</description>
+    </item>
+    
+    <item>
+      <title>HTTP のステータスコードを簡単に調べる</title>
+      <link>https://tellme.tokyo/post/2015/11/07/165928/</link>
+      <pubDate>Sat, 07 Nov 2015 16:59:28 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/11/07/165928/</guid>
+      <description>HTTPステータスコードは、HTTPにおいてWebサーバからのレスポンスの意味を表現する3桁の数字からなるコードで、RFC 2616、RFC 7231等によって定められている。via HTTPステータスコード - Wikipedia
+ 403とか404はよく目にもするので覚えていますが、300番台は？500番台は？とかとなると思い出せないことが多いです。いちいちググり直すのも手間。そんなときに、bash なりのシェルにてエイリアスとして登録しているハックを目にしました。
+ Jxck/dotfiles - GitHub  このまま参考にさせてもらおう、と思ったのですがすべて登録するのもな、と思いコマンドで用意しました（番号が変わるものでもないので一度登録して変更することになる心配がないためエイリアスもいいと思います）。
+
+ b4b4r07/http_code - GitHub  antigen で簡単にインストールできます。
+$ antigen bundle b4b4r07/http_code antigen でない場合は、
+sudo sh -c &amp;quot;curl https://raw.githubusercontent.com/b4b4r07/http_code/master/bin/http_code -o /usr/local/bin/http_code &amp;amp;&amp;amp; chmod +x /usr/local/bin/http_code&amp;quot; しかし、antigen でインストールしたほうが、補完ファイルなども使用できるようになります。
+使い方は gif アニメにもある通り、-a/--all オプションをつけると一覧表示、引数に数字を渡すとそれに対する説明を返します。</description>
+    </item>
+    
+    <item>
+      <title>ディレクトリ移動系プラグイン「enhancd」の実装</title>
+      <link>https://tellme.tokyo/post/2015/08/16/092849/</link>
+      <pubDate>Sun, 16 Aug 2015 09:28:49 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/08/16/092849/</guid>
+      <description>まえがき  という記事を Qiita に投稿してみるやいなや、予想以上の反響がありとても焦りました。これは「自分はディレクトリ移動に関してこんな効率化を行っているよ」という Tips なのですが、その際に使ったプラグイン（と言っても自分で作ったのですが）の使い方などをまとめてあるだけの記事です。
+Qiita に投稿するときに enhancd についてたくさんを書きすぎても、そもそも ehancd をまず知りもしない人が見るときに困惑するだけだなと思い
+、その基本的な動き方（ギミックなど）と使い方の紹介にとどめていました。ところが、これも驚いたことに、予想以上のプルリクエストが来たり、バグレポートがあがったりして「これは実装部分についても言及したいぞ」と思い、ここにまとめることにしました。
+注意（以下である体になるのは仕様です）
+enhancd の構想 enhancd は基本的にシンプルな機能しか持ち合わせていない。これは長きに渡りシェルスクリプトを書いてみてよくわかったことがあってのことで、それは「ミニマルでイナフがシンプルへの一番の最適解」であるということ。この考えは UNIX の思想にも似通う。
+まず欲しい機能を列挙した。
+ 今っぽく（というか今流行の）peco とか percol でディレクトリ選択したい きちんとしたパスじゃなくても、移動履歴からよしなに補完して移動を可能にしたい  この2つは互いに相乗効果が見込めるし、この方向性で詰めるて問題はなさそうだ。それともう一つ。既存の何かを強化するときに大事にしていることは、既にあるその機能をきちんと「強化する」方向性であるかどうかということ。例えば、cd -（一つ前のディレクトリに戻る）が「戻る」系の機能ではなく、全く違う別の何かに成り果てることはユーザを戸惑わせるだけだし、とてもナンセンスかなと。cd の名前を背負うのだから、既にある機能を尊重しつつ高めるものでなければならない。全く別の機能で塗り替えちゃうことはよくない。
+enhancd の実装 enhancd には現在、23の関数が定義されていて、それらは2つに大別できる。
+ enhancd 以外でも使えるような一般的なユーティリティ関数 enhancd の機能やそれを補佐するような専用の関数  前者と後者を見分けるために、後者の関数名のプレフィックスには cd:: が付いている。
+次は専用関数の実装について言及する。
+cd::cd これはユーザが実質の cd として呼ぶ関数だ（実は cd はこれのエイリアスになっている）。
+きちんと経路が辿れ、すでに存在している場合は通常の cd として振る舞う。辿れない場合こそが…enhancd の本領発揮である。
+cd::cd() { # ... 中略 if [ -d &amp;#34;$1&amp;#34; ]; then builtin cd &amp;#34;$1&amp;#34; else # t という変数にリストを作る # cd::cd が引数なしで実行されたとき、既存の cd を尊重した動きをする if empty &amp;#34;$1&amp;#34;; then t=&amp;#34;$({ cd::cat_log; echo &amp;#34;$HOME&amp;#34;; } | cd::list)&amp;#34; else t=&amp;#34;$(cd::list | cd::narrow &amp;#34;$1&amp;#34;)&amp;#34; fi # t を cd::interfaece に渡す # t が空（リストなし）のときは $1 を渡す cd::interface &amp;#34;${t:-$1}&amp;#34; fi # .</description>
+    </item>
+    
+    <item>
+      <title>ターミナルのディレクトリ移動を高速化するプラグイン「enhancd」のその後</title>
+      <link>https://tellme.tokyo/post/2015/08/12/183523/</link>
+      <pubDate>Wed, 12 Aug 2015 18:35:23 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/08/12/183523/</guid>
+      <description>事の発端はこのツイート（であろう）。
+そうしたらバズり始めた。</description>
+    </item>
+    
+    <item>
+      <title>拡張版 cd コマンドの enhancd が生まれ変わった</title>
+      <link>https://tellme.tokyo/post/2015/07/21/142826/</link>
+      <pubDate>Tue, 21 Jul 2015 14:28:26 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/07/21/142826/</guid>
+      <description>b4b4r07/enhancd ❤ GitHub  以前、シェルスクリプトの勉強の集大成として enhancd というプラグインちっくなものを書いた。これは cd コマンドのラッパー関数を提供するもので、通常のビルドインにはないメリットがたくさんある。cd コマンドはよく使われるコマンドの一つにも関わらず、その使い勝手はあまり良くない。たとえば、フルパスもしくは相対パスで辿れるディレクトリにしか移動できない。当たり前ではあるけど、すべてのパスを覚えているわけではないし、間違ったパスや単にディレクトリ名だけを与えても、よしなにやってくれるコマンドが欲しかったのだ（grep だって使いやすさを向上させた ack, ag, pt といったコマンドがある）。
+次に「どの言語で実装するか」、になるのだが（シェルスクリプトの勉強というのはさておき）、シェルスクリプトでなければならない理由というのがあって、それはディレクトリ移動に関する拡張を実装するからだ。ディレクトリ移動は基本的にカレントシェルである必要がある。ユーザがログインしてインタラクティブに実行しているシェル上で移動しなければ、もちろんのことながら見た目上、移動しない。 よくある（悪い）例が、
+$ cat cd.sh #!/bin/bash cd ~/src pwd $ ./cd.sh /home/lisa/src $ pwd /home/lisa シェルスクリプトで cd を実行し pwd した後、コマンドラインから pwd してもパスが変わっていないというやつだ。これはシェルスクリプトを実行するとき、別のプロセスの bash 上で cd が実行されているんだけど、シェルスクリプトが終了するとそのプロセスも終了するから見た目上 cd してないように感じる。これを回避するにはカレントシェルで実行するほかないのだ。
+シェルには source というコマンドがあって、これは誤解があるようにいえばカレントシェルでスクリプトを実行することを意味する。これを使うことで先ほどの構想は実現できる。別言語で書いても無理やりカレントシェルに反映させる方法もある（exec $SHELL）が、これは結構雑な方法でバックグランプロセスとかも消し去ってしまうので避けたかったということもある。
+なぜ生まれ変わったか 先代の enhancd（v1.0）は約 600 行だったが、シェルスクリプトの 600 行は結構メンテナンスが大変。シェルスクリプトの性質上、可読性も悪い上に、行指向な記述が多くなるためさらにそれに拍車をかけた。カスタマイザブルにしたかったため、たくさんの環境変数で操作できるような UI にしてたことと、途中から Zsh でも動作するように書き換えていったため、非常に煩雑になっていた。既知のバグもあったが、それらが影響してなかなかに取りづらく機能も拡張しづらくまさにスパゲッティ状態だった。エブリデイで使っているくせにこんな汚いものを使いたくないと、cdinterface という別プロジェクトで簡素化したプラグインを立ち上げた。個人的にこれで満足していた。 が、しかし。 最近になり enhancd にやたらスターがつくようになり（といっても記事執筆時 8 stars）見られていると思うとなんだか恥ずかしくなったので久しぶりにメンテナンスを…と思い立ったのだがやはり厳しいものがあった。時間も無駄になりそうだし更にスターが付いちゃう前にメジャーバージョンアップという名の下 cdinterface と統合しようとなった。
+新しい enhancd その前に cdinterface とは、絞りこみ部分をビジュアルフィルタ（peco や fzf）に任せると割り切って 作った cd 拡張。enhancd v1.</description>
+    </item>
+    
+    <item>
+      <title>書くのが面倒な zsh 補完関数を簡単に生成するツール「zgencomp」つくった</title>
+      <link>https://tellme.tokyo/post/2015/03/24/171218/</link>
+      <pubDate>Tue, 24 Mar 2015 17:12:18 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/03/24/171218/</guid>
+      <description>b4b4r07/zgencomp・GitHub
+zgencomp を使えば、Zsh コマンドの補完関数を簡単に生成することができます。
+背景 Zsh の醍醐味のひとつが補完機能であるのは言わずもがなですね。
+この補完について、基本的なコマンドや有名プロジェクトのコマンドなどの多くは提供されているのですが、自作コマンドもちろんのこと、マイナーなコマンドは提供されていなかったりします。
+その場合、ユーザが Zsh スクリプトの記法で補完ファイルを記述しなければなりません。これが結構骨の折れる作業で、Zsh が提供する補完インターフェースは高機能ゆえに複雑怪奇で、並みのユーザはおろか熟練のシェルスクリプターでも投げ出したくなる様です。
+特に自作コマンドの場合、コマンドの作成で疲弊して、マニュアルやドキュメンテーションでも疲弊しているところにこの補完機能の作業となると、まず補完は諦めがちです。
+zgencomp を使う そこでこのツールです。
+まずはデモを。
+
+JSON ファイルに設定を記述し、それをもとに補完関数を生成します。JSON ファイルはある程度のテンプレートが用意されているので書き換える形で簡単に設定できます。
+JSON ファイルの書き方 &amp;ldquo;command&amp;rdquo; サンプルである JSON ファイルの書き換え方について紹介します。
+{ &amp;#34;command&amp;#34; : &amp;#34;mycmd&amp;#34;, &amp;#34;properties&amp;#34; : { &amp;#34;author&amp;#34; : &amp;#34;John Doe&amp;#34;, &amp;#34;license&amp;#34; : &amp;#34;MIT&amp;#34;, ここらへんはそのままですね。ただし、&amp;quot;command&amp;quot; が空白の場合、パースエラーになります。
+&amp;ldquo;properties&amp;rdquo; &amp;#34;help&amp;#34; : { &amp;#34;option&amp;#34; : [ &amp;#34;-h&amp;#34;, &amp;#34;--help&amp;#34; ], &amp;#34;description&amp;#34; : &amp;#34;show this help and exit&amp;#34; }, ヘルプやバージョンに関するオプションについては通常のオプションとしては扱わず、コマンドの属性情報（&amp;quot;properties&amp;quot;）として処理します。
+また、&amp;quot;option&amp;quot; について指定できるオプションは - または -- から始まる文字列です（ショート／ロング オプション）。加えて、1つ以上のオプション指定が必須です。1つも指定されていない場合は、補完が実行されません。 これは &amp;quot;help&amp;quot; の &amp;quot;option&amp;quot; だけではなくすべての &amp;quot;option&amp;quot; に当てはまります。</description>
+    </item>
+    
+    <item>
+      <title>enhancd という autojump/z ライクな bash/zsh プラグインを書いた</title>
+      <link>https://tellme.tokyo/post/2014/11/20/134901/</link>
+      <pubDate>Thu, 20 Nov 2014 13:49:01 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2014/11/20/134901/</guid>
+      <description>【追記 2015-07-21】
+拡張版 cd コマンドの enhancd が生まれ変わった - tellme.tokyo
+enhancd v2.0 として生まれ変わりました。 enhancd [ɛnhǽn-síːdí] b4b4r07/enhancd.sh - GitHub  enhancd.sh とは autojump や z.sh などにインスパイアされて、後述する cdhist.sh をベースに作成されたディレクトリ移動をサポートするツールのことで、今回はそれらにも勝るとも劣らない機能を追加・拡張したので公開することにした。
+作った経緯 Bashの小枝集にて紹介されている cdhist.sh というものがある。これは説明にもある通り
+ ブラウザの「戻る」や「進む」のようにカレントディレクトリを行ったりきたりできるコマンド。これはリング状のディレクトリバッファを持っており以下の様な使われ方をする&amp;hellip;（※都合により引用を解釈の変わらない程度に変更）
+ yusuke ~[1]$ . cdhist.sh (cdhist を起動) yusuke ~[2]$ cd /tmp (カレントディレクトリが /tmp に移る) yusuke /tmp[3]$ cd /usr/bin (カレントディレクトリが /usr/bin に移る) yusuke /usr/bin[4]$ - (ひとつ前に戻る) yusuke /tmp[5]$ cd /etc (カレントディレクトリが /etc に移る) yusuke /etc[6]$ - (ひとつ前に戻る) yusuke /tmp[7]$ + (ひとつ後に進む) yusuke /etc[8]$ = (ディレクトリの履歴一覧表示) 3 /usr/bin 2 ~ 1 /tmp 0 /etc yusuke /etc[9]$ = 2 (リスト上のディレクトリを直接指定) yusuke ~[10]$  というスクリプトである。しばらくこれを満足して使っていたのだが、いくつかの不満点を抱くようになった。</description>
+    </item>
+    
+  </channel>
+</rss>

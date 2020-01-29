@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="zplug 流 zsh プラグイン管理術 - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2015/12/13/174209/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>zplug 流 zsh プラグイン管理術 | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">zplug 流 zsh プラグイン管理術</h1>
+    <h2 class="subtitle is-5">December 13, 2015 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/zsh">zsh</a>
+    
+        <a class="button is-link" href="/tags/zplug">zplug</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      
+        <a href="https://b4b4r07.hatenadiary.com/entry/2015/12/13/174209">元記事</a><br><br>
+      
+      <p>とある引用から。</p>
+<blockquote>
+<p>技術者であればだれでも経験することでしょうけれども、自分が作ったものを他人に理解させるというのは存外に難しく、なぜかというと開発者自身はどうしても開発した時の思考の流れを重視してしまい、読者にとって理解しやすい話の流れで話すという思考の大転換が困難だからです。そういえば、開発者自身による解説書の名著って意外なくらい少ないと思いませんか？</p>
+</blockquote>
+<p>私は先月末に zplug という zsh 用のプラグインマネージャーをリリースした。以下の記事では、zplug が生まれた背景やその周辺事情を導入として書いたため、もしかするとユーザ目線からでは分かりづらかったかもしれない。</p>
+<ul>
+<li><a href="http://qiita.com/b4b4r07/items/cd326cd31e01955b788b">おい、Antigen もいいけど zplug 使えよ</a></li>
+</ul>
+<p>そこで今回は開発者としての記事ではなく、いちユーザとして（といっても開発者がユーザ目線でプロダクトを語るのは冒頭の引用にもある通りひどく難しいことである）使い方を紹介していく。</p>
+<h1 id="特徴">特徴</h1>
+<p><a href="https://github.com/b4b4r07/zplug"><img src="https://raw.githubusercontent.com/b4b4r07/screenshots/master/zplug/logo.png" alt=""></a></p>
+<ul>
+<li>何でも管理できる（コマンド、Gist、oh-my-zsh のプラグイン、GitHub Releases のバイナリ）</li>
+<li>非同期インストール/アップデート</li>
+<li>ブランチロック・リビジョンロック</li>
+<li>インストール後の コマンド実行 hook あり</li>
+<li>oh-my-zsh などの外部プラグインをサポート</li>
+<li>バイナリを管理できる（GitHub Releases）</li>
+<li>shallow clone できる（オン・オフ）</li>
+<li>依存関係の記述ができる</li>
+<li>ユーザはプラグインマネージャのことを考えなくていい（<code>*.plugin.zsh</code> 不必要）</li>
+<li>選択的インターフェイスとの連携（fzf, peco, percol, zaw）</li>
+</ul>
+<h1 id="書き方">書き方</h1>
+<p>zplug はタグという概念を持っている。タグとはプラグインの属性情報を表したもので、<code>タグ:値</code> のセットで記述していく。</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">$ zplug <span class="s2">&#34;foo/bar&#34;</span>, as:command, of:<span class="s2">&#34;*.sh&#34;</span>
+</code></pre></div><p>こんな具合である。各タグ間はカンマと一つ以上のスペース（<code>,　</code>）で区切る必要がある。タグの値は必ずしもクォートで括る必要はないが、ワイルドカードなどファイルグロブを値と指定する場合、シェルに展開されないようにクォーティングする。</p>
+<h2 id="タグ一覧">タグ一覧</h2>
+<p>現在利用できるタグは以下のとおり。</p>
+<table>
+<thead>
+<tr>
+<th>タグ</th>
+<th>説明</th>
+<th>値 (デフォルト値)</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>as</code></td>
+<td>コマンドかプラグインかを指定する</td>
+<td><code>plugin</code>,<code>command</code> (<code>plugin</code>)</td>
+<td><code>as:command</code></td>
+</tr>
+<tr>
+<td><code>of</code></td>
+<td><code>source</code> するファイルへの相対パスかパスを通すコマンドへの相対パスを指定する（glob パターンでも可）</td>
+<td>- (<code>&quot;*.zsh&quot;</code>)</td>
+<td><code>of:bin</code>,<code>of:&quot;*.sh&quot;</code></td>
+</tr>
+<tr>
+<td><code>from</code></td>
+<td>外部からの取得を行う</td>
+<td><code>gh-r</code>,<code>gist</code>,<code>oh-my-zsh</code>,<code>github</code>,<code>bitbucket</code> (<code>github</code>)</td>
+<td><code>from:gh-r</code></td>
+</tr>
+<tr>
+<td><code>at</code></td>
+<td>ブランチ/タグを指定したインストールをサポートする</td>
+<td>ブランチかタグの名前 (<code>master</code>)</td>
+<td><code>at:v1.5.6</code></td>
+</tr>
+<tr>
+<td><code>file</code></td>
+<td>リネームしたい名前（コマンド時に有用）</td>
+<td>好きなファイル名 (-)</td>
+<td><code>file:fzf</code></td>
+</tr>
+<tr>
+<td><code>dir</code></td>
+<td>インストール先のディレクトリパス</td>
+<td><strong>READ ONLY</strong></td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>if</code></td>
+<td>真のときダウンロードしたコマンド/プラグインを有効化する</td>
+<td>真か偽 (-)</td>
+<td><code>if:&quot;[ -d ~/.zsh ]&quot;</code></td>
+</tr>
+<tr>
+<td><code>do</code></td>
+<td>インストール後に実行するコマンド</td>
+<td>コマンド (-)</td>
+<td><code>do:make install</code></td>
+</tr>
+<tr>
+<td><code>frozen</code></td>
+<td>直接指定しないかぎりアップデートを禁止する</td>
+<td>0か1 (0)</td>
+<td><code>frozen:1</code></td>
+</tr>
+<tr>
+<td><code>commit</code></td>
+<td>コミットを指定してインストールする (<code>$ZPLUG_SHALLOW</code> が真かどうかに関わらず)</td>
+<td>コミットのハッシュ値 (-)</td>
+<td><code>commit:4428d48</code></td>
+</tr>
+<tr>
+<td><code>on</code></td>
+<td>依存関係</td>
+<td><strong>READ ONLY</strong></td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>nice</code></td>
+<td>優先度（高 -20 〜 19 低）の設定をする。優先度の高いものから読み込む。10 以上を設定すると compinit のあとにロードされる</td>
+<td>-20..19 (0)</td>
+<td><code>nice:10</code></td>
+</tr>
+</tbody>
+</table>
+<p>具体的な書き方については <a href="https://github.com/b4b4r07/zplug">README</a> か <a href="https://github.com/b4b4r07/zplug/wiki/zshrc">公式の Wiki</a> を参照。</p>
+<h2 id="タグの省略について">タグの省略について</h2>
+<p>タグは限りなく怠惰な指定が可能である。例えば、</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">zplug <span class="s2">&#34;zsh-users/zsh-history-substring-search&#34;</span>
+</code></pre></div><p>は</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">zplug <span class="s2">&#34;zsh-users/zsh-history-substring-search&#34;</span>, as:plugin, from:github, of:<span class="s2">&#34;*.zsh&#34;</span>
+</code></pre></div><p>と等価である。意味はそのままで、「プラグインとして解釈され（as）、GitHubから取得し（from）、<code>*.zsh</code> なファイル（of）を読み込む」ことを指定している。</p>
+<p>つまりタグは省略された場合、デフォルト値が適用される。他にも <code>at:master, nice:0</code> が適用されているが、zplug のタグにおいてとても重要なのは <code>as</code>, <code>of</code>, <code>from</code> である。逆にこの 3 つを使えばだいたいのコマンドやプラグインを管理下に置くことができるように思う。</p>
+<h1 id="各コマンド">各コマンド</h1>
+<p>また、タグによって指定されたプラグイン属性は各種サブコマンドによってインストールされたりロードされたりする。</p>
+<p>ここで zplug コマンドの役割とフローを説明する。</p>
+<ol>
+<li>「ユーザ名/リポジトリ名」を引数に <code>zplug &quot;foo/bar&quot;</code> としてプラグインを連想配列 <code>$zplugs</code> に登録する（このとき、プラグイン名がキーで、タグによる属性情報が値となる）</li>
+<li><code>zplug install</code> でインストールする</li>
+<li><code>zplug load</code> で <code>source</code> されたりコマンドならシンボリックリンクが作成される</li>
+<li>プラグイン・コマンドが使用可能になる</li>
+</ol>
+<h2 id="インストールとアップデート">インストールとアップデート</h2>
+<p><code>zplug install</code> と <code>zplug update</code> によりインストールとアップデートが行える。インストールする項目があるか、アップデートする項目があるか、はそれぞれ <code>zplug check</code> と <code>zplug status</code> によって確認できる。</p>
+<p>また、zplug check は（例えるなら）Boolean な関数なので以下の様な書き方ができる。</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">zplug check <span class="o">||</span> zplug install
+</code></pre></div><p>また、インストール済みかどうかのチェックで設定項目を書くのにも使用されるべきである。</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh"><span class="k">if</span> zplug check <span class="s2">&#34;zsh-users/zsh-history-substring-search&#34;</span><span class="p">;</span> <span class="k">then</span>
+    bindkey <span class="s1">&#39;^P&#39;</span> history-substring-search-up
+    bindkey <span class="s1">&#39;^N&#39;</span> history-substring-search-down
+<span class="k">fi</span>
+</code></pre></div><p>これでインストールされていないときに、不要なキーバインドの設定を防ぐことができる。</p>
+<h1 id="まとめ">まとめ</h1>
+<p>うまく説明できたかわからない。ただ、zplug が持つポテンシャルは zsh プラグイン管理を革新するだけのものがある。みなさん使ってみてください。</p>
+<ul>
+<li><a href="https://github.com/b4b4r07/zplug">zplug</a></li>
+</ul>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/https://b4b4r07.hatenadiary.com/entry/2015/12/13/174209" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2020 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+

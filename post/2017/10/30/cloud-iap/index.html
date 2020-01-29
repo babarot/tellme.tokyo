@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="Cloud Identity-Aware Proxy を使って GCP backend を保護する - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2017/10/30/cloud-iap/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>Cloud Identity-Aware Proxy を使って GCP backend を保護する | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">Cloud Identity-Aware Proxy を使って GCP backend を保護する</h1>
+    <h2 class="subtitle is-5">October 30, 2017 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/iap">IAP</a>
+    
+        <a class="button is-link" href="/tags/gcp">GCP</a>
+    
+        <a class="button is-link" href="/tags/gke">GKE</a>
+    
+        <a class="button is-link" href="/tags/gce">GCE</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      
+      <h1 id="cloud-iap-とは">Cloud IAP とは</h1>
+<blockquote>
+<p>Cloud ID-Aware Proxy（Cloud IAP）は、Google Cloud Platform で動作するクラウド アプリケーションへのアクセスを制御します。
+Cloud IAP はユーザー ID を確認し、そのユーザーがアプリケーションへのアクセスを許可されるかどうかを判断します。
+<em>- <a href="https://cloud.google.com/iap/">https://cloud.google.com/iap/</a></em></p>
+</blockquote>
+<p><img src="https://cloud.google.com/images/products/iap/iap-lead.png" alt=""></p>
+<p>つまり Cloud Identity-Aware Proxy (Cloud IAP、または IAP) を使うことで、任意の GCP リソース <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> に存在するロードバランサに対して、許可された Google アカウントやサービスアカウントによるアクセスのみに絞ることができます。
+また、このアクセスリスト (ACL) の追加や削除などは GCP のウェブコンソールから簡単に制御することができます。</p>
+<h1 id="設定方法">設定方法</h1>
+<h2 id="glb-を作成する">GLB を作成する</h2>
+<p>IAP を使う場合、GCP 上にロードバランサ (LB) を用意する必要があります。
+これは IAP が LB に対して設定されるからです。</p>
+<p>本記事では GKE、GCE での設定方法について説明します。
+現時点で GAE にも対応していますが今回は検証しません。</p>
+<h3 id="1-gke">1. GKE</h3>
+<p>GKE で外部に公開したサービス (の <a href="https://kubernetes.io/docs/concepts/services-networking/ingress/">Ingress</a>) に対して ACL を設定したい、などでしょうか。
+Ingress リソースを作成すると、自動で GLBC (GCE Load-Balancer Controller) が割り当てられます。
+これは、GCP のウェブコンソールからも確認できます (メニュータブから <code>Network services &gt; Load balancing</code>)。</p>
+
+<figure >
+  
+    <img
+    src="/images/cloud-iap/iap-gke-lb.png"
+    
+    width="500"
+    />
+    
+  
+</figure>
+
+
+<p>あとは、GCP backend <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> に紐付いた GLB が存在すれば IAP を有効にすることができるので、いつも通り <a href="https://kubernetes.io/docs/concepts/services-networking/service/">Service</a> や <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployment</a> のリソースを作るだけで特にやることはありません。</p>
+<h3 id="2-gce">2. GCE</h3>
+<p>GCE の場合も同様に IAP を設定するためのロードバランサとして GLB を用意する必要があります。
+また、GCE インスタンスと GLB を紐付けるためには GCE インスタンスを Instance groups に登録する必要があります。
+これは GLB がどのインスタンスグループにリクエストをバランシングするべきかを指示するために必要です。
+仮に GCE インスタンスが 1 台でも、特定の Instance groups に所属させます (あとから台数を増やすことも可能です)。</p>
+<p>GCP backend <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup> に紐付いた GLB が用意できたら、あとはコンソールから IAP を有効にするだけです。</p>
+<h2 id="glb-に対して-iap-を有効にする">GLB に対して IAP を有効にする</h2>
+<p>次に、さきほど作成したロードバランサに対して IAP を有効にします。
+IAP の Enabling は GCP のウェブコンソールから簡単にできます (メニュータブから <code>IAM &amp; admin &gt; Identity-Aware Proxy</code>)。</p>
+
+<figure >
+  
+    <img
+    src="/images/cloud-iap/iap-console.png"
+    
+    width="650"
+    />
+    
+  
+</figure>
+
+
+<p>画像は GKE の例です。紐付いているロードバランサが GKE で作った Ingress であることがわかります。
+IAP の設定画面にはこれ以外にもたくさんの GLB が並んでいるので、IAP の認証をもたせたいサービスをバックエンドに持つロードバランサに対して、スイッチをオンにするだけで有効化できます。</p>
+<p>有効化したあとは、以下の追加設定が必要です。
+IAP を有効にすると次のような Credentials が作成されています。</p>
+
+<figure >
+  
+    <img
+    src="/images/cloud-iap/iap-cred.png"
+    
+    width="650"
+    />
+    
+  
+</figure>
+
+
+<p>これはその IAP に対する Client ID や Secret を表します。
+最後に Authorized redirects URIs を設定する必要があります。
+これは <code>https://&lt;YOUR_APP_URL&gt;/_gcp_gatekeeper/authenticate</code> の形で設定する必要があります。</p>
+<p>詳しくは <a href="https://cloud.google.com/iap/docs/how-to">https://cloud.google.com/iap/docs/how-to</a> をご覧ください。</p>
+<p>数分で IAP が設定されるので、完了したらアクセスしてみてください。</p>
+<h1 id="iap-protected-app-にリクエストする">IAP-protected app にリクエストする</h1>
+<h2 id="ブラウザから">ブラウザから</h2>
+<p>設定が完了していると、ロードバランサがつなぐサービスの URL にアクセスすると IAP によって Google の認証・認可が入ります。</p>
+
+<figure >
+  
+    <img
+    src="/images/cloud-iap/iap-browser.png"
+    
+    width="500"
+    />
+    
+  
+</figure>
+
+
+<p>ブラウザからだと Google アカウントによる認証になるので、IAP のコンソールから ACL にそのアカウントを追加するとログインすることができます。</p>
+
+<figure >
+  
+    <img
+    src="/images/cloud-iap/iap-acl.png"
+    
+    width="500"
+    />
+    
+  
+</figure>
+
+
+<p>ACL にないアカウントや、ID/Pass が異なる場合などはログインできず、バックエンドサービスへリクエストはいきません。</p>
+
+<figure >
+  
+    <img
+    src="/images/cloud-iap/iap-failed.png"
+    
+    width="500"
+    />
+    
+  
+</figure>
+
+
+<h2 id="プログラムから">プログラムから</h2>
+<p>ユーザがブラウザからアクセスするような Web アプリケーションなどの場合であれば問題ないのですが、API だけを提供するような GCP backend のサービスであったり開発中だったりすると、<code>curl</code> といった馴染みの CLI ツールやプログラムから認証したいことが多いと思います。
+また、IAP による認証だけを提供するためのバックエンド (つまり IAP プロキシ) であれば、この必要性は更に高いです。
+そのためコードベースでアクセスできるようにしておくとよいでしょう。</p>
+<p>まず、OpenID Connect (OIDC) トークンを使用して、Cloud IAP で保護されたリソースに対してサービスアカウントを認証します。 - <em><a href="https://cloud.google.com/iap/docs/authentication-howto">https://cloud.google.com/iap/docs/authentication-howto</a></em></p>
+<ol>
+<li>Cloud IAP で保護されたプロジェクトのアクセスリストにサービスアカウントを追加します</li>
+<li>JWT ベースのアクセス トークン (JWT-bAT) を生成します</li>
+<li>Cloud IAP で保護されたクライアント ID の OIDC トークンをリクエストします</li>
+<li><code>Authorization: Bearer</code> ヘッダーに OIDC トークンを追加して、Cloud IAP で保護されたリソースへの認証済みリクエストを作成します</li>
+</ol>
+<p>本記事では簡単に <code>curl</code> を使ってリクエストするフローだけ説明します。</p>
+<p>まず、GCP の Credentials から Other タイプで機密情報を作成します。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">OTHER_CLIENT_ID</span><span class="o">=</span><span class="s2">&#34;324403170728-gt3eoa75t6acdto8higo2opr18m8b6bd.apps.googleusercontent.com&#34;</span>
+open <span class="s2">&#34;</span><span class="s2">https://accounts.google.com/o/oauth2/v2/auth?client_id=</span><span class="nv">$OTHER_CLIENT_ID</span><span class="s2">&amp;response_type=code&amp;scope=openid%20email&amp;access_type=offline&amp;redirect_uri=urn:ietf:wg:oauth:2.0:oob</span><span class="s2">&#34;</span>
+</code></pre></div><p>上記 URL を開くと認証コードを取得できます。</p>
+
+<figure >
+  
+    <img
+    src="/images/cloud-iap/iap-auth-code.png"
+    
+    width="500"
+    />
+    
+  
+</figure>
+
+
+<p>これが <code>AUTH_CODE</code> になります。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">OTHER_CLIENT_ID</span><span class="o">=</span><span class="s2">&#34;324403170728-gt3eoa75t6acdto8higo2opr18m8b6bd.apps.googleusercontent.com&#34;</span>
+<span class="nv">OTHER_CLIENT_SECRET</span><span class="o">=</span><span class="s2">&#34;6wRMEKNTpHCJA4jz3M4v0O-P&#34;</span>
+<span class="nv">AUTH_CODE</span><span class="o">=</span><span class="s2">&#34;4/OQcxiB3JZo8rTIPOmlRNo1m9q2V9CQY6Y343BFWlYLU&#34;</span>
+
+<span class="nv">REFRESH_TOKEN</span><span class="o">=</span><span class="k">$(</span>
+curl --verbose <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">client_id</span><span class="o">=</span><span class="nv">$OTHER_CLIENT_ID</span> <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">client_secret</span><span class="o">=</span><span class="nv">$OTHER_CLIENT_SECRET</span> <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">code</span><span class="o">=</span><span class="nv">$AUTH_CODE</span> <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">redirect_uri</span><span class="o">=</span>urn:ietf:wg:oauth:2.0:oob <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">grant_type</span><span class="o">=</span>authorization_code <span class="se">\
+</span><span class="se"></span>    https://www.googleapis.com/oauth2/v4/token
+<span class="k">)</span>
+</code></pre></div><p>上記スクリプトを使用して <code>REFRESH_TOKEN</code> を取得します。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">REFRESH_TOKEN</span><span class="o">=</span><span class="s2">&#34;1/2NR2PjGdKnIOw5oYacdOt7EszfkgB_MEEuOMpcLzzd4TdDtqiCUH__GEMQX20nji&#34;</span>
+
+<span class="nv">token</span><span class="o">=</span><span class="k">$(</span>
+curl --verbose <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">client_id</span><span class="o">=</span><span class="nv">$OTHER_CLIENT_ID</span> <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">client_secret</span><span class="o">=</span><span class="nv">$OTHER_CLIENT_SECRET</span> <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">refresh_token</span><span class="o">=</span><span class="nv">$REFRESH_TOKEN</span> <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">grant_type</span><span class="o">=</span>refresh_token <span class="se">\
+</span><span class="se"></span>    --data <span class="nv">audience</span><span class="o">=</span><span class="nv">$IAP_CLIENT_ID</span> <span class="se">\
+</span><span class="se"></span>    https://www.googleapis.com/oauth2/v4/token <span class="p">|</span> jq -r .id_token
+<span class="k">)</span>
+
+curl <span class="se">\
+</span><span class="se"></span>    -H <span class="s2">&#34;</span><span class="s2">Authorization: Bearer </span><span class="nv">$token</span><span class="s2">&#34;</span> <span class="se">\
+</span><span class="se"></span>    <span class="s2">&#34;https://myserver.tellme.tokyo&#34;</span>
+</code></pre></div><p>取得した <code>REFRESH_TOKEN</code> を元にトークンを生成し、Bearer につけてバックエンドサービスにリクエストします。
+これでようやく IAP で保護されたアプリケーションにリクエストすることができました。</p>
+<p>サービスアカウントを使うことでよりプログラマブルなリクエストが可能です。
+Go や Python、PHP といった各種言語での具体例については以下のリポジトリにサンプルスクリプトをまとめました。
+詳しくはリポジトリにある README を参考にしてください。</p>
+<iframe
+  class="hatenablogcard"
+  style="width:100%;height:155px;max-width:420px;"
+  src="https://hatenablog-parts.com/embed?url=https%3a%2f%2fgithub.com%2fb4b4r07%2fmake_iap_request"
+  title=""
+  width="300"
+  height="150"
+  frameborder="0"
+  scrolling="no">
+</iframe>
+
+<p>また、上述した <code>curl</code> 流れを簡単にするために Client ID とサービスアカウントを使ってリクエストを作ることができる CLI の curl ラッパーを書きました。
+こちらも参考にしてみてください。</p>
+<iframe
+  class="hatenablogcard"
+  style="width:100%;height:155px;max-width:420px;"
+  src="https://hatenablog-parts.com/embed?url=https%3a%2f%2fgithub.com%2fb4b4r07%2fiap_curl"
+  title=""
+  width="300"
+  height="150"
+  frameborder="0"
+  scrolling="no">
+</iframe>
+
+<p>こんな感じでリクエストすることができます。
+Client ID (<code>IAP_CLIENT_ID</code>) は IAP に紐付いている Credentials から、サービスアカウント (<code>GOOGLE_APPLICATION_CREDENTIALS</code>) はどの GCP プロジェクトでもいいのでメニュータブから作成した後に IAP のコンソールのアクセスリストにそのメールアドレスを追加してください。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">IAP_CLIENT_ID</span><span class="o">=</span><span class="s2">&#34;342624545358-asdfd8fas9df8sd7ga0sdguadfpvqp69.apps.googleusercontent.com&#34;</span>
+<span class="nv">GOOGLE_APPLICATION_CREDENTIALS</span><span class="o">=</span><span class="s2">&#34;/path/to/service-account.json&#34;</span>
+iap_curl <span class="s2">&#34;https://myserver.your-iap-protected-app.com&#34;</span>
+</code></pre></div><p>内部で実行するコマンドは <code>curl</code> ですが、<code>httpstat</code> <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup> を使ってベンチマークを取ることも可能です。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">IAP_CURL_BIN</span><span class="o">=</span><span class="s2">&#34;httpstat&#34;</span>
+iap_curl <span class="s2">&#34;https://myserver.your-iap-protected-app.com&#34;</span>
+</code></pre></div><h1 id="iap-の仕組み">IAP の仕組み</h1>
+<p>最後に IAP がどのように実装されているのか説明します。</p>
+<p>※ 出典は <a href="https://cloud.google.com/iap/docs/how-to">https://cloud.google.com/iap/docs/how-to</a> です。詳しくはそちらを参照してください。</p>
+<p>Cloud IAP によって保護されているアプリケーションまたはリソースには、適切な <a href="https://cloud.google.com/iam/docs/understanding-roles">Cloud Identity Access Management (Cloud IAM) 役割</a>を持つユーザーとグループがプロキシ経由でのみアクセスできます。
+Cloud IAP によってアプリケーションまたはリソースへのアクセスをユーザーに許可すると、使用中のサービスによって実装されたきめ細かいアクセス制御が適用され、VPN を使用する必要がなくなります。
+ユーザーが Cloud IAP で保護されたリソースにアクセスしようとすると、Cloud IAP が認証と承認のチェックを行います。</p>
+<h2 id="認証">認証</h2>
+<p>Google Cloud Platform (GCP) リソースへのリクエストは、App Engine または Cloud Load Balancing（HTTPS）経由で送信されます。
+これらのサービスの処理インフラストラクチャコードは、Cloud IAP がアプリまたはバックエンド サービスに対して有効になっているかどうかを確認します。
+Cloud IAP が有効になっている場合は、保護されたリソースに関する情報が Cloud IAP 認証サーバーに送信されます。
+これには、GCP プロジェクト番号、リクエスト URL、およびリクエスト ヘッダーや Cookie 内の Cloud IAP 認証情報などの情報が含まれます。</p>
+<p>次に、Cloud IAP はユーザーのブラウザ認証情報をチェックします。
+存在しない場合、ユーザーは OAuth 2.0 の Google アカウントログインフローにリダイレクトされ、トークンが今後のログインのためにブラウザの Cookie に保存されます。
+既存のユーザー用の Google アカウントを作成する必要がある場合は、Google Cloud Directory Sync を使用して Active Directory または LDAP サーバーと同期できます。</p>
+<p>リクエストされた認証情報が有効である場合、認証サーバーはこれらの認証情報を使用してユーザーの ID (メールアドレスとユーザー ID) を取得します。
+認証サーバーは、この ID を使用してユーザーの Cloud IAM 役割をチェックし、ユーザーがリソースにアクセスする権限を持っているどうかをチェックします。</p>
+<p>Compute Engine または Container Engine を使用している場合、仮想マシン (VM) のアプリケーション処理ポートにアクセスできるユーザーは Cloud IAP 認証をバイパスできます。
+Compute Engine と Container Engine のファイアウォールは、同じネットワーク上の他の VM や Cloud IAP で保護されたアプリケーションと同じ VM 上で実行されているコードからのアクセスを防御しません。</p>
+<h2 id="承認">承認</h2>
+<p>認証後、Cloud IAP は関連する Cloud IAM ポリシーを適用して、ユーザーが要求されたリソースにアクセスする権限を持っているかどうかをチェックします。
+リソースが存在する Cloud Platform Console プロジェクトで Cloud IAP の access: HTTPS 役割を持つユーザーは、アプリケーションにアクセスする権限があります。
+Cloud IAP の access: HTTPS 役割リストを管理するには、Cloud Platform Console の Cloud IAP パネルを使用します。</p>
+<h1 id="今後の課題">今後の課題</h1>
+<h2 id="iap-の設定は各-lb-ごとにできるがacl-はプロジェクト内で共通">IAP の設定は各 LB ごとにできるが、ACL はプロジェクト内で共通</h2>
+<p>IAP の設定画面には、そのプロジェクトで作成されたロードバランサのすべてが並んでいます。
+Cloud IAP ではその LB のそれぞれに対して IAP を有効にするかどうか選択できます。
+しかしアクセスリストの一覧はその GCP プロジェクト内でひとつしか設定できません。</p>
+<p>つまり、例えるならば「エディター」という GCP プロジェクトにある「最近の Emacs ニュースを提供するサービス」と「最近の Vim ニュースを提供するサービス」の ACL を分けることができないのです。
+これはセキュリティ上、好ましくありません。</p>
+<h2 id="iap-の-acl-への追加が手動">IAP の ACL への追加が手動</h2>
+<p>開発者や関係者がたくさんいる場合、たくさんの Google アカウントを手動で ACL に追加しなければなりません。
+とはいえ、Google グループを使ってグルーピングすることが可能なので、多少のオペレーションで済みますが、Terraform などを使ったコードベースの管理はまだできないようです。</p>
+<h1 id="まとめ">まとめ</h1>
+<ul>
+<li>Cloud IAP を使うと GCP にあるサーバに対して簡単に Google 認証を設定できます</li>
+<li>リクエストするにはサービスアカウントと JWT 認証による手続きが必要です</li>
+<li>簡単にリクエストを作るために <code>iap_curl</code> という CLI ツールを書きました</li>
+</ul>
+<h1 id="参考資料">参考資料</h1>
+<ul>
+<li><a href="https://takipone.com/gcp-cloud-iap-ataglance/">Google Cloud Identity-Aware Proxy(Cloud IAP)でWebアプリに認証を追加する | :wq</a></li>
+<li><a href="https://cloudplatform-jp.googleblog.com/2017/05/Getting-started-with-Cloud-Identity-Aware-Proxy.html">Google Cloud Platform Japan 公式ブログ: Cloud Identity-Aware Proxy におけるアクセス制御の仕組み</a></li>
+<li><a href="https://medium.com/@DazWilkin/google-cloud-iap-and-gke-c773da56c3cf">Google Cloud IAP and GKE – Daz Wilkin – Medium</a></li>
+<li><a href="https://github.com/GoogleCloudPlatform/python-docs-samples/tree/master/iap">python-docs-samples/iap at master - GoogleCloudPlatform/python-docs-samples</a></li>
+<li><a href="https://github.com/google/google-auth-library-php/issues/149">Implement IAP/JWT client - Issue #149 - google/google-auth-library-php</a></li>
+<li><a href="https://stackoverflow.com/questions/43995763/connecting-to-iap-identity-aware-proxy-protected-service-with-php-and-service">Connecting to IAP (Identity Aware Proxy) protected service with PHP and Service Account - Stack Overflow</a></li>
+<li><a href="https://github.com/imkira/gcp-iap-auth">imkira/gcp-iap-auth: A simple server implementation and package in Go for helping you secure your web apps running on GCP behind a Cloud IAP (Identity-Aware Proxy)</a></li>
+</ul>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>今日 (2017/10/30) 現在では GCE、GAE、GKE に対応 <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>GKE の場合は Instance groups に属する <a href="https://kubernetes.io/docs/concepts/architecture/nodes/">Nodes</a> (実体は GCE インスタンス) <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p>GCE の場合は Instance groups に属する GCE インスタンス <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4" role="doc-endnote">
+<p><a href="https://tellme.tokyo/post/2016/09/25/httpstat/">最近、httpstat なるものが流行っているらしい | tellme.tokyo</a> <a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2020 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+

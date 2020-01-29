@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="特定のワードで Twitter を監視して、検知したら Slack に投げる - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2016/10/17/205021/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>特定のワードで Twitter を監視して、検知したら Slack に投げる | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">特定のワードで Twitter を監視して、検知したら Slack に投げる</h1>
+    <h2 class="subtitle is-5">October 17, 2016 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/slack">slack</a>
+    
+        <a class="button is-link" href="/tags/go">go</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      
+        <a href="https://b4b4r07.hatenadiary.com/entry/2016/10/17/205021">元記事</a><br><br>
+      
+      <p>&hellip; というツールを書きました。Twitter Streaming Daemon なので <a href="https://github.com/b4b4r07/twistd"><code>twistd</code></a> です。<a href="https://github.com/yarnpkg/yarn/issues/673">最近話題の名前衝突</a>ですが、こっちは個人のツールだし一旦気にしないことにします (リポジトリ作ってから気づいた)。</p>
+<iframe
+  class="hatenablogcard"
+  style="width:100%;height:155px;max-width:420px;"
+  src="https://hatenablog-parts.com/embed?url=https%3a%2f%2fgithub.com%2fb4b4r07%2ftwistd"
+  title=""
+  width="300"
+  height="150"
+  frameborder="0"
+  scrolling="no">
+</iframe>
+
+<h2 id="tldr">tl;dr</h2>
+<ul>
+<li>Twitter Streaming API を利用してツイートを監視する</li>
+<li>特定のワードで引っかかったら Slack に通知する</li>
+<li>2つをいっぺんに行うコマンドを書いた (デーモンとして利用しましょう)</li>
+</ul>
+<p><a href="https://github.com/b4b4r07/twistd"><img src="https://raw.githubusercontent.com/b4b4r07/screenshots/master/twistd/main.png" alt="twistd"></a></p>
+<p><em>※ <code>['tomato', 'potato']</code> で引っ掛けてる例</em></p>
+<h2 id="モチベーション">モチベーション</h2>
+<p><a href="http://github.com/zplug">zplug (GitHub Organization)</a> ではオーナーの他に数名のコラボレーターの方たちがいます。開発者同士のコミュニケーションには Slack を用い、GitHub Issues で issue トラッキングをしています。Slack への GitHub の通知は、Slack のインテグレーション機能 (issue が作られたり P-R が投げられると通知される) を使っています。これはよくあるスタイルだと思います。</p>
+<p>ところが、数ヶ月 Organization を運用して気づいたのが GitHub Issues に上がってこないバグレポートや機能改善、機能要望も結構あるということです。その多くは Twitter 上でつぶやかれていて、それからは時折 <code>zplug -RT</code> とかで Twitter 検索をしていたのですが、それを他のコラボレーターに共有するのが面倒なことと、定期的なエゴサーチが面倒 (見逃すということもある) で、Twitter を常時監視して zplug についてつぶやかれていたら Slack にポストしてくれるツールはないかと探しておりました。ちょうど良さそうなツールはないようなので、じゃあ作りましょうかとなった次第です (すでにあったらごめんなさい。そして <code>twistd</code> より優れていたら教えてください)。</p>
+<p><a href="https://github.com/b4b4r07/twistd"><img src="https://raw.githubusercontent.com/b4b4r07/screenshots/master/twistd/map.png" alt="twistd"></a></p>
+<p>ちなみに、zplug では twistd の他、また別の daemon や複数の bot が動いています。</p>
+<p><a href="https://github.com/zplug/bots">https://github.com/zplug/bots</a></p>
+<h2 id="使い方とか">使い方とか</h2>
+<h3 id="インストールと設定">インストールと設定</h3>
+<p>インストールはひとまず <code>git clone</code> して <code>make install</code> です。詳しい利用は <a href="https://github.com/b4b4r07/twistd/blob/master/Makefile"><code>Makefile</code></a> を見てください。</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">$ git clone https://github.com/b4b4r07/twistd<span class="p">;</span> <span class="nb">cd</span> twistd
+$ <span class="nv">$EDITOR</span> config.toml    <span class="c1"># トークンとか書く</span>
+$ sudo make install      <span class="c1"># ビルドして /etc 以下に config 置く</span>
+</code></pre></div><p><code>twist -c config.toml</code> で起動できます (config を指定しないと <code>/etc/twistd.conf</code> を読みに行きます)。コマンド名は <code>twist</code> です。末尾に <code>d</code> つかないです。</p>
+<p>あとは自身の Twitter などで「<code>(検索ワード)</code>」を含んだツイートをすると Slack にポストされます。もろもろは <code>config.toml</code> に設定してください。詳しくは <a href="https://github.com/b4b4r07/twistd/blob/master/README.md">README</a> で。</p>
+<h3 id="デーモンとして利用する">デーモンとして利用する</h3>
+<p>常駐させる関係でデーモン化させておいたほうがいいでしょう。</p>
+<ul>
+<li>systemd</li>
+<li>supervisord</li>
+<li>daemontools</li>
+<li>&hellip;</li>
+</ul>
+<h2 id="終わりに">終わりに</h2>
+<p>ある国には <a href="https://ja.wikipedia.org/wiki/%E3%82%A8%E3%82%B7%E3%83%A5%E3%83%AD%E3%83%B3">エシュロン</a>という装置があるそうですが、実際に使ってみるとそれを彷彿とさせる仕上がりでした (詳しくは知らない)。個人 (特にエンジニア) が発信するツールはブログか Twitter が大半を占めると思うのですが、Slack インテグレーションの Google Alert と、この twistd を併せて使うことで大体網羅して監視できるのが <del>気持ち悪い</del> 良いです ((まあ Public なツイートのみの収集なので))。&hellip;というようなエピローグはさておき、こんな感じになります。</p>
+<p><a href="https://github.com/b4b4r07/twistd"><img src="https://raw.githubusercontent.com/b4b4r07/screenshots/master/twistd/demo.gif" alt="twistd"></a></p>
+<p>こいつは config を読み込んで常駐するだけのシンプルな作りです。ロジックも Twitter Streaming API で待ち受けて Slack Incoming Webhooks するだけです。よかったら使ってみてください ((年1回ペースでしかリリースされない新譜のチェックなどにも使えそう))。改善 P-R も歓迎です。</p>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/https://b4b4r07.hatenadiary.com/entry/2016/10/17/205021" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2020 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+

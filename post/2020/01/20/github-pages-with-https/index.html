@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="GitHub Pages で HTTPS を有効にする - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2020/01/20/github-pages-with-https/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>GitHub Pages で HTTPS を有効にする | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">GitHub Pages で HTTPS を有効にする</h1>
+    <h2 class="subtitle is-5">January 20, 2020 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/github-pages">github-pages</a>
+    
+        <a class="button is-link" href="/tags/blog">blog</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      
+      <p>GitHub Pages で静的ページを公開するのが簡単なのでよく使う。
+これまで公開したサイトの HTTPS 化は Cloudfrare でやっていた。<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>
+めんどくさくて移行していなかったんだけど HTTPS 化するのも GitHub Pages の設定画面からできるようなのでやっていく<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。</p>
+<h2 id="1-ip-をレジストラに追加する">1. IP をレジストラに追加する</h2>
+<p><a href="https://help.github.com/en/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site#configuring-a-records-with-your-dns-provider">公式ガイドにある通り</a>、GitHub の A レコードをすべて登録する。</p>
+<pre><code>185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
+</code></pre>
+<figure >
+  
+    <img
+    src="ip.png"
+    
+    width="400"
+    />
+    
+  
+</figure>
+
+
+<p>待っていると数分でつながるようになる。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ dig babarot.me +nostats +nocomments +nocmd
+
+<span class="p">;</span> &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; babarot.me +nostats +nocomments +nocmd
+<span class="p">;</span><span class="p">;</span> global options: +cmd
+<span class="p">;</span>babarot.me.                    IN      A
+babarot.me.             <span class="m">3185</span>    IN      A       185.199.110.153
+babarot.me.             <span class="m">3185</span>    IN      A       185.199.108.153
+babarot.me.             <span class="m">3185</span>    IN      A       185.199.111.153
+babarot.me.             <span class="m">3185</span>    IN      A       185.199.109.153
+</code></pre></div><h2 id="2-該当リポジトリで設定">2. 該当リポジトリで設定</h2>
+
+<figure >
+  
+    <img
+    src="settings.png"
+    
+    width="600"
+    />
+    
+  
+</figure>
+
+
+<ol>
+<li>Custom domain に使用する独自ドメインを書く (CNAME ファイルがコミットされる)</li>
+<li>少し待ってると Enforce HTTPS のチェックボックスが押せるようになる</li>
+<li>少し待ってるとブラウザなどから https で接続できるようになる</li>
+</ol>
+<p>ここまで正味15分くらい、待ち時間を入れても30分くらいでできた。</p>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://sfus.net/blog/2018/11/migrate-to-https/">GitHub Pages の独自ドメインを HTTPS 化した - Hitori-Gotten Log</a></li>
+<li><a href="https://girigiribauer.com/archives/20180503/">GitHub hosting の custom domain が HTTPS 対応したので HTTPS 化してみた - ばうあーろぐ</a></li>
+<li><a href="https://taikii.net/posts/2018/07/github-pages-with-custom-domain/">GitHub Pagesを独自ドメインで運用する - taikii blog</a></li>
+<li><a href="https://qiita.com/shiruco/items/b504365371f18bfae7c8">GitHub Pagesの独自ドメインHTTPS化対応 - Qiita</a></li>
+<li><a href="https://risacan.net/GitHub-Pages%E3%81%A7%E5%85%AC%E9%96%8B%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E3%82%B5%E3%82%A4%E3%83%88%E3%82%92%E7%8B%AC%E8%87%AA%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E3%81%A7HTTPS%E5%8C%96%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/">GitHub Pagesで公開しているサイトを独自ドメインでHTTPS化する方法 | risacan.github.io</a></li>
+</ul>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://qiita.com/noraworld/items/89dd85a434a7b759e00c">GitHub Pages + CloudFlare で独自ドメインをSSL化する - Qiita</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p><a href="https://help.github.com/ja/github/working-with-github-pages/securing-your-github-pages-site-with-https">HTTPS で GitHub Pages サイトを保護する - GitHub ヘルプ</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2020 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+

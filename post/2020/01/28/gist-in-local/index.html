@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="ローカルから Gist を編集する方法 - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2020/01/28/gist-in-local/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>ローカルから Gist を編集する方法 | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">ローカルから Gist を編集する方法</h1>
+    <h2 class="subtitle is-5">January 28, 2020 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/go">go</a>
+    
+        <a class="button is-link" href="/tags/gist">gist</a>
+    
+        <a class="button is-link" href="/tags/cli">CLI</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      
+      <p>コードスニペットなどの管理によく Gist を使う。
+他にも特定の人にテキストを共有する目的で日本語を書いて置いておく場としても利用している。</p>
+<p>頻繁に読み書きするとなるとウェブから編集するのは少し手間に感じてくる。
+構造化された文章を書くなら慣れたエディタで書きたい。
+ローカルにコピペしてきてから編集してウェブ画面でペーストしていたこともあるが、頻繁にとなるとこれも結構面倒くさい。</p>
+<p>Gist はあくまでも git リポジトリなので git clone して手元で編集して push することもできる。
+かといってそれをやるかというとそれもまた面倒。
+テキスト編集するだけなのに git fetch も git commit もしたくない。
+なるべくそういったことは隠蔽されていてほしい。
+どこに clone するかといったことは ghq を使うことで考えなくてよくなるけど根本的な面倒くささは拭えない。</p>
+<p>こういったモチベーションからウェブから読み書きするのと同じ体験をローカルで再現するツールを書いた<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>。</p>
+<p><img src="https://raw.githubusercontent.com/b4b4r07/gist/master/docs/screenshot.png" alt=""></p>
+<p><a href="https://github.com/b4b4r07/gist">gist</a> という Gist に対して簡単な CRUD 操作ができるツールを Go で書いた。</p>
+<iframe
+  class="hatenablogcard"
+  style="width:100%;height:155px;max-width:420px;"
+  src="https://hatenablog-parts.com/embed?url=https%3a%2f%2fgithub.com%2fb4b4r07%2fgist"
+  title=""
+  width="300"
+  height="150"
+  frameborder="0"
+  scrolling="no">
+</iframe>
+
+<p>gistコマンドは次のサブコマンドを持つ。</p>
+<table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>new</td>
+<td>引数に渡されたファイルを Gist にアップロードする。<!-- raw HTML omitted -->引数がない場合は tmp ファイルを開き、エディタを閉じたらその内容でアップロードする</td>
+</tr>
+<tr>
+<td>open</td>
+<td>記事一覧を表示して選択されたファイルの Gist ページをブラウザで開く</td>
+</tr>
+<tr>
+<td>edit</td>
+<td>記事一覧を表示して選択されたファイルをエディタで開く</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>記事一覧を表示して選択されたファイルの Gist ページを消す</td>
+</tr>
+</tbody>
+</table>
+<p>これらのコマンドは実際に new とか edit する前に内部で次のことをする。</p>
+<ul>
+<li><a href="https://developer.github.com/v3/gists/#list-a-users-gists">/users/:username/gists</a> を叩いてユーザのすべての Gist ID を取ってくる</li>
+<li>すべての Gist ID を使って goroutine で git clone する</li>
+<li>Gist ID のリストはファイルキャッシュに持つ</li>
+</ul>
+<p>これに加えて、例えば edit だと</p>
+<ul>
+<li>セレクタ UI で Gist 一覧を表示する</li>
+<li>選択された Gist のファイルをエディタで開く</li>
+<li>未コミットのファイルがあったら git push する</li>
+</ul>
+<p>という感じで動作する。</p>
+<p>新しい Gist を追加するときは new からやればそのときにファイルキャッシュも更新するようになっているので、edit するときにも追加したファイルを選択することができる。
+ウェブから Gist を追加したときはファイルキャッシュを更新する必要がある (ただの JSON なので消すだけで次回の実行のときに再取得する)<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。</p>
+<pre><code class="language-console" data-lang="console">$ tree ~/.gist
+/Users/b4b4r07/.gist
+├── b4b4r07
+│  ├── 8cdc244f074d024b0ac0415ebc578af9
+│  ├── 05dd70cb491a4fe18de6627c8d966ac5
+│  ├── 197373082ad1fed866100e6d376dcbdc
+│  ├── ...
+│  ├── ...
+│  └── f26dd264f094e0ca834ce9feadc0c3f1
+└── cache.json
+</code></pre><p>かなり直感的に動くのでもう自分用途ではこれで良いといった感じになった。</p>
+<hr>
+<p>実装的には、Page と File という概念を持っていて、</p>
+<ul>
+<li>Page: Gist の ID が発行されるページ。1 Page に複数のファイルを持つことができる</li>
+<li>File: 実際のファイル</li>
+</ul>
+<p>という感じになっている。</p>
+<p>実際に Gist API 自体も Gist と File は別に管理しているようでこのツールでもそのコンセプトを踏襲して作った。</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>ツール自体は結構前に作っていて <a href="https://qiita.com/b4b4r07/items/0032a4508c1868aad491">Qiita</a> にも書いたことがある。今回は <a href="https://github.com/manifoldco/promptui">promptui</a> と <a href="https://github.com/spf13/cobra">cobra</a> を使ってコードベースを一新したので記事も書き直した <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>例えば Gist が 1,000 件以上ある場合、Paging している関係で 1 リクエスト 100 件取得したとしても結構待たされる。ので場合によっては全件取らない実装も入れてもいいなと思った <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2020 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+

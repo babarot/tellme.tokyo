@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="かゆいところに手が届く系の Git Tips 話 - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2016/12/20/git-tips/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>かゆいところに手が届く系の Git Tips 話 | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">かゆいところに手が届く系の Git Tips 話</h1>
+    <h2 class="subtitle is-5">December 20, 2016 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/git">git</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      
+        <a href="http://b4b4r07.hatenadiary.com/entry/2016/12/20/110000">元記事</a><br><br>
+      
+      
+
+<p>この記事は <a href="http://qiita.com/advent-calendar/2016/git">Git Advent Calendar 2016</a> の 20 日目です。git コマンドを日常的に実行するわけですが、外部スクリプトなどで個人的に日々改善しているお話についてまとめてみました。</p>
+
+<h1 id="ブランチ切り替えを手早くする">ブランチ切り替えを手早くする</h1>
+
+<p>git オペレーションで add,commit 並に多用すると思うのがブランチ切り替えで、特に remote にある branch の切り替えなどをショートカットしたくスクリプトを書きました。</p>
+
+<pre><code>$ git br
+</code></pre>
+
+<p>で fzf/peco などのフィルタで切り替えてくれます。ブランチ切り替え系はよくある tips なのですが、何が便利かというと、<code>remotes/origin/HOGE</code> などのリモートにしかないブランチは <code>git checkout -b HOGE remote/origin/HOGE</code> してくれるようになっているので気にせずに checkout できます。</p>
+
+<p>詳しくは直接スクリプトを読んでみて下さい。簡単なシェルスクリプトです。</p>
+
+<p><a href="https://github.com/b4b4r07/git-br">https://github.com/b4b4r07/git-br</a></p>
+
+<p><img src="https://cl.ly/28143e1J2G2h/git_br.gif" alt="" /></p>
+
+<h1 id="ローカルのファイルを-github-で読む">ローカルのファイルを GitHub で読む</h1>
+
+<p><code>hub browse</code> です。認証しなくて良いので便利です。ブランチを指定するとそのブランチで開いてくれますし、省略すると現在いるブランチで開いてくれます。</p>
+
+<pre><code>$ git open
+</code></pre>
+
+<p>フォークして引数にファイル名を渡したら GitHub で開いてくれるようにしたのですが、まだマージされていません。が、僕のフォーク版だと、そのブランチのファイルを開いてくれます。</p>
+
+<p><a href="https://github.com/b4b4r07/git-open">https://github.com/b4b4r07/git-open</a></p>
+
+<p><img src="https://cl.ly/1h1G0I002s1J/git_open.gif" alt="" /></p>
+
+<h1 id="大量のコンフリクトファイルを捌く">大量のコンフリクトファイルを捌く</h1>
+
+<p>多人数で開発するとなると、ブランチ運用がマストなわけですがコンフリクトもまぁ発生するわけです。特に、DB の DNS 設定ファイルなどは同時に多人数が編集することも多く、衝突しやすいファイル群のように思います。解消するファイルが多数ある場合、修正して add するまでどれが完了したかいまいち分かりづらかったので、エディタで編集後にすぐ自動で任意の git コマンドを実行してくれるスクリプトを書きました。</p>
+
+<p><a href="https://github.com/b4b4r07/git-conflict">https://github.com/b4b4r07/git-conflict</a></p>
+
+<p><img src="https://cl.ly/3O1T0O3d3e0k/git_conflict.gif" alt="" /></p>
+
+<h1 id="ssh-に切り替える">SSH に切り替える</h1>
+
+<p>pull や push には HTTPS と SSH が選べると思いますが、SSH がいいときもあります。切り替えが面倒なのでこれを簡単にしました。<code>git remote set-url</code> し直すだけのスクリプトですが、長々とタイプしなくて良いので意外と便利です。</p>
+
+<pre><code>$ git url-ssh
+</code></pre>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh"><span class="cp">#!/bin/bash
+</span><span class="cp"></span>
+<span class="nv">url</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>git remote -v <span class="p">|</span> awk <span class="s1">&#39;$1==&#34;origin&#34;{print $2;exit}&#39;</span><span class="k">)</span><span class="s2">&#34;</span>
+
+<span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$url</span><span class="s2">&#34;</span> <span class="o">=</span>~ ^https?:// <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="c1"># reconstruct url</span>
+    <span class="nv">url</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$url</span><span class="s2">&#34;</span> <span class="p">|</span> <span class="se">\
+</span><span class="se"></span>        perl -pe <span class="s1">&#39;s#^https?://(github\.com)/([A-z0-9._-]+)/([A-z0-9._-]+)(\.git)?$#git\@$1:$2/$3#&#39;</span>
+    <span class="k">)</span><span class="s2">&#34;</span>
+
+    <span class="c1"># to replace git protocol in remote URL with http protocol</span>
+    git remote set-url origin <span class="s2">&#34;</span><span class="si">${</span><span class="nv">url</span><span class="si">}</span><span class="s2">.git&#34;</span> <span class="m">2</span>&gt;/dev/null
+    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> !<span class="o">=</span> <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> <span class="s2">&#34;Failed to change remote URL&#34;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
+        <span class="nb">exit</span> <span class="m">1</span>
+    <span class="k">fi</span>
+
+    <span class="c1"># Show a remote URL</span>
+    <span class="nb">echo</span> <span class="s2">&#34;Changed!&#34;</span>
+    git remote -v
+<span class="k">else</span>
+    <span class="nb">echo</span> <span class="s2">&#34;Do nothing&#34;</span>
+    git remote -v
+<span class="k">fi</span></code></pre></div>
+<p>[f:id:b4b4r07:20161220023143p:plain:w600]</p>
+
+<h1 id="git-status-を簡単にする">git status を簡単にする</h1>
+
+<p>僕は常にワークスペースの状態を確認しておきたい派です。エイリアスをしたりして打つ文字数を減らすなどは良い案ではありますが、最速は空エンターです。zsh ユーザなら簡単にセットアップできるのでおすすめです。</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">do_enter<span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">[[</span> -n <span class="nv">$BUFFER</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+        zle accept-line
+        <span class="k">return</span> <span class="nv">$status</span>
+    <span class="k">fi</span>
+
+    <span class="nb">echo</span>
+    <span class="k">if</span> <span class="o">[[</span> -d .git <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="k">if</span> <span class="o">[[</span> -n <span class="s2">&#34;</span><span class="k">$(</span>git status --short<span class="k">)</span><span class="s2">&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+            git status
+        <span class="k">fi</span>
+    <span class="k">else</span>
+        <span class="c1"># do nothing</span>
+        :
+    <span class="k">fi</span>
+
+    zle reset-prompt
+<span class="o">}</span>
+zle -N do_enter
+bindkey <span class="s1">&#39;^m&#39;</span> do_enter</code></pre></div>
+<p>これもよくある Tips な気がするのですが (空エンターで <code>ls</code> など) ぶっちゃけ「画面数行確保したい」と思って空エンターすることが多い気がします。そうなるといつでもどこでも <code>ls</code> やら <code>git status</code> が発動してほしくないわけで、なので僕の場合、git リポジトリでなおかつワーキングスペースに何らかの変更が加えられているときのみ <code>git status</code> するようにしています。もちろん、ラインバッファに文字があるときはそれが <code>accept-line</code> されます。</p>
+
+<p><img src="https://cl.ly/1E0F0S0w3I2S/git_st.gif" alt="" /></p>
+
+<h1 id="スペルチェックしてから-push-する">スペルチェックしてから push する</h1>
+
+<p>タイポが蔓延するのを未然に防ぎます。プルリク用のブランチの CI で落としてもいいのですが、リモートにコミット積む前に防ぎたかった (rebase し直すのも面倒ですよね) のと、ローカルだと <code>--amend</code> し直せるので pre-push の hook を使います。git では <code>.git/hooks/</code> ディレクトリ配下に様々な hook scripts がサンプルとして配置されているので、<code>.sample</code> をリネームして書いていきます。終了ステータス (<code>$?</code>) が非ゼロで終われば hook 失敗となりそのタスクは実行されません (pre-push hook であれば push が実行されません)。</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh"><span class="cp">#!/bin/bash
+</span><span class="cp"></span>
+find . -type f <span class="p">|</span> xargs misspell -locale US -error
+<span class="nb">exit</span> <span class="nv">$?</span></code></pre></div>
+<p>今回、スペルチェッカーには <a href="https://github.com/client9/misspell">misspell</a> を使いました。<code>-error</code> オプションを渡せば、タイポを見つけたときに非ゼロで終了してくれるので今回の要件にマッチしていたので使いました。気に入ったスペルチェッカーがあればそれを使って非ゼロで終わるようにすれば misspell にかぎらず使用できます。</p>
+
+<p>[<a href="https://github.com/client9/misspell:title">https://github.com/client9/misspell:title</a>]</p>
+
+<p><img src="https://cl.ly/0X452R17412J/git_push.gif" alt="" /></p>
+
+<h1 id="終わりに">終わりに</h1>
+
+<p>さまざまなテクニック的な部分を Tips として紹介してきました。他にも便利な git サブコマンド系のツールがあったりしますが、一度入れてもなかなか自分のユースケースにフィットしないと使わずに忘れ去られていってしまいます。自分が経験しながら「不便だな、面倒だな」と思う点を自分で解決してゆくと、日々自分のために作業効率が改善される Tips が積み上がっていくと思います。</p>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/http://b4b4r07.hatenadiary.com/entry/2016/12/20/110000" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2020 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+

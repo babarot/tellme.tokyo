@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="golang でシェルの Exit code を扱う - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2018/04/02/golang-shell-exit-code/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>golang でシェルの Exit code を扱う | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">golang でシェルの Exit code を扱う</h1>
+    <h2 class="subtitle is-5">April 2, 2018 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/go">go</a>
+    
+        <a class="button is-link" href="/tags/cli">CLI</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      
+      <p>CLI ツールはよく golang で書く。
+(golang でなくとも) ちゃんとした CLI ツールを書こうとすると、Exit code とそのエラーの取り回しについて悩むことが多い。
+今回は、何回か遭遇したこの悩みに対する現時点における自分的ベストプラクティスをまとめておく。</p>
+<p><strong>ToC</strong></p>
+<ul>
+<li><a href="#exit-code-%E3%81%A8%E3%81%AF">Exit code とは</a></li>
+<li><a href="#golang-%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B-exit-code">golang における Exit code</a></li>
+<li><a href="#%E9%AB%98%E6%AC%A1%E3%81%A7%E3%81%AE%E5%8F%96%E3%82%8A%E5%9B%9E%E3%81%97">高次での取り回し</a>
+<ul>
+<li><a href="#cli-%E5%81%B4">CLI 側</a></li>
+<li><a href="#%E5%87%A6%E7%90%86%E5%81%B4">処理側</a></li>
+</ul>
+</li>
+<li><a href="#%E3%81%BE%E3%81%A8%E3%82%81">まとめ</a></li>
+</ul>
+<h2 id="exit-code-とは">Exit code とは</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ ./script/something.sh
+$ <span class="nb">echo</span> <span class="nv">$?</span>
+<span class="m">0</span>
+</code></pre></div><p><code>$?</code> で参照できる値で、0 は成功を表し、0 以外は失敗を含む別の意味を表す。取りうる範囲は 0 - 255 (シェルによって違うことがあるかも知れない)。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ <span class="nb">true</span>
+$ <span class="nb">echo</span> <span class="nv">$?</span>
+<span class="m">0</span>
+$ <span class="nb">false</span>
+$ <span class="nb">echo</span> <span class="nv">$?</span>
+<span class="m">1</span>
+</code></pre></div><p>詳しくは、<a href="https://qiita.com/Linda_pp/items/1104d2d9a263b60e104b">コマンドラインツールを書くなら知っておきたい Bash の 予約済み Exit Code - Qiita</a></p>
+<p>CLI ツールとはいわゆる UNIX コマンドであることが多いので、その慣習にならって実装するのよい。
+成功したら 0 を、失敗したらエラーメッセージとともに非 0 を返すといった感じ。</p>
+<h2 id="golang-における-exit-code">golang における Exit code</h2>
+<p>golang だとこんなイメージだと思う。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">// ...
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stderr</span><span class="p">,</span> <span class="s">&#34;[ERROR] %v\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+		<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+	<span class="p">}</span>
+</code></pre></div><p>これをもう少し扱いやすくした例が以下。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">run</span><span class="p">(</span><span class="nx">args</span> <span class="p">[</span><span class="p">]</span><span class="kt">string</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stderr</span><span class="p">,</span> <span class="s">&#34;[ERROR] too few arguments\n&#34;</span><span class="p">)</span>
+		<span class="k">return</span> <span class="mi">1</span>
+	<span class="p">}</span>
+	<span class="c1">// ...
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stderr</span><span class="p">,</span> <span class="s">&#34;[ERROR] %v\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+		<span class="k">return</span> <span class="mi">1</span>
+	<span class="p">}</span>
+	<span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="nf">run</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="p">]</span><span class="p">)</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><p><code>run()</code> はひたすら「err」や「エラーとして扱いたいケース」をひろって標準エラー出力に表示して、Exit code を return する役割に徹する。
+<code>main()</code> はその Exit code で <code>os.Exit()</code> するだけ。</p>
+<h2 id="高次での取り回し">高次での取り回し</h2>
+<p><code>main.go</code> や main パッケージで事足りる場合は上であげたパターンで問題ないが、規模が大きくなってくるともう少し抽象化したレイヤが欲しくなってきたりする。
+golang において、Exit code 周りで扱いたい要素は以下だと思っている。</p>
+<ul>
+<li>Exit code そのもの (<code>int</code>)</li>
+<li>エラー (<code>error</code>)</li>
+<li>(エラー) メッセージ (<code>string</code>)</li>
+</ul>
+<p>golang のプログラム的には err で返すけど、main まで上がってきたときにそれはエラーとして扱われたくない、つまり非 0 にされたくないケースがある。
+一様に <code>err != nil</code> だったら <code>fmt.Fprintf(os.Stderr... &amp;&amp; os.Exit(1)</code> としているとうまく扱えなくなる。</p>
+<p>そこで考えつくのが独自のエラー型の定義になる。</p>
+<h3 id="cli-側">CLI 側</h3>
+<p>main 関数に近い部分、つまりコマンドラインインターフェイスを提供する側 (user に近いレイヤ) は以下の実装をしておく。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">ExitError</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">exitCode</span> <span class="kt">int</span>
+	<span class="nx">err</span>      <span class="kt">error</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">ee</span> <span class="o">*</span><span class="nx">ExitError</span><span class="p">)</span> <span class="nf">Error</span><span class="p">(</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">ee</span><span class="p">.</span><span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="s">&#34;&#34;</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%v&#34;</span><span class="p">,</span> <span class="nx">ee</span><span class="p">.</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">NewExitError</span><span class="p">(</span><span class="nx">exitCode</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="o">*</span><span class="nx">ExitError</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">ExitError</span><span class="p">{</span>
+		<span class="nx">exitCode</span><span class="p">:</span> <span class="nx">exitCode</span><span class="p">,</span>
+		<span class="nx">err</span><span class="p">:</span>      <span class="nx">err</span><span class="p">,</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>error と Exit code を一緒くたに扱うための構造体を定義して、error interface を満たすために <code>Error()</code> メソッドを定義する。</p>
+<p>Primitive な error 型はそもそも message をもっているので、メッセージについてはこれが使える。</p>
+<p>あとは ExitError をハンドリングする関数を追加する。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">HandleExit</span><span class="p">(</span><span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">ExitCodeOK</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">exitErr</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">err</span><span class="p">.</span><span class="p">(</span><span class="nx">ExitCoder</span><span class="p">)</span><span class="p">;</span> <span class="nx">ok</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="p">)</span> <span class="o">!=</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
+			<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">exitErr</span><span class="p">.</span><span class="p">(</span><span class="nx">ErrorFormatter</span><span class="p">)</span><span class="p">;</span> <span class="nx">ok</span> <span class="p">{</span>
+				<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stderr</span><span class="p">,</span> <span class="s">&#34;%+v\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+			<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+				<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintln</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stderr</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+		<span class="k">return</span> <span class="nx">exitErr</span><span class="p">.</span><span class="nf">ExitCode</span><span class="p">(</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">err</span><span class="p">.</span><span class="p">(</span><span class="kt">error</span><span class="p">)</span><span class="p">;</span> <span class="nx">ok</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stderr</span><span class="p">,</span> <span class="s">&#34;%v\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+		<span class="k">return</span> <span class="nx">ExitCodeError</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="nx">ExitCodeOK</span>
+<span class="p">}</span>
+</code></pre></div><p>これがやっていることは、err が nil なら 0 を返し、ExitCoder (あとで全コードを載せるが ExitError が満たしているインタフェース) が実装されていればエラーを表示して、任意の Exit code で抜ける。
+それでもなければ Primitive な error が実装されていればエラーを表示して非 0 で抜ける。
+どれにも属さなければエラーではなく、0 で抜ける。</p>
+<h3 id="処理側">処理側</h3>
+<p>main から実行される実処理を担う部分は以下のような実装をしておく。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Result でなくてもよい
+</span><span class="c1"></span><span class="c1">// 実装側から CLI 側に伝播させたい情報を入れた構造体を定義する
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Result</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">Response</span> <span class="kt">string</span>
+
+	<span class="nx">ExitCode</span> <span class="kt">int</span>
+	<span class="nx">Error</span>    <span class="kt">error</span>
+<span class="p">}</span>
+</code></pre></div><p>CLI ツールが担うメイン処理の実行を記録する構造体を定義する。
+この Result は Response (<code>string</code>) を返す処理を表した構造体である。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">doSomething</span><span class="p">(</span><span class="p">)</span> <span class="nx">Result</span> <span class="p">{</span>
+	<span class="c1">// ...
+</span><span class="c1"></span>
+	<span class="c1">// エラーをエラーとして扱い、Exit code を非 0 とするケース
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">Result</span><span class="p">{</span>
+			<span class="nx">Response</span><span class="p">:</span> <span class="s">&#34;no response&#34;</span><span class="p">,</span>
+			<span class="nx">ExitCode</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+			<span class="nx">Error</span><span class="p">:</span> <span class="nx">err</span><span class="p">,</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="c1">// エラーをエラーとして扱うが、Exit code は 0 でいいケース
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">Result</span><span class="p">{</span>
+			<span class="nx">Response</span><span class="p">:</span> <span class="s">&#34;some responses&#34;</span><span class="p">,</span>
+			<span class="nx">ExitCode</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+			<span class="nx">Error</span><span class="p">:</span> <span class="nx">err</span><span class="p">,</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="c1">// Result のおかげでこの実処理を担う部分で Exit code を決めることができる
+</span><span class="c1"></span>	<span class="c1">// あとはこれが main まで正しく伝播されるように書いていく
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></div><p>こうすることで、先程の例に照らし合わせてみると、error と Exit code の取り回しを以下のように表すことができる。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">doSomethingWrapper</span><span class="p">(</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">result</span> <span class="o">:=</span> <span class="nf">doSomething</span><span class="p">(</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">result</span><span class="p">.</span><span class="nx">Error</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">result</span><span class="p">.</span><span class="nx">ExitCode</span><span class="p">,</span> <span class="nx">result</span><span class="p">.</span><span class="nx">Error</span>
+	<span class="p">}</span>
+	<span class="c1">// ...
+</span><span class="c1"></span>	<span class="c1">// cope with result.Response
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">run</span><span class="p">(</span><span class="nx">args</span> <span class="p">[</span><span class="p">]</span><span class="kt">string</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;too few arguments&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="c1">// ...
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">err</span>
+	<span class="p">}</span>
+	<span class="c1">// ...
+</span><span class="c1"></span>	<span class="nx">exitCode</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nf">doSomethingWrapper</span><span class="p">(</span><span class="p">)</span>
+	<span class="k">return</span> <span class="nf">NewExitError</span><span class="p">(</span><span class="nx">exitCode</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">err</span> <span class="o">:=</span> <span class="nf">run</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="p">]</span><span class="p">)</span>
+	<span class="nx">os</span><span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="nf">HandleExit</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><p><code>run()</code> では error を返すことに徹することができる (<code>run()</code> で error に Exit code を含めたい場合は ExitError 型に変換して抜ける)。
+「Exit code を何にするか」はさらにそのさきの処理 (<code>doSomethingWrapper()</code>、実際の値を決定するのは <code>doSomething()</code>) に委ねることができている。
+最終的に <code>main()</code> のレイヤで、そのエラーを咀嚼して Exit code を取り出して <code>os.Exit()</code> にわたすことができる。</p>
+<h2 id="まとめ">まとめ</h2>
+<p>小さいツールならこのようなことを考える必要はまったくないが、同じ CLI の中でパッケージを切り出したら、このやり方を考えても良いかも知れない。
+このエラーと Exit code の取り回しは <a href="https://github.com/urfave/cli">urfave/cli</a> がとても参考になった。</p>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2020 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
