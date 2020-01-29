@@ -7,7 +7,7 @@ draft: false
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2017/08/03/015238"
 tags:
-- gke
+- GKE
 - blog
 ---
 

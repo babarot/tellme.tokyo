@@ -7,7 +7,7 @@ draft: false
 author: "b4b4r07"
 oldlink: ""
 image: ""
-tags: ["go", "gist", "cli"]
+tags: ["go", "gist", "CLI"]
 
 ---
 

@@ -8,7 +8,7 @@ author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2017/02/14/214231"
 tags:
 - go
-- sql
+- SQL
 ---
 
 僕は開発中、zsh のヒストリー補完の機能をよく使います。具体的には次のような場面が多いです。
