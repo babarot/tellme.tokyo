@@ -91,7 +91,7 @@ Terraform の [resource](https://www.terraform.io/docs/configuration/resources.h
 Stein では **rule の conditions にある評価式が一つでも false になった場合、rule が fail して report にもとづいてエラーが返る** ようになっている。
 上の例では、spec.replicas が 3 以上を満たさない場合、この rule が失敗し標準出力にレポートされる。
 
-```console
+```bash
 $ stein apply
 manifests/microservices/x-echo-jp/development/Deployment/test.yaml
   [ERROR]  rule.replicas            Too few replicas
@@ -112,7 +112,7 @@ HCL ベースとはいえ、Terraform のように少しの学習コストがあ
 
 その前に、Stein のインターフェースを示すと、Stein は CLI コマンドとして動作する。
 
-```console
+```bash
 $ stein --help
 Usage: stein [--version] [--help] <command> [<args>]
 
@@ -128,9 +128,10 @@ fmt は HCL のフォーマットチェックができる。
 
 ポリシーファイルは HCL で定義し、任意のディレクトリに置くことができる。
 
-```console
+```bash
 $ stein apply -policy rule.hcl manifests/microservices/x-echo-jp/development/Deployment/test.yaml
 ```
+
 ```bash
 $ export STEIN_POLICY=rule.hcl
 $ stein apply manifests/microservices/x-echo-jp/development/Deployment/test.yaml
@@ -142,7 +143,7 @@ apply のフラグで指定するか環境変数で指定することができ�
 `.policy` が認識されるのは引数に渡されたファイルが置かれているディレクトリの階層すべて、になる。
 上の例だと次のディレクトリが対象になる。
 
-```console
+```
 manifests/.policy/
 manifests/microservices/.policy/
 manifests/microservices/x-echo-jp/.policy/
@@ -228,7 +229,7 @@ function "get_service_id_with_env" {
 
 また、リポジトリにある [_examples](https://github.com/b4b4r07/stein/tree/master/_examples) ディレクトリは実際のユースケースに則した形でのせたのでこれも参考になる。
 
-```console
+```
 $ tree -a _examples
 _examples
 ├── .policy/
@@ -262,6 +263,7 @@ _examples
         └── development/
             └── deploy-to-dev-v2.yaml
 ```
+
 ```bash
 # _examples にある例をもとに stein を実行する
 $ make run
