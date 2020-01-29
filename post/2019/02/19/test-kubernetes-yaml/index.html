@@ -159,12 +159,12 @@ $ stein apply manifests/microservices/x-echo-jp/development/Deployment/test.yaml
 <p>また、<code>.policy</code> ディレクトリをデフォルトのポリシーファイル置き場として認識するのでその場合は指定しなくて良い。
 <code>.policy</code> が認識されるのは引数に渡されたファイルが置かれているディレクトリの階層すべて、になる。
 上の例だと次のディレクトリが対象になる。</p>
-<pre><code>manifests/.policy/
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">manifests/.policy/
 manifests/microservices/.policy/
 manifests/microservices/x-echo-jp/.policy/
 manifests/microservices/x-echo-jp/development/.policy/
 manifests/microservices/x-echo-jp/development/Deployment/.policy/
-</code></pre><p>このおかげで影響させるポリシーをディレクトリで指定することができるようになっている。
+</code></pre></div><p>このおかげで影響させるポリシーをディレクトリで指定することができるようになっている。
 より詳細な挙動と実際の例は公式ドキュメントとリポジトリにあるサンプルが参考になる。</p>
 <ul>
 <li><a href="https://b4b4r07.github.io/stein/configuration/load/">Load Order - Stein Documentations</a></li>
@@ -235,7 +235,7 @@ manifests/microservices/x-echo-jp/development/Deployment/.policy/
 他の使い方やユースケースなどは公式ドキュメントとしてまとめているので参考になるかもしれない。</p>
 <p><a href="https://b4b4r07.github.io/stein/">Stein Documentations</a></p>
 <p>また、リポジトリにある <a href="https://github.com/b4b4r07/stein/tree/master/_examples">_examples</a> ディレクトリは実際のユースケースに則した形でのせたのでこれも参考になる。</p>
-<pre><code>$ tree -a _examples
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ tree -a _examples
 _examples
 ├── .policy/
 │   ├── config.hcl
@@ -267,7 +267,7 @@ _examples
     └── x-echo-jp/
         └── development/
             └── deploy-to-dev-v2.yaml
-</code></pre><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># _examples にある例をもとに stein を実行する</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># _examples にある例をもとに stein を実行する</span>
 $ make run
 </code></pre></div><h2 id="まとめ">まとめ</h2>
 <p>本記事では、</p>
