@@ -143,7 +143,7 @@ apply のフラグで指定するか環境変数で指定することができ�
 `.policy` が認識されるのは引数に渡されたファイルが置かれているディレクトリの階層すべて、になる。
 上の例だと次のディレクトリが対象になる。
 
-```
+```bash
 manifests/.policy/
 manifests/microservices/.policy/
 manifests/microservices/x-echo-jp/.policy/
@@ -229,7 +229,7 @@ function "get_service_id_with_env" {
 
 また、リポジトリにある [_examples](https://github.com/b4b4r07/stein/tree/master/_examples) ディレクトリは実際のユースケースに則した形でのせたのでこれも参考になる。
 
-```
+```bash
 $ tree -a _examples
 _examples
 ├── .policy/
