@@ -78,6 +78,16 @@
   </url>
   
   <url>
+    <loc>https://tellme.tokyo/tags/book/</loc>
+    <lastmod>2019-12-28T19:01:59+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/tags/movie/</loc>
+    <lastmod>2019-12-28T19:01:59+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/tags/hashiconf/</loc>
     <lastmod>2019-10-03T17:15:22+09:00</lastmod>
   </url>
@@ -155,11 +165,6 @@
   <url>
     <loc>https://tellme.tokyo/post/2018/11/19/github-label-management/</loc>
     <lastmod>2018-11-19T20:08:07+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tellme.tokyo/tags/book/</loc>
-    <lastmod>2018-11-08T22:37:54+09:00</lastmod>
   </url>
   
   <url>

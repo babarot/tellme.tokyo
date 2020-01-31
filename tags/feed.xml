@@ -67,6 +67,24 @@
     </item>
     
     <item>
+      <title>book</title>
+      <link>https://tellme.tokyo/tags/book/</link>
+      <pubDate>Sat, 28 Dec 2019 19:01:59 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/book/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>movie</title>
+      <link>https://tellme.tokyo/tags/movie/</link>
+      <pubDate>Sat, 28 Dec 2019 19:01:59 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/movie/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>hashiconf</title>
       <link>https://tellme.tokyo/tags/hashiconf/</link>
       <pubDate>Thu, 03 Oct 2019 17:15:22 +0900</pubDate>
@@ -144,15 +162,6 @@
       <pubDate>Mon, 19 Nov 2018 20:08:07 +0900</pubDate>
       
       <guid>https://tellme.tokyo/tags/github/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>book</title>
-      <link>https://tellme.tokyo/tags/book/</link>
-      <pubDate>Thu, 08 Nov 2018 22:37:54 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/tags/book/</guid>
       <description></description>
     </item>
     

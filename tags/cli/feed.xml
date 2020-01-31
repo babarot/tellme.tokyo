@@ -28,14 +28,14 @@ gist という Gist に対して簡単な CRUD 操作ができるツールを Go
     </item>
     
     <item>
-      <title>golang でシェルの Exit code を扱う</title>
+      <title>Go でシェルの Exit code を扱う</title>
       <link>https://tellme.tokyo/post/2018/04/02/golang-shell-exit-code/</link>
       <pubDate>Mon, 02 Apr 2018 23:42:39 +0900</pubDate>
       
       <guid>https://tellme.tokyo/post/2018/04/02/golang-shell-exit-code/</guid>
-      <description>CLI ツールはよく golang で書く。 (golang でなくとも) ちゃんとした CLI ツールを書こうとすると、Exit code とそのエラーの取り回しについて悩むことが多い。 今回は、何回か遭遇したこの悩みに対する現時点における自分的ベストプラクティスをまとめておく。
+      <description>CLI ツールはよく Go で書く。 (Go でなくとも) ちゃんとした CLI ツールを書こうとすると、Exit code とそのエラーの取り回しについて悩むことが多い。 今回は、何回か遭遇したこの悩みに対する現時点における自分的ベストプラクティスをまとめておく。
 ToC
- Exit code とは golang における Exit code 高次での取り回し  CLI 側 処理側   まとめ  Exit code とは $ ./script/something.sh $ echo $? 0 $? で参照できる値で、0 は成功を表し、0 以外は失敗を含む別の意味を表す。取りうる範囲は 0 - 255 (シェルによって違うことがあるかも知れない)。
+ Exit code とは Go における Exit code 高次での取り回し  CLI 側 処理側   まとめ  Exit code とは $ ./script/something.sh $ echo $? 0 $? で参照できる値で、0 は成功を表し、0 以外は失敗を含む別の意味を表す。取りうる範囲は 0 - 255 (シェルによって違うことがあるかも知れない)。
 $ true $ echo $? 0 $ false $ echo $? 1 詳しくは、コマンドラインツールを書くなら知っておきたい Bash の 予約済み Exit Code - Qiita
 CLI ツールとはいわゆる UNIX コマンドであることが多いので、その慣習にならって実装するのよい。 成功したら 0 を、失敗したらエラーメッセージとともに非 0 を返すといった感じ。</description>
     </item>

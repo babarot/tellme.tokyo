@@ -135,14 +135,14 @@ fzf, err := finder.New(&amp;#34;fzf&amp;#34;, &amp;#34;--reverse&amp;#34;, &amp;
     </item>
     
     <item>
-      <title>golang でシェルの Exit code を扱う</title>
+      <title>Go でシェルの Exit code を扱う</title>
       <link>https://tellme.tokyo/post/2018/04/02/golang-shell-exit-code/</link>
       <pubDate>Mon, 02 Apr 2018 23:42:39 +0900</pubDate>
       
       <guid>https://tellme.tokyo/post/2018/04/02/golang-shell-exit-code/</guid>
-      <description>CLI ツールはよく golang で書く。 (golang でなくとも) ちゃんとした CLI ツールを書こうとすると、Exit code とそのエラーの取り回しについて悩むことが多い。 今回は、何回か遭遇したこの悩みに対する現時点における自分的ベストプラクティスをまとめておく。
+      <description>CLI ツールはよく Go で書く。 (Go でなくとも) ちゃんとした CLI ツールを書こうとすると、Exit code とそのエラーの取り回しについて悩むことが多い。 今回は、何回か遭遇したこの悩みに対する現時点における自分的ベストプラクティスをまとめておく。
 ToC
- Exit code とは golang における Exit code 高次での取り回し  CLI 側 処理側   まとめ  Exit code とは $ ./script/something.sh $ echo $? 0 $? で参照できる値で、0 は成功を表し、0 以外は失敗を含む別の意味を表す。取りうる範囲は 0 - 255 (シェルによって違うことがあるかも知れない)。
+ Exit code とは Go における Exit code 高次での取り回し  CLI 側 処理側   まとめ  Exit code とは $ ./script/something.sh $ echo $? 0 $? で参照できる値で、0 は成功を表し、0 以外は失敗を含む別の意味を表す。取りうる範囲は 0 - 255 (シェルによって違うことがあるかも知れない)。
 $ true $ echo $? 0 $ false $ echo $? 1 詳しくは、コマンドラインツールを書くなら知っておきたい Bash の 予約済み Exit Code - Qiita
 CLI ツールとはいわゆる UNIX コマンドであることが多いので、その慣習にならって実装するのよい。 成功したら 0 を、失敗したらエラーメッセージとともに非 0 を返すといった感じ。</description>
     </item>
@@ -206,7 +206,7 @@ Transfer to Crowi そして今日、Crowi のメインメンテナの @sotarok �
     </item>
     
     <item>
-      <title>golang で zsh history を SQL 的に活用する</title>
+      <title>Go で zsh history を SQL 的に活用する</title>
       <link>https://tellme.tokyo/post/2017/02/14/214231/</link>
       <pubDate>Tue, 14 Feb 2017 21:42:31 +0900</pubDate>
       
@@ -258,12 +258,12 @@ Transfer to Crowi そして今日、Crowi のメインメンテナの @sotarok �
     </item>
     
     <item>
-      <title>Golang でコマンドラインにゴミ箱を実装した話</title>
+      <title>Go でコマンドラインにゴミ箱を実装した話</title>
       <link>https://tellme.tokyo/post/2015/05/22/103912/</link>
       <pubDate>Fri, 22 May 2015 10:39:12 +0900</pubDate>
       
       <guid>https://tellme.tokyo/post/2015/05/22/103912/</guid>
-      <description>Golang でコマンドラインにゴミ箱を実装した話 - TELLME.TOKYO
+      <description>Go でコマンドラインにゴミ箱を実装した話 - TELLME.TOKYO
 移設しました。</description>
     </item>
     

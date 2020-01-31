@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta content="b4b4r07, babarot" name="keywords">
 <meta content="b4b4r07" name="author">
-<meta property="og:title" content="golang で zsh history を SQL 的に活用する - tellme.tokyo">
+<meta property="og:title" content="Go で zsh history を SQL 的に活用する - tellme.tokyo">
 <meta property="og:url" content="https://tellme.tokyo/post/2017/02/14/214231/">
 <meta property="og:description" content="Masaki ISHIYAMA">
 <meta property="og:type" content="website" />
@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
 
-<title>golang で zsh history を SQL 的に活用する | tellme.tokyo</title>
+<title>Go で zsh history を SQL 的に活用する | tellme.tokyo</title>
 <link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
 <link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
 <link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
@@ -52,7 +52,7 @@
 
 <section class="section">
   <div class="container">
-    <h1 class="title">golang で zsh history を SQL 的に活用する</h1>
+    <h1 class="title">Go で zsh history を SQL 的に活用する</h1>
     <h2 class="subtitle is-5">February 14, 2017 </h2>
     
       <div class="tags">
@@ -221,7 +221,7 @@
 </table>
 <p>変わるかもしれません。</p>
 <h3 id="インストール">インストール</h3>
-<p>内部で golang 製の zhist というコマンドを使用します。ビルドが必要です。</p>
+<p>内部で Go 製の zhist というコマンドを使用します。ビルドが必要です。</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ git clone https://github.com/b4b4r07/zsh-history <span class="o">&amp;&amp;</span> <span class="nb">cd</span> zsh-history
 $ make <span class="o">&amp;&amp;</span> sudo make install
 $ <span class="nb">source</span> init.zsh
@@ -258,7 +258,7 @@ $ <span class="nb">source</span> init.zsh
 <span class="m">2</span> directories, <span class="m">2</span> files
 </code></pre></div><p>うっかり DB ファイルを消した際はここからリストアしてください (多少の差分ができることは悪しからず)。</p>
 <h4 id="zhist-について">zhist について</h4>
-<p>golang 製の CLI ツールです。zsh-history で使われており、sqlite3 とのつなぎ込みを行います。
+<p>Go 製の CLI ツールです。zsh-history で使われており、sqlite3 とのつなぎ込みを行います。
 挙動は toml によって制御できます。</p>
 <div class="highlight"><pre class="chroma"><code class="language-toml" data-lang="toml"><span class="c"># -s (スクリーンモード) で起動したときのプロンプト</span>
 <span class="nx">prompt</span> <span class="p">=</span> <span class="s2">&#34;sqlite3&gt; &#34;</span>
