@@ -1,5 +1,5 @@
 ---
-title: "golang で zsh history を SQL 的に活用する"
+title: "Go で zsh history を SQL 的に活用する"
 date: 2017-02-14T21:42:31+09:00
 description: ""
 categories: []
@@ -91,7 +91,7 @@ host | string | ホスト名
 
 ### インストール
 
-内部で golang 製の zhist というコマンドを使用します。ビルドが必要です。
+内部で Go 製の zhist というコマンドを使用します。ビルドが必要です。
 
 ```bash
 $ git clone https://github.com/b4b4r07/zsh-history && cd zsh-history
@@ -143,7 +143,7 @@ $ tree $ZSH_HISTORY_BACKUP_DIR
 
 #### zhist について
 
-golang 製の CLI ツールです。zsh-history で使われており、sqlite3 とのつなぎ込みを行います。
+Go 製の CLI ツールです。zsh-history で使われており、sqlite3 とのつなぎ込みを行います。
 挙動は toml によって制御できます。
 
 ```toml

@@ -6,7 +6,10 @@ categories: []
 draft: false
 author: b4b4r07
 oldlink: ""
-tags: []
+tags:
+- book
+- movie
+- review
 ---
 
 本に関しては記録がないので直近で記憶に残ってるやつ。映画は Filmarks ベース。
