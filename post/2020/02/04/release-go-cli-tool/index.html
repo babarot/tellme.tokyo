@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="Go で書いた CLI ツールのリリースは GoReleaser と GitHub Actions で個人的には決まり - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2020/02/04/release-go-cli-tool/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>Go で書いた CLI ツールのリリースは GoReleaser と GitHub Actions で個人的には決まり | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">Go で書いた CLI ツールのリリースは GoReleaser と GitHub Actions で個人的には決まり</h1>
+    <h2 class="subtitle is-5">February 4, 2020 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/go">go</a>
+    
+        <a class="button is-link" href="/tags/cli">cli</a>
+    
+        <a class="button is-link" href="/tags/release">release</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      
+      <h2 id="ltdr">lt;dr</h2>
+<p><a href="https://goreleaser.com/">GoReleaser</a> と <a href="https://help.github.com/en/actions/automating-your-workflow-with-github-actions/about-github-actions">GitHub Actions</a> を使うと簡単にビルドしたバイナリを作ってアップロードできる。</p>
+<ul>
+<li>2つの YAML を書いてリポジトリにコミットする
+<ul>
+<li><code>.github/workflows/release.yml</code></li>
+<li><code>.goreleaser.yml</code></li>
+</ul>
+</li>
+<li>git tag して push する</li>
+<li>バイナリがリリースされる</li>
+</ul>
+<p>専用のツールをローカルにインストールする必要はない。</p>
+<h2 id="本題">本題</h2>
+<p>前に、<a href="https://tellme.tokyo/post/2019/02/15/release-go/">Go のコマンドラインツールを簡単にリリースする | tellme.tokyo</a> というブログを書いた。</p>
+<p>それよりももっと楽になったので紹介する。</p>
+<p>基本的にこのページで紹介する方法では 2 つの YAML をリポジトリに置くだけで終わる。
+ローカルに何かをインストールする必要もない。
+2 つの YAML を書くだけ (コピペするだけ) でリリースの準備が整う。</p>
+<p>まずはじめに <code>.github/workflows/release.yml</code> を置く。
+編集不要でコピペする。</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">name</span><span class="p">:</span><span class="w"> </span>release<span class="w">
+</span><span class="w"></span><span class="k">on</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">  </span><span class="k">push</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">    </span><span class="k">tags</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">    </span>- <span class="s2">&#34;v[0-9]+.[0-9]+.[0-9]+&#34;</span><span class="w">
+</span><span class="w"></span><span class="k">jobs</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">  </span><span class="k">goreleaser</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">    </span><span class="k">runs-on</span><span class="p">:</span><span class="w"> </span>ubuntu-latest<span class="w">
+</span><span class="w">    </span><span class="k">steps</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">      </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Checkout<span class="w">
+</span><span class="w">        </span><span class="k">uses</span><span class="p">:</span><span class="w"> </span>actions/checkout@v1<span class="w">
+</span><span class="w">        </span><span class="k">with</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">          </span><span class="k">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">      </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Setup<span class="w"> </span>Go<span class="w">
+</span><span class="w">        </span><span class="k">uses</span><span class="p">:</span><span class="w"> </span>actions/setup-go@v1<span class="w">
+</span><span class="w">        </span><span class="k">with</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">          </span><span class="k">go-version</span><span class="p">:</span><span class="w"> </span><span class="m">1.13</span><span class="w">
+</span><span class="w">      </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Run<span class="w"> </span>GoReleaser<span class="w">
+</span><span class="w">        </span><span class="k">uses</span><span class="p">:</span><span class="w"> </span>goreleaser/goreleaser-action@v1<span class="w">
+</span><span class="w">        </span><span class="k">with</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">          </span><span class="k">version</span><span class="p">:</span><span class="w"> </span>latest<span class="w">
+</span><span class="w">          </span><span class="k">args</span><span class="p">:</span><span class="w"> </span>release<span class="w"> </span>--rm-dist<span class="w">
+</span><span class="w">        </span><span class="k">env</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">          </span><span class="k">GITHUB_TOKEN</span><span class="p">:</span><span class="w"> </span>${{<span class="w"> </span>secrets.GITHUB_TOKEN<span class="w"> </span>}}<span class="w">
+</span></code></pre></div><p>つぎに <code>.goreleaser.yml</code> を置く。このファイルはツール名の部分だけリポジトリに沿うように変更する (git-bump のところ)。</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">project_name</span><span class="p">:</span><span class="w"> </span>git-bump<span class="w">
+</span><span class="w"></span><span class="k">env</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">  </span>- GO111MODULE=on<span class="w">
+</span><span class="w"></span><span class="k">before</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">  </span><span class="k">hooks</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">    </span>- go<span class="w"> </span>mod<span class="w"> </span>tidy<span class="w">
+</span><span class="w"></span><span class="k">builds</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">  </span>- <span class="k">main</span><span class="p">:</span><span class="w"> </span>.<span class="w">
+</span><span class="w">    </span><span class="k">binary</span><span class="p">:</span><span class="w"> </span>git-bump<span class="w">
+</span><span class="w">    </span><span class="k">ldflags</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">      </span>- -s<span class="w"> </span>-w<span class="w">
+</span><span class="w">      </span>- -X<span class="w"> </span>main.Version={{.Version}}<span class="w">
+</span><span class="w">      </span>- -X<span class="w"> </span>main.Revision={{.ShortCommit}}<span class="w">
+</span><span class="w">    </span><span class="k">env</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">      </span>- CGO_ENABLED=<span class="m">0</span><span class="w">
+</span><span class="w"></span><span class="k">archives</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">  </span>- <span class="k">name_template</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}&#39;</span><span class="w">
+</span><span class="w">    </span><span class="k">replacements</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">      </span><span class="k">darwin</span><span class="p">:</span><span class="w"> </span>darwin<span class="w">
+</span><span class="w">      </span><span class="k">linux</span><span class="p">:</span><span class="w"> </span>linux<span class="w">
+</span><span class="w">      </span><span class="k">windows</span><span class="p">:</span><span class="w"> </span>windows<span class="w">
+</span><span class="w">      </span><span class="k">386</span><span class="p">:</span><span class="w"> </span>i386<span class="w">
+</span><span class="w">      </span><span class="k">amd64</span><span class="p">:</span><span class="w"> </span>x86_64<span class="w">
+</span><span class="w">    </span><span class="k">format_overrides</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">      </span>- <span class="k">goos</span><span class="p">:</span><span class="w"> </span>windows<span class="w">
+</span><span class="w">        </span><span class="k">format</span><span class="p">:</span><span class="w"> </span>zip<span class="w">
+</span><span class="w"></span><span class="k">release</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">  </span><span class="k">prerelease</span><span class="p">:</span><span class="w"> </span>auto<span class="w">
+</span></code></pre></div><p>(もし細かいパラメータの意味や出力結果の調整をしたかったら<a href="https://goreleaser.com/">公式ページ</a>をみたらすぐできる)</p>
+<p>すると、GitHub Actions の release ワークフローが走って、</p>
+
+<figure >
+  
+    <img
+    src="action.png"
+    
+    width="300"
+    />
+    
+  
+</figure>
+
+
+<p>こんな感じで各 OS 向けにビルドされた artifacts が <a href="https://github.com/b4b4r07/git-bump">Releases</a> にアップロードされる。</p>
+<p><img src="release.png" alt=""></p>
+<p>ローカルに <a href="https://github.com/goreleaser/goreleaser">goreleaser</a> をインストールしたりする必要もないので楽になった。</p>
+<p>加えて、GoReleaser を使うと git tag の情報とか build commit をバイナリに埋め込むことがこれまでよりも簡単になる。</p>
+<p>Go のコード側で埋め込み用の Variables だけを定義する。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// These variables are set in build step
+</span><span class="c1"></span><span class="kd">var</span> <span class="p">(</span>
+	<span class="nx">Version</span>  <span class="p">=</span> <span class="s">&#34;unset&#34;</span>
+	<span class="nx">Revision</span> <span class="p">=</span> <span class="s">&#34;unset&#34;</span>
+<span class="p">)</span>
+</code></pre></div><p>main.go ではなく、cmd などの下や別ファイルに Version などを書いている場合は別途埋め込み先の指定を変える。</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">builds</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">  </span>- <span class="k">main</span><span class="p">:</span><span class="w"> </span>.<span class="w">
+</span><span class="w">    </span><span class="k">binary</span><span class="p">:</span><span class="w"> </span>gist<span class="w">
+</span><span class="w">    </span><span class="k">ldflags</span><span class="p">:</span><span class="w"> </span><span class="w">
+</span><span class="w">      </span>- -s<span class="w"> </span>-w<span class="w">
+</span><span class="w">      </span>- -X<span class="w"> </span>github.com/b4b4r07/gist/cmd.Version={{.Version}}<span class="w">
+</span><span class="w">      </span>- -X<span class="w"> </span>github.com/b4b4r07/gist/cmd.BuildSHA={{.ShortCommit}}<span class="w">
+</span><span class="w">      </span>- -X<span class="w"> </span>github.com/b4b4r07/gist/cmd.BuildTag={{.Tag}}<span class="w">
+</span></code></pre></div><p>今までは Makefile で ldflags の設定などをすることが多かったけど、それも GoReleaser の設定ファイルに寄せることができる。
+これで Makefile を頑張って書く必要もなくなった。</p>
+<p>この仕組みのおかげで Go で CLI ツールを書くことがもっと楽しくなったし楽になったのでバイナリをちゃんと用意することが増えた。</p>
+<p>おかげさまで今まで以上に git tag して git push origin tag することが増えたので、</p>
+<ul>
+<li>「あれ今このリポジトリはバージョンいくつだっけな」</li>
+<li>「git tag して patch version で bump して、、」</li>
+</ul>
+<p>とするのが面倒だったのでそれをするためだけの Go ツールを書いた。</p>
+<iframe
+  class="hatenablogcard"
+  style="width:100%;height:155px;max-width:420px;"
+  src="https://hatenablog-parts.com/embed?url=https%3a%2f%2fgithub.com%2fb4b4r07%2fgit-bump"
+  title=""
+  width="300"
+  height="150"
+  frameborder="0"
+  scrolling="no">
+</iframe>
+
+<p><img src="git-bump.png" alt=""></p>
+<p>いわずもがなにこれも GoReleaser + GitHub Actions でリリースしている。</p>
+<p>(特に CLI ツールでなくとも GitHub Actions を書いてビルドするときにも便利だった)</p>
+<h2 id="まとめ">まとめ</h2>
+<p>GoReleaser と GitHub Actions で Go の CLI ツールのリリースでやることが減った。</p>
+<p>個人的に GoReleaser を使っておくことで checksum のテキストを作ってくれてバイナリと一緒にアップロードしてくれるところも手間を減らせるという点で好きなポイント。</p>
+<p>以下に実例をいくつか列挙しておく。</p>
+<ul>
+<li><a href="https://github.com/b4b4r07/git-bump">https://github.com/b4b4r07/git-bump</a></li>
+<li><a href="https://github.com/b4b4r07/gist">https://github.com/b4b4r07/gist</a></li>
+<li><a href="https://github.com/b4b4r07/gomi">https://github.com/b4b4r07/gomi</a></li>
+</ul>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2020 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+

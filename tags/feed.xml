@@ -7,10 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Wed, 29 Jan 2020 23:21:50 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 04 Feb 2020 00:32:10 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/tags/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>CLI</title>
+      <link>https://tellme.tokyo/tags/cli/</link>
+      <pubDate>Tue, 04 Feb 2020 00:32:10 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/cli/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>go</title>
+      <link>https://tellme.tokyo/tags/go/</link>
+      <pubDate>Tue, 04 Feb 2020 00:32:10 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>release</title>
+      <link>https://tellme.tokyo/tags/release/</link>
+      <pubDate>Tue, 04 Feb 2020 00:32:10 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/release/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>blog</title>
@@ -31,29 +58,11 @@
     </item>
     
     <item>
-      <title>CLI</title>
-      <link>https://tellme.tokyo/tags/cli/</link>
-      <pubDate>Tue, 28 Jan 2020 22:04:26 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/tags/cli/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>gist</title>
       <link>https://tellme.tokyo/tags/gist/</link>
       <pubDate>Tue, 28 Jan 2020 22:04:26 +0900</pubDate>
       
       <guid>https://tellme.tokyo/tags/gist/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>go</title>
-      <link>https://tellme.tokyo/tags/go/</link>
-      <pubDate>Tue, 28 Jan 2020 22:04:26 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/tags/go/</guid>
       <description></description>
     </item>
     

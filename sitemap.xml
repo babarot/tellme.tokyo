@@ -3,6 +3,41 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://tellme.tokyo/tags/cli/</loc>
+    <lastmod>2020-02-04T00:32:10+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/tags/go/</loc>
+    <lastmod>2020-02-04T00:32:10+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/post/2020/02/04/release-go-cli-tool/</loc>
+    <lastmod>2020-02-04T00:32:10+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/post/</loc>
+    <lastmod>2020-02-04T00:32:10+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/tags/release/</loc>
+    <lastmod>2020-02-04T00:32:10+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/tags/</loc>
+    <lastmod>2020-02-04T00:32:10+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tellme.tokyo/</loc>
+    <lastmod>2020-02-04T00:32:10+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://tellme.tokyo/tags/blog/</loc>
     <lastmod>2020-01-29T23:21:50+09:00</lastmod>
   </url>
@@ -18,32 +53,7 @@
   </url>
   
   <url>
-    <loc>https://tellme.tokyo/post/</loc>
-    <lastmod>2020-01-29T23:21:50+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tellme.tokyo/tags/</loc>
-    <lastmod>2020-01-29T23:21:50+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tellme.tokyo/</loc>
-    <lastmod>2020-01-29T23:21:50+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tellme.tokyo/tags/cli/</loc>
-    <lastmod>2020-01-28T22:04:26+09:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://tellme.tokyo/tags/gist/</loc>
-    <lastmod>2020-01-28T22:04:26+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tellme.tokyo/tags/go/</loc>
     <lastmod>2020-01-28T22:04:26+09:00</lastmod>
   </url>
   
