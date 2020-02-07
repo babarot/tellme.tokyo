@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>unix on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/unix/</link>
+    <description>Recent content in unix on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Fri, 07 Feb 2020 12:27:21 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/unix/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>標準出力に出しつつ、パイプ先のコマンドにも繋ぐ</title>
+      <link>https://tellme.tokyo/post/2020/02/07/tee-command/</link>
+      <pubDate>Fri, 07 Feb 2020 12:27:21 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2020/02/07/tee-command/</guid>
+      <description>コマンドの結果を目で見ながら、パイプに渡すなどするときのこと。
+よくやるのに忘れるのでメモする。
+結論 some-command | tee &amp;gt;(pipe-command) 解説 tee コマンドを使うとできる。
+肝は tee が input されたデータを、
+ 標準出力 リダイレクト先  これらに output することができるので、リダイレクト先をプロセス置換1を使ってパイプに渡したいコマンドを指定することで標準出力に出しつつ、特定のコマンドにパイプすることができる。
+実際のデモ:
+seq 15 | tee &amp;gt;(grep 4) tee は標準出力ではなく、標準エラー出力にも出すことができる。 普通に file descriptor 2番に出力する。
+seq 15 | tee &amp;gt;(grep 4) &amp;gt;&amp;amp;2 # もしくは seq 15 | tee &amp;gt;&amp;amp;2 &amp;gt;(grep 4) よくやるシーンとして、CI のコンソールにも出しつつ、結果を GitHub コメントに POST する、といったときにやる。
+notify() { local comment template comment=&amp;#34;$(tee &amp;gt;(cat)&amp;gt;&amp;amp;2)&amp;#34; # pipe and output stderr template=&amp;#34;## Some results \`\`\` %s \`\`\` &amp;#34; comment=&amp;#34;$(printf &amp;#34;${template}&amp;#34; &amp;#34;${comment}&amp;#34;)&amp;#34; github_comment &amp;#34;${comment}&amp;#34; } some_output_func | notify mercari/tfnotify も最初はこういう感じのシェルスクリプトから始まったことを思い出した。</description>
+    </item>
+    
+  </channel>
+</rss>
