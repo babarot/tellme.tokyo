@@ -16,7 +16,9 @@ jobs:
       with:
         hugo-version: '0.63.1'
     - name: Build
-      run: hugo
+      run: |
+        hugo
+        cp -v ./CNAME ./docs/CNAME
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v2
       env:
