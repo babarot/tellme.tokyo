@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>go on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/go/</link>
+    <description>Recent content in go on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Tue, 04 Feb 2020 00:32:10 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/go/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Go で書いた CLI ツールのリリースは GoReleaser と GitHub Actions で個人的には決まり</title>
+      <link>https://tellme.tokyo/post/2020/02/04/release-go-cli-tool/</link>
+      <pubDate>Tue, 04 Feb 2020 00:32:10 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2020/02/04/release-go-cli-tool/</guid>
+      <description>lt;dr GoReleaser と GitHub Actions を使うと簡単にビルドしたバイナリを作ってアップロードできる。
+ 2つの YAML を書いてリポジトリにコミットする  .github/workflows/release.yml .goreleaser.yml   git tag して push する バイナリがリリースされる  専用のツールをローカルにインストールする必要はない。
+本題 前に、Go のコマンドラインツールを簡単にリリースする | tellme.tokyo というブログを書いた。
+それよりももっと楽になったので紹介する。
+基本的にこのページで紹介する方法では 2 つの YAML をリポジトリに置くだけで終わる。 ローカルに何かをインストールする必要もない。 2 つの YAML を書くだけ (コピペするだけ) でリリースの準備が整う。
+まずはじめに .github/workflows/release.yml を置く。 編集不要でコピペする。
+name:releaseon:push:tags:- &amp;#34;v[0-9]+.[0-9]+.[0-9]+&amp;#34;jobs:goreleaser:runs-on:ubuntu-lateststeps:- name:Checkoutuses:actions/checkout@v1with:fetch-depth:1- name:SetupGouses:actions/setup-go@v1with:go-version:1.13- name:RunGoReleaseruses:goreleaser/goreleaser-action@v1with:version:latestargs:release--rm-distenv:GITHUB_TOKEN:${{secrets.GITHUB_TOKEN}}つぎに .goreleaser.yml を置く。このファイルはツール名の部分だけリポジトリに沿うように変更する (git-bump のところ)。
+project_name:git-bumpenv:- GO111MODULE=onbefore:hooks:- gomodtidybuilds:- main:.binary:git-bumpldflags:- -s-w- -Xmain.Version={{.Version}}- -Xmain.Revision={{.ShortCommit}}env:- CGO_ENABLED=0archives:- name_template:&amp;#39;{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .</description>
+    </item>
+    
+    <item>
+      <title>ローカルから Gist を編集する方法</title>
+      <link>https://tellme.tokyo/post/2020/01/28/gist-in-local/</link>
+      <pubDate>Tue, 28 Jan 2020 22:04:26 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2020/01/28/gist-in-local/</guid>
+      <description>コードスニペットなどの管理によく Gist を使う。 他にも特定の人にテキストを共有する目的で日本語を書いて置いておく場としても利用している。
+頻繁に読み書きするとなるとウェブから編集するのは少し手間に感じてくる。 構造化された文章を書くなら慣れたエディタで書きたい。 ローカルにコピペしてきてから編集してウェブ画面でペーストしていたこともあるが、頻繁にとなるとこれも結構面倒くさい。
+Gist はあくまでも git リポジトリなので git clone して手元で編集して push することもできる。 かといってそれをやるかというとそれもまた面倒。 テキスト編集するだけなのに git fetch も git commit もしたくない。 なるべくそういったことは隠蔽されていてほしい。 どこに clone するかといったことは ghq を使うことで考えなくてよくなるけど根本的な面倒くささは拭えない。
+こういったモチベーションからウェブから読み書きするのと同じ体験をローカルで再現するツールを書いた1。
+gist という Gist に対して簡単な CRUD 操作ができるツールを Go で書いた。
+ gistコマンドは次のサブコマンドを持つ。
+   コマンド 説明     new 引数に渡されたファイルを Gist にアップロードする。引数がない場合は tmp ファイルを開き、エディタを閉じたらその内容でアップロードする   open 記事一覧を表示して選択されたファイルの Gist ページをブラウザで開く   edit 記事一覧を表示して選択されたファイルをエディタで開く   delete 記事一覧を表示して選択されたファイルの Gist ページを消す    これらのコマンドは実際に new とか edit する前に内部で次のことをする。</description>
+    </item>
+    
+    <item>
+      <title>メソッドを持った interface を要素に持つ struct への JSON Unmarshal</title>
+      <link>https://tellme.tokyo/post/2019/04/10/json-unmarshal-with-interface-element/</link>
+      <pubDate>Wed, 10 Apr 2019 23:42:51 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2019/04/10/json-unmarshal-with-interface-element/</guid>
+      <description>interface要素を持つstructへのJSON Unmarshal - すぎゃーんメモ
+これが参考になった。
+ただ、このケースで上げているのは interface がどの struct で評価されればいいかわかっているケースだった。 例えば、これをキーに持つ JSON だった場合は struct A で、このキーがなかったら struct B で、みたいなケースは自分で JSON の中を読みにいって判別して Unmarshal する他ない。
+具体例を示す。
+type State struct { Modules []Module `json:&amp;#34;modules&amp;#34;` } type Module struct { Name string `json:&amp;#34;name&amp;#34;` Resources []Resource `json:&amp;#34;resources&amp;#34;` } // ちなみにメソッドを持っていない場合は // interface{} として Unmarshal されるのでエラーにならない type Resource interface { Get() // ... } type AWSModule struct { Name string `json:&amp;#34;name&amp;#34;` } func (m AWSModule) Get() {} type GCPModule struct { Name string `json:&amp;#34;name&amp;#34;` Project string `json:&amp;#34;project&amp;#34;` } func (m GCPModule) Get() {} こういう状況だと上のブログにもある通り、</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes などの YAML を独自のルールをもとにテストする</title>
+      <link>https://tellme.tokyo/post/2019/02/19/test-kubernetes-yaml/</link>
+      <pubDate>Tue, 19 Feb 2019 21:40:24 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2019/02/19/test-kubernetes-yaml/</guid>
+      <description>設定ファイルのメンテナンスの必要性 Infrastructure as Code の普及もありインフラの状態やその他多くの設定が、設定ファイル言語 (YAML や HCL など) で記述されることが多くなった。 Terraform HCL や Kubernetes YAML など、人が継続的にメンテナンスしなければならなく、その設定が直接プロダクションに影響を与える場合、そのレビューがとても重要になる。 具体的に例えば、「デプロイする Replica の数」や「Resource limit や PodDisruptionBudget が適切か」などレビューの中で注意深く見なけれなならない点などがあげられる。 加えて日々のレビューの中で、問題にはならないが「Kubernetes の metadata.namespace は省略できるけど事故防止の意味も込めて明示的に書きましょう」といった設定ファイルに対して強制させたいポリシーなどが生まれて、ひとつのレビュー観点になっていくことは自然である。
+人がレビューの中で毎回見なければならないこと、毎回指摘すること、機械的にチェックできることはルールセットを定義して、それをもとに lint でチェックして CI で失敗させるのが効率的である。
+YAML などのただの設定ファイル言語に対して「独自のルールを定義してそれをもとにテストする」ということは実は難しかったりする。
+ garethr/kubeval: Validate your Kubernetes configuration files, supports multiple Kubernetes versions viglesiasce/kube-lint: A linter for Kubernetes resources with a customizable rule set  kubeval はマニフェストファイルの validator として機能する。例えば、integer として定義しなければいけないフィールドを string で定義していた場合に検知することができる。 kube-lint は決められた Kind (現在は Pod のみ) の決められたフィールドのチェックを決められたオペレータ (equal, not equal など) で違反していないかチェックすることができる。</description>
+    </item>
+    
+    <item>
+      <title>hashicorp/hcl2 を使って独自 DSL を定義する</title>
+      <link>https://tellme.tokyo/post/2019/02/19/hashicorp-hcl2/</link>
+      <pubDate>Tue, 19 Feb 2019 02:44:36 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2019/02/19/hashicorp-hcl2/</guid>
+      <description>HCL2 とは HCL (HashiCorp Configuration Language) は HashiCorp によって作られた設定言語です。 HCL の目的はコマンドラインツールで使用するために、人間からも機械からも扱いやすく構成されていて、かつ特に DevOps ツールやサーバーなどを対象とした構造化構成言語であることです。
+実装は hashicorp/hcl にあります。
+実はこれの他に同時に Version 2 の実装も目下開発中のようです。
+hashicorp/hcl2: Temporary home for experimental new version of HCL
+このリポジトリでは HCL が元から持つ iteration と補間言語 HIL を組み合わせて、任意の式をサポートする単一の構成言語を目指しているようです。 要するに、設定ファイルでありながら、演算処理や式の評価といったプログラミング言語的な要素を持ち合わせます。
+ちなみに、HCL は HCL2 との互換性は保証されていないため、application から使用する場合は latest ではなく vendoring したものを参照するのが好ましいです。 また、HCL から HCL2 への移行パスは想定されていないようです。 構文の見た目上は非常に似ておりベースデザインは元実装を引き継ぎつつも、拡張された部分については全く異なるアプローチで実装されているようです。 例えば HCL2 の実装の方はより堅牢なエラー処理を可能にする機能などが盛り込まれています。 HCL2 の開発が安定したらもとのリポジトリはアーカイブされ、こちらが HCL の本実装になるようです。
+ちなみに、HCL2 を含んだ HCL 全体のデザインなどは次の PDF が参考になります。
+HCL Documentation
+HCL2 の機能 JSON や YAML のパーサでは、バイト列を Go の構造体に落とし込むことで各要素を Go プログラム内から扱えるようにしています。</description>
+    </item>
+    
+    <item>
+      <title>Go のコマンドラインツールを簡単にリリースする</title>
+      <link>https://tellme.tokyo/post/2019/02/15/release-go/</link>
+      <pubDate>Fri, 15 Feb 2019 01:09:19 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2019/02/15/release-go/</guid>
+      <description>goreleaser のおかげで Go のバイナリをクロスプラットフォーム向けにビルドしてパッケージングして GitHub Releases にアップロードするステップがだいぶ簡単になった。
+今までは、gox + ghr などを使ってそれらをスクリプト化したものを各リポジトリに用意する必要があったのが、今では goreleaser 用の設定ファイル (YAML) を置くだけでよくなった。
+例: stein/.goreleaser.yml at master · b4b4r07/stein
+しかしそれでもリリースするにあたっていくつかのプロセスが残っている。
+ tag 打ち バージョン情報の更新 Changelog の更新  それらをスクリプト化して各リポジトリに置くと、スクリプトに改修や機能追加すると各リポジトリでアップデートしなきゃいけなかった。自分向けなので必ずやらなきゃいけないわけではないけど、毎回シェルスクリプトを書くのも億劫だし、git.io を使って共用できるようにした。
+b4b4r07/release-go
+使い方は簡単で raw のスクリプトを curl などで取ってきて bash にわたすようにする。
+実際は Makefile なんかに書いておくとより便利になる。
+.PHONY: release release: @bash &amp;lt;(wget -o /dev/null -qO - https://git.io/release-go) これを実行すると、
+ gobump を使って semver 形式で bump up git-chglog を使っている場合は Changelog の更新 goreleaser の実行  を必要に合わせてプロンプト経由で対話的に実行することができる。</description>
+    </item>
+    
+    <item>
+      <title>GitHub のラベルを宣言的に管理する</title>
+      <link>https://tellme.tokyo/post/2018/11/19/github-label-management/</link>
+      <pubDate>Mon, 19 Nov 2018 20:08:07 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/11/19/github-label-management/</guid>
+      <description>ソフトウェアの宣言的設定について &amp;ldquo;何かを管理する&amp;quot;となったときに、宣言的に設定できるようになっていると非常に便利である。 この宣言的設定 (Infrastructure as Code) とは、イミュータブルなインフラ (Immutable Infrastructure) を作るための基本的な考え方で、システムの状態を設定ファイルにて宣言するという考え方である。 具体的には Kubernetes のマニフェストファイル (YAML) だったり、Terraform のコード (HCL) が挙げられる。 この考え方は、インフラ領域に限らず、何らかの状態管理にはもってこいの手法である。
+GitHub のラベルは Issues/P-Rs を管理するために便利な機能である。 しかし、リポジトリの規模やラベルの数が増えてくると、ラベル自体も管理する必要が出てくる。 実際に Kubernetes 規模のリポジトリになると、ラベル管理なしにはやっていられない。 ラベルを管理するための bot やツールすら動いている。 実際に Kubernetes のコミュニティでは現在 180 個近くのラベルが定義されており、同様のラベルが導入されているリポジトリが数十個ある。
+ Labels - kubernetes/community  1つのリポジトリのラベルを管理するくらいならマニュアルでも可能だが、複数リポジトリとなるとリポジトリ間の同期が大変になってくる。 特に ZenHub などの GitHub Issues を使ったマネジメントをしている場合、ラベル名が一致されていることとその付随情報 (色や説明) の同期が必須になる。 人間が手で追加や変更をしていると、必ず差異が発生する。
+ここで、冒頭に挙げた宣言的設定が有効な手段になる。
+github-labeler の紹介 https://github.com/b4b4r07/github-labeler
+宣言的設定の手法をラベル管理に持ち込むために、GitHub ラベルの定義とそれを作るリポジトリについて「YAML に書いたとおりになる」ツールを書いた。
+例えば次のような YAML を書く。
+labels:- name:area/securitydescription:Indicatesanissueonsecurityarea.color:1d76db- name:kind/bugdescription:CategorizesissueorPRasrelatedtoabug.color:d93f0b- name:kind/cleanupdescription:CategorizesissueorPRasrelatedtocleaningupcode,process,ortechnicaldebt.color:bfd4f2- name:kind/designdescription:CategorizesissueorPRasrelatedtodesign.color:bfd4f2- name:kind/documentationdescription:CategorizesissueorPRasrelatedtodocumentation.color:bfd4f2repos:- name:org/repo1labels:- area/security- kind/api-change- kind/bug- kind/cleanup- kind/design- name:org/repo2labels:- kind/api-change- kind/bug- kind/cleanup- kind/designこの YAML をもとに github-labeler を実行すると、こんな感じになる。</description>
+    </item>
+    
+    <item>
+      <title>スムーズに Hugo でブログを書くツール</title>
+      <link>https://tellme.tokyo/post/2018/10/16/write-blog-smoothly/</link>
+      <pubDate>Tue, 16 Oct 2018 13:18:07 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/10/16/write-blog-smoothly/</guid>
+      <description>このブログ (b4b4r07/tellme.tokyo) ではマークダウンで記事を書き、Hugo を使って静的ファイルを生成して GitHub Pages でホスティングしている。
+とても便利なのだが、いくつか面倒な点がある。
+ リアルタイムに記事のプレビューが見たいとなると、hugo server -D する必要があり、都度別コンソールで立ち上げるのが面倒 記事をあたらしく書き始めるとき hugo new post/&amp;lt;filename&amp;gt;.md を打つのが面倒 過去記事を編集するのが面倒 hugo を実行すると draft の記事も生成されてしまう (index には載らないが、生成されるので commit してしまう)  いろいろ面倒なので、Hugo でブログを書くだけのツール (hugo wrapper) を書いた。 hugo の上位互換というわけではなく、必要な機能の不便な部分だけを Override しているだけのツールなので合わせて使っていく。
+tellme.tokyo/cmd/blog at master · b4b4r07/tellme.tokyo
+Usage: blog [--version] [--help] &amp;lt;command&amp;gt; [&amp;lt;args&amp;gt;] Available commands are: edit Edit blog articles new Create new blog article 簡単な CLI ツールになっていて、ブログを編集するときに blog edit とすれば fzf が立ち上がって記事を選択できるようになっている。
+$ blog edit &amp;gt; 39/39 &amp;gt; スムーズに Hugo ブログを書くツール Windows 時代の使用ソフト晒し Bind Address で少しハマった話 Hugo で PlantUML のようなシーケンス図を描画する Kubernetes 上で Credentials を扱う HashiCorp Vault の Unseal と Rekey 東京衣食住 Microservices Platform Meetupで話した 『ルポ川崎』を読んだ fzf との連携は b4b4r07/go-finder でやっている1。</description>
+    </item>
+    
+    <item>
+      <title>Go から peco する</title>
+      <link>https://tellme.tokyo/post/2018/04/25/go-finder/</link>
+      <pubDate>Wed, 25 Apr 2018 02:11:37 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/04/25/go-finder/</guid>
+      <description>peco とか fzf のようなフィルターコマンドが便利すぎて使わない日はないのですが、これらをどうしても Go プログラムに組み込んでしまいたいときが稀にあります。
+どちらも Go で書かれているので、ライブラリとして使えるように提供されていれば import するだけなのですが、どちらも CLI (Command Line Interface) のみを提供しています。 CLI として作られている以上、シェルコマンドとして使うべきではあるのですが、そうすると何かと連携させたいとなった場合 (多くの場合はそうですが)、シェルスクリプトを書くことになります。 小さなものであればそれで構わないのですが大きめなツールになる場合、基本的にシェルスクリプトを書きたくないわけで、そうするとやはりどうしても Go から扱いたくなります。
+シェルコマンドといっても CLI (Command Line Interface) なので、アプリケーションに精通したインターフェースである API (Application Programming Interface) と似たように考えることができて、CLI はコマンドラインに精通したインターフェースを持っているわけです。 そう考えるとコマンドのオプションはそのインターフェイスを通してコマンドに処理の変更を伝える起点と捉えることができます。
+Go ではコマンドラインインターフェースとやりとりできる os/exec が標準パッケージとして使えるので、これをうまく使って CLI との通信部分を抽象化してラッパーライブラリとして実装できないか考えてみました。
+https://github.com/b4b4r07/go-finder
+go-finder というパッケージを作りました。
+使い方は次のようになります。
+finder - GoDoc
+fzf, err := finder.New(&amp;#34;fzf&amp;#34;, &amp;#34;--reverse&amp;#34;, &amp;#34;--height&amp;#34;, &amp;#34;40&amp;#34;) if err != nil { panic(err) } fzf.Run() peco, err := finder.New(&amp;#34;peco&amp;#34;, &amp;#34;--layout=bottom-up&amp;#34;) if err !</description>
+    </item>
+    
+    <item>
+      <title>Go でシェルの Exit code を扱う</title>
+      <link>https://tellme.tokyo/post/2018/04/02/golang-shell-exit-code/</link>
+      <pubDate>Mon, 02 Apr 2018 23:42:39 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/04/02/golang-shell-exit-code/</guid>
+      <description>CLI ツールはよく Go で書く。 (Go でなくとも) ちゃんとした CLI ツールを書こうとすると、Exit code とそのエラーの取り回しについて悩むことが多い。 今回は、何回か遭遇したこの悩みに対する現時点における自分的ベストプラクティスをまとめておく。
+ToC
+ Exit code とは Go における Exit code 高次での取り回し  CLI 側 処理側   まとめ  Exit code とは $ ./script/something.sh $ echo $? 0 $? で参照できる値で、0 は成功を表し、0 以外は失敗を含む別の意味を表す。取りうる範囲は 0 - 255 (シェルによって違うことがあるかも知れない)。
+$ true $ echo $? 0 $ false $ echo $? 1 詳しくは、コマンドラインツールを書くなら知っておきたい Bash の 予約済み Exit Code - Qiita
+CLI ツールとはいわゆる UNIX コマンドであることが多いので、その慣習にならって実装するのよい。 成功したら 0 を、失敗したらエラーメッセージとともに非 0 を返すといった感じ。</description>
+    </item>
+    
+    <item>
+      <title>複数のサービスのヘルスチェックをとるツール</title>
+      <link>https://tellme.tokyo/post/2018/04/01/req/</link>
+      <pubDate>Sun, 01 Apr 2018 23:05:54 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/04/01/req/</guid>
+      <description>ヘルスチェックのときの問題点 あるウェブサービスの動作確認をとっているとき、curl などを使ってリクエストを送ると思いますが、場合によっては環境変数が必要だったり、エンドポイントのパスが長かったり、Cloud IAP といった認証機構があったりします。 動作確認中はだいたい複数回実行するので実行しやすいように（また履歴で追いやすいように）、書き捨て用のシェルスクリプトにまとめたり、再利用しやすいようにワンライナーにしたりします。
+#!/bin/bash GOOGLE_APPLICATION_CREDENTIALS=&amp;#34;/path/to/google-credentials.json&amp;#34; CLIENT_ID=&amp;#34;sample.apps.googleusercontent.com&amp;#34; curl &amp;#34;https://iap-protected-app-url&amp;#34; （再利用性が高く変数をスクリプト内のプロセスに閉じられる上に編集はしやすいが、毎回このようなシェルスクリプトを書くのは面倒）
+$ GOOGLE_APPLICATION_CREDENTIALS=&amp;#34;/path/to/google-credentials.json&amp;#34; CLIENT_ID=&amp;#34;sample.apps.googleusercontent.com&amp;#34; curl &amp;#34;https://iap-protected-app-url&amp;#34; （再利用性も高く変数はコマンドのプロセスにしか影響しないが、長くて見づらく編集しづらい）
+環境変数を含むワンライナーだとあまりにも長いので、以下のように環境変数の宣言部分だけコマンドラインから先に実行してしまえば curl と URL のみの実行で済みますが、特定のエンドポイント用の環境変数が実行シェルに記録されてしまうのは好ましくありません。
+# 記録される $ GOOGLE_APPLICATION_CREDENTIALS=&amp;#34;/path/to/google-credentials.json&amp;#34; $ CLIENT_ID=&amp;#34;sample.apps.googleusercontent.com&amp;#34; $ curl &amp;#34;https://iap-protected-app-url&amp;#34; （変数部分だけコマンドラインから定義してしまえば curl からの実行で済むが、シェルを再起動するまでは変数が実行プロセスに記録されてしまう）
+問題はこれだけではありません。 開発環境の動作確認が終わったら本番環境の動作確認です（critical なサービスではない場合、初動の動作確認はカジュアルに curl でヘルスチェックを取ることも多いです）。
+今度は本番環境に変わるのでURLや環境変数を書き換える必要があります。 また、開発環境と本番環境のヘルスチェックの行き来をしなきゃいけない場合もあります。 流石にここまでくると面倒くさくて、確認が終わったら削除するであろう取り急ぎなスクリプトにしちゃうことが多いです。
+あとからまたヘルスチェックをとりたいと思ったとき これまでは上記の方法でなんとかお茶を濁していたのですが、最近厳しくなってきました。 見ているサービスが多くなってきたためです。
+例えばあるサービスの Dev の様子がおかしいとなったとき、開発者が修正をデプロイしたとしても、場合によっては SRE や基盤チームがその後の疎通やサービスの状態をみたりします。 上にあるようなその場しのぎのスクリプトやワンライナーでやっていると、すでにスクリプトを削除していたり履歴を追うのが面倒で、こういうときにヘルスチェック用のパスが何だったのか（/health ? /status ?）、そもそもリクエストすべきサービスの URL がなんだったのか正確に思い出せません。
+ツール https://github.com/b4b4r07/req
+前に Cloud IAP で保護されたエンドポイントに対して簡単にリクエストを送るために作った CLI ツールの iap_curl が便利だったので、基本的な挙動はそのままに少し手を加えて汎用化しました。
+Cloud Identity-Aware Proxy を使って GCP backend を保護する | tellme.</description>
+    </item>
+    
+    <item>
+      <title>最強のヒストリ補完を作りました</title>
+      <link>https://tellme.tokyo/post/2017/06/13/233305/</link>
+      <pubDate>Tue, 13 Jun 2017 23:33:05 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2017/06/13/233305/</guid>
+      <description>最強のヒストリ補完を求めて シェルヒストリに不満を持っていたので自作しました。今の自分にとっては必要な機能を盛り込んでいて便利に使えていますが、誰かにとっては、もしくは数カ月後の自分にとってはぜんぜん最強じゃないかもしれないです。
+以前このようなエントリを書きました。
+http://www.tellme.tokyo/entry/2017/02/14/214231
+このころから (いやもっと前から) シェルのヒストリ補完に不満を持っていました。
+ 単純にデフォルトの C-r だと目的のものを探しづらい  例えばコマンド名の一部だけだとノイズが多すぎる けどディレクトリは覚えているからそれでもフィルタしたい、とか    他にも色々あって (その理由について先のエントリを見てもらうとして) zsh-history というツールを書きました。
+ このときは最強のヒストリ補完ができたと、嬉々として先程のエントリを書いたのです。 しかし、まあ数ヶ月使っていると不便な点が見えてきて、
+ 複数ホスト間でもヒストリ共有したい ディレクトリだけではなくブランチごとに履歴を持ちたい カジュアルに履歴を消したい などなどの変更を加えるときに SQLite3 だとめんどい パフォーマンスは落ちるかもしれないけどテキストで持ってたほうが何かと便利かも  みたいなことが相まって作り直そうと思ったわけです。
+新しく作った 特徴など 前回のネーミングセンスなさから変わらず、単に history となっています (そもそも前回のときのも zsh- prefix をつける必要性なかったので)。
+ 何ができるかというと、
+ peco/fzf などでフィルタできる ブランチとかディレクトリに限定してフィルタできる (任意) 自動でバックアップしてくれる gist 経由で同期できる  GITHUB_TOKEN さえ渡せばよしなにやってくれるので、ユーザは他の PC でトークンを設定して history sync するだけ   同期のタイミングとか時間間隔とか差分量 (100 行以上で同期、など) の設定ができる 履歴を直接編集できる zsh intergrate は書いてるので source misc/zsh/init.</description>
+    </item>
+    
+    <item>
+      <title>Crowi 用の API Client 書いて公式に取り込まれた</title>
+      <link>https://tellme.tokyo/post/2017/04/04/023351/</link>
+      <pubDate>Tue, 04 Apr 2017 02:33:51 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2017/04/04/023351/</guid>
+      <description>Crowi というオープンソースソフトウェアの wiki があります。
+ Markdown で書ける wiki で、
+ Markdown をオートプレビュー URL (パス構造) でページを作成/表現できる リビジョンヒストリ (差分を管理してくれる) いいね、ブックマーク、ポータル機能、&amp;hellip;  などの特徴があって、とても便利なサービスです。
+簡単に Heroku to deploy できるので気になる方は試してみてください。開発者向けにはオールインワンの Docker が有志によってメンテされているので、そちらを試してみても良いかもしれません。
+go-crowi Crowi 用の API Client を Go で書きました。
+ Go で API Client は初めて書いたのですが、@deeeet さんの記事が参考になりました。
+https://deeeet.com/writing/2016/11/01/go-api-client/
+もともと、Qiita:Team からの移行ツールを Go で書いていたのですが、Crowi API と通信する部分は外部パッケージとして切り出したほうが汎用的に良いなと、go-crowi を作りました。
+https://github.com/b4b4r07/qiita2crowi
+このツールは Qiita:Team からのエクスポート用の JSON を食わすと、指定した Crowi に記事を作成してくれるものです。Qiita から画像を取ってきてアッタチメントしたり、コメントなども移行してくれます。
+Transfer to Crowi そして今日、Crowi のメインメンテナの @sotarok さんから公式においても良いかも、というお話をいただき transfer しました。
+公式 SDK としたほうが多くの人に使ってもらえるし、ユーザに安心感も与えられるのでこの移譲には大賛成です。P-R も歓迎しています (おそらく自分がこのままメンテすることになると思います)。</description>
+    </item>
+    
+    <item>
+      <title>Go で zsh history を SQL 的に活用する</title>
+      <link>https://tellme.tokyo/post/2017/02/14/214231/</link>
+      <pubDate>Tue, 14 Feb 2017 21:42:31 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2017/02/14/214231/</guid>
+      <description>僕は開発中、zsh のヒストリー補完の機能をよく使います。具体的には次のような場面が多いです。
+ 多用するコマンド  結局開発中に使うのはエディタ (vim) と git サブコマンドに集中する ちょちょいと ^N (↑) で履歴をさかのぼる   alias がイケてない場面  「エディタで .zshrc 開いて追加してリロード」が面倒で後回ししがち  そして登録せずに終わる の繰り返し&amp;hellip;   うろ覚え程度のコマンドの alias 名はもはや思い出せない  結局エディタ開いて見直したり、^R で遡ることに挑戦する     長いコマンド列になるとき  引数が多いとき、多段のパイプで繋いだとき 例えば、複数のパラメータを与えたときの curl コマンド    Ctrl-r (history-incremental-search-backward) よるヒストリーサーチが便利なのはよく知られたことですが、それに加えて peco のようなコマンドラインセレクタと zsh history を組み合わせて、過去に自分が入力したコマンドをその一部の記憶から引き出せるようにしたりして、便利になるようにカスタマイズしていました。
+しかし、それでも以下のような不満がありました。
+ ディレクトリごとに履歴を持ってほしい  ある特定のディレクトリでのみ使うコマンドなど  git checkout ブランチ とか (git 系全般にいえる) プロジェクトのリポジトリとか   tmux などで zsh を複数立ち上げているときなどにヒストリーを混同したくない   コマンド履歴にタグを付けたい  コメント (interactive_comments オプション) をつけて保持しておきたい あとあと検索が楽になる   すべての履歴を保持したい  何件まで保存、などは考えたくない 数年前の履歴も引き出せるようにしておきたい ただし数十万〜件になろうともパフォーマンスは落としたくない 標準のヒストリーは数十 MB にもなると、もたつく等の報告例あり   特定の月に使用したコマンド履歴を出したい  一定期間だけ違うプロジェクトにアサインされていたとか   substring search したい  これもディレクトリごとにできるとよし   history が壊れないような仕組みがほしい  突然壊れたとの報告例あり (自分は経験したことないけど) Twitter で検索すると嘆いている人が多い    zsh のオプション (setopt) や Third-party 系のプラグインなどを併用すれば一部の課題は解決できるのですが、同時に満たしてくれるものはなく自作しました。</description>
+    </item>
+    
+    <item>
+      <title>ログのタイムスタンプで UNIX 時間なのはツライって話</title>
+      <link>https://tellme.tokyo/post/2016/12/06/211226/</link>
+      <pubDate>Tue, 06 Dec 2016 21:12:26 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/12/06/211226/</guid>
+      <description>tl;dr https://github.com/b4b4r07/epoch-cat
+ UNIX 時間は読めないのでログファイル丸ごと食わせて、該当部分を変換するフィルタ作った  やり方は色々ある JSON とか LTSV とか combine とか、それらの複合で記録されてることの多いログファイルですが、たまにタイムスタンプが UNIX 時間になってることがあります。
+これめっちゃつらくないですかね？&amp;hellip;とても普通の人間が読める形式じゃないです。素の JSON であれば、jq に食わせて Dates 系の関数 などで加工することは可能ですが、jq 1.5 以上((現在 2016/12/06 最新の安定版は v1.5))が必須で、かつ jq 構文を覚えたり都度調べる必要があります (jq は好きだけどあまり使わない構文を覚えるのは個人的に面倒)。
+そもそもログファイルが JSON じゃない形式の場合は、以下のリンクにあるようなやり方を組み合わせて調べたり、もはや UNIX 時間になっている該当部分をコピペして date コマンドに投げたりして JST (や UTC) に変換することが多いです。
+ $ date -d @1478745332.2113 +&amp;#34;%Y/%m/%d %T&amp;#34; # GNU date これ非常に面倒なんですよね。さらに言えば GNU date である必要があったり((GNU date コマンドで unix time 変換))して、ただログの時間を読みたいだけなのに無駄に考えることが多いです。
+こまけぇこたぁいいから 時と場合であれこれ考えずに丸っとよしなにやってくれるフィルタあったら便利そう、ってことで書いてみました。
+ https://github.com/b4b4r07/epoch-cat  別に難しいことはしてなく、cat コマンドの要領で UNIX 時間っぽい数字を RFC3339 形式に変換します。数値を何でもかんでも変換していたらとてもやってやれないので、誤爆を防ぐために 2000-01-01 00:00:00+00:00 以降の UNIX 時間 (946684800) にのみ反応します。ロケールは TZ 環境変数に従ってローカライズされます。</description>
+    </item>
+    
+    <item>
+      <title>特定のワードで Twitter を監視して、検知したら Slack に投げる</title>
+      <link>https://tellme.tokyo/post/2016/10/17/205021/</link>
+      <pubDate>Mon, 17 Oct 2016 20:50:21 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/10/17/205021/</guid>
+      <description>&amp;hellip; というツールを書きました。Twitter Streaming Daemon なので twistd です。最近話題の名前衝突ですが、こっちは個人のツールだし一旦気にしないことにします (リポジトリ作ってから気づいた)。
+ tl;dr  Twitter Streaming API を利用してツイートを監視する 特定のワードで引っかかったら Slack に通知する 2つをいっぺんに行うコマンドを書いた (デーモンとして利用しましょう)  
+※ [&#39;tomato&#39;, &#39;potato&#39;] で引っ掛けてる例
+モチベーション zplug (GitHub Organization) ではオーナーの他に数名のコラボレーターの方たちがいます。開発者同士のコミュニケーションには Slack を用い、GitHub Issues で issue トラッキングをしています。Slack への GitHub の通知は、Slack のインテグレーション機能 (issue が作られたり P-R が投げられると通知される) を使っています。これはよくあるスタイルだと思います。
+ところが、数ヶ月 Organization を運用して気づいたのが GitHub Issues に上がってこないバグレポートや機能改善、機能要望も結構あるということです。その多くは Twitter 上でつぶやかれていて、それからは時折 zplug -RT とかで Twitter 検索をしていたのですが、それを他のコラボレーターに共有するのが面倒なことと、定期的なエゴサーチが面倒 (見逃すということもある) で、Twitter を常時監視して zplug についてつぶやかれていたら Slack にポストしてくれるツールはないかと探しておりました。ちょうど良さそうなツールはないようなので、じゃあ作りましょうかとなった次第です (すでにあったらごめんなさい。そして twistd より優れていたら教えてください)。</description>
+    </item>
+    
+    <item>
+      <title>シェルスクリプトで git gc してまわるやつ</title>
+      <link>https://tellme.tokyo/post/2015/12/26/164141/</link>
+      <pubDate>Sat, 26 Dec 2015 16:41:41 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/12/26/164141/</guid>
+      <description>ほほう。Go による非同期処理でじゃがじゃが git gc ですか、シェルスクリプトでも非同期でやってみよう。
+#!/bin/bash  find ${GOPATH%%:*}/src/github.com \  -follow \  -maxdepth 2 \  -mindepth 2 \  -type d | while read repo; do cd &amp;#34;$repo&amp;#34; &amp;amp;&amp;amp; git gc &amp;amp; done wait   いい感じやで。
+書いたのにこんなのを見つけた。ワンライナーじゃん。
+（こっちは ghq に依存していないから…）</description>
+    </item>
+    
+    <item>
+      <title>Go でコマンドラインにゴミ箱を実装した話</title>
+      <link>https://tellme.tokyo/post/2015/05/22/103912/</link>
+      <pubDate>Fri, 22 May 2015 10:39:12 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/05/22/103912/</guid>
+      <description>Go でコマンドラインにゴミ箱を実装した話 - TELLME.TOKYO
+移設しました。</description>
+    </item>
+    
+    <item>
+      <title>書くのが面倒な zsh 補完関数を簡単に生成するツール「zgencomp」つくった</title>
+      <link>https://tellme.tokyo/post/2015/03/24/171218/</link>
+      <pubDate>Tue, 24 Mar 2015 17:12:18 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/03/24/171218/</guid>
+      <description>b4b4r07/zgencomp・GitHub
+zgencomp を使えば、Zsh コマンドの補完関数を簡単に生成することができます。
+背景 Zsh の醍醐味のひとつが補完機能であるのは言わずもがなですね。
+この補完について、基本的なコマンドや有名プロジェクトのコマンドなどの多くは提供されているのですが、自作コマンドもちろんのこと、マイナーなコマンドは提供されていなかったりします。
+その場合、ユーザが Zsh スクリプトの記法で補完ファイルを記述しなければなりません。これが結構骨の折れる作業で、Zsh が提供する補完インターフェースは高機能ゆえに複雑怪奇で、並みのユーザはおろか熟練のシェルスクリプターでも投げ出したくなる様です。
+特に自作コマンドの場合、コマンドの作成で疲弊して、マニュアルやドキュメンテーションでも疲弊しているところにこの補完機能の作業となると、まず補完は諦めがちです。
+zgencomp を使う そこでこのツールです。
+まずはデモを。
+
+JSON ファイルに設定を記述し、それをもとに補完関数を生成します。JSON ファイルはある程度のテンプレートが用意されているので書き換える形で簡単に設定できます。
+JSON ファイルの書き方 &amp;ldquo;command&amp;rdquo; サンプルである JSON ファイルの書き換え方について紹介します。
+{ &amp;#34;command&amp;#34; : &amp;#34;mycmd&amp;#34;, &amp;#34;properties&amp;#34; : { &amp;#34;author&amp;#34; : &amp;#34;John Doe&amp;#34;, &amp;#34;license&amp;#34; : &amp;#34;MIT&amp;#34;, ここらへんはそのままですね。ただし、&amp;quot;command&amp;quot; が空白の場合、パースエラーになります。
+&amp;ldquo;properties&amp;rdquo; &amp;#34;help&amp;#34; : { &amp;#34;option&amp;#34; : [ &amp;#34;-h&amp;#34;, &amp;#34;--help&amp;#34; ], &amp;#34;description&amp;#34; : &amp;#34;show this help and exit&amp;#34; }, ヘルプやバージョンに関するオプションについては通常のオプションとしては扱わず、コマンドの属性情報（&amp;quot;properties&amp;quot;）として処理します。
+また、&amp;quot;option&amp;quot; について指定できるオプションは - または -- から始まる文字列です（ショート／ロング オプション）。加えて、1つ以上のオプション指定が必須です。1つも指定されていない場合は、補完が実行されません。 これは &amp;quot;help&amp;quot; の &amp;quot;option&amp;quot; だけではなくすべての &amp;quot;option&amp;quot; に当てはまります。</description>
+    </item>
+    
+  </channel>
+</rss>

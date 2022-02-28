@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>report on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/report/</link>
+    <description>Recent content in report on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Sun, 04 Dec 2016 15:48:46 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/report/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>builderscon tokyo 2016 に参加してきました</title>
+      <link>https://tellme.tokyo/post/2016/12/04/154846/</link>
+      <pubDate>Sun, 04 Dec 2016 15:48:46 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/12/04/154846/</guid>
+      <description>引用
+ buildersconは「知らなかった、を聞く」をテーマとした技術を愛する全てのギーク達のお祭りです
+ tl;dr  builderscon tokyo 2016 に参加して、  裸で登壇された生 mattn さんを見て、 みんなを楽しませる技術力に凄いなぁと改めて思わされ、 自分も何か作りたい衝動に駆られた    Opening 牧さんによるオープニングでした。いきなり第2回開催予定の告知からスタートし会場が少しざわめきました。まだ、第1回の builderscon すら終わってないのに、このタイミングでの告知は、サプライズ感だけでなく絶対成功させるぞという気概を感じさせるとともに、コンセプトにもあるお祭りっぽさがあってとてもワクワクさせられました。
+OSS は Windows で動いてこそ楽しい @mattn さんによる発表でした。僕ははじめてお目にかかりました。(見た目は) 普通以上に普通なのに、異常なエンジニアリング力です。改めて尊敬し直しました。Vimmer であり、時折 Go も書く自分としては一番楽しみにしていた発表でした。案の定、Go で Windows OSS 開発の未来が明るくなる話や、Vim の新作ネタプラグイン (畏敬の念を込めてネタプラグインと呼ぶ) などが発表されました。個人的に、Vim 界隈に長年貢献されてきた mattn さんと kaoriya さんのツーショットや、mattn さんの Vim 環境 (青っぽいリッチステータスラインに Solarized Dark なテーマ) を生で見られたことに感激しました。
+php.ini について知る @uzulla さんによる発表でした。PHP を書くことが多くなった自分としては聞いときたいなと思い、聞いていたのですがやはり思った以上に知らないことが多く (PHP が ini を解釈するときは想像以上にゆるふわ) とても勉強になりました。&amp;quot;true&amp;quot; って true じゃないとか、ini ファイルのパス解決順序で最後に読まれた ini が適用されるので気づかないでハマってたり、なんかつらそうだという印象でした。良くも悪くもそこが PHP の特徴なところもあるようで、うまく折り合いながら向き合っていく気合が必要とのことでした。発表終了間際に発言されていた「php.</description>
+    </item>
+    
+    <item>
+      <title>運営として VimConf 2016 に参加してきた</title>
+      <link>https://tellme.tokyo/post/2016/11/06/230902/</link>
+      <pubDate>Sun, 06 Nov 2016 23:09:02 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/11/06/230902/</guid>
+      <description>と、仰々しいタイトルにしましたが、株式会社ミクシィさんにて行われた VimConf 2016 の参加レポートです。自分は一般参加者としてではなく、一部運営に携わったのでその点について主に書ければなと思います。
+tl;dr   VimConf 2016 のまとめ役として参加しました スライドの感想や資料については他の方のレポートを見てください 「ババロットさん、アイコン変えた方がいいよ」  まとめ役として参画した背景 ある日突然、社内 Slack の個人チャンネル (分報的なアレ) にてこんなポストが投げられました (リンクだけ)。
+ [https://github.com/vim-jp/vimconf/issues/106:title]
+二つ返事で参加レスをしたわけですが、これはノリで運営やってみました、とかでは全くないです。日々、Vim を使い vim-jp やその界隈の人たちのプラグインなどを使ったりし感謝していくうちに、いつかコミュニティに携わりたい・還元したいという気持ちが芽生えていたためです。たまたまこの煽りポストがいい後押しとなり、運営への参画を踏み出すきっかけになったのでした。
+ひとり KPT まとめ役という肩書きで参加したわけですが、色々振り返ってみるとやり残したことや課題感、続けたいことなどが見えたのでまとめてみます。
+ KEEP  VimConf 2017 への参画  せっかく自分の中に溜まったノウハウをここで途絶えさせるのは勿体無いので、次回も何らかの形で携わりたい。貢献し続けることも大切   参加率の良さ  9 割近くの参加率、総勢約 120 名での VimConf は初のこと。募集開始を遅らせたりなどの工夫があった。果たしてこれが功を奏したかは来年も試してテストしてみないとだけど   ケータリングの量  多すぎず少なすぎずで懇親会終わる頃にちょうど綺麗になくなった感。廃棄もほとんどなかったんじゃないかな。ここは自分ががっつり噛んでいたところなので見事な新卒力を発揮できた   交流が活発に見えた  誰とも話せない、という人はいなかった気がします。それとドリンク島がドリンクを求めた立ち寄った人との交流の場になっていたのは良かった     PROBLEM  コミットが足りなかった  TRY: 忙し月と準備が被った。次回も参加することで乗り越えていきたいところ   意外とバタバタ@懇親会準備1  TRY: 各種業者に当日リマインダを掛けられたのはよかった。ただ、一部到着連絡をもらえず開場まで運ばれたのには焦った (受付に人がいて気づいてくれた.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>zplug on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/zplug/</link>
+    <description>Recent content in zplug on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Thu, 22 Sep 2016 00:34:48 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/zplug/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>zplug では Collaborators を募集しています</title>
+      <link>https://tellme.tokyo/post/2016/09/22/003448/</link>
+      <pubDate>Thu, 22 Sep 2016 00:34:48 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2016/09/22/003448/</guid>
+      <description>zplug は A next-generation plugin manager for zsh と謳い、絶賛開発中の zsh 向けのプラグインマネージャです。設計当初の目標通りフルスタックなツールになってきており、もはや zsh で書かれたというだけの、単なるパッケージマネージャとして使うことができるほどの機能を持ちはじめています。
+どんな機能があるか、どんな使い方ができるかなどは公式の README をご覧ください。最近では、ドキュメントの多言語化にも取り組んでおり、日本語版の README も追加しました。お気に入りの機能として特筆すると、例えば C 言語で書かれたツールの管理もできます:
+# インストール、アップデートに反応してビルドが走る zplug &amp;#34;jhawthorn/fzy&amp;#34;, \  as:command, \  rename-to:fzy, \  hook-build:&amp;#34; { make sudo make install }&amp;#34; 現在、zplug では @b4b4r07 と @NigoroJr さんの2人で開発・メンテナンスしております。@zplug-man は bot メンバーです。zplug ではコミュニケーション用に Slack を導入しており、Slack から zplug-man に作業させたりしています。
+ Join us!  そんな zplug では Collaborators を募集しています。記述する言語は Shell Script (zsh) です。zsh では黒魔術みたいな記述がたくさん出てきます。例えば:
+if (( $#unclassified_plugins == 0 )); then # If $tags[use] is a regular file, # expect to expand to $tags[dir]/*.</description>
+    </item>
+    
+    <item>
+      <title>最近の zplug の変更について</title>
+      <link>https://tellme.tokyo/post/2015/12/21/122701/</link>
+      <pubDate>Mon, 21 Dec 2015 12:27:01 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/12/21/122701/</guid>
+      <description>テック系でも Qiita ってところはブログではないので書けないことがある。しかしブログはそういうことが書けるのがいいなと思う。自分の庭みたいなもの。
+ローカルプラグインを管理できるようになった 先日の issue（#54）によってローカルリポジトリをロード対象とすることが可能になった。neobundle.vim や vim-plug にもあるお馴染みの機能だ。
+zplug &amp;#34;~/.zsh&amp;#34;, from:local from タグを使って指定する。自分の場合、~/.zsh 以下で zsh の設定ファイルを次のように分割しているため、この機能はとても便利に働く。デフォルトでは &amp;quot;*.zsh&amp;quot; が読み込み対象になっているので ~/.zsh 以下の zsh ファイルを簡単に zplug で管理できる
+$ tree ~/.zsh /Users/b4b4r07/.zsh ├── 10_utils.zsh ├── 20_keybinds.zsh ├── 30_aliases.zsh ├── 40_prompt.zsh ├── 50_setopt.zsh ├── 60_export.zsh ├── Completion │ ├── _ack │ ├── _add-sshkey-remote │ ├── _ag ... │ └── _path ├── Makefile └── README.md フルパスでない場合は $ZPLUG_HOME を基準にパス解決される。
+zplug &amp;#34;repos/user/repo&amp;#34;, from:local 読み込むファイルを一部無視できるようになった これもまた issue（#56）によって導入された機能で、of タグと逆の指定をするためのタグ ignore が使用できるようになった。</description>
+    </item>
+    
+    <item>
+      <title>zplug 流 zsh プラグイン管理術</title>
+      <link>https://tellme.tokyo/post/2015/12/13/174209/</link>
+      <pubDate>Sun, 13 Dec 2015 17:42:09 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/12/13/174209/</guid>
+      <description>とある引用から。
+ 技術者であればだれでも経験することでしょうけれども、自分が作ったものを他人に理解させるというのは存外に難しく、なぜかというと開発者自身はどうしても開発した時の思考の流れを重視してしまい、読者にとって理解しやすい話の流れで話すという思考の大転換が困難だからです。そういえば、開発者自身による解説書の名著って意外なくらい少ないと思いませんか？
+ 私は先月末に zplug という zsh 用のプラグインマネージャーをリリースした。以下の記事では、zplug が生まれた背景やその周辺事情を導入として書いたため、もしかするとユーザ目線からでは分かりづらかったかもしれない。
+ おい、Antigen もいいけど zplug 使えよ  そこで今回は開発者としての記事ではなく、いちユーザとして（といっても開発者がユーザ目線でプロダクトを語るのは冒頭の引用にもある通りひどく難しいことである）使い方を紹介していく。
+特徴 
+ 何でも管理できる（コマンド、Gist、oh-my-zsh のプラグイン、GitHub Releases のバイナリ） 非同期インストール/アップデート ブランチロック・リビジョンロック インストール後の コマンド実行 hook あり oh-my-zsh などの外部プラグインをサポート バイナリを管理できる（GitHub Releases） shallow clone できる（オン・オフ） 依存関係の記述ができる ユーザはプラグインマネージャのことを考えなくていい（*.plugin.zsh 不必要） 選択的インターフェイスとの連携（fzf, peco, percol, zaw）  書き方 zplug はタグという概念を持っている。タグとはプラグインの属性情報を表したもので、タグ:値 のセットで記述していく。
+$ zplug &amp;#34;foo/bar&amp;#34;, as:command, of:&amp;#34;*.sh&amp;#34; こんな具合である。各タグ間はカンマと一つ以上のスペース（,　）で区切る必要がある。タグの値は必ずしもクォートで括る必要はないが、ワイルドカードなどファイルグロブを値と指定する場合、シェルに展開されないようにクォーティングする。
+タグ一覧 現在利用できるタグは以下のとおり。
+   タグ 説明 値 (デフォルト値) 例     as コマンドかプラグインかを指定する plugin,command (plugin) as:command   of source するファイルへの相対パスかパスを通すコマンドへの相対パスを指定する（glob パターンでも可） - (&amp;quot;*.</description>
+    </item>
+    
+    <item>
+      <title>プラグインマネージャ zplug リリース前夜</title>
+      <link>https://tellme.tokyo/post/2015/12/01/113422/</link>
+      <pubDate>Tue, 01 Dec 2015 11:34:22 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/12/01/113422/</guid>
+      <description>ここしばらく zplug という zsh 用のプラグインマネージャを作っていた（GitHub でも開発を始めたのは 11/22）。これは、Antigen alternative としてではなく、イチから作ったもので、今までよりも簡単に不都合が少なく高速に管理が可能になる予定（予定）。
+一応、正式リリース（RC 版？）を明日に公開しようかなと。
+そして昨日今日ではバージョンテストをしていて、5.x 系では問題なく動いている。4.x 系になると一部で動かなくなる。zsh の場合 4.x から 4.2.7 までが安定版ブランチのようになっていて（見る限り）、4.3.4 から 4.3.17 までが開発版ブランチのような分かれ方をしていた（5.x に移行するためのテストなのかな？とか）。zplug では 4.3.9 以上での動作を確認した。ひとつ下のバージョンの 4.3.6 では無名関数がうまく動いていなかった（修正すれば動いたんだけどリリースノートに無名関数のことが記載されていないし、深堀りするのも面倒なのでサポートはここで区切ろうと思った次第）
+あとは「テスト」を書いていきたい（1500 Lines な zsh script のテスト誰が書きたいんだ…）
+P.S. 公式の wiki を編集してくれる方いないですかね。他のプラグインマネージャからの乗り換え方法など
+zsh のプラグインマネージャ - tellme.tokyo</description>
+    </item>
+    
+    <item>
+      <title>zsh のプラグインマネージャ</title>
+      <link>https://tellme.tokyo/post/2015/11/24/142143/</link>
+      <pubDate>Tue, 24 Nov 2015 14:21:43 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/11/24/142143/</guid>
+      <description>antigen ですよね、やっぱり。最近は antigen の軽量バージョンである zgen もアツいようです。
+僕も同様に、最初は antigen 使っていたんですが、まずプラグインの読み込みが遅い（tmux でペインを頻繁に開いたりする身からするとローディングが遅いのはツライ）のと、antigen 自体の機能が貧弱で困ってました。例えば、antigen はプラグインしか管理してくれませんよね。コマンドも管理しようとすると一工夫するしかありません（例: b4b4r07/http_code）。それに、fzf や jq など CLI ツールとしては有用でもコンパイルする必要があるものの管理は不可能でした。
+zplug すべての要望に応えるプラグインマネージャをスクラッチから作っています。
+  b4b4r07/zplug
+
+ 並列インストール（擬似マルチスレッド） ブランチ/タグ指定 コマンド管理（言語は問わない） バイナリ管理（GitHub Releases 限定） ビルド機能（インストール時に任意のコマンドを実行） 限定インストール（条件が真のときのみインストール） 依存関係の管理    まだまだアルファ版でトータルの完成度でいうと antigen には及ばないのでこれからです。 年内のリリース（あわよくば Advent Calender でリリースしたい）を目指して開発中です。
+設定は以下のような感じで書けるようにしています。
+source ~/.zplug/zplug # Make sure you use double quotes zplug &amp;#34;zsh-users/zsh-syntax-highlighting&amp;#34; zplug &amp;#34;zsh-users/zsh-substring-search&amp;#34; # shell commands zplug &amp;#34;holman/spark&amp;#34;, as:cmd # shell commands (specify export directory path using `of` specifier) zplug &amp;#34;b4b4r07/http_code&amp;#34;, as:cmd, of:bin # shell commands (whatever language is OK; e.</description>
+    </item>
+    
+  </channel>
+</rss>

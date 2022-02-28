@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="私の fzf 活用事例 - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2015/11/08/013526/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>私の fzf 活用事例 | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">私の fzf 活用事例</h1>
+    <h2 class="subtitle is-5">November 8, 2015 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/shellscript">shellscript</a>
+    
+        <a class="button is-link" href="/tags/zsh">zsh</a>
+    
+        <a class="button is-link" href="/tags/fzf">fzf</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      <p><a href="https://github.com/peco/peco">peco</a>、使ってますか。この記事を見ている人なら peco 知っていると思います。<a href="https://github.com/junegunn/fzf">fzf</a> は、peco と同じようなツールでこちらも同じく Go 言語で書かれています。</p>
+<p>以前、Qiita に以下のような記事を書いたところ、意外にも良い反応を得られたので今回はその続編といきます。</p>
+<ul>
+<li><a href="http://qiita.com/b4b4r07/items/9e1bbffb1be70b6ce033">おい、peco もいいけど fzf 使えよ - Qiita</a></li>
+</ul>
+<p>タイトルは id:k0kubun さんの<a href="http://k0kubun.hatenablog.com/entry/2014/07/06/033336">私のpeco活用事例</a>のオマージュです。</p>
+<h1 id="fzf-を酷使する">fzf を酷使する</h1>
+<h2 id="最近開いたファイル">最近開いたファイル</h2>
+<p>最近使ったファイル（MRU; Most Recently Used）にアクセスしたい、なんて局面ありません？僕はしょっちゅうです。Vim では mru.vim や neomru などがあるので困りませんが、それをコマンドラインから操作するには意外と手段がありませんでした。そこで、Vim で使われている MRU の履歴ファイルをシェルから開いてうまいことやろうとなりました。</p>
+<p>GIF アニメを見ればどんな具合か一発でわかります。<code>mru</code> とすると Vim の MRU プラグインで使用されている履歴ファイルを開き、fzf 上で Ctrl-l とすると <code>less</code> で開き、Ctrl-v とすると <code>Vim</code> で開きます。GIF には出ていませんが、Ctrl-x を 2 回押すとカーソル下のファイルを削除します。Ctrl-r を押せば、その親ディレクトリを表示します。Tab を押せば複数選択もできます。</p>
+<p><a href="https://github.com/b4b4r07/dotfiles"><img src="https://raw.githubusercontent.com/b4b4r07/screenshots/master/qiita/fzf/mru.gif" alt=""></a></p>
+<p><code>cp $(mru) .</code> とコマンドラインから指定してやって、最近開いたファイルをコピーしてくるとかも簡単です。これはライフチェンジングです。また、<code>less</code> に色が付いているのは Pygments を通しているからです。<code>pygmentize</code> がインストールされている環境ならソースコードに色がつきます。</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">mru<span class="o">(</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nb">local</span> -a f
+    <span class="nv">f</span><span class="o">=</span><span class="o">(</span>
+    ~/.vim_mru_files<span class="o">(</span>N<span class="o">)</span>
+    ~/.unite/file_mru<span class="o">(</span>N<span class="o">)</span>
+    ~/.cache/ctrlp/mru/cache.txt<span class="o">(</span>N<span class="o">)</span>
+    ~/.frill<span class="o">(</span>N<span class="o">)</span>
+    <span class="o">)</span>
+    <span class="k">if</span> <span class="o">[</span><span class="o">[</span> <span class="nv">$#</span>f -eq <span class="m">0</span> <span class="o">]</span><span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> <span class="s2">&#34;There is no available MRU Vim plugins&#34;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
+        <span class="k">return</span> <span class="m">1</span>
+    <span class="k">fi</span>
+
+    <span class="nb">local</span> cmd q k res
+    <span class="nb">local</span> line ok make_dir i arr
+    <span class="nb">local</span> get_styles styles style
+    <span class="k">while</span> : <span class="si">${</span><span class="nv">make_dir</span><span class="p">:</span><span class="p">=0</span><span class="si">}</span><span class="p">;</span> <span class="nv">ok</span><span class="o">=</span><span class="o">(</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">ok</span><span class="p">[@]</span><span class="k">:-</span><span class="nv">dummy_</span><span class="nv">$RANDOM</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span><span class="p">;</span> <span class="nv">cmd</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>
+        cat &lt;<span class="nv">$f</span> <span class="se">\
+</span><span class="se"></span>            <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> line<span class="p">;</span> <span class="k">do</span> <span class="o">[</span> -e <span class="s2">&#34;</span><span class="nv">$line</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$line</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">done</span> <span class="se">\
+</span><span class="se"></span>            <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> line<span class="p">;</span> <span class="k">do</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$make_dir</span><span class="s2">&#34;</span> -eq <span class="m">1</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">line</span><span class="p">:</span><span class="nv">h</span><span class="si">}</span><span class="s2">/</span><span class="s2">&#34;</span> <span class="o">||</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$line</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">done</span> <span class="se">\
+</span><span class="se"></span>            <span class="p">|</span> awk <span class="s1">&#39;!a[$0]++&#39;</span> <span class="se">\
+</span><span class="se"></span>            <span class="p">|</span> perl -pe <span class="s1">&#39;s/^(\/.*\/)(.*)$/\033[34m$1\033[m$2/&#39;</span> <span class="se">\
+</span><span class="se"></span>            <span class="p">|</span> fzf --ansi --multi --query<span class="o">=</span><span class="s2">&#34;</span><span class="nv">$q</span><span class="s2">&#34;</span> <span class="se">\
+</span><span class="se"></span>            --no-sort --exit-0 --prompt<span class="o">=</span><span class="s2">&#34;MRU&gt; &#34;</span> <span class="se">\
+</span><span class="se"></span>            --print-query --expect<span class="o">=</span>ctrl-v,ctrl-x,ctrl-l,ctrl-q,ctrl-r,<span class="s2">&#34;?&#34;</span>
+            <span class="k">)</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
+        <span class="nv">q</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>head -1 <span class="o">&lt;&lt;&lt;</span> <span class="s2">&#34;</span><span class="nv">$cmd</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
+        <span class="nv">k</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>head -2 <span class="o">&lt;&lt;&lt;</span> <span class="s2">&#34;</span><span class="nv">$cmd</span><span class="s2">&#34;</span> <span class="p">|</span> tail -1<span class="k">)</span><span class="s2">&#34;</span>
+        <span class="nv">res</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>sed <span class="s1">&#39;1,2d;/^$/d&#39;</span> <span class="o">&lt;&lt;&lt;</span> <span class="s2">&#34;</span><span class="nv">$cmd</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
+        <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$res</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="k">continue</span>
+        <span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$k</span><span class="s2">&#34;</span> in
+            <span class="s2">&#34;?&#34;</span><span class="o">)</span>
+                cat <span class="s">&lt;&lt;HELP &gt; /dev/tty
+</span><span class="s">usage: vim_mru_files
+</span><span class="s">    list up most recently files
+</span><span class="s">keybind:
+</span><span class="s">  ctrl-q  output files and quit
+</span><span class="s">  ctrl-l  less files under the cursor
+</span><span class="s">  ctrl-v  vim files under the cursor
+</span><span class="s">  ctrl-r  change view type
+</span><span class="s">  ctrl-x  remove files (two-step)
+</span><span class="s">HELP</span>
+                <span class="k">return</span> <span class="m">1</span>
+                <span class="p">;</span><span class="p">;</span>
+            ctrl-r<span class="o">)</span>
+                <span class="k">if</span> <span class="o">[</span> <span class="nv">$make_dir</span> -eq <span class="m">1</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+                    <span class="nv">make_dir</span><span class="o">=</span><span class="m">0</span>
+                <span class="k">else</span>
+                    <span class="nv">make_dir</span><span class="o">=</span><span class="m">1</span>
+                <span class="k">fi</span>
+                <span class="k">continue</span>
+                <span class="p">;</span><span class="p">;</span>
+            ctrl-l<span class="o">)</span>
+                <span class="nb">export</span> <span class="nv">LESS</span><span class="o">=</span><span class="s1">&#39;-R -f -i -P ?f%f:(stdin). ?lb%lb?L/%L.. [?eEOF:?pb%pb\%..]&#39;</span>
+                <span class="nv">arr</span><span class="o">=</span><span class="o">(</span><span class="s2">&#34;</span><span class="si">${</span><span class="p">(@f)res</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span>
+                <span class="k">if</span> <span class="o">[</span><span class="o">[</span> -d <span class="si">${</span><span class="nv">arr</span><span class="p">[1]</span><span class="si">}</span> <span class="o">]</span><span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+                    ls -l <span class="s2">&#34;</span><span class="si">${</span><span class="p">(@f)res</span><span class="si">}</span><span class="s2">&#34;</span> &lt; /dev/tty <span class="p">|</span> less &gt; /dev/tty
+                <span class="k">else</span>
+                    <span class="k">if</span> has <span class="s2">&#34;pygmentize&#34;</span><span class="p">;</span> <span class="k">then</span>
+                        <span class="nv">get_styles</span><span class="o">=</span><span class="s2">&#34;from pygments.styles import get_all_styles
+</span><span class="s2">                        styles = list(get_all_styles())
+</span><span class="s2">                        print(&#39;\n&#39;.join(styles))&#34;</span>
+                        <span class="nv">styles</span><span class="o">=</span><span class="o">(</span> <span class="k">$(</span>sed -e <span class="s1">&#39;s/^  *//g&#39;</span> <span class="o">&lt;&lt;&lt;</span><span class="s2">&#34;</span><span class="nv">$get_styles</span><span class="s2">&#34;</span> <span class="p">|</span> python<span class="k">)</span> <span class="o">)</span>
+                        <span class="nv">style</span><span class="o">=</span><span class="si">${</span><span class="si">${</span><span class="p">(M)styles</span><span class="p">:</span><span class="p">#solarized</span><span class="si">}</span><span class="k">:-</span><span class="nv">default</span><span class="si">}</span>
+                        <span class="nb">export</span> <span class="nv">LESSOPEN</span><span class="o">=</span><span class="s2">&#34;</span><span class="s2">| pygmentize -O style=</span><span class="nv">$style</span><span class="s2"> -f console256 -g %s</span><span class="s2">&#34;</span>
+                    <span class="k">fi</span>
+                    less <span class="s2">&#34;</span><span class="si">${</span><span class="p">(@f)res</span><span class="si">}</span><span class="s2">&#34;</span> &lt; /dev/tty &gt; /dev/tty
+                <span class="k">fi</span>
+                <span class="p">;</span><span class="p">;</span>
+            ctrl-x<span class="o">)</span>
+                <span class="k">if</span> <span class="o">[</span><span class="o">[</span> <span class="si">${</span><span class="p">(j</span><span class="p">:</span><span class="p"> </span><span class="p">:</span><span class="p">)ok</span><span class="si">}</span> <span class="o">=</span><span class="o">=</span> <span class="si">${</span><span class="p">(j</span><span class="p">:</span><span class="p"> </span><span class="p">:</span><span class="p">)</span><span class="si">${</span><span class="p">(@f)res</span><span class="si">}</span><span class="si">}</span> <span class="o">]</span><span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+                    <span class="nb">eval</span> <span class="s1">&#39;${${${(M)${+commands[gomi]}#1}:+gomi}:-rm} &#34;${(@f)res}&#34; 2&gt;/dev/null&#39;</span>
+                    <span class="nv">ok</span><span class="o">=</span><span class="o">(</span><span class="o">)</span>
+                <span class="k">else</span>
+                    <span class="nv">ok</span><span class="o">=</span><span class="o">(</span><span class="s2">&#34;</span><span class="si">${</span><span class="p">(@f)res</span><span class="si">}</span><span class="s2">&#34;</span><span class="o">)</span>
+                <span class="k">fi</span>
+                <span class="p">;</span><span class="p">;</span>
+            ctrl-v<span class="o">)</span>
+                vim -p <span class="s2">&#34;</span><span class="si">${</span><span class="p">(@f)res</span><span class="si">}</span><span class="s2">&#34;</span> &lt; /dev/tty &gt; /dev/tty
+                <span class="p">;</span><span class="p">;</span>
+            ctrl-q<span class="o">)</span>
+                <span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$res</span><span class="s2">&#34;</span> &lt; /dev/tty &gt; /dev/tty
+                <span class="k">return</span> <span class="nv">$status</span>
+                <span class="p">;</span><span class="p">;</span>
+            *<span class="o">)</span>
+                <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="p">(@f)res</span><span class="si">}</span><span class="s2">&#34;</span>
+                <span class="nb">break</span>
+                <span class="p">;</span><span class="p">;</span>
+        <span class="k">esac</span>
+    <span class="k">done</span>
+<span class="o">}</span>
+</code></pre></div><p>この関数を zshrc かなんかに貼り付ければいい感じに動きます。ここに載せる際に少し縮小していますが。全ソースコードは私の dotfiles にあります。</p>
+<p>こいつはグローバルエイリアスとの連携で真価を発揮します。分かりやすいように <code>alias -g from='$(mru)'</code> とし、<code>alias -g to='$(dest_dir)'</code> とします。こうすると．．．</p>
+<pre><code class="language-console" data-lang="console">$ cp from to
+</code></pre><p>とするだけで、最近使ったファイルを最近使ったディレクトリにコピーできます！！！！便利。もちろん複数コピーとかもできます。</p>
+<p><a href="https://github.com/b4b4r07/dotfiles"><img src="https://raw.githubusercontent.com/b4b4r07/screenshots/master/qiita/fzf/from_to.gif" alt=""></a></p>
+<p>コイツのおかげで、今自分がどこにいるかを意識しないでファイルオペレーションが可能となります。「from」や「to」という名前のファイルを扱いたい場合は <code>\</code> でエスケープしてやればいいです。面倒を強いられますが、超絶便利エイリアスとのトレードオフです。</p>
+<p><code>to</code> エイリアスにある <code>dest_dir</code> については enhancd というプラグインに使用している移動履歴ファイルを参照するシェル関数を定義しています。<code>mru</code> のように便利なカスタマイズを施しているのでよかったら見てみてください。</p>
+<ul>
+<li><a href="https://github.com/b4b4r07/dotfiles/tree/master/.zsh">b4b4r07/dotfiles - GitHub</a></li>
+</ul>
+<h2 id="ワンライナーを実行する">ワンライナーを実行する</h2>
+<p>ワンライナーとは <code>cat file.csv | sort | uniq -c | sort -nr | awk -F, 'END {print $4}'</code> のようなものです。これ毎回実行するのダルくありません？かといってエイリアス登録するのも…。上の例では 4 カラム目を抜いていますが、あるときは 3 カラム目なんて場合もあります。こういう例では、エイリアスは使えません。</p>
+<p><a href="https://github.com/b4b4r07/dotfiles"><img src="https://raw.githubusercontent.com/b4b4r07/screenshots/master/qiita/fzf/oneliner.gif" alt=""></a></p>
+<p>こいつを利用するには<a href="https://github.com/b4b4r07/dotfiles/blob/master/doc/misc/commands.txt">こんな登録用のファイル</a>を用意してやる必要があります。
+<code>[]</code> の中にワンライナーの説明を書いてスペースを開けワンライナーを記述します。
+ワンライナーの中の <code>@</code> マークは実行後のカーソルの位置になります。よく実行する前に編集するワンライナーの箇所においておけばカーソル移動なくスムーズに編集できます。
+また、ワンライナーの末尾に <code>!</code> を置くとコマンドライン上に展開されず、すぐさま実行されます（<code>accept-line</code> の実行）。
+ここらへんのルールに関しては<a href="https://github.com/b4b4r07/dotfiles/blob/master/doc/misc/commands.txt">さっきのファイル</a>の先頭に書いてあるのでどうぞ。</p>
+<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">exec-oneliner<span class="o">(</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nb">local</span> oneliner_f
+    <span class="nv">oneliner_f</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">ONELINER_FILE</span><span class="k">:-</span><span class="p">~/.commnad.list</span><span class="si">}</span><span class="s2">&#34;</span>
+
+    <span class="o">[</span><span class="o">[</span> ! -f <span class="nv">$oneliner_f</span> <span class="o">||</span> ! -s <span class="nv">$oneliner_f</span> <span class="o">]</span><span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="k">return</span>
+
+    <span class="nb">local</span> cmd q k res accept
+    <span class="k">while</span> <span class="nv">accept</span><span class="o">=</span>0<span class="p">;</span> <span class="nv">cmd</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>
+        cat &lt;<span class="nv">$oneliner_f</span> <span class="se">\
+</span><span class="se"></span>            <span class="p">|</span> sed -e <span class="s1">&#39;/^#/d;/^$/d&#39;</span> <span class="se">\
+</span><span class="se"></span>            <span class="p">|</span> perl -pe <span class="s1">&#39;s/^(\[.*?\]) (.*)$/$1\t$2/&#39;</span> <span class="se">\
+</span><span class="se"></span>            <span class="p">|</span> perl -pe <span class="s1">&#39;s/(\[.*?\])/\033[31m$1\033[m/&#39;</span> <span class="se">\
+</span><span class="se"></span>            <span class="p">|</span> perl -pe <span class="s1">&#39;s/^(: ?)(.*)$/$1\033[30;47;1m$2\033[m/&#39;</span> <span class="se">\
+</span><span class="se"></span>            <span class="p">|</span> perl -pe <span class="s1">&#39;s/^(.*)([[:blank:]]#[[:blank:]]?.*)$/$1\033[30;1m$2\033[m/&#39;</span> <span class="se">\
+</span><span class="se"></span>            <span class="p">|</span> perl -pe <span class="s1">&#39;s/(!)/\033[31;1m$1\033[m/&#39;</span> <span class="se">\
+</span><span class="se"></span>            <span class="p">|</span> perl -pe <span class="s1">&#39;s/(\|| [A-Z]+ [A-Z]+| [A-Z]+ )/\033[35;1m$1\033[m/g&#39;</span> <span class="se">\
+</span><span class="se"></span>            <span class="p">|</span> fzf --ansi --multi --no-sort --tac --query<span class="o">=</span><span class="s2">&#34;</span><span class="nv">$q</span><span class="s2">&#34;</span> <span class="se">\
+</span><span class="se"></span>            --print-query --expect<span class="o">=</span>ctrl-v --exit-0
+            <span class="k">)</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
+        <span class="nv">q</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>head -1 <span class="o">&lt;&lt;&lt;</span> <span class="s2">&#34;</span><span class="nv">$cmd</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
+        <span class="nv">k</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>head -2 <span class="o">&lt;&lt;&lt;</span> <span class="s2">&#34;</span><span class="nv">$cmd</span><span class="s2">&#34;</span> <span class="p">|</span> tail -1<span class="k">)</span><span class="s2">&#34;</span>
+        <span class="nv">res</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>sed <span class="s1">&#39;1,2d;/^$/d;s/[[:blank:]]#.*$//&#39;</span> <span class="o">&lt;&lt;&lt;</span> <span class="s2">&#34;</span><span class="nv">$cmd</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
+        <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$res</span><span class="s2">&#34;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="k">continue</span>
+        <span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$k</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;ctrl-v&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+            vim <span class="s2">&#34;</span><span class="nv">$oneliner_f</span><span class="s2">&#34;</span> &lt; /dev/tty &gt; /dev/tty
+        <span class="k">else</span>
+            <span class="nv">cmd</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>perl -pe <span class="s1">&#39;s/^(\[.*?\])\t(.*)$/$2/&#39;</span> <span class="o">&lt;&lt;&lt;</span><span class="s2">&#34;</span><span class="nv">$res</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
+            <span class="k">if</span> <span class="o">[</span><span class="o">[</span> <span class="nv">$cmd</span> <span class="o">=</span>~ <span class="s2">&#34;</span><span class="s2">!</span>$<span class="s2">&#34;</span> <span class="o">||</span> <span class="nv">$cmd</span> <span class="o">=</span>~ <span class="s2">&#34;</span><span class="s2">! *#.*</span>$<span class="s2">&#34;</span> <span class="o">]</span><span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+                <span class="nv">accept</span><span class="o">=</span><span class="m">1</span>
+                <span class="nv">cmd</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>sed -e <span class="s1">&#39;s/!.*$//&#39;</span> <span class="o">&lt;&lt;&lt;</span><span class="s2">&#34;</span><span class="nv">$cmd</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
+            <span class="k">fi</span>
+            <span class="nb">break</span>
+        <span class="k">fi</span>
+    <span class="k">done</span>
+
+    <span class="nb">local</span> len
+    <span class="k">if</span> <span class="o">[</span><span class="o">[</span> -n <span class="nv">$cmd</span> <span class="o">]</span><span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nv">BUFFER</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>tr -d <span class="s1">&#39;@&#39;</span> <span class="o">&lt;&lt;&lt;</span><span class="s2">&#34;</span><span class="nv">$cmd</span><span class="s2">&#34;</span> <span class="p">|</span> perl -pe <span class="s1">&#39;s/\n/; /&#39;</span> <span class="p">|</span> sed -e <span class="s1">&#39;s/; $//&#39;</span><span class="k">)</span><span class="s2">&#34;</span>
+        <span class="nv">len</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">cmd</span><span class="p">%%@*</span><span class="si">}</span><span class="s2">&#34;</span>
+        <span class="nv">CURSOR</span><span class="o">=</span><span class="si">${#</span><span class="nv">len</span><span class="si">}</span>
+        <span class="k">if</span> <span class="o">[</span><span class="o">[</span> <span class="nv">$accept</span> -eq <span class="m">1</span> <span class="o">]</span><span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+            zle accept-line
+        <span class="k">fi</span>
+    <span class="k">fi</span>
+    zle redisplay
+<span class="o">}</span>
+zle -N exec-oneliner
+bindkey <span class="s1">&#39;^x^x&#39;</span> exec-oneliner
+</code></pre></div><p>この設定ではコマンドラインから Ctrl-x を 2 回押すことで実行できます。</p>
+<p>また、全ソースコードは私の dotfiles にあります。</p>
+<ul>
+<li><a href="https://github.com/b4b4r07/dotfiles/tree/master/.zsh">b4b4r07/dotfiles - GitHub</a></li>
+</ul>
+<h2 id="コマンドラインにゴミ箱を実装する">コマンドラインにゴミ箱を実装する</h2>
+<ul>
+<li><a href="http://tellme.tokyo/post/2015/05/22/gomi/">Golang でコマンドラインにゴミ箱を実装した話</a></li>
+<li><a href="https://github.com/b4b4r07/gomi">b4b4r07/gomi - GitHub</a></li>
+</ul>
+<p>これの Zsh 実装です。</p>
+<ul>
+<li><a href="https://github.com/b4b4r07/zsh-gomi">b4b4r07/zsh-gomi - GitHub</a></li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/b4b4r07/screenshots/master/zsh-gomi/demo.gif" alt=""></p>
+<p><code>gomi -r</code> とすれば捨てたファイルの履歴が閲覧でき、Ctrl-v で中身を見ることが出来ます。Ctrl-x 2 回で本当に削除（<code>rm</code>）し、Enter でリストアできます。</p>
+<p>Antigen からインストールでき、<code>antigen bundle b4b4r07/zsh-gomi</code> で OK です（zshrc に記述していたのですが大きくなったためプラグイン化しました）。</p>
+<h2 id="コマンドラインに-finder-を実装する">コマンドラインに Finder を実装する</h2>
+<ul>
+<li><a href="https://github.com/b4b4r07/cli-finder">b4b4r07/cli-finder - GitHub</a></li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/b4b4r07/screenshots/master/cli-finder/demo.gif" alt=""></p>
+<p>Mac の Finder のようなものです。Ctrl-r でツリースタイルからリストスタイルにスイッチ出来ます。同じく Ctrl-l で <code>less</code>、Ctrl-v で Vim です。</p>
+<h1 id="fzf-のメリット">fzf のメリット</h1>
+<p>fzf のメリットは　<code>--ansi</code> と <code>--expect</code> です。これによってエスケープシーケンスによる色付けが使用でき、修飾キー含め押されたキーを判定できます。これによって fzf 上でさまざまなケースに応じたコマンドを実行でき、インタラクティブな CLI を実現できます。</p>
+<h1 id="ライトユース">ライトユース</h1>
+<p>ここまで fzf のオプションなどをフルに活かした使い方を紹介してきました。よくある紹介記事などでは、「peco を使ってコマンド履歴を便利にしよう」とか「ghq+pecoでソースコード管理を統一しよう」とかありますが、アレでやっていることは fzf でももちろんできます。今更出尽くした話題について fzf 版を載せてもあまり新鮮味がないので省略します。見たい場合は、私のリポジトリを見てくれればカスタマイズした fzf 版があるのでどうぞ。</p>
+<h1 id="最後に">最後に</h1>
+<p>やっぱりインタラクティブフィルタ（選択的インターフェイスのこと）は便利ですね。CLI がライフチェンジングです。特に <code>--expect</code> を鬼活用すると便利汁ブシャーなります。</p>
+<p>最近、この fzf 活用にハマっていて、インタラクティブフィルタありきのプラグインを 2 つリリースしたので宣伝しておきます。</p>
+<ul>
+<li><a href="http://qiita.com/b4b4r07/items/2cf90da00a4c2c7b7e60">ターミナルのディレクトリ移動を高速化する - Qiita</a>
+<ul>
+<li><a href="https://github.com/b4b4r07/enhancd">b4b4r07/enhancd - GitHub</a></li>
+</ul>
+</li>
+<li><a href="http://qiita.com/b4b4r07/items/1811f39a5f1418b38ec4">コマンドラインでemojiを扱う - Qiita</a>
+<ul>
+<li><a href="https://github.com/b4b4r07/emoji-cli">b4b4r07/emoji-cli - GitHub</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/https://b4b4r07.hatenadiary.com/entry/2015/11/08/013526" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2022 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+

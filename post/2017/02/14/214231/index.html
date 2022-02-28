@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="Go で zsh history を SQL 的に活用する - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2017/02/14/214231/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>Go で zsh history を SQL 的に活用する | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">Go で zsh history を SQL 的に活用する</h1>
+    <h2 class="subtitle is-5">February 14, 2017 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/go">go</a>
+    
+        <a class="button is-link" href="/tags/sql">SQL</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      <p>僕は開発中、zsh のヒストリー補完の機能をよく使います。具体的には次のような場面が多いです。</p>
+<ul>
+<li>多用するコマンド
+<ul>
+<li>結局開発中に使うのはエディタ (vim) と git サブコマンドに集中する</li>
+<li>ちょちょいと <code>^N</code> (<code>↑</code>) で履歴をさかのぼる</li>
+</ul>
+</li>
+<li>alias がイケてない場面
+<ul>
+<li>「エディタで <code>.zshrc</code> 開いて追加してリロード」が面倒で後回ししがち
+<ul>
+<li>そして登録せずに終わる</li>
+<li>の繰り返し&hellip;</li>
+</ul>
+</li>
+<li>うろ覚え程度のコマンドの alias 名はもはや思い出せない
+<ul>
+<li>結局エディタ開いて見直したり、<code>^R</code> で遡ることに挑戦する</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>長いコマンド列になるとき
+<ul>
+<li>引数が多いとき、多段のパイプで繋いだとき</li>
+<li>例えば、複数のパラメータを与えたときの <code>curl</code> コマンド</li>
+</ul>
+</li>
+</ul>
+<p>Ctrl-r (<code>history-incremental-search-backward</code>) よるヒストリーサーチが便利なのはよく知られたことですが、それに加えて <a href="https://github.com/peco/peco">peco</a> のようなコマンドラインセレクタと zsh history を組み合わせて、過去に自分が入力したコマンドをその一部の記憶から引き出せるようにしたりして、便利になるようにカスタマイズしていました。</p>
+<p>しかし、それでも以下のような不満がありました。</p>
+<ul>
+<li>ディレクトリごとに履歴を持ってほしい
+<ul>
+<li>ある特定のディレクトリでのみ使うコマンドなど
+<ul>
+<li><code>git checkout ブランチ</code> とか (git 系全般にいえる)</li>
+<li>プロジェクトのリポジトリとか</li>
+</ul>
+</li>
+<li>tmux などで zsh を複数立ち上げているときなどにヒストリーを混同したくない</li>
+</ul>
+</li>
+<li>コマンド履歴にタグを付けたい
+<ul>
+<li>コメント (interactive_comments オプション) をつけて保持しておきたい</li>
+<li>あとあと検索が楽になる</li>
+</ul>
+</li>
+<li>すべての履歴を保持したい
+<ul>
+<li>何件まで保存、などは考えたくない</li>
+<li>数年前の履歴も引き出せるようにしておきたい</li>
+<li>ただし数十万〜件になろうともパフォーマンスは落としたくない</li>
+<li>標準のヒストリーは数十 MB にもなると、もたつく等の報告例あり</li>
+</ul>
+</li>
+<li>特定の月に使用したコマンド履歴を出したい
+<ul>
+<li>一定期間だけ違うプロジェクトにアサインされていたとか</li>
+</ul>
+</li>
+<li>substring search したい
+<ul>
+<li>これもディレクトリごとにできるとよし</li>
+</ul>
+</li>
+<li>history が壊れないような仕組みがほしい
+<ul>
+<li>突然壊れたとの報告例あり (自分は経験したことないけど)</li>
+<li>Twitter で検索すると嘆いている人が多い</li>
+</ul>
+</li>
+</ul>
+<p>zsh のオプション (<code>setopt</code>) や Third-party 系のプラグインなどを併用すれば一部の課題は解決できるのですが、同時に満たしてくれるものはなく自作しました。</p>
+<h2 id="zsh-history">zsh-history</h2>
+<iframe
+  class="hatenablogcard"
+  style="width:100%;height:155px;max-width:420px;"
+  src="https://hatenablog-parts.com/embed?url=https%3a%2f%2fgithub.com%2fb4b4r07%2fzsh-history"
+  title=""
+  width="300"
+  height="150"
+  frameborder="0"
+  scrolling="no">
+</iframe>
+
+<h3 id="特徴">特徴</h3>
+<p>上に挙げた不満点をすべて解消するような感じになっています。</p>
+<p>それ以外の特徴として、</p>
+<ul>
+<li>sqlite3 にデータを持つ (スキーマについては以下)
+<ul>
+<li>SQL を解釈する I/F を持つ</li>
+<li>peco ライクな専用のセレクタ UI を持つ</li>
+</ul>
+</li>
+<li>コマンド実行直後に DB に記録
+<ul>
+<li>実行コマンドとステータスコード</li>
+</ul>
+</li>
+<li>zle から呼ばれた場合は BUFFER に選択内容を展開する (いわゆる zsh の widget)</li>
+</ul>
+<p>詳しくは次の GIF をみてください。</p>
+<p><img src="https://cl.ly/032Z0Y2Z0Q2v/c.gif" alt=""></p>
+<h3 id="history-テーブル"><code>history</code> テーブル</h3>
+<p>テーブル構成はこんな感じです。</p>
+<table>
+<thead>
+<tr>
+<th>カラム名</th>
+<th>型</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>int</td>
+<td>通し番号</td>
+</tr>
+<tr>
+<td>date</td>
+<td>string</td>
+<td>実行後の日付 (<code>%F %T</code> 形式)</td>
+</tr>
+<tr>
+<td>dir</td>
+<td>string</td>
+<td>実行時のディレクトリ</td>
+</tr>
+<tr>
+<td>command</td>
+<td>string</td>
+<td>実行したコマンド</td>
+</tr>
+<tr>
+<td>status</td>
+<td>int</td>
+<td>ステータスコード (<code>$?</code>)</td>
+</tr>
+<tr>
+<td>host</td>
+<td>string</td>
+<td>ホスト名</td>
+</tr>
+</tbody>
+</table>
+<p>変わるかもしれません。</p>
+<h3 id="インストール">インストール</h3>
+<p>内部で Go 製の zhist というコマンドを使用します。ビルドが必要です。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ git clone https://github.com/b4b4r07/zsh-history <span class="o">&amp;&amp;</span> <span class="nb">cd</span> zsh-history
+$ make <span class="o">&amp;&amp;</span> sudo make install
+$ <span class="nb">source</span> init.zsh
+</code></pre></div><h3 id="使い方">使い方</h3>
+<p>デフォルトでは既存のキーバインドを上書きしないように、何も設定されていません。
+以下の環境変数で設定できるようになっているので適宜変更してください。</p>
+<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># DB パス</span>
+<span class="nb">export</span> <span class="nv">ZSH_HISTORY_FILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.zsh_history.db</span><span class="s2">&#34;</span>
+<span class="c1"># コマンドラインセレクタ (先頭から順番に使われる)</span>
+<span class="nb">export</span> <span class="nv">ZSH_HISTORY_FILTER</span><span class="o">=</span><span class="s2">&#34;fzy:fzf:peco:percol&#34;</span>
+
+<span class="c1"># peco などと組み合わせて検索するためのキーバインド</span>
+<span class="c1"># そのディレクトリで使用したコマンドしか候補に出さないか、</span>
+<span class="c1"># 今までの履歴を全部候補に出すか切り分けらる</span>
+<span class="nb">export</span> <span class="nv">ZSH_HISTORY_KEYBIND_GET_BY_DIR</span><span class="o">=</span><span class="s2">&#34;^r&#34;</span>
+<span class="nb">export</span> <span class="nv">ZSH_HISTORY_KEYBIND_GET_ALL</span><span class="o">=</span><span class="s2">&#34;^r^a&#34;</span>
+
+<span class="c1"># 専用のセレクタ I/F から SQL を実行する</span>
+<span class="nb">export</span> <span class="nv">ZSH_HISTORY_KEYBIND_SCREEN</span><span class="o">=</span><span class="s2">&#34;^r^r&#34;</span>
+
+<span class="c1"># substring 系のキーバインド</span>
+<span class="c1"># BUFFER (コマンドライン) に何もなければ通常の動作</span>
+<span class="nb">export</span> <span class="nv">ZSH_HISTORY_KEYBIND_ARROW_UP</span><span class="o">=</span><span class="s2">&#34;^p&#34;</span>
+<span class="nb">export</span> <span class="nv">ZSH_HISTORY_KEYBIND_ARROW_DOWN</span><span class="o">=</span><span class="s2">&#34;^n&#34;</span>
+</code></pre></div><p>また、zsh-history では DB のバックアップをサポートしています (これが飛んだらおじゃんなので&hellip;)。
+一日一回コマンド実行時に、そのときの時点の DB ファイルを昨日付けのデータとして <code>$ZSH_HISTORY_BACKUP_DIR</code> に保存します。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ tree <span class="nv">$ZSH_HISTORY_BACKUP_DIR</span>
+/Users/b4b4r07/.zsh/history/backup
+<span class="sb">`</span>-- <span class="m">2017</span>
+    <span class="sb">`</span>-- <span class="m">02</span>
+        <span class="p">|</span>-- 13.db
+        <span class="sb">`</span>-- 14.db
+
+<span class="m">2</span> directories, <span class="m">2</span> files
+</code></pre></div><p>うっかり DB ファイルを消した際はここからリストアしてください (多少の差分ができることは悪しからず)。</p>
+<h4 id="zhist-について">zhist について</h4>
+<p>Go 製の CLI ツールです。zsh-history で使われており、sqlite3 とのつなぎ込みを行います。
+挙動は toml によって制御できます。</p>
+<div class="highlight"><pre class="chroma"><code class="language-toml" data-lang="toml"><span class="c"># -s (スクリーンモード) で起動したときのプロンプト</span>
+<span class="nx">prompt</span> <span class="p">=</span> <span class="s2">&#34;sqlite3&gt; &#34;</span>
+<span class="c"># -s で起動したときに最初に実行される SQL</span>
+<span class="nx">init_query</span> <span class="p">=</span> <span class="s2">&#34;SELECT DISTINCT(command) FROM history WHERE command LIKE &#39;%%&#39; AND status = 0 ORDER BY id DESC&#34;</span>
+<span class="c"># -s で起動したときのカーソル位置を制御する (% に移動)</span>
+<span class="nx">init_cursor</span> <span class="p">=</span> <span class="s2">&#34;%&#34;</span>
+<span class="c"># -s で ESC を押したときに Vim のノーマルモードに移行する</span>
+<span class="c"># そのときに表示するシンボル</span>
+<span class="nx">vim_mode_prompt</span> <span class="p">=</span> <span class="s2">&#34;VIM-MODE&#34;</span>
+<span class="c"># DB に登録しない文字列とか</span>
+<span class="nx">ignore_words</span> <span class="p">=</span> <span class="p">[</span>
+    <span class="s2">&#34;false&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;echo&#34;</span><span class="p">,</span>
+<span class="p">]</span>
+</code></pre></div><p><code>~/.config/zhist/config.toml</code> が使われます。存在しない場合は、上記の内容をデフォルト値として toml を作成します。</p>
+<p>ただし、これから変更される可能性があります。</p>
+<h3 id="マイグレーション">マイグレーション</h3>
+<p>申し訳程度にマイグレーションスクリプトを同梱しているので、標準のヒストリーを使っている方は以下を実行して <code>~/.zsh_history</code> からインポートしてください (既存のヒストリーが壊れることはありません)。</p>
+<pre><code class="language-console" data-lang="console">$ source misc/migrations.zsh | sqlite3 $ZSH_HISTORY_FILE
+</code></pre><p>(横着して書いたため <code>sqlite3</code> が必要です)</p>
+<h2 id="まとめ">まとめ</h2>
+<p>だいぶ便利です。使ってみてください。</p>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/https://b4b4r07.hatenadiary.com/entry/2017/02/14/214231" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2022 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+

@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="退職と転職。人生の振り返り - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2022/02/28/mercari-to-10x/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>退職と転職。人生の振り返り | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">退職と転職。人生の振り返り</h1>
+    <h2 class="subtitle is-5">February 28, 2022 </h2>
+    
+    <br>
+    <div class="content">
+      <p>お久しぶりです。</p>
+<p>2021年12月末でメルカリを退職しました。在籍期間は5年8ヶ月でした。2022年1月からは 10X で SRE をやっています。メルカリはファーストキャリアで第1期新卒としての入社でした。メルカリで働いたことは自分の人生に大きな影響があったこと、退職したことは大きな決断だったので振り返りを残します。</p>
+<h2 id="2016年">2016年</h2>
+<p>2016年に新卒としてメルカリに入社しました。<a href="https://www.wantedly.com/projects/53111">GitHub 採用</a>というやつです。当時は相当前衛的でヤバイ組織だなという印象を持ちました。</p>
+<p>配属先は「JP チーム」という名前のチームで、バックエンドエンジニアとしてでした。JP チームの API 開発エンジニアとしては3人目の入社で、当時の JP チームはデザインメンバーからプロデューサー (当時の呼称) までが10人前後集まった集団でした。プロダクトサイドのメンバーとしてはもっといたのですが、当時は「US ファースト」で開発リソースの9割近くが US 事業に割かれていました。入社前は外から CM などを通してみるメルカリは大きく伸び始めている企業で、優秀な人がたくさん働いているのだろうなとぼんやり思っていたのですが、入社して蓋を開けてみるとこれほどまでに少ない人員で運営していたのかと驚きました。 JP は多くの利益を生むメルカリグループ全体の収益基盤にもかかわらず、小さなチームで運営していたことに驚いたと同時に、足を引っ張らぬよう気を引き締めたことを覚えています。業務内容は主に「<a href="https://about.mercari.com/press/news/articles/20160616_40mdl/">○月くじ</a>」や <a href="https://about.mercari.com/press/news/articles/20160519_tvcm/">CM 連動型のキャンペーン</a>などでした。</p>
+<p>同年9月頃に新卒エンジニア3人が1ヶ月間代わる代わるメルカリの SRE 業務を体験するという SRE 研修が始まりました。当時の SRE チームと SRE メンバーの視点を養うということで始まった研修ですが、サブタスクとして好きな業務改善に取り組むことができました。自分は IP DB と呼ばれていた <a href="https://engineering.mercari.com/blog/entry/2016-12-19-180000/">Go で書かれたサーバを net/http を使って書き直す</a>ことに取り組みました。</p>
+<p>研修後は JP チームに戻り色々な業務を担当しました。1番覚えているのは CS ツールの電話対応でした。エスカレされてきたお客様同士の重大なトラブルなどについては CS が電話で応対できるようにするといったものです。はじめて一任されたデカメのタスクで、実装や QA などで大変だった一方で、福岡に電話対応チームが発足するということもあり楽しかった思い出があります。</p>
+<p>その後は自分も US 配属となりました。より一層 US 事業に力を入れる必要がある必要が出てきたためです。当時は US アプリのリデザインとアーキテクチャの刷新が図られていました。API サイドでは PHP で書かれた API のコードベースに Go で書かれた API ラッパーを挟むという大工事が始まっていました。これは後に US が JP ベースの PHP コードからラッパーを介して Go で書き直された各種機能（マイクロサービス）にスイッチングすることを担っていました。</p>
+<p>また、人事面では当時は tenntenn さんや deeeet さんといったメルカリに入社する前から知っていた人が続々と入社してきて驚きました。</p>
+<h2 id="2017年">2017年</h2>
+<p>2017年、夏ころに US の流れを受けて JP でもマイクロサービス化のムーブメントがありました。このころ SRE 研修を経てから、バックエンドエンジニアではなくインフラ面で仕事がしたいとの気持ちが芽生えてきて、各方面に打診をしてチーム異動を願っていました。そんな中、気持ちに応えて異動を手伝ってくれる人たちのおかげで SRE チームにジョインすることとなりました。</p>
+<ul>
+<li><a href="https://tellme.tokyo/post/2017/11/02/sre/">SREになった | tellme.tokyo</a></li>
+</ul>
+<p>SRE に異動しての初仕事は<a href="https://engineering.mercari.com/blog/entry/2017-09-11-150000/">メルカリ社内にあった Wiki システムを GKE に載せ替える</a>というタスクでした。</p>
+<p>JP でもいよいよマイクロサービス化を推し進めようとの経営判断となり、担当する専用のチームを発足させることになります。白羽の矢が立ったのは US 出張で US マイクロサービス化の現場を見てきた deeeet さんでした。当時同じ SRE チーム所属であったことと、Wiki の GKE 移行でサポートしてもらって関わりがあった自分もこのチームにジョインすることになります (当時は SRE 傘下の Microservices チームという位置づけでした)。</p>
+<h2 id="2018年">2018年</h2>
+<p>マイクロサービス化の波も本格化し始め、Microservices チーム (当時) は次のリポジトリを作って Spinnaker を導入したあたりからチームの様相を呈してきました。人も集まりはじめて3~5人くらいになっていたと思います。</p>
+<ul>
+<li>microservices: すべての issue トラッカーとドキュメント</li>
+<li>microservices-terraform: すべてのインフラ基盤</li>
+</ul>
+<p>この頃は、まずは1つのマイクロサービスの成功事例を作ることに躍起でした。多くの試行錯誤を繰り返してチームでマイクロサービスのデザインやマイクロサービスに必要なスケール戦略を考えていたと思います。実際にマイクロサービスの開発現場にジョインして、開発のサポートからマイクロサービスのプラットフォームを作るにあたって必要なことのキャッチアップも行っていました。今でいう Embedded SRE の走りみたいな状態だったと思います。なんとしてでも成功事例を作るんだと意気込んで取り組んでいました。</p>
+<p>加えて、マイクロサービス化が軌道に乗った先のことも考えて動いていました。チーム内ではスケールする Terraform リポジトリの設計や Terraform 導入の戦略、Kubernetes では Namespace の設計や権限周りのデザイン、Ingress のデザイン1つとってもたくさん議論しながら進めていたことを覚えています。また、メルカリのマイクロサービスがここまで発展することになったものに microservices-starter-kit という Terraform モジュールがあります。これは Terraform の template 機能を使ったもので、各 env ごとに必要な情報が記載されたモジュールファイルを吐き出してくれるようになっていて、これが Microservices Platform 側と開発者のインターフェイスになってくれるというものでした。</p>
+<p><a href="https://engineering.mercari.com/blog/entry/2018-07-24-161759/">Mercari Meetup for Microservices Platform を開催しました | メルカリエンジニアリング</a></p>
+<p>この仕組のおかげでそれから数年、ほぼすべてのマイクロサービスはここから生まれて数千もの Terraform states を生むまでに貢献します。</p>
+<h2 id="2019年">2019年〜</h2>
+<p>Microservices Platform チーム (のちに Platform チーム) として動きはじめてきて、みんなで1つのことをやるフェーズからそれぞれがそれぞれのタスクを、また OnSupport という開発者から上がってきた issue を解決するメンバーや、バディー制度 (2-3人で小チームを組んでレビューコストを下げる) などを導入してチームとしての動きが本格化してきました。</p>
+<p>自分は、</p>
+<ul>
+<li>tfnotify の開発</li>
+<li>HashiCorp Vault の検証、導入</li>
+<li>microservices-kubernetes の開発: すべての Kubernetes manifest モノリポ (Spinnaker と共存)</li>
+<li>devstats (Microservices の効果測定、開発 Agility やボトルネックの可視化) の開発</li>
+<li>OPA Gatekeepr や conftest のトライ</li>
+<li>&hellip;</li>
+</ul>
+<p>などをやっていました。思い出せない限りのイシュー、たくさんの挑戦ができました。</p>
+<p><a href="https://engineering.mercari.com/blog/entry/2019-12-23-084839/">Mercari Microservices Platformの進捗（2019年） | メルカリエンジニアリング</a></p>
+<p>その後は、<a href="https://engineering.mercari.com/blog/entry/2020-06-02-090450/">クラスタ移行</a>などの大規模イベントを経て、<a href="https://engineering.mercari.com/blog/entry/2020-07-16-083548/">チーム再編</a>も行われ、チームメンバーも20人超にまで成長していました。働き方では、<a href="https://3.basecamp-help.com/article/35-the-six-week-cycle">Six week release cycle</a> というワークスタイルを導入して軌道に乗ってきていました。</p>
+<p>アウトプットは、<a href="https://speakerdeck.com/b4b4r07">Speakerdeck</a> やこのブログ、メルカリのエンジニアブログに残してきました。</p>
+<h2 id="2021年">2021年</h2>
+<p>(Microservices) Platform チームが、</p>
+<ul>
+<li>Platform DX</li>
+<li>Platform Inra</li>
+<li>CI/CD</li>
+<li>Network</li>
+</ul>
+<p>に分割されてそれぞれのエリアにフォーカスできるようになりました。やれることも増えて、やっていることも deep dive できるようになり確実にチームとして進化しているのを感じていましたが、一方であの頃の小さなチームでの楽しかった思い出や経験が反芻されるようにもなっていました。そのことで自身のパフォーマンスにも影響が出ていました。</p>
+<p>チームの進化の方向性に正当性を感じる一方で自分の趣向性とは反してきていると感じていたのです。この頃からぼんやりと転職を考えるようになります。</p>
+<h2 id="2022年">2022年</h2>
+<p>株式会社 10X に転職しました。実は2020年はじめくらいから転職自体は考え始めていて、話などはもらっていたのですが返事がだいぶ遅くなりました。これは Platform チームを辞めることに躊躇していたからです。最高のチームに恵まれて、Microservices の最前線で課題解決に取り組んでいることから離れるのを惜しみました。</p>
+<p>しかし時間をかけることで自分の中で落とし所を見つけたため転職を決意しました。最初に辞めることをよぎったときから最終の決断まで2年もの歳月があり、いちばん重要であろう意思決定までに至るプロセスは今回は載せません。しかし、チームやマネージャーと相談した上で自分の次の成長を求めて出ることに決意したのです。決断した際に快く後押ししてくれた方たちに感謝します。</p>
+<p>退職する際に、Terraform を管理するリポジトリに定義された自分を削除するプルリクエスト (消すことですべての権限を失う) で同僚から Hotel California の歌詞になぞらえて、</p>
+<blockquote>
+<p><em>You can checkout any time you like</em> <em>But you can never leave!</em></p>
+</blockquote>
+<p>と言われました。これはまさしくメルカリの Platform チームです。改めて居心地のいい空間から出る勇気は相当な覚悟がいるなと感じます。</p>
+<h2 id="今後">今後</h2>
+<p>10X では SRE エンジニアとしての入社です。SRE ロールを持つのは自分ひとりなので人手が足りません。10X のインフラ課題を一緒に解決してくれる人を探しています。10X に入社してやりたいこと、その他詳しいことは入社時に語った Podcast があるので気になる方は試聴してみてください。</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<iframe 
+    style="border-radius:12px" 
+    src="https://open.spotify.com/embed/episode/368dieIZeYabeHAw2fH0Y7?utm_source=generator&theme=0"
+    width="100%"
+    height="232"
+    frameBorder="0"
+    allowfullscreen=""
+    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+</iframe>
+
+
+
+<p>Twitter <a href="https://twitter.com/b4b4r07">@babarot</a></p>
+<h2 id="最後に">最後に</h2>
+<p>最後にメルカリでの SWE として仕事ができたこと、自分と関わってくれたすべての人に感謝します。本当に最高のチーム、最高のチームメンバーに恵まれました。今でも Microservices Platform チームは素晴らしかったなと思います。そんなチームを作れたこと、EM、一緒に働いたチームのメンバー、かつてのメンバー (@spesnova) にも感謝します。spesnova さんには多くを学びました。</p>
+<p>特に何度も何度も一緒に働かないかと声掛けをしてチームに引き入れてくれ、最後は自分の EM にもなった deeeet さんには感謝しきれません。あの頃誘ってくれていなければ、今の自分は成立していなかったはずです。転職の決断をする最後まで良きチームリード・上司であったこと、映画の雑談で盛り上がったことはいつまでも忘れないです。ありがとうざいました。またともに働ける日が来ることを願って、自分も成長していきたいと思います。</p>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2022 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+

@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="Kubernetes などの YAML を独自のルールをもとにテストする - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2019/02/19/test-kubernetes-yaml/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>Kubernetes などの YAML を独自のルールをもとにテストする | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">Kubernetes などの YAML を独自のルールをもとにテストする</h1>
+    <h2 class="subtitle is-5">February 19, 2019 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/kubernetes">kubernetes</a>
+    
+        <a class="button is-link" href="/tags/go">go</a>
+    
+        <a class="button is-link" href="/tags/stein">stein</a>
+    
+        <a class="button is-link" href="/tags/yaml">yaml</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      <!-- raw HTML omitted -->
+<h2 id="設定ファイルのメンテナンスの必要性">設定ファイルのメンテナンスの必要性</h2>
+<p>Infrastructure as Code の普及もありインフラの状態やその他多くの設定が、設定ファイル言語 (YAML や HCL など) で記述されることが多くなった。
+Terraform HCL や Kubernetes YAML など、人が継続的にメンテナンスしなければならなく、その設定が直接プロダクションに影響を与える場合、そのレビューがとても重要になる。
+具体的に例えば、「デプロイする Replica の数」や「Resource limit や PodDisruptionBudget が適切か」などレビューの中で注意深く見なけれなならない点などがあげられる。
+加えて日々のレビューの中で、問題にはならないが「Kubernetes の metadata.namespace は省略できるけど事故防止の意味も込めて明示的に書きましょう」といった設定ファイルに対して強制させたいポリシーなどが生まれて、ひとつのレビュー観点になっていくことは自然である。</p>
+<p>人がレビューの中で毎回見なければならないこと、毎回指摘すること、機械的にチェックできることはルールセットを定義して、それをもとに lint でチェックして CI で失敗させるのが効率的である。</p>
+<p>YAML などのただの設定ファイル言語に対して「独自のルールを定義してそれをもとにテストする」ということは実は難しかったりする。</p>
+<ul>
+<li><a href="https://github.com/garethr/kubeval">garethr/kubeval: Validate your Kubernetes configuration files, supports multiple Kubernetes versions</a></li>
+<li><a href="https://github.com/viglesiasce/kube-lint">viglesiasce/kube-lint: A linter for Kubernetes resources with a customizable rule set</a></li>
+</ul>
+<p>kubeval はマニフェストファイルの validator として機能する。例えば、integer として定義しなければいけないフィールドを string で定義していた場合に検知することができる。
+kube-lint は決められた Kind (現在は Pod のみ) の決められたフィールドのチェックを決められたオペレータ (equal, not equal など) で違反していないかチェックすることができる。</p>
+<p>あくまでも「このファイルのこの部分はこのように定義されているべきである」というルール作りに特化したツールはなかった。</p>
+<h2 id="独自のルールをもとにテストする">独自のルールをもとにテストする</h2>
+<p>そこで次のツールを Terraform と <a href="https://www.terraform.io/docs/enterprise/sentinel/index.html">HashiCorp Sentinel</a> から着想を得て作った。</p>
+<p><a href="https://github.com/b4b4r07/stein/">b4b4r07/stein: A linter for config files with a customizable rule set</a></p>
+<p>HashiCorp Sentinel は HashiCorp が提唱する <a href="https://docs.hashicorp.com/sentinel/concepts/policy-as-code">Policy as Code</a> を実装したツールになっている。
+要するに、「インフラの状態を設定ファイルとしてコードで書くように、設定ファイルの状態をポリシーとしてコードで書く」、という考え方でありそれを実践できるツールである。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">main</span> <span class="p">=</span> <span class="nx">rule</span> <span class="p">{</span>
+  <span class="nx">all</span> <span class="nx">tfplan</span><span class="p">.</span><span class="nx">resources</span><span class="p">.</span><span class="nx">aws_instance</span> <span class="nx">as</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">instances</span> <span class="p">{</span>
+    <span class="nx">all</span> <span class="nx">instances</span> <span class="nx">as</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">r</span> <span class="p">{</span>
+      <span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">applied</span><span class="p">.</span><span class="nx">tags</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span> <span class="p">&gt;</span> <span class="mi">0</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>上の Sentinel のポリシー例は AWS インスタンスのタグ指定がされているかどうかをルールとして定義したものになっている。</p>
+<p>一方で、Stein では例えば次のようなポリシーをコードとして書けるようになっている。</p>
+<ul>
+<li>metadata.namespace は指定されているか</li>
+<li><code>&lt;namespace&gt;/development</code> でディレクトリを切ってマニフェストを置いているとき、metadata.namespace は <code>&lt;namespace&gt;-dev</code> になっているか</li>
+<li>ファイル名は metadata.name に <code>.yaml</code> をつけたものになっているか</li>
+<li>マニフェストの拡張子に <code>.yml</code> はないか</li>
+<li>1ファイルにつき、1リソースの定義になっているか</li>
+<li>Deployemnt が定義されているとき PodDisruptionBudget も同様に定義されているか</li>
+<li>etc</li>
+</ul>
+<p>こうしたポリシーは会社やそのチームの方針によって異なる。
+こういったことからさまざまなユースケースをカバーするポリシーを定義するときは、ツール側で自由にルールを定義できるような機能を提供していなければならない。
+上の例で示したように、Sentinel では <a href="https://docs.hashicorp.com/sentinel/language/">Sentinel Language</a> という専用言語を用いてルールを定義できるようにしている。</p>
+<p>Stein では Terraform のように HCL で定義できるようにしている。</p>
+<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">rule</span> <span class="s2">&#34;replicas&#34;</span> {
+<span class="n">  description</span> <span class="o">=</span> <span class="s2">&#34;Check the number of replicas is sufficient&#34;</span>
+
+<span class="n">  conditions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&#34;${jsonpath(&#34;spec.replicas&#34;) &gt; 3}&#34;</span><span class="p">,</span>
+  <span class="p">]</span>
+
+  <span class="k">report</span> {
+<span class="n">    level</span>   <span class="o">=</span> <span class="s2">&#34;ERROR&#34;</span>
+<span class="n">    message</span> <span class="o">=</span> <span class="s2">&#34;Too few replicas&#34;</span>
+  }
+}
+</code></pre></div><p>Terraform の <a href="https://www.terraform.io/docs/configuration/resources.html">resource</a> ブロックのように Stein 内で識別される <a href="https://b4b4r07.github.io/stein/configuration/policy/rules/">rule</a> というブロックを提供している。
+この中でルールを定義していく。
+Stein では <strong>rule の conditions にある評価式が一つでも false になった場合、rule が fail して report にもとづいてエラーが返る</strong> ようになっている。
+上の例では、spec.replicas が 3 以上を満たさない場合、この rule が失敗し標準出力にレポートされる。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ stein apply
+manifests/microservices/x-echo-jp/development/Deployment/test.yaml
+  <span class="o">[</span>ERROR<span class="o">]</span>  rule.replicas            Too few replicas
+</code></pre></div><p>各要素へのアクセス (spec.replicas) は <a href="https://kubernetes.io/docs/reference/kubectl/jsonpath/">JSONPATH 形式</a>で jsonpath 関数によって提供される。
+jsonpath 関数は Stein が提供する組み込み関数になっている。
+Stein では Terraform のように組み込み変数や組み込み関数を提供している。</p>
+<p><a href="https://b4b4r07.github.io/stein/configuration/syntax/interpolation/">Interpolation Syntax - Stein Documentations</a></p>
+<p>その他、Terraform が提供している Interpolation をインポートしているので、例えば format 関数や lookup 関数なども使うことができる。</p>
+<h2 id="stein-を使う">Stein を使う</h2>
+<p>Stein を使うことで自由なルールをポリシーとして定義して、それをもとにテスト実行することができるようになる。
+HCL ベースとはいえ、Terraform のように少しの学習コストがあるので提供しているスキーマの使い方を示す。</p>
+<p>その前に、Stein のインターフェースを示すと、Stein は CLI コマンドとして動作する。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ stein --help
+Usage: stein <span class="o">[</span>--version<span class="o">]</span> <span class="o">[</span>--help<span class="o">]</span> &lt;command&gt; <span class="o">[</span>&lt;args&gt;<span class="o">]</span>
+
+Available commands are:
+    apply    Applies a policy to arbitrary config files.
+    fmt      Formats a policy <span class="nb">source</span> to a canonical format.
+
+</code></pre></div><p>apply と fmt をサブコマンドとして持つ。
+apply は定義されたポリシーを元に引数に渡された YAML などに対してチェックを実行する。
+fmt は HCL のフォーマットチェックができる。</p>
+<p>ポリシーファイルは HCL で定義し、任意のディレクトリに置くことができる。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ stein apply -policy rule.hcl manifests/microservices/x-echo-jp/development/Deployment/test.yaml
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ <span class="nb">export</span> <span class="nv">STEIN_POLICY</span><span class="o">=</span>rule.hcl
+$ stein apply manifests/microservices/x-echo-jp/development/Deployment/test.yaml
+</code></pre></div><p>apply のフラグで指定するか環境変数で指定することができる。ちなみにカンマ区切りで複数指定できるので、Terraform のように自由な単位でファイル分割ができる。</p>
+<p>また、<code>.policy</code> ディレクトリをデフォルトのポリシーファイル置き場として認識するのでその場合は指定しなくて良い。
+<code>.policy</code> が認識されるのは引数に渡されたファイルが置かれているディレクトリの階層すべて、になる。
+上の例だと次のディレクトリが対象になる。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">manifests/.policy/
+manifests/microservices/.policy/
+manifests/microservices/x-echo-jp/.policy/
+manifests/microservices/x-echo-jp/development/.policy/
+manifests/microservices/x-echo-jp/development/Deployment/.policy/
+</code></pre></div><p>このおかげで影響させるポリシーをディレクトリで指定することができるようになっている。
+より詳細な挙動と実際の例は公式ドキュメントとリポジトリにあるサンプルが参考になる。</p>
+<ul>
+<li><a href="https://b4b4r07.github.io/stein/configuration/load/">Load Order - Stein Documentations</a></li>
+<li><a href="https://github.com/b4b4r07/stein/tree/master/_examples">stein/_examples at master · b4b4r07/stein</a></li>
+</ul>
+<p>次に DSL の書き方について示す。</p>
+<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">rule</span> <span class="s2">&#34;namespace_name_irregular&#34;</span> {
+<span class="n">  description</span> <span class="o">=</span> <span class="s2">&#34;Check namespace name is valid&#34;</span>
+
+  <span class="err">/</span><span class="err">/</span> <span class="p">(</span><span class="k">省略できる</span><span class="p">)</span>
+  <span class="err">/</span><span class="err">/</span> <span class="k">このルールが依存するルールを書くことができる</span>
+  <span class="err">/</span><span class="err">/</span> <span class="k">この場合</span><span class="err">、</span><span class="k">rule</span><span class="p">.</span><span class="k">namespace_specification</span> <span class="k">が失敗した場合このルールは</span> <span class="k">apply</span> <span class="k">されない</span>
+<span class="n">  depends_on</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;rule.namespace_specification&#34;</span><span class="p">]</span>
+
+  <span class="err">/</span><span class="err">/</span> <span class="p">(</span><span class="k">省略できる</span><span class="p">)</span>
+  <span class="err">/</span><span class="err">/</span> <span class="k">このルールを</span> <span class="k">apply</span> <span class="k">するにあたって満たすべき評価式を指定できる</span>
+  <span class="err">/</span><span class="err">/</span> <span class="k">cases</span> <span class="k">をすべて満たすとき</span><span class="err">、</span><span class="k">このルールが</span> <span class="k">apply</span> <span class="k">される</span>
+  <span class="k">precondition</span> {
+<span class="n">    cases</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="s2">&#34;${is_irregular_namespace_pattern()}&#34;</span><span class="p">,</span>
+    <span class="p">]</span>
+  }
+
+  <span class="err">/</span><span class="err">/</span> <span class="p">(</span><span class="k">必須</span><span class="p">)</span>
+  <span class="err">/</span><span class="err">/</span> <span class="k">apply</span> <span class="k">したときにこのルールを成功させるか失敗させるかを決める</span>
+  <span class="err">/</span><span class="err">/</span> <span class="k">ひとつでも</span> <span class="kt">false</span> <span class="k">が返ったとき</span><span class="err">、</span><span class="k">このルールは失敗する</span>
+<span class="n">  conditions</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&#34;${contains(lookuplist(var.namespace_name_map, jsonpath(&#34;metadata.namespace&#34;)), get_service_id_with_env(filename))}&#34;</span><span class="p">,</span>
+  <span class="p">]</span>
+
+  <span class="err">/</span><span class="err">/</span> <span class="p">(</span><span class="k">必須</span><span class="p">)</span>
+  <span class="err">/</span><span class="err">/</span> <span class="k">ルールが失敗したときのレポートフォーマットを指定できる</span>
+  <span class="err">/</span><span class="err">/</span> <span class="k">ERROR</span> <span class="k">の場合</span><span class="err">、</span><span class="k">stein</span> <span class="k">の終了値は</span> <span class="m">1</span> <span class="k">になり</span><span class="err">、</span><span class="k">WARN</span> <span class="k">のときはエラー表示はされるが終了値は</span> <span class="m">0</span> <span class="k">になる</span>
+  <span class="k">report</span> {
+<span class="n">    level</span>   <span class="o">=</span> <span class="s2">&#34;ERROR&#34;</span>
+<span class="n">    message</span> <span class="o">=</span> <span class="s2">&#34;${format(&#34;This case is irregular pattern, so %q is invalid&#34;, jsonpath(&#34;metadata.namespace&#34;))}&#34;</span>
+  }
+}
+
+<span class="err">/</span><span class="err">/</span> <span class="k">Terraform</span> <span class="k">の変数定義と同じ</span>
+<span class="k">variable</span> <span class="s2">&#34;namespace_name_map&#34;</span> {
+<span class="n">  type</span> <span class="o">=</span> <span class="s2">&#34;map&#34;</span>
+
+<span class="n">  default</span> <span class="o">=</span> {
+<span class="n">    &#34;gateway&#34;</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="s2">&#34;x-gateway-jp-dev&#34;</span><span class="p">,</span>
+      <span class="s2">&#34;x-gateway-jp-prod&#34;</span><span class="p">,</span>
+    <span class="p">]</span>
+  }
+}
+
+<span class="err">/</span><span class="err">/</span> <span class="k">ユーザ定義関数を定義できる</span>
+<span class="k">function</span> <span class="s2">&#34;get_service_name&#34;</span> {
+<span class="n">  params</span> <span class="o">=</span> <span class="p">[</span><span class="k">file</span><span class="p">]</span>
+<span class="n">  result</span> <span class="o">=</span> <span class="k">basename</span><span class="p">(</span><span class="k">dirname</span><span class="p">(</span><span class="k">dirname</span><span class="p">(</span><span class="k">dirname</span><span class="p">(</span><span class="k">file</span><span class="p">)</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+}
+
+<span class="k">function</span> <span class="s2">&#34;get_env&#34;</span> {
+<span class="n">  params</span> <span class="o">=</span> <span class="p">[</span><span class="k">file</span><span class="p">]</span>
+<span class="n">  result</span> <span class="o">=</span> <span class="k">basename</span><span class="p">(</span><span class="k">dirname</span><span class="p">(</span><span class="k">dirname</span><span class="p">(</span><span class="k">file</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+}
+
+<span class="k">function</span> <span class="s2">&#34;get_service_id_with_env&#34;</span> {
+<span class="n">  params</span> <span class="o">=</span> <span class="p">[</span><span class="k">file</span><span class="p">]</span>
+<span class="n">  result</span> <span class="o">=</span> <span class="k">format</span><span class="p">(</span><span class="s2">&#34;%s-%s&#34;</span><span class="p">,</span> <span class="k">get_service_name</span><span class="p">(</span><span class="k">file</span><span class="p">)</span><span class="p">,</span> <span class="k">lookup</span><span class="p">(</span><span class="k">var</span><span class="p">.</span><span class="k">shortened_environment</span><span class="p">,</span> <span class="k">get_env</span><span class="p">(</span><span class="k">file</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+}
+</code></pre></div><p>これ以外にも機能があるが長くなってしまうので省略する。
+他の使い方やユースケースなどは公式ドキュメントとしてまとめているので参考になるかもしれない。</p>
+<p><a href="https://b4b4r07.github.io/stein/">Stein Documentations</a></p>
+<p>また、リポジトリにある <a href="https://github.com/b4b4r07/stein/tree/master/_examples">_examples</a> ディレクトリは実際のユースケースに則した形でのせたのでこれも参考になる。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ tree -a _examples
+_examples
+├── .policy/
+│   ├── config.hcl
+│   ├── functions.hcl
+│   ├── rules.hcl
+│   └── variables.hcl
+├── manifests/
+│   ├── .policy/
+│   │   ├── functions.hcl
+│   │   └── rules.hcl
+│   └── microservices/
+│       ├── x-echo-jp/
+│       │   └── development/
+│       │       ├── Deployment/
+│       │       │   ├── redis-master.yaml
+│       │       │   ├── test.yaml
+│       │       │   └── test.yml
+│       │       ├── PodDisruptionBudget/
+│       │       │   └── pdb.yaml
+│       │       └── Service/
+│       │           └── service.yaml
+│       └── x-gateway-jp/
+│           └── development/
+│               └── Deployment/
+│                   └── test.yaml
+└── spinnaker/
+    ├── .policy/
+    │   └── functions.hcl
+    └── x-echo-jp/
+        └── development/
+            └── deploy-to-dev-v2.yaml
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># _examples にある例をもとに stein を実行する</span>
+$ make run
+</code></pre></div><h2 id="まとめ">まとめ</h2>
+<p>本記事では、</p>
+<ul>
+<li>YAML などの設定ファイル言語のメンテナンスと Policy as Code の重要性</li>
+<li>Sentinel から着想を得て Policy as Code を実践するツールとして Stein の説明</li>
+<li>Stein を使った設定ファイルに対するテストと使い方</li>
+</ul>
+<p>について書いた。</p>
+<p>実際にこれらを本番環境に導入する際には CI で実行させるといいと思う。
+その際に、その P-R で変更された YAML ファイルのみに対して stein を実行する、というアプローチを取ると良い。</p>
+<p><a href="https://b4b4r07.github.io/stein/">Stein Documentations</a></p>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2022 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+

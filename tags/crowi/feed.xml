@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>crowi on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/crowi/</link>
+    <description>Recent content in crowi on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Tue, 04 Apr 2017 02:33:51 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/crowi/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Crowi 用の API Client 書いて公式に取り込まれた</title>
+      <link>https://tellme.tokyo/post/2017/04/04/023351/</link>
+      <pubDate>Tue, 04 Apr 2017 02:33:51 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2017/04/04/023351/</guid>
+      <description>Crowi というオープンソースソフトウェアの wiki があります。
+ Markdown で書ける wiki で、
+ Markdown をオートプレビュー URL (パス構造) でページを作成/表現できる リビジョンヒストリ (差分を管理してくれる) いいね、ブックマーク、ポータル機能、&amp;hellip;  などの特徴があって、とても便利なサービスです。
+簡単に Heroku to deploy できるので気になる方は試してみてください。開発者向けにはオールインワンの Docker が有志によってメンテされているので、そちらを試してみても良いかもしれません。
+go-crowi Crowi 用の API Client を Go で書きました。
+ Go で API Client は初めて書いたのですが、@deeeet さんの記事が参考になりました。
+https://deeeet.com/writing/2016/11/01/go-api-client/
+もともと、Qiita:Team からの移行ツールを Go で書いていたのですが、Crowi API と通信する部分は外部パッケージとして切り出したほうが汎用的に良いなと、go-crowi を作りました。
+https://github.com/b4b4r07/qiita2crowi
+このツールは Qiita:Team からのエクスポート用の JSON を食わすと、指定した Crowi に記事を作成してくれるものです。Qiita から画像を取ってきてアッタチメントしたり、コメントなども移行してくれます。
+Transfer to Crowi そして今日、Crowi のメインメンテナの @sotarok さんから公式においても良いかも、というお話をいただき transfer しました。
+公式 SDK としたほうが多くの人に使ってもらえるし、ユーザに安心感も与えられるのでこの移譲には大賛成です。P-R も歓迎しています (おそらく自分がこのままメンテすることになると思います)。</description>
+    </item>
+    
+  </channel>
+</rss>

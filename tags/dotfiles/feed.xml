@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>dotfiles on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/dotfiles/</link>
+    <description>Recent content in dotfiles on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Sun, 18 Jan 2015 23:52:12 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/dotfiles/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>dotfiles を curl -L dot.hoge.com | sh でインストールする方法</title>
+      <link>https://tellme.tokyo/post/2015/01/18/235212/</link>
+      <pubDate>Sun, 18 Jan 2015 23:52:12 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2015/01/18/235212/</guid>
+      <description>dotfiles をインストールする際に、
+curl -L https://raw.githubusercontent.com/{YOUR_ACCOUNT}/dotfiles/master/install.sh | bash  といった具合にウェブを介してスクリプトを実行することが一般的になりつつあると思いますが、この方法にはひとつ問題がありそれは URL 部分が長いということです。これは結構厄介で長すぎるがゆえに暗記できないので、いちいちブラウザを起動してコピペしないといけなかったり、そもそもブラウザなどないようなどこかのサーバにデプロイするときなど、暗記していたほうがいい場面が結構あります。
+ curl -sL dot.hoge.com | sh で自分専用環境を構築する方法（かっこいい）
+ そんなとき、このエントリを発見しました。 独自ドメインを取得して、そのサブドメインに自分で立ち上げた Nginx で dotfiles リポジトリへリダイレクトしてやるようにする方法です。こうすることで、github の URL 部分を自分のドメインを使った好きな URL にすることができるようになります。
+しかし、この方法はサーバと独自ドメインの2つを用意しなければなりません。エンジニアたるものサーバやドメインは持っていたほうがいいのかもしれませんが、持っていなかった場合 dotfiles の URL 短縮のためだけに維持費に数千円／年を支払うのはもったいないですよね。
+そこで、利用するのが短縮 URL サービスです。最近ではとても身近なものになり、スタンダードになりつつある Bitly をはじめ Amazon 専用の amzn.to や Google の goo.gl などとても増えてきています。
+その中でも、今回はカスタムドメインを指定できる Bitly を使用します。これでリダイレクトさせるウェブページを作成する必要がなくなり、サーバ代を浮かすことが出来ます（注：ただし独自ドメインは取得する必要があります）。
+事前準備 独自ドメインの取得  ムームードメイン お名前.com  有名どころですとサクッと取得することができます。 個人情報を入力し、年額を支払い、振込が確認された後、認証まで数時間たつとドメイン取得となります！
+ここらへんは100円／年台からなのでとても安価です。
+Bitly アカウント作成 無料アカウントを作成します。最近までは Bitly Pro という有料サービスでカスタムドメインの設定を提供していましたが、今では無料アカウントに開放しています。
+カスタムドメインの設定 さて、ここからが本番です。ここからは筆者の環境（ ムームードメイン）で説明していきます。 ムームードメインのサイトにいき、</description>
+    </item>
+    
+  </channel>
+</rss>

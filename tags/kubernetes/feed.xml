@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>kubernetes on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/kubernetes/</link>
+    <description>Recent content in kubernetes on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Tue, 19 Feb 2019 21:40:24 +0900</lastBuildDate>
+    
+	<atom:link href="https://tellme.tokyo/tags/kubernetes/feed.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kubernetes などの YAML を独自のルールをもとにテストする</title>
+      <link>https://tellme.tokyo/post/2019/02/19/test-kubernetes-yaml/</link>
+      <pubDate>Tue, 19 Feb 2019 21:40:24 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2019/02/19/test-kubernetes-yaml/</guid>
+      <description>設定ファイルのメンテナンスの必要性 Infrastructure as Code の普及もありインフラの状態やその他多くの設定が、設定ファイル言語 (YAML や HCL など) で記述されることが多くなった。 Terraform HCL や Kubernetes YAML など、人が継続的にメンテナンスしなければならなく、その設定が直接プロダクションに影響を与える場合、そのレビューがとても重要になる。 具体的に例えば、「デプロイする Replica の数」や「Resource limit や PodDisruptionBudget が適切か」などレビューの中で注意深く見なけれなならない点などがあげられる。 加えて日々のレビューの中で、問題にはならないが「Kubernetes の metadata.namespace は省略できるけど事故防止の意味も込めて明示的に書きましょう」といった設定ファイルに対して強制させたいポリシーなどが生まれて、ひとつのレビュー観点になっていくことは自然である。
+人がレビューの中で毎回見なければならないこと、毎回指摘すること、機械的にチェックできることはルールセットを定義して、それをもとに lint でチェックして CI で失敗させるのが効率的である。
+YAML などのただの設定ファイル言語に対して「独自のルールを定義してそれをもとにテストする」ということは実は難しかったりする。
+ garethr/kubeval: Validate your Kubernetes configuration files, supports multiple Kubernetes versions viglesiasce/kube-lint: A linter for Kubernetes resources with a customizable rule set  kubeval はマニフェストファイルの validator として機能する。例えば、integer として定義しなければいけないフィールドを string で定義していた場合に検知することができる。 kube-lint は決められた Kind (現在は Pod のみ) の決められたフィールドのチェックを決められたオペレータ (equal, not equal など) で違反していないかチェックすることができる。</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes 上で Credentials を扱う</title>
+      <link>https://tellme.tokyo/post/2018/08/07/kubernetes-configmaps-secrets/</link>
+      <pubDate>Tue, 07 Aug 2018 01:01:47 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2018/08/07/kubernetes-configmaps-secrets/</guid>
+      <description>アプリケーションにロジックを外側から変更したい場合やソースコード外から設定されるべき情報 (API キーや何らかのトークン、その他の Credentials など) をアプリケーション側から読み取れるようにしたい場合がある。 よくある方法として、環境変数やフラグなどがある。
+しかしこれらは往々にしてアプリケーションにハードコードされがちである (ロジックが書かれたファイル外に定義されたとしてもそれはハードコードに等しい)。 そうすると設定変更のたびにデプロイを必要とするし、言わずもがなセキュリティ的には厳しい。
+またこの問題は、コンテナとマイクロサービスの領域において更に顕著になる。 同じデータを2つの異なるコンテナで参照する必要がある場合や、ホストマシンが使えないのでどうやってコンテナ内に渡すべきかを考える必要が出てくる。
+実際にハードコードされたアプリケーションから環境変数に移し、それらをコンテナ化し Kubernetes に載せ替えてくステップを追う。
+アプリ側にハードコードされた例 var http = require(&amp;#39;http&amp;#39;); var server = http.createServer(function (request, response) { const language = &amp;#39;English&amp;#39;; const API_KEY = &amp;#39;123-456-789&amp;#39;; response.write(`Language: ${language}\n`); response.write(`API Key: ${API_KEY}\n`); response.end(`\n`); }); server.listen(3000); language やAPI キーを変更する場合は、コードを編集する必要がある。 またバグやセキュリティリーク、ソースコードの履歴を汚すアプローチである。
+これの代わりに環境変数を使う。
+環境変数を使うパターン Step 1: 環境変数を読み込む var http = require(&amp;#39;http&amp;#39;); var server = http.createServer(function (request, response) { const language = process.env.LANGUAGE; const API_KEY = process.</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes 開発環境構築のいろは</title>
+      <link>https://tellme.tokyo/post/2017/12/01/kubeabc/</link>
+      <pubDate>Fri, 01 Dec 2017 00:54:11 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2017/12/01/kubeabc/</guid>
+      <description>はじめに Kubernetes2 Advent Calendar 2017 - Qiita 1 日目です。
+Kubernetes 上で動かすアプリを作ることが多くなってきていると思いますが、従来のオペレーションとは違う方法で開発やデプロイなどを行う必要があります。 Kubernetes の実行環境として GKE を例に取ると、GCP プロジェクトやその中で作った GKE クラスタ、Kubernetes ネームスペースなど、見る必要のある領域が増えるとともに今までのやり方も変わるはずです。 本記事ではその際のユースケースと、それをいい感じにしてくれるツールを紹介します。
+今いるクラスタは何か 本番環境と開発環境 (Prod / Dev) でクラスタを分けることは多いと思います。 その他にもクラスタを持っていることもあるでしょう。
+Continuous Delivery のプラットフォームとして Spinnaker が注目されつつあるので、Kubernetes クラスタへのデプロイはこれに置き換わる可能性1はありますが、Spinnaker がサポートしていない Kubernetes リソース (例えば、PodDisruptionBudget など) については、まだ手動で kubectl apply せざるを得ません。 また、基本的なリソースに対する apply 相当のことが Spinnaker によってできるようになったとはいえ、まだまだ手動で apply を実行したい場面もあります。 そこで気をつけたいのは、今いるクラスタとネームスペースの確認です。
+Spinnaker は「デプロイ先のクラスタ」と「どのイメージを撒くか (manifest file)」をセットにして内部に持っているので「意図しないクラスタに対して意図しない manifest file をデプロイしてしまう」といった誤操作は防げるのですが、これが kubectl apply による手動だと今いるクラスタと -f に渡すファイル次第で、互い違いにデプロイしてしまうなどの事故も起こしかねません2。 毎回指差し確認するのも面倒ですし、そもそも確認を徹底するというのは有効打ではないので、常に見えるところに表示しておくのがおすすめです。
+ 手前味噌ですが、現在の Kubernetes クラスタと GCP プロジェクトを表示できるコマンドを書きました。
+$ .</description>
+    </item>
+    
+    <item>
+      <title>ブログをGKEで運用し、Spinnakerでデプロイする</title>
+      <link>https://tellme.tokyo/post/2017/07/30/blog-on-gke-deployed-by-spinnaker/</link>
+      <pubDate>Sun, 30 Jul 2017 12:37:33 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2017/07/30/blog-on-gke-deployed-by-spinnaker/</guid>
+      <description>このブログをはてなブログから Google Container Engine (GKE) に移行しました。
+今回、移行先に GKE を選択した理由は GKE を使ってみたかったからです。ある Web サービスを GKE に移行することになったのですが、今まで Kubernetes を含め触ったことがなかったので、自分の持つサービスで練習がてらと思いブログを題材にしました。
+目次
+ 移行のためにやったこと  ブログ用の Docker コンテナを作成 kubernetes cluster を構築 コンテナの入った Pod を動かす HTTPS 化する   記事の配信まで  Circle CI による継続的インテグレーション Spinnaker による継続的デリバリ   所感など  移行のためにやったこと 今回の移行に際し、移行周りのスクリプトや kubernetes のマニフェストファイル、及び記事自体を管理するために GitHub にリポジトリを作りました。
+ 1. ブログ用の Docker コンテナを作成 まずはブログを配信するためのサーバを載せたコンテナを作成します。静的サイトジェネレーターには Hugo を利用しました。
+FROMgolang:1.8-alpine AS hugoRUN apk add --update --no-cache git &amp;amp;&amp;amp; \  go get -v github.</description>
+    </item>
+    
+  </channel>
+</rss>

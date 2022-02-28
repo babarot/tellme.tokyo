@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="Go から peco する - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2018/04/25/go-finder/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>Go から peco する | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">Go から peco する</h1>
+    <h2 class="subtitle is-5">April 25, 2018 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/go">go</a>
+    
+        <a class="button is-link" href="/tags/fzf">fzf</a>
+    
+        <a class="button is-link" href="/tags/peco">peco</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      <p><a href="https://github.com/peco/peco">peco</a> とか <a href="https://github.com/junegunn/fzf">fzf</a> のようなフィルターコマンドが便利すぎて使わない日はないのですが、これらをどうしても Go プログラムに組み込んでしまいたいときが稀にあります。</p>
+<p>どちらも Go で書かれているので、ライブラリとして使えるように提供されていれば import するだけなのですが、どちらも CLI (Command Line Interface) のみを提供しています。
+CLI として作られている以上、シェルコマンドとして使うべきではあるのですが、そうすると何かと連携させたいとなった場合 (多くの場合はそうですが)、シェルスクリプトを書くことになります。
+小さなものであればそれで構わないのですが大きめなツールになる場合、基本的にシェルスクリプトを書きたくないわけで、そうするとやはりどうしても Go から扱いたくなります。</p>
+<p>シェルコマンドといっても CLI (Command Line Interface) なので、アプリケーションに精通したインターフェースである API (Application Programming Interface) と似たように考えることができて、CLI はコマンドラインに精通したインターフェースを持っているわけです。
+そう考えるとコマンドのオプションはそのインターフェイスを通してコマンドに処理の変更を伝える起点と捉えることができます。</p>
+<p>Go ではコマンドラインインターフェースとやりとりできる <a href="https://golang.org/pkg/os/exec/"><code>os/exec</code></a> が標準パッケージとして使えるので、これをうまく使って CLI との通信部分を抽象化してラッパーライブラリとして実装できないか考えてみました。</p>
+<p><a href="https://github.com/b4b4r07/go-finder">https://github.com/b4b4r07/go-finder</a></p>
+<p>go-finder というパッケージを作りました。</p>
+<p>使い方は次のようになります。</p>
+<p><a href="https://godoc.org/github.com/b4b4r07/go-finder">finder - GoDoc</a></p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">fzf</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">finder</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;fzf&#34;</span><span class="p">,</span> <span class="s">&#34;--reverse&#34;</span><span class="p">,</span> <span class="s">&#34;--height&#34;</span><span class="p">,</span> <span class="s">&#34;40&#34;</span><span class="p">)</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">fzf</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="p">)</span>
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">peco</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">finder</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;peco&#34;</span><span class="p">,</span> <span class="s">&#34;--layout=bottom-up&#34;</span><span class="p">)</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">peco</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="p">)</span>
+</code></pre></div><p>デフォルトでは <code>os.Stdin</code> からの入力をデータソースとして使用します。
+<code>finder.New()</code> が返す <code>*finder.Finder</code> には <code>Source</code> というフィールドが定義されていて、自由にデータソースを設定することができます。
+以下のようなよく使用されるソースに関しては、パッケージでメソッドを提供しています。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">peco</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">finder</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;peco&#34;</span><span class="p">)</span>
+<span class="nx">peco</span><span class="p">.</span><span class="nf">FromFile</span><span class="p">(</span><span class="s">&#34;some-file.txt&#34;</span><span class="p">)</span>
+<span class="nx">peco</span><span class="p">.</span><span class="nf">FromText</span><span class="p">(</span><span class="s">&#34;sample\ntext\nfoo&#34;</span><span class="p">)</span>
+<span class="nx">peco</span><span class="p">.</span><span class="nf">FromCommand</span><span class="p">(</span><span class="s">&#34;cat&#34;</span><span class="p">,</span> <span class="s">&#34;some-file.txt&#34;</span><span class="p">)</span>
+<span class="nx">peco</span><span class="p">.</span><span class="nf">FromStdin</span><span class="p">(</span><span class="p">)</span> <span class="c1">// デフォルト
+</span></code></pre></div><p>また、以下のように独自のデータソースも定義できます。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">peco</span><span class="p">.</span><span class="nf">From</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">out</span> <span class="nx">io</span><span class="p">.</span><span class="nx">WriteCloser</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+		<span class="nx">lines</span> <span class="o">:=</span> <span class="p">[</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;line 1&#34;</span><span class="p">,</span> <span class="s">&#34;line 2&#34;</span><span class="p">,</span> <span class="s">&#34;line 3&#34;</span><span class="p">}</span>
+		<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">line</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">lines</span> <span class="p">{</span>
+			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintln</span><span class="p">(</span><span class="nx">out</span><span class="p">,</span> <span class="nx">line</span><span class="p">)</span>
+		<span class="p">}</span>
+		<span class="k">return</span> <span class="kc">nil</span>
+	<span class="p">}</span>
+<span class="p">}</span><span class="p">)</span>
+</code></pre></div><p>peco か fzf か <a href="https://github.com/mooz/percol">percol</a> といったフィルタコマンドのうち、何が使われるかわからないケースについても Go で書くことができます。</p>
+<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">opts</span> <span class="p">[</span><span class="p">]</span><span class="kt">string</span>
+<span class="nx">command</span> <span class="o">:=</span> <span class="nx">finder</span><span class="p">.</span><span class="nf">Command</span><span class="p">(</span><span class="s">&#34;fzf&#34;</span><span class="p">,</span> <span class="s">&#34;peco&#34;</span><span class="p">,</span> <span class="s">&#34;percol&#34;</span><span class="p">,</span> <span class="s">&#34;zaw&#34;</span><span class="p">)</span>
+<span class="k">switch</span> <span class="nx">command</span> <span class="p">{</span>
+<span class="k">case</span> <span class="s">&#34;fzf&#34;</span><span class="p">:</span>
+	<span class="nx">opts</span> <span class="p">=</span> <span class="p">[</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
+		<span class="s">&#34;--reverse&#34;</span><span class="p">,</span>
+		<span class="s">&#34;--height&#34;</span><span class="p">,</span> <span class="s">&#34;40&#34;</span><span class="p">,</span>
+	<span class="p">}</span>
+<span class="k">case</span> <span class="s">&#34;peco&#34;</span><span class="p">:</span>
+	<span class="nx">opts</span> <span class="p">=</span> <span class="p">[</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
+		<span class="s">&#34;--layout=bottom-up&#34;</span><span class="p">,</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">cli</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">finder</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">command</span><span class="p">,</span> <span class="nx">opts</span><span class="o">...</span><span class="p">)</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">items</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">cli</span><span class="p">.</span><span class="nf">Run</span><span class="p">(</span><span class="p">)</span>
+<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+	<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%#v\n&#34;</span><span class="p">,</span> <span class="nx">items</span><span class="p">)</span>
+</code></pre></div><p><code>finder.Command()</code> は引数にとったコマンドのうち、使用できる (PATH が通っている) コマンドを教えてくれるのでそれに合わせてオプションを定義します。</p>
+<p>以上のように、go-finder ではこれらのフィルタコマンドをラップしてあげることで Go から扱いやすくなりました。</p>
+<p>これにより、<a href="https://github.com/b4b4r07/enhancd">enhancd</a> の Go 化ができそうです。</p>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+    
+      <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+    
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2022 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
