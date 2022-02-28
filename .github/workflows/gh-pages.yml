@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
       with:
@@ -20,8 +22,9 @@ jobs:
         hugo
         cp -v ./CNAME ./docs/CNAME
     - name: Deploy
-      uses: peaceiris/actions-gh-pages@v2
-      env:
-        ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-        PUBLISH_BRANCH: gh-pages
-        PUBLISH_DIR: ./docs
+      uses: peaceiris/actions-gh-pages@v3
+      if: ${{ github.ref == 'refs/heads/master' }}
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./site
+        publish_branch: gh-pages
