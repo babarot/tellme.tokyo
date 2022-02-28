@@ -10,9 +10,6 @@
     {{ end }}
     <br>
     <div class="content">
-      {{ if (.Params.Oldlink) and ($.Param "displayoldlink") }}
-        <a href="{{ .Params.Oldlink }}">元記事</a><br><br>
-      {{ end }}
       {{ .Content }}
     </div>
     <br>
