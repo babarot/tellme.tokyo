@@ -35,7 +35,7 @@ avatar = "https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/i
 
 [params.sharing]
 twitter = true
-hatebu = true
+hatebu = false
 pocket = false
 
 [params.highlight]
