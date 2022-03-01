@@ -1,4 +1,4 @@
-blog
+Moved: https://github.com/b4b4r07/blog
 ====
 
 ![Website](https://img.shields.io/website?down_color=lightgrey&down_message=down&up_color=green&up_message=up&url=https%3A%2F%2Ftellme.tokyo)

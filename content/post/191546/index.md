@@ -7,6 +7,7 @@ draft: false
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2016/10/01/191546"
 tags:
+- mercari
 - life
 ---
 
