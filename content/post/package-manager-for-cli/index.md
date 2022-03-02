@@ -10,7 +10,7 @@ image: ""
 tags: ["CLI"]
 ---
 
-最近、[afx](https://babarot.me/afx/) という CLI 向けのパッケージマネージャを公開した。ここで "CLI のパッケージ" とは jq のようなコマンドラインツールや [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) のようなヒストリ補完をする zsh プラグインを指す。afx ではこれらを 1 つのツールで管理すること、コードで表現して管理することを目的としている  (YAML を使用する)。
+最近、[afx](https://babarot.me/afx/) という CLI 向けのパッケージマネージャを公開した。ここで "CLI のパッケージ" とは例えば jq のようなコマンドラインツールや [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) のようなヒストリ補完をするシェルのプラグインを指す (bash/zsh/fish)。afx ではこれらを 1 つのツールで管理すること、コードで表現して管理することを目的としている。コードには YAML を使用する。
 
 また afx では、管理するパッケージとそのツールの設定を一緒に保つことができる。例えば jq 自体の管理とその jq で使う環境変数やエイリアスの設定などを同じ YAML ファイルに記述できる。これによって、各種ツールの設定が bashrc/zshrc などに散乱することや、もう使っていないなどの理由でツール自体はインストールされていないのに設定だけが残っている、みたいなことを防ぐことができる。
 
