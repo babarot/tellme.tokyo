@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="新しいコマンドラインツール向けのパッケージマネージャ - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2022/03/02/package-manager-for-cli/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>新しいコマンドラインツール向けのパッケージマネージャ | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">新しいコマンドラインツール向けのパッケージマネージャ</h1>
+    <h2 class="subtitle is-5">March 2, 2022 </h2>
+    
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/cli">CLI</a>
+    
+</div>
+
+    
+    <br>
+    <div class="content">
+      <p>最近、<a href="https://babarot.me/afx/">afx</a> という CLI 向けのパッケージマネージャを公開した。ここで &ldquo;CLI のパッケージ&rdquo; とは jq のようなコマンドラインツールや <a href="https://github.com/zsh-users/zsh-history-substring-search">zsh-history-substring-search</a> のようなヒストリ補完をする zsh プラグインを指す。afx ではこれらを 1 つのツールで管理すること、コードで表現して管理することを目的としている  (YAML を使用する)。</p>
+<p>また afx では、管理するパッケージとそのツールの設定を一緒に保つことができる。例えば jq 自体の管理とその jq で使う環境変数やエイリアスの設定などを同じ YAML ファイルに記述できる。これによって、各種ツールの設定が bashrc/zshrc などに散乱することや、もう使っていないなどの理由でツール自体はインストールされていないのに設定だけが残っている、みたいなことを防ぐことができる。</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># ~/.config/afx/commands.yaml</span><span class="w">
+</span><span class="w"></span><span class="k">github</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>stedolan/jq<span class="w">
+</span><span class="w">  </span><span class="k">description</span><span class="p">:</span><span class="w"> </span>Command-line<span class="w"> </span>JSON<span class="w"> </span>processor<span class="w">
+</span><span class="w">  </span><span class="k">owner</span><span class="p">:</span><span class="w"> </span>stedolan<span class="w">
+</span><span class="w">  </span><span class="k">repo</span><span class="p">:</span><span class="w"> </span>jq<span class="w">
+</span><span class="w">  </span><span class="k">release</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">    </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>jq<span class="w">
+</span><span class="w">    </span><span class="k">tag</span><span class="p">:</span><span class="w"> </span>jq<span class="m">-1.6</span><span class="w">
+</span><span class="w">  </span><span class="k">command</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">    </span><span class="k">link</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">    </span>- <span class="k">from</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;*jq*&#39;</span><span class="w">
+</span><span class="w">      </span><span class="k">to</span><span class="p">:</span><span class="w"> </span>jq<span class="w">
+</span><span class="w">    </span><span class="k">alias</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">      </span><span class="k">jq</span><span class="p">:</span><span class="w"> </span>jq<span class="w"> </span>-C<span class="w">
+</span><span class="w">    </span><span class="k">snippet</span><span class="p">:</span><span class="w"> </span><span class="sd">|
+</span><span class="sd">     </span><span class="sd"> </span><span class="sd"># you can write shell script here</span><span class="w">
+</span><span class="w">      </span><span class="c"># -&gt; define global alias (zsh feature)</span><span class="w">
+</span><span class="w">      </span>if<span class="w"> </span><span class="p">[</span><span class="p">[</span><span class="w"> </span>$SHELL<span class="w"> </span>==<span class="w"> </span><span class="cp">*zsh*</span><span class="w"> </span><span class="p">]</span><span class="p">]</span>;<span class="w"> </span>then<span class="w">
+</span><span class="w">        </span>alias<span class="w"> </span>-g<span class="w"> </span>J=<span class="s1">&#39;| jq -C . | less -F&#39;</span><span class="w">
+</span><span class="w">      </span>fi<span class="w">
+</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># ~/.config/afx/plugins.yaml</span><span class="w">
+</span><span class="w"></span><span class="k">github</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>b4b4r07/enhancd<span class="w">
+</span><span class="w">  </span><span class="k">description</span><span class="p">:</span><span class="w"> </span>A<span class="w"> </span>next-generation<span class="w"> </span>cd<span class="w"> </span>command<span class="w"> </span>with<span class="w"> </span>your<span class="w"> </span>interactive<span class="w"> </span>filter<span class="w">
+</span><span class="w">  </span><span class="k">owner</span><span class="p">:</span><span class="w"> </span>b4b4r07<span class="w">
+</span><span class="w">  </span><span class="k">repo</span><span class="p">:</span><span class="w"> </span>enhancd<span class="w">
+</span><span class="w">  </span><span class="k">plugin</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">    </span><span class="k">env</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">      </span><span class="k">ENHANCD_FILTER</span><span class="p">:</span><span class="w"> </span>fzf<span class="w"> </span>--height<span class="w"> </span><span class="m">25</span>%<span class="w"> </span>--reverse<span class="w"> </span>--ansi<span class="p">:</span>fzy<span class="p">:</span>peco<span class="w">
+</span><span class="w">    </span><span class="k">sources</span><span class="p">:</span><span class="w">
+</span><span class="w"></span><span class="w">    </span>- init.sh<span class="w">
+</span></code></pre></div><h2 id="背景">背景</h2>
+<p>(tl;dr)</p>
+<ul>
+<li><a href="https://github.com/zplug/zplug">zplug</a> から乗り換えるため</li>
+<li>Homebrew で配信されていないツールを管理するため</li>
+<li>既存のパッケージマネージャより優れたものを作るため</li>
+</ul>
+<p>&hellip;</p>
+<p>昔、Zsh 向けのプラグインマネージャである <a href="https://github.com/zplug/zplug">zplug</a> を作った。大学生のときに書いたので今から結構前になるけれど、その当時は Zsh のプラグインマネージャといえばたいした機能を持ったやつはなくて、自分のニーズにあったものを作ろうと書き始めた。zplug は Zsh のプラグインはもちろん、GitHub Release にアップロードされている各種バイナリ (jq など) も一緒にインストール・管理することができた。それぞれのインストールするコマンドやプラグインごとに設定を保持して zshrc に書き記すことができた。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># .zshrc</span>
+zplug <span class="s2">&#34;stedolan/jq&#34;</span>, <span class="se">\
+</span><span class="se"></span>  as:command, <span class="se">\
+</span><span class="se"></span>  from:gh-r, <span class="se">\
+</span><span class="se"></span>  rename-to:jq
+</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># .zshrc</span>
+zplug <span class="s2">&#34;b4b4r07/enhancd&#34;</span>, as:plugin, use:init.sh
+<span class="k">if</span> zplug check <span class="s2">&#34;b4b4r07/enhancd&#34;</span><span class="p">;</span> <span class="k">then</span>
+  <span class="nb">export</span> <span class="nv">ENHANCD_FILTER</span><span class="o">=</span><span class="s2">&#34;fzf --height 25% --reverse --ansi&#34;</span>
+  <span class="nb">export</span> <span class="nv">ENHANCD_DOT_SHOW_FULLPATH</span><span class="o">=</span><span class="m">1</span>
+<span class="k">fi</span>
+</code></pre></div><p>zplug を作った理由に、Zsh プラグインだけではなく自分が利用しているすべてのコマンドラインツールも同じように管理したいというのがあった。Homebrew では配信されていない便利なコマンドラインツールの多くが GitHub Release で公開されていたからである。Homebrew では公式でサポートしているパッケージについては特別な設定もなく <code>brew</code> を通してインストールすることができるが、その他の野良パッケージについては作者が <a href="https://docs.brew.sh/Taps">Taps</a> と言われるものを作成して Homebrew で配信できるようにするか、なければ利用者が作るほかなかったからである。</p>
+<p>それはそれで面倒なことに変わりないが、それに加えてそもそも Homebrew で配信されているツールに関しても、Homebrew だとインストールしたらおしまいとなりがちで、環境を新調した際などには「何を Homebrew で管理してたっけ」というのが付きまとう (メモしたり <code>brew list</code> したら良いということも言えるが Declarative ではない)。つまり zplug で解決したかった課題は、&ldquo;Zsh のプラグインマネージャ&rdquo; という役割だけではなく、すべてのプラグインやコマンドラインツールをまとめて1つの方法で、かつ再現性ある状態で管理したいというものであった (インストールと管理が同一の方法であること)。</p>
+<p>開発については、当時は Vim のパッケージマネージャに影響を受けてピュア Zsh script で書かれていることと、zshrc 内で記述できることを意識していた。公開当初は自分のモチベーションも高く、コードベースもそこまで大きくなかったのでメンテナンスも容易であったが、そのことがデメリットとなり高機能化するにつれてメンテナンスコストが膨れ上がった。zplug が非常に高機能であるがゆえにその 100% が Zsh script であることと、それからくる可読性の低さ、デバッグやテストの難しさから機能追加はおろかリファクタリングも難しくなっていた。</p>
+<p>社会人となり学生の頃よりは自由な時間が減ったことも後押しして OSS としては長らくメンテしていない状態が続き、数年のうちに自分でも使うことを辞めてしまっていた。これはエラーなどが出たときに直せないのに加えて、しばらくの時間を空けてから zplug のコードを覗くと、そこで使われている黒魔術的な Zsh script <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>に「これは到底メンテすることなどできない」という気持ちにさせられてしまうからであった。</p>
+<p>一方で、「ツールを管理したい」という欲求自体はなくなるわけではないので、仕事や日常でいいなと思って試したりする便利ツールは手動でダウンロードして PATH に配置するなどしていた。Homebrew なども併用していたが、以前のような統一的な管理方法を失ってしまったので、野良でインストールしたツールは管理が難しくなってしまった。PC の新調のタイミングなどで今まで使っていたツールはメモやスクリプトを頼りにインストールするが、スクリプトに入れ忘れたようなやつは管理から漏れてそのままロストしてしまうこともあった。はやり、インストール (手動でダウンロード) と管理方法 (メモやスクリプト) が別々だとついつい漏れるなと思い直した。</p>
+<p>さすがにこれではしんどいなと、簡単なシェルスクリプト<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>を書いたりして誤魔化していたが、そのうち適当な時間を見繕って Go でもう少しリッチなやつを書いて使っていた。それから3年くらいひっそりと使い続け、環境を新調するたびにコードをちょっとずつ書き足していたが、とくに公開する予定もなくずっと private なリポジトリに置いていた。それに甘んじて適当なコードだったため毎回新しい環境で動かすたびにエラーが上がっていて騙し騙し使っていた<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>のだけど、さすがにそれにも辟易してきていたのでコードベースに大きくテコ入れをして afx を公開するに至った。</p>
+<h2 id="使い方">使い方</h2>
+<p>詳しい使い方はドキュメントにある。</p>
+<p><a href="https://babarot.me/afx/getting-started/">Getting Started - AFX</a></p>
+<p>インストールしたいパッケージの YAML を書いて afx install を実行する。設定などは afx init を実行するとシェルスクリプトとして吐き出されるので、各種 rc ファイルで読み込むようにする。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># bashrc などに書く</span>
+<span class="nb">source</span> &lt;<span class="o">(</span>afx init<span class="o">)</span>
+</code></pre></div><p>afx init の実行自体はただ標準出力に設定した項目が afx の処理を通して出力されるだけなので気軽に実行して問題ない。<code>source</code> などでシェルに反映してはじめて設定が有効化される。</p>
+<p>各種パッケージのインストールは YAML に設定を書いて afx install を実行したら、アンインストールは YAML から消して afx uninstall を実行したら、アップデートはバージョンの部分を書き換えて afx update を実行したら完了する。afx は常に「YAML ファイルに書かれていることと一致している状態」を目指すようになっている。</p>
+<div class="highlight"><pre class="chroma"><code class="language-diff" data-lang="diff">  github:
+  - name: ogham/exa
+    description: A modern version of &#39;ls&#39;.
+    owner: ogham
+    repo: exa
+    release:
+      name: exa
+<span class="gd">-     tag: v0.9.0
+</span><span class="gd"></span><span class="gi">+     tag: v0.10.0
+</span><span class="gi"></span>    command:
+      alias:
+        l: exa --group-directories-first -T --git-ignore --level 2
+        ls: exa --group-directories-first
+        la: exa --group-directories-first -a --header --git
+        ll: exa --group-directories-first -l --header --git
+        lla: exa --group-directories-first -la --header --git
+      link:
+      - from: &#39;*exa*&#39;
+        to: exa
+</code></pre></div><p>バージョンを書き換えて <code>afx update</code> すると更新できる。</p>
+<h2 id="設定方法">設定方法</h2>
+<p>afx では現在、次のパッケージタイプが用意されている:</p>
+<ul>
+<li>GitHub / GitHub Release</li>
+<li>Gist</li>
+<li>HTTP (上記以外のウェブサイトで配信されるコンテンツ)</li>
+<li>Local (ダウンロード済みのコンテンツ)</li>
+</ul>
+<p>それぞれのパッケージタイプにはそれぞれの設定方法があるが、共通して command と plugin という設定ができる。command はコマンドラインツールとして PATH が通されることを想定し、plugin はシェルのプラグインとして source されることを想定する。</p>
+<p>それ以外の設定では、次のようなことができる:</p>
+<ul>
+<li>環境変数の設定</li>
+<li>エイリアスの設定</li>
+<li>依存関係の設定 (パッケージの読み込み順序)</li>
+<li>任意のスニペットコードの設定 (パッケージに合わせた function の定義など)</li>
+<li>条件に応じた読み込みの設定</li>
+<li>(command の場合)
+<ul>
+<li>バイナリのリネーム</li>
+<li>ビルドコマンドの実行</li>
+<li>ビルド実行の際の環境変数の設定</li>
+</ul>
+</li>
+</ul>
+<p>その他の設定や詳しいことは<a href="https://babarot.me/afx/configuration/package/github/">ドキュメント</a>に記載がある。実際の設定方法は自分が利用しているパッケージの限りであれば <a href="https://github.com/b4b4r07/dotfiles/tree/master/.config/afx">dotfiles</a> にある。</p>
+<h2 id="まとめ">まとめ</h2>
+<p>今回、zplug alternative として作っていた CLI 向けパッケージマネージャを公開した。例えば Homebrew でインストールすることができない CLI ツールなどを管理したい人、Homebrew で配信されているものもまとめて管理したい人、インストールとその設定をコードで保存して環境構築に再現性を持たせたい人には向いていると思う。</p>
+<p>また、ビルド実行もサポートしているので、Homebrew にもなければ GitHub Release にもない、例えば make や go get するしかインストールする方法がないといったパッケージもインストール・パッケージ管理することができる。</p>
+<p><a href="https://github.com/b4b4r07/afx/">https://github.com/b4b4r07/afx/</a></p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>例えば <code>${^path[@]}/zplug-*(N-.:t:gs:zplug-:)</code> や <code>${(qqq)name}${tags[@]:+&quot;, ${(j:, :)${(q)tags[@]}}&quot;}</code> など <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>URL を for-loop して git clone するやつ <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p>GitHub Releases に上がっているパッケージの命名規則 (OS名やアーキテクチャなど) に統一がなく、その判定処理の実装が困難だったため簡単なものを書いた後はずっと後回しにしていた。そのため、新環境を作ったときにまっさらな設定もない vim で動かない部分をコメントアウトしてビルドして、それを使って実行して vim をインストールする (vim の設定も有効になる) というような状態だった <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2022 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+

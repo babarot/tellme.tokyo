@@ -7,10 +7,23 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Mon, 28 Feb 2022 21:00:12 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 02 Mar 2022 20:35:20 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>新しいコマンドラインツール向けのパッケージマネージャ</title>
+      <link>https://tellme.tokyo/post/2022/03/02/package-manager-for-cli/</link>
+      <pubDate>Wed, 02 Mar 2022 20:35:20 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2022/03/02/package-manager-for-cli/</guid>
+      <description>最近、afx という CLI 向けのパッケージマネージャを公開した。ここで &amp;ldquo;CLI のパッケージ&amp;rdquo; とは jq のようなコマンドラインツールや zsh-history-substring-search のようなヒストリ補完をする zsh プラグインを指す。afx ではこれらを 1 つのツールで管理すること、コードで表現して管理することを目的としている (YAML を使用する)。
+また afx では、管理するパッケージとそのツールの設定を一緒に保つことができる。例えば jq 自体の管理とその jq で使う環境変数やエイリアスの設定などを同じ YAML ファイルに記述できる。これによって、各種ツールの設定が bashrc/zshrc などに散乱することや、もう使っていないなどの理由でツール自体はインストールされていないのに設定だけが残っている、みたいなことを防ぐことができる。
+# ~/.config/afx/commands.yamlgithub:- name:stedolan/jqdescription:Command-lineJSONprocessorowner:stedolanrepo:jqrelease:name:jqtag:jq-1.6command:link:- from:&amp;#39;*jq*&amp;#39;to:jqalias:jq:jq-Csnippet:| # you can write shell script here# -&amp;gt; define global alias (zsh feature)if[[$SHELL==*zsh*]];thenalias-gJ=&amp;#39;| jq -C . | less -F&amp;#39;fi# ~/.config/afx/plugins.yamlgithub:- name:b4b4r07/enhancddescription:Anext-generationcdcommandwithyourinteractivefilterowner:b4b4r07repo:enhancdplugin:env:ENHANCD_FILTER:fzf--height25%--reverse--ansi:fzy:pecosources:- init.sh背景 (tl;dr)
+ zplug から乗り換えるため Homebrew で配信されていないツールを管理するため 既存のパッケージマネージャより優れたものを作るため  &amp;hellip;
+昔、Zsh 向けのプラグインマネージャである zplug を作った。大学生のときに書いたので今から結構前になるけれど、その当時は Zsh のプラグインマネージャといえばたいした機能を持ったやつはなくて、自分のニーズにあったものを作ろうと書き始めた。zplug は Zsh のプラグインはもちろん、GitHub Release にアップロードされている各種バイナリ (jq など) も一緒にインストール・管理することができた。それぞれのインストールするコマンドやプラグインごとに設定を保持して zshrc に書き記すことができた。</description>
+    </item>
     
     <item>
       <title>退職と転職。人生の振り返り</title>
