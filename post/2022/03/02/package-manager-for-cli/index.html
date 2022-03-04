@@ -106,7 +106,7 @@
 <li>既存のパッケージマネージャより優れたものを作るため</li>
 </ul>
 <p>&hellip;</p>
-<p>昔、Zsh 向けのプラグインマネージャである <a href="https://github.com/zplug/zplug">zplug</a> を作った。大学生のときに書いたので今から結構前になるけれど、その当時は Zsh のプラグインマネージャといえばたいした機能を持ったやつはなくて、自分のニーズにあったものを作ろうと書き始めた。zplug は Zsh のプラグインはもちろん、GitHub Release にアップロードされている各種バイナリ (jq など) も一緒にインストール・管理することができた。それぞれのインストールするコマンドやプラグインごとに設定を保持して zshrc に書き記すことができた。</p>
+<p>昔、Zsh 向けのプラグインマネージャである <a href="https://github.com/zplug/zplug">zplug</a> を作った。学生のときに書いたので今から結構前になるけれど、その当時は Zsh のプラグインマネージャといえばたいした機能を持ったやつはなくて、自分のニーズにあったものを作ろうと書き始めた。zplug は Zsh のプラグインはもちろん、GitHub Release にアップロードされている各種バイナリ (jq など) も一緒にインストール・管理することができた。それぞれのインストールするコマンドやプラグインごとに設定を保持して zshrc に書き記すことができた。</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># .zshrc</span>
 zplug <span class="s2">&#34;stedolan/jq&#34;</span>, <span class="se">\
 </span><span class="se"></span>  as:command, <span class="se">\
@@ -127,11 +127,11 @@ zplug <span class="s2">&#34;b4b4r07/enhancd&#34;</span>, as:plugin, use:init.sh
 <h2 id="使い方">使い方</h2>
 <p>詳しい使い方はドキュメントにある。</p>
 <p><a href="https://babarot.me/afx/getting-started/">Getting Started - AFX</a></p>
-<p>インストールしたいパッケージの YAML を書いて afx install を実行する。設定などは afx init を実行するとシェルスクリプトとして吐き出されるので、各種 rc ファイルで読み込むようにする。</p>
+<p>インストールしたいパッケージの YAML を書いて <code>afx install</code> を実行する。設定などは <code>afx init</code> を実行するとシェルスクリプトとして吐き出されるので、各種 rc ファイルで読み込むようにする。</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># bashrc などに書く</span>
 <span class="nb">source</span> &lt;<span class="o">(</span>afx init<span class="o">)</span>
-</code></pre></div><p>afx init の実行自体はただ標準出力に設定した項目が afx の処理を通して出力されるだけなので気軽に実行して問題ない。<code>source</code> などでシェルに反映してはじめて設定が有効化される。</p>
-<p>各種パッケージのインストールは YAML に設定を書いて afx install を実行したら、アンインストールは YAML から消して afx uninstall を実行したら、アップデートはバージョンの部分を書き換えて afx update を実行したら完了する。afx は常に「YAML ファイルに書かれていることと一致している状態」を目指すようになっている。</p>
+</code></pre></div><p><code>afx init</code> の実行自体は設定した項目が afx の処理を通してただ単に標準出力にアウトプットされるだけなので気軽に実行しても問題ない。<code>source</code> などのコマンドを通してシェルに反映してはじめて設定が有効化される。</p>
+<p>各種パッケージのインストールは YAML に設定を書いて <code>afx install</code> を実行したら、アンインストールは YAML から消して <code>afx uninstall</code> を実行したら、アップデートはバージョンの部分を書き換えて <code>afx update</code> を実行したら完了する。afx は常に「YAML ファイルに書かれていることと一致している状態」を目指すようになっている。</p>
 <div class="highlight"><pre class="chroma"><code class="language-diff" data-lang="diff">  github:
   - name: ogham/exa
     description: A modern version of &#39;ls&#39;.
