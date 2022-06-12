@@ -48,7 +48,7 @@ resource "azurerm_resource_group" "rg" {
 }
 ```
 
-for_each では要素は [each](https://www.terraform.io/language/meta-arguments/for_each#the-each-object) というオブジェクトで参照する。Map の場合は、each.key と each.value で、配列 (Set) の場合は、each.key と each.value のどちらを使っても要素を参照できる。
+for_each では要素は [each](https://www.terraform.io/language/meta-arguments/for_each#the-each-object) というオブジェクトで参照する。Map の場合は、each.key でキーが each.value で値が参照でき、配列 (Set) の場合は、each.key と each.value のどちらを使っても参照できる。
 
 ## count と for_each の使い分け
 
