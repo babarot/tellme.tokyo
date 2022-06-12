@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Mon, 23 Jul 2018 14:35:00 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 12 Jun 2022 00:03:43 +0900</lastBuildDate>
     
 	<atom:link href="https://tellme.tokyo/tags/terraform/feed.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Terraform の count と for_each の使い分けと Splat Expressions について</title>
+      <link>https://tellme.tokyo/post/2022/06/12/terraform-count-for-each/</link>
+      <pubDate>Sun, 12 Jun 2022 00:03:43 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2022/06/12/terraform-count-for-each/</guid>
+      <description>count と for_each Terraform には &amp;ldquo;繰り返す&amp;rdquo; 処理として count と for_each がある。
+resource &amp;#34;aws_instance&amp;#34; &amp;#34;server&amp;#34; { count = 4# create four similar EC2 instances  ami = &amp;#34;ami-a1b2c3d4&amp;#34; instance_type = &amp;#34;t2.micro&amp;#34; tags = { Name = &amp;#34;Server ${count.index}&amp;#34; } } resource &amp;#34;aws_iam_user&amp;#34; &amp;#34;the-accounts&amp;#34; { for_each = toset( [&amp;#34;Todd&amp;#34;, &amp;#34;James&amp;#34;, &amp;#34;Alice&amp;#34;, &amp;#34;Dottie&amp;#34;] ) name = each.key } どちらも for ループとして利用できるが count はリソースが配列として作成され、for_each はリソースがマップとして作成される。for_each に配列を渡す場合は明示的に toset で Set (重複する値がないことが保証された配列) に変換して渡す必要がある (Map はそのまま渡す)。
+# for_each に Map を渡す resource &amp;#34;azurerm_resource_group&amp;#34; &amp;#34;rg&amp;#34; { for_each = { a_group = &amp;#34;eastus&amp;#34; another_group = &amp;#34;westus2&amp;#34; } name = each.</description>
+    </item>
     
     <item>
       <title>Microservices Platform Meetupで話した</title>
