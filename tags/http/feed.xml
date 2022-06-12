@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Sun, 01 Apr 2018 23:05:54 +0900</lastBuildDate>
-    
-	<atom:link href="https://tellme.tokyo/tags/http/feed.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 01 Apr 2018 23:05:54 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/http/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>複数のサービスのヘルスチェックをとるツール</title>
       <link>https://tellme.tokyo/post/2018/04/01/req/</link>

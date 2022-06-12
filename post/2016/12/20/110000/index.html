@@ -67,14 +67,14 @@
       <p>この記事は <a href="http://qiita.com/advent-calendar/2016/git">Git Advent Calendar 2016</a> の 20 日目です。git コマンドを日常的に実行するわけですが、外部スクリプトなどで個人的に日々改善しているお話についてまとめてみました。</p>
 <h1 id="ブランチ切り替えを手早くする">ブランチ切り替えを手早くする</h1>
 <p>git オペレーションで add,commit 並に多用すると思うのがブランチ切り替えで、特に remote にある branch の切り替えなどをショートカットしたくスクリプトを書きました。</p>
-<pre><code>$ git br
+<pre tabindex="0"><code>$ git br
 </code></pre><p>で fzf/peco などのフィルタで切り替えてくれます。ブランチ切り替え系はよくある tips なのですが、何が便利かというと、<code>remotes/origin/HOGE</code> などのリモートにしかないブランチは <code>git checkout -b HOGE remote/origin/HOGE</code> してくれるようになっているので気にせずに checkout できます。</p>
 <p>詳しくは直接スクリプトを読んでみて下さい。簡単なシェルスクリプトです。</p>
 <p><a href="https://github.com/b4b4r07/git-br">https://github.com/b4b4r07/git-br</a></p>
 <p><img src="https://cl.ly/28143e1J2G2h/git_br.gif" alt=""></p>
 <h1 id="ローカルのファイルを-github-で読む">ローカルのファイルを GitHub で読む</h1>
 <p><code>hub browse</code> です。認証しなくて良いので便利です。ブランチを指定するとそのブランチで開いてくれますし、省略すると現在いるブランチで開いてくれます。</p>
-<pre><code>$ git open
+<pre tabindex="0"><code>$ git open
 </code></pre><p>フォークして引数にファイル名を渡したら GitHub で開いてくれるようにしたのですが、まだマージされていません。が、僕のフォーク版だと、そのブランチのファイルを開いてくれます。</p>
 <p><a href="https://github.com/b4b4r07/git-open">https://github.com/b4b4r07/git-open</a></p>
 <p><img src="https://cl.ly/1h1G0I002s1J/git_open.gif" alt=""></p>
@@ -84,20 +84,20 @@
 <p><img src="https://cl.ly/3O1T0O3d3e0k/git_conflict.gif" alt=""></p>
 <h1 id="ssh-に切り替える">SSH に切り替える</h1>
 <p>pull や push には HTTPS と SSH が選べると思いますが、SSH がいいときもあります。切り替えが面倒なのでこれを簡単にしました。<code>git remote set-url</code> し直すだけのスクリプトですが、長々とタイプしなくて良いので意外と便利です。</p>
-<pre><code>$ git url-ssh
-</code></pre><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
+<pre tabindex="0"><code>$ git url-ssh
+</code></pre><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
 </span><span class="cp"></span>
 <span class="nv">url</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>git remote -v <span class="p">|</span> awk <span class="s1">&#39;$1==&#34;origin&#34;{print $2;exit}&#39;</span><span class="k">)</span><span class="s2">&#34;</span>
 
-<span class="k">if</span> <span class="o">[</span><span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$url</span><span class="s2">&#34;</span> <span class="o">=</span>~ ^https?:// <span class="o">]</span><span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="nv">$url</span><span class="s2">&#34;</span> <span class="o">=</span>~ ^https?:// <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
     <span class="c1"># reconstruct url</span>
     <span class="nv">url</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$url</span><span class="s2">&#34;</span> <span class="p">|</span> <span class="se">\
 </span><span class="se"></span>        perl -pe <span class="s1">&#39;s#^https?://(github\.com)/([A-z0-9._-]+)/([A-z0-9._-]+)(\.git)?$#git\@$1:$2/$3#&#39;</span>
     <span class="k">)</span><span class="s2">&#34;</span>
 
     <span class="c1"># to replace git protocol in remote URL with http protocol</span>
-    git remote set-url origin <span class="s2">&#34;</span><span class="si">${</span><span class="nv">url</span><span class="si">}</span><span class="s2">.git</span><span class="s2">&#34;</span> 2&gt;/dev/null
-    <span class="k">if</span> <span class="o">[</span><span class="o">[</span> <span class="nv">$?</span> !<span class="o">=</span> <span class="m">0</span> <span class="o">]</span><span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    git remote set-url origin <span class="s2">&#34;</span><span class="si">${</span><span class="nv">url</span><span class="si">}</span><span class="s2">.git&#34;</span> 2&gt;/dev/null
+    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$?</span> !<span class="o">=</span> <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
         <span class="nb">echo</span> <span class="s2">&#34;Failed to change remote URL&#34;</span> &gt;<span class="p">&amp;</span><span class="m">2</span>
         <span class="nb">exit</span> <span class="m">1</span>
     <span class="k">fi</span>
@@ -124,15 +124,15 @@
 
 <h1 id="git-status-を簡単にする">git status を簡単にする</h1>
 <p>僕は常にワークスペースの状態を確認しておきたい派です。エイリアスをしたりして打つ文字数を減らすなどは良い案ではありますが、最速は空エンターです。zsh ユーザなら簡単にセットアップできるのでおすすめです。</p>
-<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">do_enter<span class="o">(</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">[</span><span class="o">[</span> -n <span class="nv">$BUFFER</span> <span class="o">]</span><span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">do_enter<span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">[[</span> -n <span class="nv">$BUFFER</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
         zle accept-line
         <span class="k">return</span> <span class="nv">$status</span>
     <span class="k">fi</span>
 
     <span class="nb">echo</span>
-    <span class="k">if</span> <span class="o">[</span><span class="o">[</span> -d .git <span class="o">]</span><span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-        <span class="k">if</span> <span class="o">[</span><span class="o">[</span> -n <span class="s2">&#34;</span><span class="k">$(</span>git status --short<span class="k">)</span><span class="s2">&#34;</span> <span class="o">]</span><span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="k">if</span> <span class="o">[[</span> -d .git <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="k">if</span> <span class="o">[[</span> -n <span class="s2">&#34;</span><span class="k">$(</span>git status --short<span class="k">)</span><span class="s2">&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
             git status
         <span class="k">fi</span>
     <span class="k">else</span>
@@ -148,7 +148,7 @@ bindkey <span class="s1">&#39;^m&#39;</span> do_enter
 <p><img src="https://cl.ly/1E0F0S0w3I2S/git_st.gif" alt=""></p>
 <h1 id="スペルチェックしてから-push-する">スペルチェックしてから push する</h1>
 <p>タイポが蔓延するのを未然に防ぎます。プルリク用のブランチの CI で落としてもいいのですが、リモートにコミット積む前に防ぎたかった (rebase し直すのも面倒ですよね) のと、ローカルだと <code>--amend</code> し直せるので pre-push の hook を使います。git では <code>.git/hooks/</code> ディレクトリ配下に様々な hook scripts がサンプルとして配置されているので、<code>.sample</code> をリネームして書いていきます。終了ステータス (<code>$?</code>) が非ゼロで終われば hook 失敗となりそのタスクは実行されません (pre-push hook であれば push が実行されません)。</p>
-<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh"><span class="cp">#!/bin/bash
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="cp">#!/bin/bash
 </span><span class="cp"></span>
 find . -type f <span class="p">|</span> xargs misspell -locale US -error
 <span class="nb">exit</span> <span class="nv">$?</span>

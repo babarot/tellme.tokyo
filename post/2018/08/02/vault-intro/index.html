@@ -103,14 +103,14 @@ Vault サーバ (クラスタ) ははじめて起動するとき (Initialize) �
 <p>1つの強力なマスターキーを保持するときのメリット以上にデメリットを解消することができる。</p>
 <p>Unseal (シャードキーを集めて1つのマスターキーを構築する作業) は CLI / API から行うことができる。</p>
 <p>CLI:</p>
-<pre><code class="language-console" data-lang="console">$ vault operator unseal
-Unseal Key (will be hidden):
-</code></pre><p>API:</p>
-<pre><code class="language-console" data-lang="console">$ curl \
-    --request POST \
-    --data '{&quot;key&quot;: &quot;Nz1QAnTdjrlSccsPho5N7SfZr6IF0XQdYLuXzXzi/kE=&quot;}' \
-    http://127.0.0.1:8200/v1/sys/unseal
-</code></pre><h2 id="rekeyrotate">Rekey/Rotate</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>vault operator unseal
+<span class="go">Unseal Key (will be hidden):
+</span></code></pre></div><p>API:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>curl <span class="se">\
+</span><span class="se"></span><span class="go">    --request POST \
+</span><span class="go">    --data &#39;{&#34;key&#34;: &#34;Nz1QAnTdjrlSccsPho5N7SfZr6IF0XQdYLuXzXzi/kE=&#34;}&#39; \
+</span><span class="go">    http://127.0.0.1:8200/v1/sys/unseal
+</span></code></pre></div><h2 id="rekeyrotate">Rekey/Rotate</h2>
 <p>Vault サーバを最初に初期化すると、Vault はマスターキーを生成し、そしてマスターキーをシャミアの秘密分散法に従って一連のキーシェアに分割する。
 Vault はマスターキーを保存しない。
 そのため、マスターキーを取得するには、まだ Unseal に使われていない他のキーのクォーラム (デフォルトは3つ) で再作成する必要がある。</p>
@@ -131,40 +131,40 @@ Vault では、暗号化キーを使用してファイルシステムやデー�
 <p>Rekey は以下のように実行できる。
 キーシェアの数とクォーラムの閾値を入力する。
 以下の例だと3つのシャードに分割し、マスターキーの構築に必要なシャードのクォーラムは2つである。</p>
-<pre><code class="language-console" data-lang="console">$ vault operator rekey -init -key-shares=3 -key-threshold=2
-Key               Value
----               -----
-Nonce             dc1aec3b-ae67-5780-b4b5-2a10ca05b17c
-Started           true
-Rekey Progress    0/1
-New Shares        3
-New Threshold     2
-</code></pre><p>上のコマンドを実行すると、Nonce が発番される。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>vault operator rekey -init -key-shares<span class="o">=</span><span class="m">3</span> -key-threshold<span class="o">=</span><span class="m">2</span>
+<span class="go">Key               Value
+</span><span class="go">---               -----
+</span><span class="go">Nonce             dc1aec3b-ae67-5780-b4b5-2a10ca05b17c
+</span><span class="go">Started           true
+</span><span class="go">Rekey Progress    0/1
+</span><span class="go">New Shares        3
+</span><span class="go">New Threshold     2
+</span></code></pre></div><p>上のコマンドを実行すると、Nonce が発番される。
 これを使用して以下のようにオペレーションを開始する。
 この Rekey には今の Unseal key が必要とされる。</p>
-<pre><code class="language-console" data-lang="console">$ vault operator rekey -nonce=dc1aec3b-ae67-5780-b4b5-2a10ca05b17c
-Rekey operation nonce: dc1aec3b-ae67-5780-b4b5-2a10ca05b17c
-Key (will be hidden):
-</code></pre><p>Rekey が完了すると新しい Unseal key が出力されシャードが3になっていることがわかる。</p>
-<pre><code class="language-console" data-lang="console">Key 1: EDj4NZK6z5Y9rpr+TtihTulfdHvFzXtBYQk36dmBczuQ
-Key 2: sCkM1i5BGGNDFk5GsqtVolWRPyd5mWn2eZG0gUySiCF7
-Key 3: e5DUvDIH0cPU8Q+hh1KNVkkMc9lliliPVe9u3Fzbzv38
-
-Operation nonce: dc1aec3b-ae67-5780-b4b5-2a10ca05b17c
-
-Vault rekeyed with 3 keys and a key threshold of 2. Please
-securely distribute the above keys. When the vault is re-sealed,
-restarted, or stopped, you must provide at least 2 of these keys
-to unseal it again.
-
-Vault does not store the master key. Without at least 2 keys,
-your vault will remain permanently sealed.
-</code></pre><p>Rekey するときに現在の Unseal key を要求するのは Unseal key を持っている人しか Rekey できないことを意味する。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>vault operator rekey -nonce<span class="o">=</span>dc1aec3b-ae67-5780-b4b5-2a10ca05b17c
+<span class="go">Rekey operation nonce: dc1aec3b-ae67-5780-b4b5-2a10ca05b17c
+</span><span class="go">Key (will be hidden):
+</span></code></pre></div><p>Rekey が完了すると新しい Unseal key が出力されシャードが3になっていることがわかる。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="go">Key 1: EDj4NZK6z5Y9rpr+TtihTulfdHvFzXtBYQk36dmBczuQ
+</span><span class="go">Key 2: sCkM1i5BGGNDFk5GsqtVolWRPyd5mWn2eZG0gUySiCF7
+</span><span class="go">Key 3: e5DUvDIH0cPU8Q+hh1KNVkkMc9lliliPVe9u3Fzbzv38
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="go">Operation nonce: dc1aec3b-ae67-5780-b4b5-2a10ca05b17c
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="go">Vault rekeyed with 3 keys and a key threshold of 2. Please
+</span><span class="go">securely distribute the above keys. When the vault is re-sealed,
+</span><span class="go">restarted, or stopped, you must provide at least 2 of these keys
+</span><span class="go">to unseal it again.
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="go">Vault does not store the master key. Without at least 2 keys,
+</span><span class="go">your vault will remain permanently sealed.
+</span></code></pre></div><p>Rekey するときに現在の Unseal key を要求するのは Unseal key を持っている人しか Rekey できないことを意味する。
 Rotate は Rekey とは異なり、必要な権限さえ持っていれば誰でも Rotate することができる (Policy によって定義される)。</p>
-<pre><code class="language-console" data-lang="console">$ vault operator rotate
-Key Term: 2
-Installation Time: ...
-</code></pre><p>これにより、キーリングに新しいキーが追加される。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>vault operator rotate
+<span class="go">Key Term: 2
+</span><span class="go">Installation Time: ...
+</span></code></pre></div><p>これにより、キーリングに新しいキーが追加される。
 ストレージバックエンドに書き込まれたすべての新しい値は、この新しい鍵で暗号化される。</p>
 <h2 id="まとめ">まとめ</h2>
 <p>Initialize -&gt; Unseal(/Seal) -&gt; Rekey/Rotate の流れを説明した。

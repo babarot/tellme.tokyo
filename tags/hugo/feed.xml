@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Tue, 16 Oct 2018 13:18:07 +0900</lastBuildDate>
-    
-	<atom:link href="https://tellme.tokyo/tags/hugo/feed.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 16 Oct 2018 13:18:07 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/hugo/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>スムーズに Hugo でブログを書くツール</title>
       <link>https://tellme.tokyo/post/2018/10/16/write-blog-smoothly/</link>

@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Tue, 19 Feb 2019 21:40:24 +0900</lastBuildDate>
-    
-	<atom:link href="https://tellme.tokyo/tags/stein/feed.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 19 Feb 2019 21:40:24 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/stein/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Kubernetes などの YAML を独自のルールをもとにテストする</title>
       <link>https://tellme.tokyo/post/2019/02/19/test-kubernetes-yaml/</link>

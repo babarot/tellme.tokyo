@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Fri, 07 Feb 2020 12:27:21 +0900</lastBuildDate>
-    
-	<atom:link href="https://tellme.tokyo/tags/shellscript/feed.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Fri, 07 Feb 2020 12:27:21 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/shellscript/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>標準出力に出しつつ、パイプ先のコマンドにも繋ぐ</title>
       <link>https://tellme.tokyo/post/2020/02/07/tee-command/</link>
@@ -100,7 +96,7 @@ ssh-keygen で作成された 公開鍵.pub の中身をコピーしてブラウ
 $ # (antigen bundle b4b4r07/ssh-keyreg) $ ssh-keygen $ ssh-keyreg はやい！！！
 
  b4b4r07/ssh-keyreg - GitHub  上では、antigen でインストールすると書いていますが、このプラグインは bash でも動きます（補完は zsh のみです。ごめんなさい）。
-インストール $ # for zsh $ antigen bundle b4b4r07/ssh-keyreg $ # for bash $ sudo sh -c &amp;quot;curl https://raw.githubusercontent.com/b4b4r07/ssh-keyreg/master/bin/ssh-keyreg -o /usr/local/bin/ssh-keyreg &amp;amp;&amp;amp; chmod +x /usr/local/bin/ssh-keyreg&amp;quot; 使い方 $ ssh-keyreg usage: ssh-keyreg [-h|--help][[-d|--desc &amp;lt;desc&amp;gt;][-u|--user &amp;lt;user[:pass]&amp;gt;][-p|--path &amp;lt;path&amp;gt;]] [github|bitbucket] command line method or programmatically add ssh key to github.</description>
+インストール $ # for zsh $ antigen bundle b4b4r07/ssh-keyreg $ # for bash $ sudo sh -c &amp;#34;curl https://raw.githubusercontent.com/b4b4r07/ssh-keyreg/master/bin/ssh-keyreg -o /usr/local/bin/ssh-keyreg &amp;amp;&amp;amp; chmod +x /usr/local/bin/ssh-keyreg&amp;#34; 使い方 $ ssh-keyreg usage: ssh-keyreg [-h|--help][[-d|--desc &amp;lt;desc&amp;gt;][-u|--user &amp;lt;user[:pass]&amp;gt;][-p|--path &amp;lt;path&amp;gt;]] [github|bitbucket] command line method or programmatically add ssh key to github.</description>
     </item>
     
     <item>
@@ -131,7 +127,7 @@ mru() { local -a f f=( ~/.</description>
 
  b4b4r07/http_code - GitHub  antigen で簡単にインストールできます。
 $ antigen bundle b4b4r07/http_code antigen でない場合は、
-sudo sh -c &amp;quot;curl https://raw.githubusercontent.com/b4b4r07/http_code/master/bin/http_code -o /usr/local/bin/http_code &amp;amp;&amp;amp; chmod +x /usr/local/bin/http_code&amp;quot; しかし、antigen でインストールしたほうが、補完ファイルなども使用できるようになります。
+sudo sh -c &amp;#34;curl https://raw.githubusercontent.com/b4b4r07/http_code/master/bin/http_code -o /usr/local/bin/http_code &amp;amp;&amp;amp; chmod +x /usr/local/bin/http_code&amp;#34; しかし、antigen でインストールしたほうが、補完ファイルなども使用できるようになります。
 使い方は gif アニメにもある通り、-a/--all オプションをつけると一覧表示、引数に数字を渡すとそれに対する説明を返します。</description>
     </item>
     

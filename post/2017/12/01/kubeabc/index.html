@@ -89,14 +89,14 @@ Kubernetes の実行環境として GKE を例に取ると、GCP プロジェク
 </iframe>
 
 <p>手前味噌ですが、現在の Kubernetes クラスタと GCP プロジェクトを表示できるコマンドを書きました。</p>
-<pre><code class="language-console" data-lang="console">$ ./kubeabc/cli/kube-context/kube-context
-gke_tellme-tokyo/default
-</code></pre><p><code>クラスタ名/ネームスペース名</code> になっています。今は長さの関係でリージョン以降は丸めています。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>./kubeabc/cli/kube-context/kube-context
+<span class="go">gke_tellme-tokyo/default
+</span></code></pre></div><p><code>クラスタ名/ネームスペース名</code> になっています。今は長さの関係でリージョン以降は丸めています。</p>
 <p>GCP プロジェクトも同じように表示できます。</p>
-<pre><code class="language-console" data-lang="console">$ ./kubeabc/cli/gcp-context/gcp-context
-gcalcli-1327
-</code></pre><p>普段は tmux を使っているので、ステータスバーに表示してあります。</p>
-<pre><code>set-option -g status-left 'tmux:[#P] #[fg=colour33](K) #(~/bin/kube-context)#[default] #[fg=colour1](G) #(~/bin/gcp-context 2&gt;&amp;1)#[default]'
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>./kubeabc/cli/gcp-context/gcp-context
+<span class="go">gcalcli-1327
+</span></code></pre></div><p>普段は tmux を使っているので、ステータスバーに表示してあります。</p>
+<pre tabindex="0"><code>set-option -g status-left 'tmux:[#P] #[fg=colour33](K) #(~/bin/kube-context)#[default] #[fg=colour1](G) #(~/bin/gcp-context 2&gt;&amp;1)#[default]'
 </code></pre>
 <figure >
   
@@ -150,8 +150,8 @@ gcalcli-1327
 <li><a href="https://github.com/boz/kail">https://github.com/boz/kail</a></li>
 <li><a href="https://github.com/dtan4/k8stail">https://github.com/dtan4/k8stail</a></li>
 </ul>
-<pre><code class="language-console" data-lang="console">$ stern wiki
-</code></pre><p>こんな感じに、ゆるく指定することができるので wiki に関する Pod のログをまとめてみることができます。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>stern wiki
+</code></pre></div><p>こんな感じに、ゆるく指定することができるので wiki に関する Pod のログをまとめてみることができます。</p>
 
 <figure >
   
@@ -170,11 +170,11 @@ gcalcli-1327
 <p><code>kubectl exec -it xxx-service-dev-v185-qjkh6 bash</code> とか長くて打てません。
 <code>kubectl get pods</code> して Pod 名をコピペすることになると思いますが、頻繁にやっているとシンドイです。
 こんなときは、Global alias を使うと便利です (zsh ユーザに限られます)。</p>
-<pre><code class="language-console" data-lang="console">$ kubectl exec -it P bash
-</code></pre><p>キャピタルの <code>P</code> は <code>kubectl get pods | fzf</code> に展開して実行されるので、インタラクティブに Pod を選んで exec に渡すことができます。</p>
-<pre><code class="language-console" data-lang="console">$ kubectl get P
-$ kubectl logs -f P
-</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>kubectl <span class="nb">exec</span> -it P bash
+</code></pre></div><p>キャピタルの <code>P</code> は <code>kubectl get pods | fzf</code> に展開して実行されるので、インタラクティブに Pod を選んで exec に渡すことができます。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>kubectl get P
+<span class="gp">$ </span>kubectl logs -f P
+</code></pre></div>
 <figure >
   
     <img
@@ -266,10 +266,10 @@ $ kubectl logs -f P
 <hr>
 <ol>
 <li id="fn:1" role="doc-endnote">
-<p>Prod クラスタに Dev クラスタ用の manifest file を撒いてしまうとか <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>Prod クラスタに Dev クラスタ用の manifest file を撒いてしまうとか&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2" role="doc-endnote">
-<p>現時点でも置き換えつつあるところも増えていると思います <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>現時点でも置き換えつつあるところも増えていると思います&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </section>

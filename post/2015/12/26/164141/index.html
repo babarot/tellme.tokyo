@@ -71,9 +71,9 @@
       <!-- raw HTML omitted -->
 <!-- raw HTML omitted -->
 <p>ほほう。Go による非同期処理でじゃがじゃが git gc ですか、シェルスクリプトでも非同期でやってみよう。</p>
-<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh"><span class="cp">#!/bin/bash
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="cp">#!/bin/bash
 </span><span class="cp"></span>
-find <span class="si">${</span><span class="nv">GOPATH</span><span class="p">%%</span><span class="p">:</span><span class="p">*</span><span class="si">}</span>/src/github.com <span class="se">\
+find <span class="si">${</span><span class="nv">GOPATH</span><span class="p">%%:*</span><span class="si">}</span>/src/github.com <span class="se">\
 </span><span class="se"></span>    -follow <span class="se">\
 </span><span class="se"></span>    -maxdepth <span class="m">2</span> <span class="se">\
 </span><span class="se"></span>    -mindepth <span class="m">2</span> <span class="se">\

@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Tue, 04 Feb 2020 00:32:10 +0900</lastBuildDate>
-    
-	<atom:link href="https://tellme.tokyo/tags/release/feed.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 04 Feb 2020 00:32:10 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/release/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go で書いた CLI ツールのリリースは GoReleaser と GitHub Actions で個人的には決まり</title>
       <link>https://tellme.tokyo/post/2020/02/04/release-go-cli-tool/</link>
@@ -24,8 +20,8 @@
 それよりももっと楽になったので紹介する。
 基本的にこのページで紹介する方法では 2 つの YAML をリポジトリに置くだけで終わる。 ローカルに何かをインストールする必要もない。 2 つの YAML を書くだけ (コピペするだけ) でリリースの準備が整う。
 まずはじめに .github/workflows/release.yml を置く。 編集不要でコピペする。
-name:releaseon:push:tags:- &amp;#34;v[0-9]+.[0-9]+.[0-9]+&amp;#34;jobs:goreleaser:runs-on:ubuntu-lateststeps:- name:Checkoutuses:actions/checkout@v1with:fetch-depth:1- name:SetupGouses:actions/setup-go@v1with:go-version:1.13- name:RunGoReleaseruses:goreleaser/goreleaser-action@v1with:version:latestargs:release--rm-distenv:GITHUB_TOKEN:${{secrets.GITHUB_TOKEN}}つぎに .goreleaser.yml を置く。このファイルはツール名の部分だけリポジトリに沿うように変更する (git-bump のところ)。
-project_name:git-bumpenv:- GO111MODULE=onbefore:hooks:- gomodtidybuilds:- main:.binary:git-bumpldflags:- -s-w- -Xmain.Version={{.Version}}- -Xmain.Revision={{.ShortCommit}}env:- CGO_ENABLED=0archives:- name_template:&amp;#39;{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .</description>
+name:releaseon:push:tags:- &amp;#34;v[0-9]+.[0-9]+.[0-9]+&amp;#34;jobs:goreleaser:runs-on:ubuntu-lateststeps:- name:Checkoutuses:actions/checkout@v1with:fetch-depth:1- name:Setup Gouses:actions/setup-go@v1with:go-version:1.13- name:Run GoReleaseruses:goreleaser/goreleaser-action@v1with:version:latestargs:release --rm-distenv:GITHUB_TOKEN:${{ secrets.GITHUB_TOKEN }}つぎに .goreleaser.yml を置く。このファイルはツール名の部分だけリポジトリに沿うように変更する (git-bump のところ)。
+project_name:git-bumpenv:- GO111MODULE=onbefore:hooks:- go mod tidybuilds:- main:.binary:git-bumpldflags:- -s -w- -X main.Version={{.Version}}- -X main.</description>
     </item>
     
   </channel>

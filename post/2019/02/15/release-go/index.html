@@ -77,7 +77,7 @@
 <p><a href="https://github.com/b4b4r07/release-go">b4b4r07/release-go</a></p>
 <p>使い方は簡単で raw のスクリプトを curl などで取ってきて bash にわたすようにする。</p>
 <p>実際は Makefile なんかに書いておくとより便利になる。</p>
-<div class="highlight"><pre class="chroma"><code class="language-make" data-lang="make"><span class="nf">.PHONY</span><span class="o">:</span> <span class="n">release</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-make" data-lang="make"><span class="nf">.PHONY</span><span class="o">:</span> <span class="n">release</span>
 <span class="nf">release</span><span class="o">:</span>
 	@bash &lt;<span class="o">(</span>wget -o /dev/null -qO - https://git.io/release-go<span class="o">)</span>
 </code></pre></div><p>これを実行すると、</p>

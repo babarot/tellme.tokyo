@@ -134,17 +134,17 @@
 <p>という感じで動作する。</p>
 <p>新しい Gist を追加するときは new からやればそのときにファイルキャッシュも更新するようになっているので、edit するときにも追加したファイルを選択することができる。
 ウェブから Gist を追加したときはファイルキャッシュを更新する必要がある (ただの JSON なので消すだけで次回の実行のときに再取得する)<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。</p>
-<pre><code class="language-console" data-lang="console">$ tree ~/.gist
-/Users/b4b4r07/.gist
-├── b4b4r07
-│  ├── 8cdc244f074d024b0ac0415ebc578af9
-│  ├── 05dd70cb491a4fe18de6627c8d966ac5
-│  ├── 197373082ad1fed866100e6d376dcbdc
-│  ├── ...
-│  ├── ...
-│  └── f26dd264f094e0ca834ce9feadc0c3f1
-└── cache.json
-</code></pre><p>かなり直感的に動くのでもう自分用途ではこれで良いといった感じになった。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>tree ~/.gist
+<span class="go">/Users/b4b4r07/.gist
+</span><span class="go">├── b4b4r07
+</span><span class="go">│  ├── 8cdc244f074d024b0ac0415ebc578af9
+</span><span class="go">│  ├── 05dd70cb491a4fe18de6627c8d966ac5
+</span><span class="go">│  ├── 197373082ad1fed866100e6d376dcbdc
+</span><span class="go">│  ├── ...
+</span><span class="go">│  ├── ...
+</span><span class="go">│  └── f26dd264f094e0ca834ce9feadc0c3f1
+</span><span class="go">└── cache.json
+</span></code></pre></div><p>かなり直感的に動くのでもう自分用途ではこれで良いといった感じになった。</p>
 <hr>
 <p>実装的には、Page と File という概念を持っていて、</p>
 <ul>
@@ -157,10 +157,10 @@
 <hr>
 <ol>
 <li id="fn:1" role="doc-endnote">
-<p>ツール自体は結構前に作っていて <a href="https://qiita.com/b4b4r07/items/0032a4508c1868aad491">Qiita</a> にも書いたことがある。今回は <a href="https://github.com/manifoldco/promptui">promptui</a> と <a href="https://github.com/spf13/cobra">cobra</a> を使ってコードベースを一新したので記事も書き直した <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>ツール自体は結構前に作っていて <a href="https://qiita.com/b4b4r07/items/0032a4508c1868aad491">Qiita</a> にも書いたことがある。今回は <a href="https://github.com/manifoldco/promptui">promptui</a> と <a href="https://github.com/spf13/cobra">cobra</a> を使ってコードベースを一新したので記事も書き直した&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2" role="doc-endnote">
-<p>例えば Gist が 1,000 件以上ある場合、Paging している関係で 1 リクエスト 100 件取得したとしても結構待たされる。ので場合によっては全件取らない実装も入れてもいいなと思った <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>例えば Gist が 1,000 件以上ある場合、Paging している関係で 1 リクエスト 100 件取得したとしても結構待たされる。ので場合によっては全件取らない実装も入れてもいいなと思った&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </section>

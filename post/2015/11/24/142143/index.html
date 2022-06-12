@@ -88,7 +88,7 @@
 <p>まだまだアルファ版でトータルの完成度でいうと antigen には及ばないのでこれからです。
 年内のリリース（あわよくば Advent Calender でリリースしたい）を目指して開発中です。</p>
 <p>設定は以下のような感じで書けるようにしています。</p>
-<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh"><span class="nb">source</span> ~/.zplug/zplug
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="nb">source</span> ~/.zplug/zplug
 
 <span class="c1"># Make sure you use double quotes</span>
 zplug <span class="s2">&#34;zsh-users/zsh-syntax-highlighting&#34;</span>
@@ -118,7 +118,7 @@ zplug <span class="s2">&#34;peco/peco&#34;</span>, <span class="se">\
 zplug <span class="s2">&#34;b4b4r07/enhancd&#34;</span>, at:v1
 
 <span class="c1"># true or false</span>
-zplug <span class="s2">&#34;hchbaw/opp.zsh&#34;</span>, <span class="k">if</span>:<span class="s2">&#34;</span><span class="s2">[ </span><span class="si">${</span><span class="nv">ZSH_VERSION</span><span class="p">%%.*</span><span class="si">}</span><span class="s2"> -lt 5 ]</span><span class="s2">&#34;</span>
+zplug <span class="s2">&#34;hchbaw/opp.zsh&#34;</span>, <span class="k">if</span>:<span class="s2">&#34;[ </span><span class="si">${</span><span class="nv">ZSH_VERSION</span><span class="p">%%.*</span><span class="si">}</span><span class="s2"> -lt 5 ]&#34;</span>
 
 <span class="c1"># Group dependencies, emoji-cli depends on jq</span>
 zplug <span class="s2">&#34;stedolan/jq&#34;</span>, <span class="se">\

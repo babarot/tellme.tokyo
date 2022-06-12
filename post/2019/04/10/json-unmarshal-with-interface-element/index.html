@@ -69,54 +69,54 @@
 <p>ただ、このケースで上げているのは interface がどの struct で評価されればいいかわかっているケースだった。
 例えば、これをキーに持つ JSON だった場合は struct A で、このキーがなかったら struct B で、みたいなケースは自分で JSON の中を読みにいって判別して Unmarshal する他ない。</p>
 <p>具体例を示す。</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">State</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">Modules</span> <span class="p">[</span><span class="p">]</span><span class="nx">Module</span> <span class="s">`</span><span class="s">json:&#34;modules&#34;</span><span class="s">`</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">State</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">Modules</span> <span class="p">[]</span><span class="nx">Module</span> <span class="s">`json:&#34;modules&#34;`</span>
 <span class="p">}</span>
 
 <span class="kd">type</span> <span class="nx">Module</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">Name</span>      <span class="kt">string</span>     <span class="s">`</span><span class="s">json:&#34;name&#34;</span><span class="s">`</span>
-	<span class="nx">Resources</span> <span class="p">[</span><span class="p">]</span><span class="nx">Resource</span> <span class="s">`</span><span class="s">json:&#34;resources&#34;</span><span class="s">`</span>
+	<span class="nx">Name</span>      <span class="kt">string</span>     <span class="s">`json:&#34;name&#34;`</span>
+	<span class="nx">Resources</span> <span class="p">[]</span><span class="nx">Resource</span> <span class="s">`json:&#34;resources&#34;`</span>
 <span class="p">}</span>
 
 <span class="c1">// ちなみにメソッドを持っていない場合は
-</span><span class="c1"></span><span class="c1">// interface{} として Unmarshal されるのでエラーにならない
+</span><span class="c1">// interface{} として Unmarshal されるのでエラーにならない
 </span><span class="c1"></span><span class="kd">type</span> <span class="nx">Resource</span> <span class="kd">interface</span> <span class="p">{</span>
-	<span class="nf">Get</span><span class="p">(</span><span class="p">)</span>
+	<span class="nf">Get</span><span class="p">()</span>
 	<span class="c1">// ...
 </span><span class="c1"></span><span class="p">}</span>
 
 <span class="kd">type</span> <span class="nx">AWSModule</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">Name</span> <span class="kt">string</span> <span class="s">`</span><span class="s">json:&#34;name&#34;</span><span class="s">`</span>
+	<span class="nx">Name</span> <span class="kt">string</span> <span class="s">`json:&#34;name&#34;`</span>
 <span class="p">}</span>
 
-<span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="nx">AWSModule</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span><span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="nx">AWSModule</span><span class="p">)</span> <span class="nf">Get</span><span class="p">()</span> <span class="p">{}</span>
 
 <span class="kd">type</span> <span class="nx">GCPModule</span> <span class="kd">struct</span> <span class="p">{</span>
-	<span class="nx">Name</span>    <span class="kt">string</span> <span class="s">`</span><span class="s">json:&#34;name&#34;</span><span class="s">`</span>
-	<span class="nx">Project</span> <span class="kt">string</span> <span class="s">`</span><span class="s">json:&#34;project&#34;</span><span class="s">`</span>
+	<span class="nx">Name</span>    <span class="kt">string</span> <span class="s">`json:&#34;name&#34;`</span>
+	<span class="nx">Project</span> <span class="kt">string</span> <span class="s">`json:&#34;project&#34;`</span>
 <span class="p">}</span>
 
-<span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="nx">GCPModule</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span><span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="nx">GCPModule</span><span class="p">)</span> <span class="nf">Get</span><span class="p">()</span> <span class="p">{}</span>
 </code></pre></div><p>こういう状況だと上のブログにもある通り、</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">NewDecoder</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span><span class="p">.</span><span class="nf">Decode</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">state</span><span class="p">)</span>  <span class="c1">// state contains Module
-</span><span class="c1"></span><span class="c1">// json: cannot unmarshal object into Go struct field Module.resources of type main.Resource
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">NewDecoder</span><span class="p">(</span><span class="nx">file</span><span class="p">).</span><span class="nf">Decode</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">state</span><span class="p">)</span>  <span class="c1">// state contains Module
+</span><span class="c1">// json: cannot unmarshal object into Go struct field Module.resources of type main.Resource
 </span></code></pre></div><p>ここでエラーが返る。</p>
 <p>この場合 interface になっている Resource を要素に持つ struct である Module に対して UnmarshalJSON を実装する。</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">Module</span><span class="p">)</span> <span class="nf">UnmarshalJSON</span><span class="p">(</span><span class="nx">b</span> <span class="p">[</span><span class="p">]</span><span class="kt">byte</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
-	<span class="nx">m</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">json</span><span class="p">.</span><span class="nx">RawMessage</span><span class="p">{</span><span class="p">}</span>
-	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Unmarshal</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">m</span><span class="p">)</span><span class="p">;</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">Module</span><span class="p">)</span> <span class="nf">UnmarshalJSON</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="nx">m</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="nx">json</span><span class="p">.</span><span class="nx">RawMessage</span><span class="p">{}</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Unmarshal</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">m</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
 		<span class="k">return</span> <span class="nx">err</span>
 	<span class="p">}</span>
 	<span class="k">for</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">m</span> <span class="p">{</span>
 		<span class="k">switch</span> <span class="nx">k</span> <span class="p">{</span>
 		<span class="k">case</span> <span class="s">&#34;resources&#34;</span><span class="p">:</span>
-			<span class="kd">var</span> <span class="nx">resources</span> <span class="p">[</span><span class="p">]</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{</span><span class="p">}</span>
-			<span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Unmarshal</span><span class="p">(</span><span class="p">[</span><span class="p">]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">resources</span><span class="p">)</span>
+			<span class="kd">var</span> <span class="nx">resources</span> <span class="p">[]</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">interface</span><span class="p">{}</span>
+			<span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Unmarshal</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">v</span><span class="p">),</span> <span class="o">&amp;</span><span class="nx">resources</span><span class="p">)</span>
 			<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
 				<span class="k">return</span> <span class="nx">err</span>
 			<span class="p">}</span>
 			<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">resource</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">resources</span> <span class="p">{</span>
-				<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">resource</span><span class="p">[</span><span class="s">&#34;project&#34;</span><span class="p">]</span><span class="p">;</span> <span class="nx">ok</span> <span class="p">{</span>
+				<span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">resource</span><span class="p">[</span><span class="s">&#34;project&#34;</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
 					<span class="kd">var</span> <span class="nx">m</span> <span class="nx">GCPModule</span>
 					<span class="nx">resource</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Marshal</span><span class="p">(</span><span class="nx">resource</span><span class="p">)</span>
 					<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>

@@ -6,10 +6,6 @@
     <description>Recent content in Categories on tellme.tokyo</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <copyright>BABAROT All Right Reserved.</copyright>
-    
-	<atom:link href="https://tellme.tokyo/categories/feed.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <copyright>BABAROT All Right Reserved.</copyright><atom:link href="https://tellme.tokyo/categories/feed.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

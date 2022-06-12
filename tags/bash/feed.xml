@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Sun, 25 Sep 2016 21:38:10 +0900</lastBuildDate>
-    
-	<atom:link href="https://tellme.tokyo/tags/bash/feed.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 25 Sep 2016 21:38:10 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/bash/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>最近、httpstat なるものが流行っているらしい</title>
       <link>https://tellme.tokyo/post/2016/09/25/213810/</link>
@@ -69,7 +65,7 @@ ssh-keygen で作成された 公開鍵.pub の中身をコピーしてブラウ
 $ # (antigen bundle b4b4r07/ssh-keyreg) $ ssh-keygen $ ssh-keyreg はやい！！！
 
  b4b4r07/ssh-keyreg - GitHub  上では、antigen でインストールすると書いていますが、このプラグインは bash でも動きます（補完は zsh のみです。ごめんなさい）。
-インストール $ # for zsh $ antigen bundle b4b4r07/ssh-keyreg $ # for bash $ sudo sh -c &amp;quot;curl https://raw.githubusercontent.com/b4b4r07/ssh-keyreg/master/bin/ssh-keyreg -o /usr/local/bin/ssh-keyreg &amp;amp;&amp;amp; chmod +x /usr/local/bin/ssh-keyreg&amp;quot; 使い方 $ ssh-keyreg usage: ssh-keyreg [-h|--help][[-d|--desc &amp;lt;desc&amp;gt;][-u|--user &amp;lt;user[:pass]&amp;gt;][-p|--path &amp;lt;path&amp;gt;]] [github|bitbucket] command line method or programmatically add ssh key to github.</description>
+インストール $ # for zsh $ antigen bundle b4b4r07/ssh-keyreg $ # for bash $ sudo sh -c &amp;#34;curl https://raw.githubusercontent.com/b4b4r07/ssh-keyreg/master/bin/ssh-keyreg -o /usr/local/bin/ssh-keyreg &amp;amp;&amp;amp; chmod +x /usr/local/bin/ssh-keyreg&amp;#34; 使い方 $ ssh-keyreg usage: ssh-keyreg [-h|--help][[-d|--desc &amp;lt;desc&amp;gt;][-u|--user &amp;lt;user[:pass]&amp;gt;][-p|--path &amp;lt;path&amp;gt;]] [github|bitbucket] command line method or programmatically add ssh key to github.</description>
     </item>
     
     <item>

@@ -95,7 +95,7 @@
 <h2 id="使い方とか">使い方とか</h2>
 <h3 id="インストールと設定">インストールと設定</h3>
 <p>インストールはひとまず <code>git clone</code> して <code>make install</code> です。詳しい利用は <a href="https://github.com/b4b4r07/twistd/blob/master/Makefile"><code>Makefile</code></a> を見てください。</p>
-<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">$ git clone https://github.com/b4b4r07/twistd<span class="p">;</span> <span class="nb">cd</span> twistd
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">$ git clone https://github.com/b4b4r07/twistd<span class="p">;</span> <span class="nb">cd</span> twistd
 $ <span class="nv">$EDITOR</span> config.toml    <span class="c1"># トークンとか書く</span>
 $ sudo make install      <span class="c1"># ビルドして /etc 以下に config 置く</span>
 </code></pre></div><p><code>twist -c config.toml</code> で起動できます (config を指定しないと <code>/etc/twistd.conf</code> を読みに行きます)。コマンド名は <code>twist</code> です。末尾に <code>d</code> つかないです。</p>

@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Mon, 30 Oct 2017 15:02:23 +0900</lastBuildDate>
-    
-	<atom:link href="https://tellme.tokyo/tags/gcp/feed.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 30 Oct 2017 15:02:23 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/gcp/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Cloud Identity-Aware Proxy を使って GCP backend を保護する</title>
       <link>https://tellme.tokyo/post/2017/10/30/cloud-iap/</link>

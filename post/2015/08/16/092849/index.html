@@ -105,7 +105,7 @@
 <h2 id="cdcd"><code>cd::cd</code></h2>
 <p>これはユーザが実質の <code>cd</code> として呼ぶ関数だ（実は <code>cd</code> はこれのエイリアスになっている）。</p>
 <p>きちんと経路が辿れ、すでに存在している場合は通常の <code>cd</code> として振る舞う。辿れない場合こそが…enhancd の本領発揮である。</p>
-<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">cd::cd<span class="o">(</span><span class="o">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">cd::cd<span class="o">()</span>
 <span class="o">{</span>
 <span class="c1"># ... 中略</span>
 
@@ -130,7 +130,7 @@
 </code></pre></div><p><code>cd::cd</code> では、それぞれに見合ったディレクトリのリストを作って、それを <code>cd::interface</code> に渡すだけである。</p>
 <h2 id="cdlist"><code>cd::list</code></h2>
 <p><code>cd::list</code> はディレクトリのリストを作成するだけの関数。</p>
-<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">cd::list<span class="o">(</span><span class="o">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">cd::list<span class="o">()</span>
 <span class="o">{</span>
     <span class="k">if</span> <span class="o">[</span> -p /dev/stdin <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
         <span class="c1"># 標準入力がある場合それを読み込む</span>
@@ -142,7 +142,7 @@
     <span class="c1"># その内容を反転（reverse）させ重複した行を取り除く（unique）</span>
 <span class="o">}</span>
 </code></pre></div><p><code>cd::cat_log</code> はログファイルを <code>cat</code> するだけ。ただ、うまく噛みあうような処置を加えている。</p>
-<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">cd::cat_log<span class="o">(</span><span class="o">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">cd::cat_log<span class="o">()</span>
 <span class="o">{</span>
     <span class="k">if</span> <span class="o">[</span> -s <span class="s2">&#34;</span><span class="nv">$ENHANCD_LOG</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
         cat <span class="s2">&#34;</span><span class="nv">$ENHANCD_LOG</span><span class="s2">&#34;</span>
@@ -151,29 +151,29 @@
     <span class="k">fi</span>
 <span class="o">}</span>
 </code></pre></div><p><code>reverse</code> して <code>unique</code> しているのはログの履歴の特性上のことである。例えば、このようなログがあるとする。</p>
-<pre><code class="language-console" data-lang="console">$ cd /home/lisa/work/dir
-$ cat $ENHANCD_LOG
-/home/lisa/work
-/home/lisa/work/dir
-/home/lisa
-/home/lisa/src/github.com/b4b4r07/enhancd
-/home/lisa/work/dir
-</code></pre><p><code>reverse</code> しないで <code>unique</code> するとこうなる（ちなみに <code>uniq</code> とは違ってソートせずに一意処理できるのが <code>unique</code> 関数である）。</p>
-<pre><code class="language-console" data-lang="console">$ cat $ENHANCD_LOG | unique
-/home/lisa/work
-/home/lisa/work/dir
-/home/lisa
-/home/lisa/src/github.com/b4b4r07/enhancd
-</code></pre><p>最新であるはずの <code>/home/lisa/work/dir</code> が上の方に重複している <code>/home/lisa/work/dir</code> に取り込まれてしまっている。これを防ぐために、一旦反転させてから行う。</p>
-<pre><code class="language-console" data-lang="console">$ cat $ENHANCD_LOG | reverse | unique
-/home/lisa/work/dir
-/home/lisa/src/github.com/b4b4r07/enhancd
-/home/lisa
-/home/lisa/work
-</code></pre><p>しかしこのままでは、ログファイルが逆さま（上が最新）になっているので、もう一度最後に <code>reverse</code> する（ただ、enhancd では逆さまのままインタラクティブフィルタリングツールに渡している。というのもそれは、そっち側でうまく扱えるようにするためである）。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span><span class="nb">cd</span> /home/lisa/work/dir
+<span class="gp">$ </span>cat <span class="nv">$ENHANCD_LOG</span>
+<span class="go">/home/lisa/work
+</span><span class="go">/home/lisa/work/dir
+</span><span class="go">/home/lisa
+</span><span class="go">/home/lisa/src/github.com/b4b4r07/enhancd
+</span><span class="go">/home/lisa/work/dir
+</span></code></pre></div><p><code>reverse</code> しないで <code>unique</code> するとこうなる（ちなみに <code>uniq</code> とは違ってソートせずに一意処理できるのが <code>unique</code> 関数である）。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>cat <span class="nv">$ENHANCD_LOG</span> <span class="p">|</span> unique
+<span class="go">/home/lisa/work
+</span><span class="go">/home/lisa/work/dir
+</span><span class="go">/home/lisa
+</span><span class="go">/home/lisa/src/github.com/b4b4r07/enhancd
+</span></code></pre></div><p>最新であるはずの <code>/home/lisa/work/dir</code> が上の方に重複している <code>/home/lisa/work/dir</code> に取り込まれてしまっている。これを防ぐために、一旦反転させてから行う。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>cat <span class="nv">$ENHANCD_LOG</span> <span class="p">|</span> reverse <span class="p">|</span> unique
+<span class="go">/home/lisa/work/dir
+</span><span class="go">/home/lisa/src/github.com/b4b4r07/enhancd
+</span><span class="go">/home/lisa
+</span><span class="go">/home/lisa/work
+</span></code></pre></div><p>しかしこのままでは、ログファイルが逆さま（上が最新）になっているので、もう一度最後に <code>reverse</code> する（ただ、enhancd では逆さまのままインタラクティブフィルタリングツールに渡している。というのもそれは、そっち側でうまく扱えるようにするためである）。</p>
 <h2 id="cdnarrow"><code>cd::narrow</code></h2>
 <p>これは絞り込みを行う関数である。<code>cd::interface</code> はインタラクティブ・フィルタリングツールを使っての絞り込みだがこれはその前段階である。<code>cd::cd</code> に与えられた引数で絞るだけである。存在しなかったら、ここでフィジーサーチにかける。これでもヒットしなかったら本当に存在しないか勘違いして覚えているか。</p>
-<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">cd::narrow<span class="o">(</span><span class="o">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">cd::narrow<span class="o">()</span>
 <span class="o">{</span>
     <span class="nv">stdin</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>cat &lt;<span class="p">&amp;</span>0<span class="k">)</span><span class="s2">&#34;</span>
     <span class="nv">m</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span><span class="nb">echo</span> <span class="s2">&#34;</span><span class="nv">$stdin</span><span class="s2">&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;/\/.?&#39;</span><span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span><span class="s1">&#39;[^\/]*$/{print $0}&#39;</span> 2&gt;/dev/null<span class="k">)</span><span class="s2">&#34;</span>
@@ -189,7 +189,7 @@ $ cat $ENHANCD_LOG
 <p>[https://raw.githubusercontent.com/b4b4r07/screenshots/master/enhancd/fuzzy.gif:image=https://raw.githubusercontent.com/b4b4r07/screenshots/master/enhancd/fuzzy.gif]</p>
 <h2 id="cdinterface"><code>cd::interface</code></h2>
 <p>ここでようやく <code>cd::interface</code> である。いわゆる enhancd cd のメイン処理をやっている関数で、引数としては改行で区切られたディレクトリのリストを期待する。それに対して、インタラクティブフィルタリングツール（peco や percol）によってフィルタするからだ。引数にあるリストがこの時点ですでに 1 つのとき、フィルタせずにそのまま移動する。2 つ以上のときフィルタを起動。</p>
-<div class="highlight"><pre class="chroma"><code class="language-sh" data-lang="sh">cd::interface<span class="o">(</span><span class="o">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">cd::interface<span class="o">()</span>
 <span class="o">{</span>
     <span class="nb">local</span> list
     <span class="nv">list</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span>
@@ -208,18 +208,18 @@ $ cat $ENHANCD_LOG
     <span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$wc</span><span class="s2">&#34;</span> in
         <span class="m">0</span> <span class="o">)</span>
             <span class="c1"># Unbelievable branch</span>
-            die <span class="s2">&#34;</span><span class="nv">$LINENO</span><span class="s2">: something is wrong</span><span class="s2">&#34;</span>
+            die <span class="s2">&#34;</span><span class="nv">$LINENO</span><span class="s2">: something is wrong&#34;</span>
             <span class="k">return</span> <span class="m">1</span>
-            <span class="p">;</span><span class="p">;</span>
+            <span class="p">;;</span>
         <span class="m">1</span> <span class="o">)</span>
             <span class="c1"># 1 件ならフィルタは起動しない</span>
             <span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;</span><span class="nv">$list</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
                 <span class="nb">builtin</span> <span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$list</span><span class="s2">&#34;</span>
             <span class="k">else</span>
-                die <span class="s2">&#34;</span><span class="nv">$list</span><span class="s2">: no such file or directory</span><span class="s2">&#34;</span>
+                die <span class="s2">&#34;</span><span class="nv">$list</span><span class="s2">: no such file or directory&#34;</span>
                 <span class="k">return</span> <span class="m">1</span>
             <span class="k">fi</span>
-            <span class="p">;</span><span class="p">;</span>
+            <span class="p">;;</span>
         * <span class="o">)</span>
             <span class="c1"># それ以外はフィルタで絞る</span>
             <span class="nb">local</span> t
@@ -228,11 +228,11 @@ $ cat $ENHANCD_LOG
                 <span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;</span><span class="nv">$t</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
                     <span class="nb">builtin</span> <span class="nb">cd</span> <span class="s2">&#34;</span><span class="nv">$t</span><span class="s2">&#34;</span>
                 <span class="k">else</span>
-                    die <span class="s2">&#34;</span><span class="nv">$t</span><span class="s2">: no such file or directory</span><span class="s2">&#34;</span>
+                    die <span class="s2">&#34;</span><span class="nv">$t</span><span class="s2">: no such file or directory&#34;</span>
                     <span class="k">return</span> <span class="m">1</span>
                 <span class="k">fi</span>
             <span class="k">fi</span>
-            <span class="p">;</span><span class="p">;</span>
+            <span class="p">;;</span>
     <span class="k">esac</span>
 <span class="o">}</span>
 </code></pre></div><p>これによって最初の構想が実現できた。</p>

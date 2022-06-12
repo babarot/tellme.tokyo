@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Wed, 29 Jan 2020 23:21:50 +0900</lastBuildDate>
-    
-	<atom:link href="https://tellme.tokyo/tags/blog/feed.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 29 Jan 2020 23:21:50 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/blog/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Cloudflare から GitHub Pages の HTTPS 機能に移行する</title>
       <link>https://tellme.tokyo/post/2020/01/29/migrate-https-gh-pages-from-cloudflare/</link>

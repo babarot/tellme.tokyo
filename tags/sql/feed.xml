@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Tue, 14 Feb 2017 21:42:31 +0900</lastBuildDate>
-    
-	<atom:link href="https://tellme.tokyo/tags/sql/feed.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 14 Feb 2017 21:42:31 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/sql/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go で zsh history を SQL 的に活用する</title>
       <link>https://tellme.tokyo/post/2017/02/14/214231/</link>

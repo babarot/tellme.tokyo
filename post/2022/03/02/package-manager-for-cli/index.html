@@ -66,38 +66,38 @@
     <div class="content">
       <p>最近、<a href="https://babarot.me/afx/">afx</a> という CLI 向けのパッケージマネージャを公開した。ここで &ldquo;CLI のパッケージ&rdquo; とは例えば jq のようなコマンドラインツールや <a href="https://github.com/zsh-users/zsh-history-substring-search">zsh-history-substring-search</a> のようなヒストリ補完をするシェルのプラグインを指す (bash/zsh/fish)。afx ではこれらを 1 つのツールで管理すること、コードで表現して管理することを目的としている。コードには YAML を使用する。</p>
 <p>また afx では、管理するパッケージとそのツールの設定を一緒に保つことができる。例えば jq 自体の管理とその jq で使う環境変数やエイリアスの設定などを同じ YAML ファイルに記述できる。これによって、各種ツールの設定が bashrc/zshrc などに散乱することや、もう使っていないなどの理由でツール自体はインストールされていないのに設定だけが残っている、みたいなことを防ぐことができる。</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># ~/.config/afx/commands.yaml</span><span class="w">
-</span><span class="w"></span><span class="k">github</span><span class="p">:</span><span class="w">
-</span><span class="w"></span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>stedolan/jq<span class="w">
-</span><span class="w">  </span><span class="k">description</span><span class="p">:</span><span class="w"> </span>Command-line<span class="w"> </span>JSON<span class="w"> </span>processor<span class="w">
-</span><span class="w">  </span><span class="k">owner</span><span class="p">:</span><span class="w"> </span>stedolan<span class="w">
-</span><span class="w">  </span><span class="k">repo</span><span class="p">:</span><span class="w"> </span>jq<span class="w">
-</span><span class="w">  </span><span class="k">release</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>jq<span class="w">
-</span><span class="w">    </span><span class="k">tag</span><span class="p">:</span><span class="w"> </span>jq<span class="m">-1.6</span><span class="w">
-</span><span class="w">  </span><span class="k">command</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span><span class="k">link</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span>- <span class="k">from</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;*jq*&#39;</span><span class="w">
-</span><span class="w">      </span><span class="k">to</span><span class="p">:</span><span class="w"> </span>jq<span class="w">
-</span><span class="w">    </span><span class="k">alias</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">      </span><span class="k">jq</span><span class="p">:</span><span class="w"> </span>jq<span class="w"> </span>-C<span class="w">
-</span><span class="w">    </span><span class="k">snippet</span><span class="p">:</span><span class="w"> </span><span class="sd">|
-</span><span class="sd">     </span><span class="sd"> </span><span class="sd"># you can write shell script here</span><span class="w">
-</span><span class="w">      </span><span class="c"># -&gt; define global alias (zsh feature)</span><span class="w">
-</span><span class="w">      </span>if<span class="w"> </span><span class="p">[</span><span class="p">[</span><span class="w"> </span>$SHELL<span class="w"> </span>==<span class="w"> </span><span class="cp">*zsh*</span><span class="w"> </span><span class="p">]</span><span class="p">]</span>;<span class="w"> </span>then<span class="w">
-</span><span class="w">        </span>alias<span class="w"> </span>-g<span class="w"> </span>J=<span class="s1">&#39;| jq -C . | less -F&#39;</span><span class="w">
-</span><span class="w">      </span>fi<span class="w">
-</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># ~/.config/afx/plugins.yaml</span><span class="w">
-</span><span class="w"></span><span class="k">github</span><span class="p">:</span><span class="w">
-</span><span class="w"></span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>b4b4r07/enhancd<span class="w">
-</span><span class="w">  </span><span class="k">description</span><span class="p">:</span><span class="w"> </span>A<span class="w"> </span>next-generation<span class="w"> </span>cd<span class="w"> </span>command<span class="w"> </span>with<span class="w"> </span>your<span class="w"> </span>interactive<span class="w"> </span>filter<span class="w">
-</span><span class="w">  </span><span class="k">owner</span><span class="p">:</span><span class="w"> </span>b4b4r07<span class="w">
-</span><span class="w">  </span><span class="k">repo</span><span class="p">:</span><span class="w"> </span>enhancd<span class="w">
-</span><span class="w">  </span><span class="k">plugin</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span><span class="k">env</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">      </span><span class="k">ENHANCD_FILTER</span><span class="p">:</span><span class="w"> </span>fzf<span class="w"> </span>--height<span class="w"> </span><span class="m">25</span>%<span class="w"> </span>--reverse<span class="w"> </span>--ansi<span class="p">:</span>fzy<span class="p">:</span>peco<span class="w">
-</span><span class="w">    </span><span class="k">sources</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span>- init.sh<span class="w">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># ~/.config/afx/commands.yaml</span><span class="w">
+</span><span class="w"></span><span class="nt">github</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">stedolan/jq</span><span class="w">
+</span><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l">Command-line JSON processor</span><span class="w">
+</span><span class="w">  </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l">stedolan</span><span class="w">
+</span><span class="w">  </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l">jq</span><span class="w">
+</span><span class="w">  </span><span class="nt">release</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">jq</span><span class="w">
+</span><span class="w">    </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l">jq-1.6</span><span class="w">
+</span><span class="w">  </span><span class="nt">command</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">link</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">from</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;*jq*&#39;</span><span class="w">
+</span><span class="w">      </span><span class="nt">to</span><span class="p">:</span><span class="w"> </span><span class="l">jq</span><span class="w">
+</span><span class="w">    </span><span class="nt">alias</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">jq</span><span class="p">:</span><span class="w"> </span><span class="l">jq -C</span><span class="w">
+</span><span class="w">    </span><span class="nt">snippet</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">      # you can write shell script here
+</span><span class="sd">      # -&gt; define global alias (zsh feature)
+</span><span class="sd">      if [[ $SHELL == *zsh* ]]; then
+</span><span class="sd">        alias -g J=&#39;| jq -C . | less -F&#39;
+</span><span class="sd">      fi</span><span class="w">      
+</span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># ~/.config/afx/plugins.yaml</span><span class="w">
+</span><span class="w"></span><span class="nt">github</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">b4b4r07/enhancd</span><span class="w">
+</span><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l">A next-generation cd command with your interactive filter</span><span class="w">
+</span><span class="w">  </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l">b4b4r07</span><span class="w">
+</span><span class="w">  </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l">enhancd</span><span class="w">
+</span><span class="w">  </span><span class="nt">plugin</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">env</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">ENHANCD_FILTER</span><span class="p">:</span><span class="w"> </span><span class="l">fzf --height 25% --reverse --ansi:fzy:peco</span><span class="w">
+</span><span class="w">    </span><span class="nt">sources</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">init.sh</span><span class="w">
 </span></code></pre></div><h2 id="背景">背景</h2>
 <p>(tl;dr)</p>
 <ul>
@@ -107,12 +107,12 @@
 </ul>
 <p>&hellip;</p>
 <p>昔、Zsh 向けのプラグインマネージャである <a href="https://github.com/zplug/zplug">zplug</a> を作った。学生のときに書いたので今から結構前になるけれど、その当時は Zsh のプラグインマネージャといえばたいした機能を持ったやつはなくて、自分のニーズにあったものを作ろうと書き始めた。zplug は Zsh のプラグインはもちろん、GitHub Release にアップロードされている各種バイナリ (jq など) も一緒にインストール・管理することができた。それぞれのインストールするコマンドやプラグインごとに設定を保持して zshrc に書き記すことができた。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># .zshrc</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># .zshrc</span>
 zplug <span class="s2">&#34;stedolan/jq&#34;</span>, <span class="se">\
 </span><span class="se"></span>  as:command, <span class="se">\
 </span><span class="se"></span>  from:gh-r, <span class="se">\
 </span><span class="se"></span>  rename-to:jq
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># .zshrc</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># .zshrc</span>
 zplug <span class="s2">&#34;b4b4r07/enhancd&#34;</span>, as:plugin, use:init.sh
 <span class="k">if</span> zplug check <span class="s2">&#34;b4b4r07/enhancd&#34;</span><span class="p">;</span> <span class="k">then</span>
   <span class="nb">export</span> <span class="nv">ENHANCD_FILTER</span><span class="o">=</span><span class="s2">&#34;fzf --height 25% --reverse --ansi&#34;</span>
@@ -128,11 +128,11 @@ zplug <span class="s2">&#34;b4b4r07/enhancd&#34;</span>, as:plugin, use:init.sh
 <p>詳しい使い方はドキュメントにある。</p>
 <p><a href="https://babarot.me/afx/getting-started/">Getting Started - AFX</a></p>
 <p>インストールしたいパッケージの YAML を書いて <code>afx install</code> を実行する。設定などは <code>afx init</code> を実行するとシェルスクリプトとして吐き出されるので、各種 rc ファイルで読み込むようにする。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># bashrc などに書く</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># bashrc などに書く</span>
 <span class="nb">source</span> &lt;<span class="o">(</span>afx init<span class="o">)</span>
 </code></pre></div><p><code>afx init</code> の実行自体は設定した項目が afx の処理を通してただ単に標準出力にアウトプットされるだけなので気軽に実行しても問題ない。<code>source</code> などのコマンドを通してシェルに反映してはじめて設定が有効化される。</p>
 <p>各種パッケージのインストールは YAML に設定を書いて <code>afx install</code> を実行したら、アンインストールは YAML から消して <code>afx uninstall</code> を実行したら、アップデートはバージョンの部分を書き換えて <code>afx update</code> を実行したら完了する。afx は常に「YAML ファイルに書かれていることと一致している状態」を目指すようになっている。</p>
-<div class="highlight"><pre class="chroma"><code class="language-diff" data-lang="diff">  github:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff">  github:
   - name: ogham/exa
     description: A modern version of &#39;ls&#39;.
     owner: ogham
@@ -185,13 +185,13 @@ zplug <span class="s2">&#34;b4b4r07/enhancd&#34;</span>, as:plugin, use:init.sh
 <hr>
 <ol>
 <li id="fn:1" role="doc-endnote">
-<p>例えば <code>${^path[@]}/zplug-*(N-.:t:gs:zplug-:)</code> や <code>${(qqq)name}${tags[@]:+&quot;, ${(j:, :)${(q)tags[@]}}&quot;}</code> など <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>例えば <code>${^path[@]}/zplug-*(N-.:t:gs:zplug-:)</code> や <code>${(qqq)name}${tags[@]:+&quot;, ${(j:, :)${(q)tags[@]}}&quot;}</code> など&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2" role="doc-endnote">
-<p>URL を for-loop して git clone するやつ <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>URL を for-loop して git clone するやつ&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:3" role="doc-endnote">
-<p>GitHub Releases に上がっているパッケージの命名規則 (OS名やアーキテクチャなど) に統一がなく、その判定処理の実装が困難だったため簡単なものを書いた後はずっと後回しにしていた。そのため、新環境を作ったときにまっさらな設定もない vim で動かない部分をコメントアウトしてビルドして、それを使って実行して vim をインストールする (vim の設定も有効になる) というような状態だった <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p>GitHub Releases に上がっているパッケージの命名規則 (OS名やアーキテクチャなど) に統一がなく、その判定処理の実装が困難だったため簡単なものを書いた後はずっと後回しにしていた。そのため、新環境を作ったときにまっさらな設定もない vim で動かない部分をコメントアウトしてビルドして、それを使って実行して vim をインストールする (vim の設定も有効になる) というような状態だった&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </section>

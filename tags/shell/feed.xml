@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Tue, 27 Aug 2019 22:14:34 +0900</lastBuildDate>
-    
-	<atom:link href="https://tellme.tokyo/tags/shell/feed.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 27 Aug 2019 22:14:34 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/shell/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Software Design 2019年9月号に寄稿しました</title>
       <link>https://tellme.tokyo/post/2019/08/27/sd1909/</link>
@@ -42,8 +38,8 @@ Software Design 2019年9月号｜技術評論社 https://t.co/kP4N2SdxEG
  になります。
 学生時代はよくシェルスクリプトを書いており、そのアウトプットのほとんどを Qiita やブログに載せていたため、今回このような形1で紙本になるのはとても嬉しかったです。
 また機会があれば書かせていただきたいなと思います2。
-   その記事をきっかけにオファーをいただきました &amp;#x21a9;&amp;#xfe0e;
- 需要があるかはわかりませんが、けじめをつけるためにも zplug の解説はどこかでしたいな、とは思っています (しかし掲載先は 1 人アドベントカレンダーのほうがいいかも知れませんね) &amp;#x21a9;&amp;#xfe0e;
+   その記事をきっかけにオファーをいただきました&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+ 需要があるかはわかりませんが、けじめをつけるためにも zplug の解説はどこかでしたいな、とは思っています (しかし掲載先は 1 人アドベントカレンダーのほうがいいかも知れませんね)&amp;#160;&amp;#x21a9;&amp;#xfe0e;
    </description>
     </item>
     

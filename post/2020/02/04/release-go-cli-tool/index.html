@@ -89,59 +89,59 @@
 2 つの YAML を書くだけ (コピペするだけ) でリリースの準備が整う。</p>
 <p>まずはじめに <code>.github/workflows/release.yml</code> を置く。
 編集不要でコピペする。</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">name</span><span class="p">:</span><span class="w"> </span>release<span class="w">
-</span><span class="w"></span><span class="k">on</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span><span class="k">push</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span><span class="k">tags</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span>- <span class="s2">&#34;v[0-9]+.[0-9]+.[0-9]+&#34;</span><span class="w">
-</span><span class="w"></span><span class="k">jobs</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span><span class="k">goreleaser</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span><span class="k">runs-on</span><span class="p">:</span><span class="w"> </span>ubuntu-latest<span class="w">
-</span><span class="w">    </span><span class="k">steps</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">      </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Checkout<span class="w">
-</span><span class="w">        </span><span class="k">uses</span><span class="p">:</span><span class="w"> </span>actions/checkout@v1<span class="w">
-</span><span class="w">        </span><span class="k">with</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">          </span><span class="k">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
-</span><span class="w">      </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Setup<span class="w"> </span>Go<span class="w">
-</span><span class="w">        </span><span class="k">uses</span><span class="p">:</span><span class="w"> </span>actions/setup-go@v1<span class="w">
-</span><span class="w">        </span><span class="k">with</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">          </span><span class="k">go-version</span><span class="p">:</span><span class="w"> </span><span class="m">1.13</span><span class="w">
-</span><span class="w">      </span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>Run<span class="w"> </span>GoReleaser<span class="w">
-</span><span class="w">        </span><span class="k">uses</span><span class="p">:</span><span class="w"> </span>goreleaser/goreleaser-action@v1<span class="w">
-</span><span class="w">        </span><span class="k">with</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">          </span><span class="k">version</span><span class="p">:</span><span class="w"> </span>latest<span class="w">
-</span><span class="w">          </span><span class="k">args</span><span class="p">:</span><span class="w"> </span>release<span class="w"> </span>--rm-dist<span class="w">
-</span><span class="w">        </span><span class="k">env</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">          </span><span class="k">GITHUB_TOKEN</span><span class="p">:</span><span class="w"> </span>${{<span class="w"> </span>secrets.GITHUB_TOKEN<span class="w"> </span>}}<span class="w">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">release</span><span class="w">
+</span><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">tags</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="s2">&#34;v[0-9]+.[0-9]+.[0-9]+&#34;</span><span class="w">
+</span><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">goreleaser</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
+</span><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Checkout</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v1</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="m">1</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Setup Go</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/setup-go@v1</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">go-version</span><span class="p">:</span><span class="w"> </span><span class="m">1.13</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Run GoReleaser</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">goreleaser/goreleaser-action@v1</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l">latest</span><span class="w">
+</span><span class="w">          </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="l">release --rm-dist</span><span class="w">
+</span><span class="w">        </span><span class="nt">env</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">GITHUB_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.GITHUB_TOKEN }}</span><span class="w">
 </span></code></pre></div><p>つぎに <code>.goreleaser.yml</code> を置く。このファイルはツール名の部分だけリポジトリに沿うように変更する (git-bump のところ)。</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">project_name</span><span class="p">:</span><span class="w"> </span>git-bump<span class="w">
-</span><span class="w"></span><span class="k">env</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span>- GO111MODULE=on<span class="w">
-</span><span class="w"></span><span class="k">before</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span><span class="k">hooks</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">    </span>- go<span class="w"> </span>mod<span class="w"> </span>tidy<span class="w">
-</span><span class="w"></span><span class="k">builds</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span>- <span class="k">main</span><span class="p">:</span><span class="w"> </span>.<span class="w">
-</span><span class="w">    </span><span class="k">binary</span><span class="p">:</span><span class="w"> </span>git-bump<span class="w">
-</span><span class="w">    </span><span class="k">ldflags</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">      </span>- -s<span class="w"> </span>-w<span class="w">
-</span><span class="w">      </span>- -X<span class="w"> </span>main.Version={{.Version}}<span class="w">
-</span><span class="w">      </span>- -X<span class="w"> </span>main.Revision={{.ShortCommit}}<span class="w">
-</span><span class="w">    </span><span class="k">env</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">      </span>- CGO_ENABLED=<span class="m">0</span><span class="w">
-</span><span class="w"></span><span class="k">archives</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span>- <span class="k">name_template</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}&#39;</span><span class="w">
-</span><span class="w">    </span><span class="k">replacements</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">      </span><span class="k">darwin</span><span class="p">:</span><span class="w"> </span>darwin<span class="w">
-</span><span class="w">      </span><span class="k">linux</span><span class="p">:</span><span class="w"> </span>linux<span class="w">
-</span><span class="w">      </span><span class="k">windows</span><span class="p">:</span><span class="w"> </span>windows<span class="w">
-</span><span class="w">      </span><span class="k">386</span><span class="p">:</span><span class="w"> </span>i386<span class="w">
-</span><span class="w">      </span><span class="k">amd64</span><span class="p">:</span><span class="w"> </span>x86_64<span class="w">
-</span><span class="w">    </span><span class="k">format_overrides</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">      </span>- <span class="k">goos</span><span class="p">:</span><span class="w"> </span>windows<span class="w">
-</span><span class="w">        </span><span class="k">format</span><span class="p">:</span><span class="w"> </span>zip<span class="w">
-</span><span class="w"></span><span class="k">release</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span><span class="k">prerelease</span><span class="p">:</span><span class="w"> </span>auto<span class="w">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">project_name</span><span class="p">:</span><span class="w"> </span><span class="l">git-bump</span><span class="w">
+</span><span class="w"></span><span class="nt">env</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="l">GO111MODULE=on</span><span class="w">
+</span><span class="w"></span><span class="nt">before</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">hooks</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">go mod tidy</span><span class="w">
+</span><span class="w"></span><span class="nt">builds</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">main</span><span class="p">:</span><span class="w"> </span><span class="l">.</span><span class="w">
+</span><span class="w">    </span><span class="nt">binary</span><span class="p">:</span><span class="w"> </span><span class="l">git-bump</span><span class="w">
+</span><span class="w">    </span><span class="nt">ldflags</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- -<span class="l">s -w</span><span class="w">
+</span><span class="w">      </span>- -<span class="l">X main.Version={{.Version}}</span><span class="w">
+</span><span class="w">      </span>- -<span class="l">X main.Revision={{.ShortCommit}}</span><span class="w">
+</span><span class="w">    </span><span class="nt">env</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">CGO_ENABLED=0</span><span class="w">
+</span><span class="w"></span><span class="nt">archives</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">name_template</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}&#39;</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacements</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">darwin</span><span class="p">:</span><span class="w"> </span><span class="l">darwin</span><span class="w">
+</span><span class="w">      </span><span class="nt">linux</span><span class="p">:</span><span class="w"> </span><span class="l">linux</span><span class="w">
+</span><span class="w">      </span><span class="nt">windows</span><span class="p">:</span><span class="w"> </span><span class="l">windows</span><span class="w">
+</span><span class="w">      </span><span class="nt">386</span><span class="p">:</span><span class="w"> </span><span class="l">i386</span><span class="w">
+</span><span class="w">      </span><span class="nt">amd64</span><span class="p">:</span><span class="w"> </span><span class="l">x86_64</span><span class="w">
+</span><span class="w">    </span><span class="nt">format_overrides</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">goos</span><span class="p">:</span><span class="w"> </span><span class="l">windows</span><span class="w">
+</span><span class="w">        </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l">zip</span><span class="w">
+</span><span class="w"></span><span class="nt">release</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">prerelease</span><span class="p">:</span><span class="w"> </span><span class="l">auto</span><span class="w">
 </span></code></pre></div><p>(もし細かいパラメータの意味や出力結果の調整をしたかったら<a href="https://goreleaser.com/">公式ページ</a>をみたらすぐできる)</p>
 <p>すると、GitHub Actions の release ワークフローが走って、</p>
 
@@ -162,20 +162,20 @@
 <p>ローカルに <a href="https://github.com/goreleaser/goreleaser">goreleaser</a> をインストールしたりする必要もないので楽になった。</p>
 <p>加えて、GoReleaser を使うと git tag の情報とか build commit をバイナリに埋め込むことがこれまでよりも簡単になる。</p>
 <p>Go のコード側で埋め込み用の Variables だけを定義する。</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// These variables are set in build step
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// These variables are set in build step
 </span><span class="c1"></span><span class="kd">var</span> <span class="p">(</span>
 	<span class="nx">Version</span>  <span class="p">=</span> <span class="s">&#34;unset&#34;</span>
 	<span class="nx">Revision</span> <span class="p">=</span> <span class="s">&#34;unset&#34;</span>
 <span class="p">)</span>
 </code></pre></div><p>main.go ではなく、cmd などの下や別ファイルに Version などを書いている場合は別途埋め込み先の指定を変える。</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">builds</span><span class="p">:</span><span class="w">
-</span><span class="w"></span><span class="w">  </span>- <span class="k">main</span><span class="p">:</span><span class="w"> </span>.<span class="w">
-</span><span class="w">    </span><span class="k">binary</span><span class="p">:</span><span class="w"> </span>gist<span class="w">
-</span><span class="w">    </span><span class="k">ldflags</span><span class="p">:</span><span class="w"> </span><span class="w">
-</span><span class="w">      </span>- -s<span class="w"> </span>-w<span class="w">
-</span><span class="w">      </span>- -X<span class="w"> </span>github.com/b4b4r07/gist/cmd.Version={{.Version}}<span class="w">
-</span><span class="w">      </span>- -X<span class="w"> </span>github.com/b4b4r07/gist/cmd.BuildSHA={{.ShortCommit}}<span class="w">
-</span><span class="w">      </span>- -X<span class="w"> </span>github.com/b4b4r07/gist/cmd.BuildTag={{.Tag}}<span class="w">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">builds</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">main</span><span class="p">:</span><span class="w"> </span><span class="l">.</span><span class="w">
+</span><span class="w">    </span><span class="nt">binary</span><span class="p">:</span><span class="w"> </span><span class="l">gist</span><span class="w">
+</span><span class="w">    </span><span class="nt">ldflags</span><span class="p">:</span><span class="w"> 
+</span><span class="w">      </span>- -<span class="l">s -w</span><span class="w">
+</span><span class="w">      </span>- -<span class="l">X github.com/b4b4r07/gist/cmd.Version={{.Version}}</span><span class="w">
+</span><span class="w">      </span>- -<span class="l">X github.com/b4b4r07/gist/cmd.BuildSHA={{.ShortCommit}}</span><span class="w">
+</span><span class="w">      </span>- -<span class="l">X github.com/b4b4r07/gist/cmd.BuildTag={{.Tag}}</span><span class="w">
 </span></code></pre></div><p>今までは Makefile で ldflags の設定などをすることが多かったけど、それも GoReleaser の設定ファイルに寄せることができる。
 これで Makefile を頑張って書く必要もなくなった。</p>
 <p>この仕組みのおかげで Go で CLI ツールを書くことがもっと楽しくなったし楽になったのでバイナリをちゃんと用意することが増えた。</p>

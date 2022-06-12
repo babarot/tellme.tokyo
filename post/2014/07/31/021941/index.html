@@ -69,7 +69,7 @@
 <img src="http://cl.ly/image/1t0W0V3W3E2O/autocdls.gif" alt="autocdls.gif"></p>
 <h1 id="インストール方法">インストール方法</h1>
 <p>NeoBundleの利用者は以下でいいです。</p>
-<pre><code>NeoBundle 'b4b4r07/autocdls.vim'
+<pre tabindex="0"><code>NeoBundle 'b4b4r07/autocdls.vim'
 </code></pre><p>とりあえず、パスの通ったディレクトリに配置すればいいです。</p>
 <h1 id="使い方">使い方</h1>
 <p><code>cd</code> するだけです。すると勝手に <code>ls</code> されファイル一覧を取得出来ます。<code>:cd</code> だけでなく、<code>:lcd</code> や <code>:chdir</code> などでもいいです。もちろん、その省略形も可です。また、<code>:Ls</code> とすると、カレントディレクトリのファイル一覧が取得できます。引数を省略すればカレントディレクトリですが、与えてやれば存在する引数先のディレクトリ内のファイルを取得します。ここらへんは、シェルの <code>ls</code>  と同じです。</p>
@@ -78,7 +78,7 @@
 <p>シェルの <code>ls</code> よりすこしリッチになっていて、自動でファイル数も取得します。この機能を切りたい場合は、<code>g:autocdls_show_filecounter = 0</code> とすればよいです（デフォルトでは1）。また、カレントディレクトリ情報（<code>:pwd</code>）も同時に欲しい場合は、<code>g:autocdls_show_pwd = 1</code> としてください。</p>
 <p><img src="http://cl.ly/image/1a0H1q1n0f39/Image%202014-09-24%20at%205.02.23%20%E5%8D%88%E5%BE%8C.png" alt="show_pwd"></p>
 <p>以下に設定例を載せておきます。</p>
-<pre><code class="language-vim:.vimrc" data-lang="vim:.vimrc">&quot; コマンドラインの高さを上げる
+<pre tabindex="0"><code class="language-vim:.vimrc" data-lang="vim:.vimrc">&quot; コマンドラインの高さを上げる
 let g:autocdls_set_cmdheight = 2
 &quot; Ls したときにファイル数をカウントする
 let g:autocdls_show_filecounter = 1

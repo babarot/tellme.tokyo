@@ -219,14 +219,14 @@
 <p>変わるかもしれません。</p>
 <h3 id="インストール">インストール</h3>
 <p>内部で Go 製の zhist というコマンドを使用します。ビルドが必要です。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ git clone https://github.com/b4b4r07/zsh-history <span class="o">&amp;&amp;</span> <span class="nb">cd</span> zsh-history
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ git clone https://github.com/b4b4r07/zsh-history <span class="o">&amp;&amp;</span> <span class="nb">cd</span> zsh-history
 $ make <span class="o">&amp;&amp;</span> sudo make install
 $ <span class="nb">source</span> init.zsh
 </code></pre></div><h3 id="使い方">使い方</h3>
 <p>デフォルトでは既存のキーバインドを上書きしないように、何も設定されていません。
 以下の環境変数で設定できるようになっているので適宜変更してください。</p>
-<div class="highlight"><pre class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># DB パス</span>
-<span class="nb">export</span> <span class="nv">ZSH_HISTORY_FILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.zsh_history.db</span><span class="s2">&#34;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-zsh" data-lang="zsh"><span class="c1"># DB パス</span>
+<span class="nb">export</span> <span class="nv">ZSH_HISTORY_FILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/.zsh_history.db&#34;</span>
 <span class="c1"># コマンドラインセレクタ (先頭から順番に使われる)</span>
 <span class="nb">export</span> <span class="nv">ZSH_HISTORY_FILTER</span><span class="o">=</span><span class="s2">&#34;fzy:fzf:peco:percol&#34;</span>
 
@@ -245,7 +245,7 @@ $ <span class="nb">source</span> init.zsh
 <span class="nb">export</span> <span class="nv">ZSH_HISTORY_KEYBIND_ARROW_DOWN</span><span class="o">=</span><span class="s2">&#34;^n&#34;</span>
 </code></pre></div><p>また、zsh-history では DB のバックアップをサポートしています (これが飛んだらおじゃんなので&hellip;)。
 一日一回コマンド実行時に、そのときの時点の DB ファイルを昨日付けのデータとして <code>$ZSH_HISTORY_BACKUP_DIR</code> に保存します。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ tree <span class="nv">$ZSH_HISTORY_BACKUP_DIR</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ tree <span class="nv">$ZSH_HISTORY_BACKUP_DIR</span>
 /Users/b4b4r07/.zsh/history/backup
 <span class="sb">`</span>-- <span class="m">2017</span>
     <span class="sb">`</span>-- <span class="m">02</span>
@@ -257,7 +257,7 @@ $ <span class="nb">source</span> init.zsh
 <h4 id="zhist-について">zhist について</h4>
 <p>Go 製の CLI ツールです。zsh-history で使われており、sqlite3 とのつなぎ込みを行います。
 挙動は toml によって制御できます。</p>
-<div class="highlight"><pre class="chroma"><code class="language-toml" data-lang="toml"><span class="c"># -s (スクリーンモード) で起動したときのプロンプト</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="c"># -s (スクリーンモード) で起動したときのプロンプト</span>
 <span class="nx">prompt</span> <span class="p">=</span> <span class="s2">&#34;sqlite3&gt; &#34;</span>
 <span class="c"># -s で起動したときに最初に実行される SQL</span>
 <span class="nx">init_query</span> <span class="p">=</span> <span class="s2">&#34;SELECT DISTINCT(command) FROM history WHERE command LIKE &#39;%%&#39; AND status = 0 ORDER BY id DESC&#34;</span>
@@ -275,8 +275,8 @@ $ <span class="nb">source</span> init.zsh
 <p>ただし、これから変更される可能性があります。</p>
 <h3 id="マイグレーション">マイグレーション</h3>
 <p>申し訳程度にマイグレーションスクリプトを同梱しているので、標準のヒストリーを使っている方は以下を実行して <code>~/.zsh_history</code> からインポートしてください (既存のヒストリーが壊れることはありません)。</p>
-<pre><code class="language-console" data-lang="console">$ source misc/migrations.zsh | sqlite3 $ZSH_HISTORY_FILE
-</code></pre><p>(横着して書いたため <code>sqlite3</code> が必要です)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span><span class="nb">source</span> misc/migrations.zsh <span class="p">|</span> sqlite3 <span class="nv">$ZSH_HISTORY_FILE</span>
+</code></pre></div><p>(横着して書いたため <code>sqlite3</code> が必要です)</p>
 <h2 id="まとめ">まとめ</h2>
 <p>だいぶ便利です。使ってみてください。</p>
 

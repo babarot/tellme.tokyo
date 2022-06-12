@@ -66,7 +66,7 @@
     <div class="content">
       <h2 id="count-と-for_each">count と for_each</h2>
 <p>Terraform には &ldquo;繰り返す&rdquo; 処理として <a href="https://www.terraform.io/language/meta-arguments/count">count</a> と <a href="https://www.terraform.io/language/meta-arguments/for_each">for_each</a> がある。</p>
-<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;aws_instance&#34; &#34;server&#34;</span> {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;aws_instance&#34; &#34;server&#34;</span> {
 <span class="n">  count</span> <span class="o">=</span> <span class="m">4</span><span class="c1"> # create four similar EC2 instances
 </span><span class="c1"></span>
 <span class="n">  ami</span>           <span class="o">=</span> <span class="s2">&#34;ami-a1b2c3d4&#34;</span>
@@ -76,12 +76,12 @@
 <span class="n">    Name</span> <span class="o">=</span> <span class="s2">&#34;Server ${count.index}&#34;</span>
   }
 }
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;aws_iam_user&#34; &#34;the-accounts&#34;</span> {
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;aws_iam_user&#34; &#34;the-accounts&#34;</span> {
 <span class="n">  for_each</span> <span class="o">=</span> <span class="k">toset</span><span class="p">(</span> <span class="p">[</span><span class="s2">&#34;Todd&#34;, &#34;James&#34;, &#34;Alice&#34;, &#34;Dottie&#34;</span><span class="p">]</span> <span class="p">)</span>
 <span class="n">  name</span>     <span class="o">=</span> <span class="k">each</span><span class="p">.</span><span class="k">key</span>
 }
 </code></pre></div><p>どちらも for ループとして利用できるが count はリソースが配列として作成され、for_each はリソースがマップとして作成される。for_each に配列を渡す場合は明示的に <a href="https://www.terraform.io/language/functions/toset"><code>toset</code></a> で <a href="https://www.terraform.io/language/expressions/type-constraints#collection-types">Set</a> (重複する値がないことが保証された配列) に変換して渡す必要がある (Map はそのまま渡す)。</p>
-<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="c1"># for_each に Map を渡す
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="c1"># for_each に Map を渡す
 </span><span class="c1"></span><span class="k">resource</span> <span class="s2">&#34;azurerm_resource_group&#34; &#34;rg&#34;</span> {
 <span class="n">  for_each</span> <span class="o">=</span> {
 <span class="n">    a_group</span> <span class="o">=</span> <span class="s2">&#34;eastus&#34;</span>
@@ -94,7 +94,7 @@
 <h2 id="count-と-for_each-の使い分け">count と for_each の使い分け</h2>
 <p><strong>基本的に count を使用しない</strong>。count だとリソースのアドレス (state) が配列となり、途中のリソースを削除するとその index が飛ぶので Terraform が配列の詰め直しをしてしまう。それにより、リソースの削除と作成が行われてしまい予期せぬアクシデントを引き起こす可能性がある。</p>
 <p>例えば、次のようなリソースの定義があるとする。<a href="https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project_service">google_project_service</a> は指定した GCP プロジェクトで使用するサービスの API を有効化するリソースである。</p>
-<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">variable</span> <span class="s2">&#34;gcp_enabled_services&#34;</span> {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">variable</span> <span class="s2">&#34;gcp_enabled_services&#34;</span> {
 <span class="n">  type</span> <span class="o">=</span> <span class="k">list</span><span class="p">(</span><span class="k">string</span><span class="p">)</span>
 
 <span class="n">  default</span> <span class="o">=</span> <span class="p">[</span>
@@ -114,27 +114,27 @@
 }
 </code></pre></div><p>ここで、例えば BigQuery を使わなくなったとして、variable の配列から削除すると以降の index が詰め直しによりリソースの再作成が行われてしまう。それにより、一時的にサービスが無効化され利用できなくなる可能性がある。Cloud SQL の API が disable され通信できなくなるなど想像するとおぞましい。</p>
 <p>(ちなみに <a href="https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project_service">google_project_service</a> には <a href="https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project_service#disable_on_destroy">disable_on_destroy</a> という Argument がある。True だと、リソースの削除のときにサービスを無効化する。これを false にすることで Terraform から無効化することを防ぐことができる。デフォルトは True)</p>
-<pre><code class="language-console" data-lang="console">$ terraform state list
-module.myservice.google_project_service.api[0]  # &lt;-- &quot;bigquery.googleapis.com&quot;
-module.myservice.google_project_service.api[1]
-module.myservice.google_project_service.api[2]
-module.myservice.google_project_service.api[3]
-...
-</code></pre><p>また、削除ではなく追加する場合でも配列の末尾に追加しないと、index がずれてそれ以降のindex 詰め直しによる再作成が行われる。実質配列のソートはできない。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>terraform state list
+<span class="go">module.myservice.google_project_service.api[0]  # &lt;-- &#34;bigquery.googleapis.com&#34;
+</span><span class="go">module.myservice.google_project_service.api[1]
+</span><span class="go">module.myservice.google_project_service.api[2]
+</span><span class="go">module.myservice.google_project_service.api[3]
+</span><span class="go">...
+</span></code></pre></div><p>また、削除ではなく追加する場合でも配列の末尾に追加しないと、index がずれてそれ以降のindex 詰め直しによる再作成が行われる。実質配列のソートはできない。</p>
 <p>この問題は for_each に書き直すことで解決する。リソースのアドレス (state) はマップとして作成されるので途中のキーを消しても他のリソースに影響を与えない。</p>
-<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;google_project_service&#34; &#34;api&#34;</span> {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;google_project_service&#34; &#34;api&#34;</span> {
 <span class="n">  for_each</span> <span class="o">=</span> <span class="k">toset</span><span class="p">(</span><span class="k">var</span><span class="p">.</span><span class="k">gcp_enabled_services</span><span class="p">)</span>
 
 <span class="n">  project</span> <span class="o">=</span> <span class="k">google_project</span><span class="p">.</span><span class="k">service</span><span class="p">.</span><span class="k">project_id</span>
 <span class="n">  service</span> <span class="o">=</span> <span class="k">each</span><span class="p">.</span><span class="k">key</span>
 }
-</code></pre></div><pre><code class="language-console" data-lang="console">$ terraform state list
-module.myservice.google_project_service.api[&quot;bigquery.googleapis.com&quot;]
-module.myservice.google_project_service.api[&quot;compute.googleapis.com&quot;]
-module.myservice.google_project_service.api[&quot;container.googleapis.com&quot;]
-module.myservice.google_project_service.api[&quot;iam.googleapis.com&quot;]
-...
-</code></pre><p>参考:</p>
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>terraform state list
+<span class="go">module.myservice.google_project_service.api[&#34;bigquery.googleapis.com&#34;]
+</span><span class="go">module.myservice.google_project_service.api[&#34;compute.googleapis.com&#34;]
+</span><span class="go">module.myservice.google_project_service.api[&#34;container.googleapis.com&#34;]
+</span><span class="go">module.myservice.google_project_service.api[&#34;iam.googleapis.com&#34;]
+</span><span class="go">...
+</span></code></pre></div><p>参考:</p>
 <p><a href="https://www.terraform.io/language/meta-arguments/count#when-to-use-for_each-instead-of-count">When to Use <code>for_each</code> Instead of <code>count</code></a></p>
 <blockquote>
 <p>If your instances are almost identical, <code>count</code> is appropriate. If some of their arguments need distinct values that can&rsquo;t be directly derived from an integer, it&rsquo;s safer to use <code>for_each</code>.
@@ -145,7 +145,7 @@ Before <code>for_each</code> was available, it was common to derive count from t
 <p>基本的に count を使用しないが、例外がある。count が 0 か 1 となる場合である。0 は作成しない、1 は 1 つ作成する (index が 0 番固定になり、詰め直しが発生しない)。</p>
 <p>count を使用したリソース作成有無 (0/1) の判定は昔から行われていた手法であるが、その場合においては count を使うほうが好ましい。
 この例は enable_gcp という variable が true のときに <a href="https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project">google_project</a> のリソースの作成を行う。</p>
-<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;google_project&#34; &#34;service&#34;</span> {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">resource</span> <span class="s2">&#34;google_project&#34; &#34;service&#34;</span> {
 <span class="n">  count</span> <span class="o">=</span> <span class="k">var</span><span class="p">.</span><span class="k">enable_gcp</span> <span class="err">?</span> <span class="m">1</span> <span class="err">:</span> <span class="m">0</span>
 
 <span class="n">  name</span>       <span class="o">=</span> <span class="s2">&#34;My Service Production&#34;</span>
@@ -155,32 +155,32 @@ Before <code>for_each</code> was available, it was common to derive count from t
 <h2 id="splat-expressions">Splat Expressions</h2>
 <p><a href="https://www.terraform.io/language/expressions/splat"><em>splat expression</em></a> とは <a href="https://www.terraform.io/language/expressions/for"><em>for expression</em></a> を簡潔に表した表現方法である。</p>
 <p><a href="https://registry.terraform.io/providers/PagerDuty/pagerduty/latest/docs/data-sources/user">pagerduty_user</a> という <a href="https://www.terraform.io/language/data-sources">Data source</a> が count によって複数個、作成されている場合、splat で次のように参照することができる。</p>
-<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">data</span> <span class="s2">&#34;pagerduty_user&#34; &#34;oncall_members&#34;</span> {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">data</span> <span class="s2">&#34;pagerduty_user&#34; &#34;oncall_members&#34;</span> {
 <span class="n">  count</span> <span class="o">=</span> <span class="k">length</span><span class="p">(</span><span class="k">local</span><span class="p">.</span><span class="k">service_users</span><span class="p">)</span>
 <span class="n">  email</span> <span class="o">=</span> <span class="k">element</span><span class="p">(</span><span class="k">local</span><span class="p">.</span><span class="k">service_users</span><span class="p">,</span> <span class="k">count</span><span class="p">.</span><span class="k">index</span><span class="p">)</span>
 }
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">data</span><span class="p">.</span><span class="k">pagerduty_user</span><span class="p">.</span><span class="k">oncall_members</span><span class="p">[</span><span class="err">*</span><span class="p">]</span><span class="p">.</span><span class="k">id</span>
-</code></pre></div><pre><code class="language-console" data-lang="console">$ terraform state list
-module.your_service.data.pagerduty_user.oncall_members[0]
-module.your_service.data.pagerduty_user.oncall_members[1]
-module.your_service.data.pagerduty_user.oncall_members[2]
-</code></pre><p>for_each の場合は、<a href="https://www.terraform.io/language/functions/values">values</a> を使って参照する。</p>
-<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">data</span> <span class="s2">&#34;pagerduty_user&#34; &#34;oncall_members&#34;</span> {
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">data</span><span class="p">.</span><span class="k">pagerduty_user</span><span class="p">.</span><span class="k">oncall_members</span><span class="p">[</span><span class="err">*</span><span class="p">].</span><span class="k">id</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>terraform state list
+<span class="go">module.your_service.data.pagerduty_user.oncall_members[0]
+</span><span class="go">module.your_service.data.pagerduty_user.oncall_members[1]
+</span><span class="go">module.your_service.data.pagerduty_user.oncall_members[2]
+</span></code></pre></div><p>for_each の場合は、<a href="https://www.terraform.io/language/functions/values">values</a> を使って参照する。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">data</span> <span class="s2">&#34;pagerduty_user&#34; &#34;oncall_members&#34;</span> {
 <span class="n">  for_each</span> <span class="o">=</span> <span class="k">toset</span><span class="p">(</span><span class="k">local</span><span class="p">.</span><span class="k">service_users</span><span class="p">)</span>
 <span class="n">  email</span>    <span class="o">=</span> <span class="k">each</span><span class="p">.</span><span class="k">key</span>
 }
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">values</span><span class="p">(</span><span class="k">data</span><span class="p">.</span><span class="k">pagerduty_user</span><span class="p">.</span><span class="k">oncall_members</span><span class="p">)</span><span class="p">[</span><span class="err">*</span><span class="p">]</span><span class="p">.</span><span class="k">id</span>
-</code></pre></div><pre><code class="language-console" data-lang="console">$ terraform state list
-module.your_service.data.pagerduty_user.oncall_members[&quot;babarot@xxx.com&quot;]
-module.your_service.data.pagerduty_user.oncall_members[&quot;foo@xxx.com&quot;]
-module.your_service.data.pagerduty_user.oncall_members[&quot;bar@xxx.com&quot;]
-</code></pre><ul>
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">values</span><span class="p">(</span><span class="k">data</span><span class="p">.</span><span class="k">pagerduty_user</span><span class="p">.</span><span class="k">oncall_members</span><span class="p">)[</span><span class="err">*</span><span class="p">].</span><span class="k">id</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>terraform state list
+<span class="go">module.your_service.data.pagerduty_user.oncall_members[&#34;babarot@xxx.com&#34;]
+</span><span class="go">module.your_service.data.pagerduty_user.oncall_members[&#34;foo@xxx.com&#34;]
+</span><span class="go">module.your_service.data.pagerduty_user.oncall_members[&#34;bar@xxx.com&#34;]
+</span></code></pre></div><ul>
 <li><a href="https://github.com/hashicorp/terraform/issues/22476">for_each and splat · Issue #22476 · hashicorp/terraform</a></li>
 <li><a href="https://github.com/hashicorp/terraform/issues/23245">Output complains about missing attribute when it is shurely present · Issue #23245 · hashicorp/terraform</a></li>
 </ul>
 <h2 id="legacy-splat-expressions">Legacy Splat Expressions</h2>
 <p>以前のバージョンでは splat は次のように表現していた。後方互換性を維持するために、まだサポートされ続けているが新しい設定ではおすすめされない。</p>
-<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">data</span><span class="p">.</span><span class="k">pagerduty_user</span><span class="p">.</span><span class="k">oncall_members</span><span class="p">.</span><span class="err">*</span><span class="p">.</span><span class="k">id</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">data</span><span class="p">.</span><span class="k">pagerduty_user</span><span class="p">.</span><span class="k">oncall_members</span><span class="p">.</span><span class="err">*</span><span class="p">.</span><span class="k">id</span>
 </code></pre></div>
     </div>
     <br>

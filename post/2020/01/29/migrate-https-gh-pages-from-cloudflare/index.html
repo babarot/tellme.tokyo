@@ -70,9 +70,9 @@
 <p><a href="https://qiita.com/superbrothers/items/95e5723e9bd320094537">カスタムドメインの GitHub Pages で HTTPS を使う - Qiita</a></p>
 <p>もう必要ないので Cloudflare を通さないようにする。</p>
 <p>Before:</p>
-<pre><code>Domain-provider DNS -&gt; Cloudflare DNS -&gt; GitHub -&gt; tellme.tokyo
+<pre tabindex="0"><code>Domain-provider DNS -&gt; Cloudflare DNS -&gt; GitHub -&gt; tellme.tokyo
 </code></pre><p>After:</p>
-<pre><code>Domain-provider DNS -&gt; GitHub -&gt; tellme.tokyo
+<pre tabindex="0"><code>Domain-provider DNS -&gt; GitHub -&gt; tellme.tokyo
 </code></pre><h3 id="1-ドメインプロバイダの-dns-設定を-cloudflare-からプロバイダ提供のものに変更する">1. ドメインプロバイダの DNS 設定を Cloudflare からプロバイダ提供のものに変更する</h3>
 <p>Cloudflare DNS を使っていたのを、</p>
 
@@ -118,7 +118,7 @@
 
 
 <p>参考: <a href="https://tellme.tokyo/post/2020/01/20/github-pages-with-https/">GitHub Pages で HTTPS を有効にする | tellme.tokyo</a></p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ dig tellme.tokyo +noall +answer
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ dig tellme.tokyo +noall +answer
 </code></pre></div><p>Cloudflare ではなく GitHub が参照される。</p>
 <h3 id="3-cloudflare-を通らなくなるので設定を消す">3. Cloudflare を通らなくなるので設定を消す</h3>
 <p>ここらへんの設定を消す。</p>

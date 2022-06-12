@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Fri, 07 Feb 2020 12:27:21 +0900</lastBuildDate>
-    
-	<atom:link href="https://tellme.tokyo/tags/unix/feed.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Fri, 07 Feb 2020 12:27:21 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/unix/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>標準出力に出しつつ、パイプ先のコマンドにも繋ぐ</title>
       <link>https://tellme.tokyo/post/2020/02/07/tee-command/</link>

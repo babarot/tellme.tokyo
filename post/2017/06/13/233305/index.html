@@ -136,14 +136,14 @@
 <p>などです。詳しくは README を見てください (あんまり書いてないですけど)。</p>
 <h3 id="インストール使い方">インストール、使い方</h3>
 <p>とりあえず使いたかったら、</p>
-<pre><code>$ brew install b4b4r07/history/history
+<pre tabindex="0"><code>$ brew install b4b4r07/history/history
 </code></pre><p>としたあとに以下を zshrc に書き込んでください (他の installation については README にて)。これが最小限の設定になります。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">ZSH_HISTORY_KEYBIND_GET</span><span class="o">=</span><span class="s2">&#34;^r&#34;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">ZSH_HISTORY_KEYBIND_GET</span><span class="o">=</span><span class="s2">&#34;^r&#34;</span>
 <span class="nv">ZSH_HISTORY_FILTER_OPTIONS</span><span class="o">=</span><span class="s2">&#34;--filter-branch --filter-dir&#34;</span>
 <span class="nv">ZSH_HISTORY_KEYBIND_ARROW_UP</span><span class="o">=</span><span class="s2">&#34;^p&#34;</span>
 <span class="nv">ZSH_HISTORY_KEYBIND_ARROW_DOWN</span><span class="o">=</span><span class="s2">&#34;^n&#34;</span>
 </code></pre></div><p><code>$GITHUB_TOKEN</code> が設定されていて、<code>$ZSH_HISTORY_AUTO_SYNC</code> が <code>true</code> なら <code>history sync</code> をしたときか、前回の同期時間から1時間 (<code>$ZSH_HISTORY_AUTO_SYNC_INTERVAL</code>) 経過するか、リモートとローカルの差分量が 100 行を超えたら、</p>
-<pre><code>~/.config/history/history.ltsv: sync immediately? [y/n]:
+<pre tabindex="0"><code>~/.config/history/history.ltsv: sync immediately? [y/n]:
 </code></pre><p>と聞いてくるので <code>y</code> とすれば同期します。ユーザが同期するタイミングを意識することはあまりないです。</p>
 <h2 id="カスタマイズ">カスタマイズ</h2>
 <p>細かいカスタマイズは <code>history config</code> からできます。
@@ -152,13 +152,13 @@
 <p>基本的に、<code>^r</code> (Ctrl-r) としたときに立ち上がるのは <code>history search</code> です。</p>
 <p>カレントのディレクトリやブランチに限定したい場合は <code>--filter-XXXX</code> というオプション (例えば、<code>--filter-branch</code>) をつければ最初から絞られて <a href="https://github.com/peco/peco">peco</a> や <a href="https://github.com/junegunn/fzf">fzf</a> に渡るようになっています。</p>
 <p>また <code>--filter-XXXX</code> 系のオプションは peco/fzf (コード上、Screen と呼ぶ) を介する UI のときに使用できて、それぞれを付けて実行するのが面倒な場合は設定ファイルから一括して変更できます。優先順位としては、「各オプションの値」＞「設定ファイルの値」です。</p>
-<div class="highlight"><pre class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">screen</span><span class="p">]</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">screen</span><span class="p">]</span>
   <span class="nx">filter_dir</span> <span class="p">=</span> <span class="kc">false</span>
   <span class="nx">filter_branch</span> <span class="p">=</span> <span class="kc">false</span>
   <span class="nx">filter_hostname</span> <span class="p">=</span> <span class="kc">false</span>
 </code></pre></div><p>各サブコマンドのオプションや使い方については <code>history help &lt;CMD&gt;</code> としてください。</p>
 <p>このときに立ち上がる画面にあるカラムはユーザが自由に定義できて、デフォルトでは</p>
-<div class="highlight"><pre class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">screen</span><span class="p">]</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="p">[</span><span class="nx">screen</span><span class="p">]</span>
   <span class="nx">columns</span> <span class="p">=</span> <span class="p">[</span>
       <span class="s2">&#34;{{.Time}}&#34;</span><span class="p">,</span> 
       <span class="s2">&#34;{{.Status}}&#34;</span><span class="p">,</span> 
@@ -201,7 +201,7 @@
 <tr>
 <td><code>{{.Command}}</code></td>
 <td>実行したコマンド</td>
-<td><code>curl example.org | jq -r '.message'</code></td>
+<td>`curl example.org</td>
 </tr>
 <tr>
 <td><code>{{.Dir}}</code></td>
@@ -231,10 +231,10 @@
 </tbody>
 </table>
 <p>このツールは LTSV に履歴データを持ちます。</p>
-<pre><code>date:2017-06-13T01:32:24.494724589+09:00	command:ls /Users/b4b4r07/Library/Caches/Homebrew/	dir:/Users/b4b4r07/src/github.com/b4b4r07/homebrew-history	branch:master	status:0	hostname:babarot-mb.local
+<pre tabindex="0"><code>date:2017-06-13T01:32:24.494724589+09:00	command:ls /Users/b4b4r07/Library/Caches/Homebrew/	dir:/Users/b4b4r07/src/github.com/b4b4r07/homebrew-history	branch:master	status:0	hostname:babarot-mb.local
 </code></pre><p><code>history edit</code> で直接編集することも出来ます (<code>vim $(history config --get history.path)</code> と等価です)。</p>
 <p>テキストでデータを持つため sqlite3 の実装よりは落ちると思われます。その際は無駄なコマンドを履歴に持たないようにすると良いかもしれないです。<code>history add</code> のときにフィルタを掛けるのです。</p>
-<pre><code class="language-tom" data-lang="tom">[history]
+<pre tabindex="0"><code class="language-tom" data-lang="tom">[history]
   ignore_words = [
       '^\w+$', 
       '^cd -+(\w)?$', 
@@ -242,15 +242,15 @@
   ]
 </code></pre><p>ignore_words を指定できるようになっていて、このように一語 (<code>ls</code>, <code>pwd</code> など) のみで構成されるコマンドラインは後から検索する必要性もないのでノイズカットにもなって一石二鳥かもしれません。</p>
 <p>最後にこの履歴データの共有です。history は Gist を使います。true になっていると勝手にシェアを始めます (最低限 <code>$GITHUB_TOKEN</code> が必要です)。勝手に、と言ってもプライベートモード (Secret) で作るので URL が流出しなければ履歴が覗かれることはありません。</p>
-<pre><code>[history]
+<pre tabindex="0"><code>[history]
   [history.sync]
     id = &quot;&quot; #ここは空で問題ないです (初回の同期のとき history.ltsv ファイルを探してきて補完してくれます)
     token = &quot;$GITHUB_TOKEN&quot; #この環境変数に値を入れるか、ここを書き換えてトークンを直書きしてください
     size = 100 # リモートとの差分行数に応じて同期します
 </code></pre><p>URL 流出が嫌な人やそのそも 1 台しか PC を持っていないなどの理由があれば同期する必要はないのでオプションを false にすると良いでしょう。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">ZSH_HISTORY_AUTO_SYNC</span><span class="o">=</span><span class="nb">false</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">export</span> <span class="nv">ZSH_HISTORY_AUTO_SYNC</span><span class="o">=</span><span class="nb">false</span>
 </code></pre></div><p>ちなみに1日1回、ローカルにバックアップを取っています。なのでバックアップの観点から Gist を使う強い理由はないです。</p>
-<pre><code>$ tree ~/.config/history/.backup/
+<pre tabindex="0"><code>$ tree ~/.config/history/.backup/
 ~/.config/history/.backup/
 └── 2017
     └── 06

@@ -70,7 +70,7 @@
 <h3 id="github-以前-2008年">GitHub 以前 (〜2008年)</h3>
 <p>昔の話です。Vim script で拡張の機能を書いたらそのスクリプトを <a href="http://www.vim.org">vim.org</a> にアップして開発者同士で共有したり、ユーザがダウンロードして使っていたようです。おそらくコレが所謂「プラグイン管理」の始まりなのですが、このときはまだ手動で行われていたようです (残念ながら、このときはまだ Vim に出会っていなかったためその肌感は分かりません&hellip;)。</p>
 <p>例えば、こんな機能も Vim script で書いた拡張です (autogroup などは考慮してません)。</p>
-<div class="highlight"><pre class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">autocmd</span> <span class="nx">BufWritePre</span> * %<span class="nx">s</span><span class="sr">/\s\+$/</span>/<span class="nx">e</span><span class="err">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vim" data-lang="vim"><span class="nx">autocmd</span> <span class="nx">BufWritePre</span> * %<span class="nx">s</span><span class="sr">/\s\+$/</span>/<span class="nx">e</span><span class="err">
 </span></code></pre></div><p>Vim 7 から Vimball という機能が Vim 本体に同梱されて、それからはこれを利用するユーザもいたようです。vim.org からアーカイブされたスクリプトを持ってきて、<code>:so %</code> したり、気に入ったら runtimepath 以下に置いて自動読み込みしたり。その頃の plugins ディレクトリは混沌としていたようです。ペライチのスクリプトが無造作に転がっており、同名ファイルに気をつけたりアップデートの情報は自分でキャッチしなければなりませんでした。</p>
 <h3 id="github-以降-2008年">GitHub 以降 (2008年〜)</h3>
 <p>GitHub は 2008 年頃発のサービスですが、翌年には最大の Git のホスティングサービスになっていたようです。本格的に流行りだしたのは 2011 年ころの印象を受けますが、このソーシャルコーディング時代の新風は Vim プラグイン界にも訪れ、席巻したようです。</p>
@@ -198,8 +198,8 @@ call dein#end()</p>
 <li>100 回計測する (<a href="https://gist.github.com/b4b4r07/3eccb4f8dd9438c706fe7950ef2f669f">使ったスクリプト</a>)</li>
 <li>dein.vim はキャッシュを使わない (後付条件です)</li>
 </ul>
-<pre><code class="language-console" data-lang="console">$ vim --startup-time=time.log +q
-</code></pre><p><strong>結果:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>vim --startup-time<span class="o">=</span>time.log +q
+</code></pre></div><p><strong>結果:</strong></p>
 <table>
 <thead>
 <tr>

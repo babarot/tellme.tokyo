@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Sun, 12 Jun 2022 00:03:43 +0900</lastBuildDate>
-    
-	<atom:link href="https://tellme.tokyo/feed.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 12 Jun 2022 00:03:43 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Terraform の count と for_each の使い分けと Splat Expressions について</title>
       <link>https://tellme.tokyo/post/2022/06/12/terraform-count-for-each/</link>
@@ -31,9 +27,7 @@ resource &amp;#34;aws_instance&amp;#34; &amp;#34;server&amp;#34; { count = 4# cr
       <guid>https://tellme.tokyo/post/2022/03/02/package-manager-for-cli/</guid>
       <description>最近、afx という CLI 向けのパッケージマネージャを公開した。ここで &amp;ldquo;CLI のパッケージ&amp;rdquo; とは例えば jq のようなコマンドラインツールや zsh-history-substring-search のようなヒストリ補完をするシェルのプラグインを指す (bash/zsh/fish)。afx ではこれらを 1 つのツールで管理すること、コードで表現して管理することを目的としている。コードには YAML を使用する。
 また afx では、管理するパッケージとそのツールの設定を一緒に保つことができる。例えば jq 自体の管理とその jq で使う環境変数やエイリアスの設定などを同じ YAML ファイルに記述できる。これによって、各種ツールの設定が bashrc/zshrc などに散乱することや、もう使っていないなどの理由でツール自体はインストールされていないのに設定だけが残っている、みたいなことを防ぐことができる。
-# ~/.config/afx/commands.yamlgithub:- name:stedolan/jqdescription:Command-lineJSONprocessorowner:stedolanrepo:jqrelease:name:jqtag:jq-1.6command:link:- from:&amp;#39;*jq*&amp;#39;to:jqalias:jq:jq-Csnippet:| # you can write shell script here# -&amp;gt; define global alias (zsh feature)if[[$SHELL==*zsh*]];thenalias-gJ=&amp;#39;| jq -C . | less -F&amp;#39;fi# ~/.config/afx/plugins.yamlgithub:- name:b4b4r07/enhancddescription:Anext-generationcdcommandwithyourinteractivefilterowner:b4b4r07repo:enhancdplugin:env:ENHANCD_FILTER:fzf--height25%--reverse--ansi:fzy:pecosources:- init.sh背景 (tl;dr)
- zplug から乗り換えるため Homebrew で配信されていないツールを管理するため 既存のパッケージマネージャより優れたものを作るため  &amp;hellip;
-昔、Zsh 向けのプラグインマネージャである zplug を作った。学生のときに書いたので今から結構前になるけれど、その当時は Zsh のプラグインマネージャといえばたいした機能を持ったやつはなくて、自分のニーズにあったものを作ろうと書き始めた。zplug は Zsh のプラグインはもちろん、GitHub Release にアップロードされている各種バイナリ (jq など) も一緒にインストール・管理することができた。それぞれのインストールするコマンドやプラグインごとに設定を保持して zshrc に書き記すことができた。</description>
+# ~/.config/afx/commands.yamlgithub:- name:stedolan/jqdescription:Command-line JSON processorowner:stedolanrepo:jqrelease:name:jqtag:jq-1.6command:link:- from:&amp;#39;*jq*&amp;#39;to:jqalias:jq:jq -Csnippet:|# you can write shell script here # -&amp;gt; define global alias (zsh feature) if [[ $SHELL == *zsh* ]]; then alias -g J=&amp;#39;| jq -C . | less -F&amp;#39; fi# ~/.config/afx/plugins.yamlgithub:- name:b4b4r07/enhancddescription:A next-generation cd command with your interactive filterowner:b4b4r07repo:enhancdplugin:env:ENHANCD_FILTER:fzf --height 25% --reverse --ansi:fzy:pecosources:- init.</description>
     </item>
     
     <item>
@@ -80,8 +74,8 @@ notify() { local comment template comment=&amp;#34;$(tee &amp;gt;(cat)&amp;gt;&a
 それよりももっと楽になったので紹介する。
 基本的にこのページで紹介する方法では 2 つの YAML をリポジトリに置くだけで終わる。 ローカルに何かをインストールする必要もない。 2 つの YAML を書くだけ (コピペするだけ) でリリースの準備が整う。
 まずはじめに .github/workflows/release.yml を置く。 編集不要でコピペする。
-name:releaseon:push:tags:- &amp;#34;v[0-9]+.[0-9]+.[0-9]+&amp;#34;jobs:goreleaser:runs-on:ubuntu-lateststeps:- name:Checkoutuses:actions/checkout@v1with:fetch-depth:1- name:SetupGouses:actions/setup-go@v1with:go-version:1.13- name:RunGoReleaseruses:goreleaser/goreleaser-action@v1with:version:latestargs:release--rm-distenv:GITHUB_TOKEN:${{secrets.GITHUB_TOKEN}}つぎに .goreleaser.yml を置く。このファイルはツール名の部分だけリポジトリに沿うように変更する (git-bump のところ)。
-project_name:git-bumpenv:- GO111MODULE=onbefore:hooks:- gomodtidybuilds:- main:.binary:git-bumpldflags:- -s-w- -Xmain.Version={{.Version}}- -Xmain.Revision={{.ShortCommit}}env:- CGO_ENABLED=0archives:- name_template:&amp;#39;{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .</description>
+name:releaseon:push:tags:- &amp;#34;v[0-9]+.[0-9]+.[0-9]+&amp;#34;jobs:goreleaser:runs-on:ubuntu-lateststeps:- name:Checkoutuses:actions/checkout@v1with:fetch-depth:1- name:Setup Gouses:actions/setup-go@v1with:go-version:1.13- name:Run GoReleaseruses:goreleaser/goreleaser-action@v1with:version:latestargs:release --rm-distenv:GITHUB_TOKEN:${{ secrets.GITHUB_TOKEN }}つぎに .goreleaser.yml を置く。このファイルはツール名の部分だけリポジトリに沿うように変更する (git-bump のところ)。
+project_name:git-bumpenv:- GO111MODULE=onbefore:hooks:- go mod tidybuilds:- main:.binary:git-bumpldflags:- -s -w- -X main.Version={{.Version}}- -X main.</description>
     </item>
     
     <item>
@@ -289,7 +283,7 @@ GitHub のラベルは Issues/P-Rs を管理するために便利な機能であ
 github-labeler の紹介 https://github.com/b4b4r07/github-labeler
 宣言的設定の手法をラベル管理に持ち込むために、GitHub ラベルの定義とそれを作るリポジトリについて「YAML に書いたとおりになる」ツールを書いた。
 例えば次のような YAML を書く。
-labels:- name:area/securitydescription:Indicatesanissueonsecurityarea.color:1d76db- name:kind/bugdescription:CategorizesissueorPRasrelatedtoabug.color:d93f0b- name:kind/cleanupdescription:CategorizesissueorPRasrelatedtocleaningupcode,process,ortechnicaldebt.color:bfd4f2- name:kind/designdescription:CategorizesissueorPRasrelatedtodesign.color:bfd4f2- name:kind/documentationdescription:CategorizesissueorPRasrelatedtodocumentation.color:bfd4f2repos:- name:org/repo1labels:- area/security- kind/api-change- kind/bug- kind/cleanup- kind/design- name:org/repo2labels:- kind/api-change- kind/bug- kind/cleanup- kind/designこの YAML をもとに github-labeler を実行すると、こんな感じになる。</description>
+labels:- name:area/securitydescription:Indicates an issue on security area.color:1d76db- name:kind/bugdescription:Categorizes issue or PR as related to a bug.</description>
     </item>
     
     <item>
@@ -310,9 +304,9 @@ labels:- name:area/securitydescription:Indicatesanissueonsecurityarea.color:1d76
 もともと中央アンデス高地に暮らす人々の暮らしにアルパカは馴染んでおり、人々はその毛を刈り売ることで生活していたが、刈るための道具が石器の類でうまく切れずに毛やアルパカを傷めてしまうだったり、アルパカの毛の細さで価値が変わることだったり、採れる部位で価値が変わることなどを知らないという現実があった。そこで彼らに毛刈りハサミや電動シェーバーだったりのことを伝えたり、毛の刈る部位によってパッキングして卸したりするように伝えたりなどのところから始めた。
 フェアトレードによるアルパカ自体の保全や現地の人の暮らしをまもりたいという志しで、ペルーの高地にあるパコマルカアルパカ研究所とパートナーシップを築き、地元の放牧者が自らの生活様式から上手く利益を上げられるように援助している。現地の研究所と対話しながら、世界で一番高品質の「シュプリームロイヤルアルパカ」を開発するなど、現在ではアルパカ製品の世界的なエキスパートになっている。
 感想として  「本当の価値を決めるのは、希少性でも価格でもない。そこにどれだけ、つくり手の熱い情熱と魂を込められるかなんだ」
- この言葉にある通り、ものづくりに対する熱すぎる情熱とアルパカ製品で世界一のプロダクトを作るということへの想いが込められていると思った。 井上兄弟は端々に&amp;quot;世界&amp;quot;だったり&amp;quot;正義&amp;rdquo;、&amp;ldquo;平和&amp;quot;だったりといった少しくさいような、独善的な表現を用いるがそれは軽々しく言っているわけではなく、本当にそうしたいと思って実行し、裏付けとなる行動とともに成果を出していて、生き様としてかっこいいと思った。そしてその生き様が作るプロダクトに反映されていて、そのストーリー性やバックグラウンドの惚れ込み、アイテムへの愛着が湧いた。
+ この言葉にある通り、ものづくりに対する熱すぎる情熱とアルパカ製品で世界一のプロダクトを作るということへの想いが込められていると思った。 井上兄弟は端々に&amp;quot;世界&amp;quot;だったり&amp;quot;正義&amp;quot;、&amp;ldquo;平和&amp;quot;だったりといった少しくさいような、独善的な表現を用いるがそれは軽々しく言っているわけではなく、本当にそうしたいと思って実行し、裏付けとなる行動とともに成果を出していて、生き様としてかっこいいと思った。そしてその生き様が作るプロダクトに反映されていて、そのストーリー性やバックグラウンドの惚れ込み、アイテムへの愛着が湧いた。
 最近では、次の写真のように、長く愛用してほしいという想いから天然の防虫剤としても知られる楠にメッセージを刻印したものを付属してくれている。こういった自分たちのプロダクトへの愛情とそれを購入者へ伝えたいという気持ちを見ることができて、なんとも言えない嬉しいような感動のような気持ちが湧いた。
-リファレンス  世界一のアルパカニットを作る兄弟「ザ・イノウエブラザーズ」とは？ 過酷な低賃金ビジネスはもうやめよう──『僕たちはファッションの力で世界を変える』 | BNL (Business Network Lab) | Eightが運営するメディア 最高のクオリティを求めて南米を旅する兄弟──ザ・イノウエ・ブラザーズ｜メンズファッションニュース｜GQ JAPAN    ファストファッションの裏側　ラナプラザの悲劇の意味 | エシカルファッションのセレクトショップ A Scenery Beyond&amp;hellip;のエシカルマガジン &amp;#x21a9;&amp;#xfe0e;
+リファレンス  世界一のアルパカニットを作る兄弟「ザ・イノウエブラザーズ」とは？ 過酷な低賃金ビジネスはもうやめよう──『僕たちはファッションの力で世界を変える』 | BNL (Business Network Lab) | Eightが運営するメディア 最高のクオリティを求めて南米を旅する兄弟──ザ・イノウエ・ブラザーズ｜メンズファッションニュース｜GQ JAPAN    ファストファッションの裏側　ラナプラザの悲劇の意味 | エシカルファッションのセレクトショップ A Scenery Beyond&amp;hellip;のエシカルマガジン&amp;#160;&amp;#x21a9;&amp;#xfe0e;
    </description>
     </item>
     
@@ -645,8 +639,8 @@ $ .</description>
  になります。
 学生時代はよくシェルスクリプトを書いており、そのアウトプットのほとんどを Qiita やブログに載せていたため、今回このような形1で紙本になるのはとても嬉しかったです。
 また機会があれば書かせていただきたいなと思います2。
-   その記事をきっかけにオファーをいただきました &amp;#x21a9;&amp;#xfe0e;
- 需要があるかはわかりませんが、けじめをつけるためにも zplug の解説はどこかでしたいな、とは思っています (しかし掲載先は 1 人アドベントカレンダーのほうがいいかも知れませんね) &amp;#x21a9;&amp;#xfe0e;
+   その記事をきっかけにオファーをいただきました&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+ 需要があるかはわかりませんが、けじめをつけるためにも zplug の解説はどこかでしたいな、とは思っています (しかし掲載先は 1 人アドベントカレンダーのほうがいいかも知れませんね)&amp;#160;&amp;#x21a9;&amp;#xfe0e;
    </description>
     </item>
     
@@ -1040,7 +1034,7 @@ ssh-keygen で作成された 公開鍵.pub の中身をコピーしてブラウ
 $ # (antigen bundle b4b4r07/ssh-keyreg) $ ssh-keygen $ ssh-keyreg はやい！！！
 
  b4b4r07/ssh-keyreg - GitHub  上では、antigen でインストールすると書いていますが、このプラグインは bash でも動きます（補完は zsh のみです。ごめんなさい）。
-インストール $ # for zsh $ antigen bundle b4b4r07/ssh-keyreg $ # for bash $ sudo sh -c &amp;quot;curl https://raw.githubusercontent.com/b4b4r07/ssh-keyreg/master/bin/ssh-keyreg -o /usr/local/bin/ssh-keyreg &amp;amp;&amp;amp; chmod +x /usr/local/bin/ssh-keyreg&amp;quot; 使い方 $ ssh-keyreg usage: ssh-keyreg [-h|--help][[-d|--desc &amp;lt;desc&amp;gt;][-u|--user &amp;lt;user[:pass]&amp;gt;][-p|--path &amp;lt;path&amp;gt;]] [github|bitbucket] command line method or programmatically add ssh key to github.</description>
+インストール $ # for zsh $ antigen bundle b4b4r07/ssh-keyreg $ # for bash $ sudo sh -c &amp;#34;curl https://raw.githubusercontent.com/b4b4r07/ssh-keyreg/master/bin/ssh-keyreg -o /usr/local/bin/ssh-keyreg &amp;amp;&amp;amp; chmod +x /usr/local/bin/ssh-keyreg&amp;#34; 使い方 $ ssh-keyreg usage: ssh-keyreg [-h|--help][[-d|--desc &amp;lt;desc&amp;gt;][-u|--user &amp;lt;user[:pass]&amp;gt;][-p|--path &amp;lt;path&amp;gt;]] [github|bitbucket] command line method or programmatically add ssh key to github.</description>
     </item>
     
     <item>
@@ -1071,7 +1065,7 @@ mru() { local -a f f=( ~/.</description>
 
  b4b4r07/http_code - GitHub  antigen で簡単にインストールできます。
 $ antigen bundle b4b4r07/http_code antigen でない場合は、
-sudo sh -c &amp;quot;curl https://raw.githubusercontent.com/b4b4r07/http_code/master/bin/http_code -o /usr/local/bin/http_code &amp;amp;&amp;amp; chmod +x /usr/local/bin/http_code&amp;quot; しかし、antigen でインストールしたほうが、補完ファイルなども使用できるようになります。
+sudo sh -c &amp;#34;curl https://raw.githubusercontent.com/b4b4r07/http_code/master/bin/http_code -o /usr/local/bin/http_code &amp;amp;&amp;amp; chmod +x /usr/local/bin/http_code&amp;#34; しかし、antigen でインストールしたほうが、補完ファイルなども使用できるようになります。
 使い方は gif アニメにもある通り、-a/--all オプションをつけると一覧表示、引数に数字を渡すとそれに対する説明を返します。</description>
     </item>
     

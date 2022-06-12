@@ -90,7 +90,7 @@ kube-lint は決められた Kind (現在は Pod のみ) の決められたフ�
 <p><a href="https://github.com/b4b4r07/stein/">b4b4r07/stein: A linter for config files with a customizable rule set</a></p>
 <p>HashiCorp Sentinel は HashiCorp が提唱する <a href="https://docs.hashicorp.com/sentinel/concepts/policy-as-code">Policy as Code</a> を実装したツールになっている。
 要するに、「インフラの状態を設定ファイルとしてコードで書くように、設定ファイルの状態をポリシーとしてコードで書く」、という考え方でありそれを実践できるツールである。</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">main</span> <span class="p">=</span> <span class="nx">rule</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="nx">main</span> <span class="p">=</span> <span class="nx">rule</span> <span class="p">{</span>
   <span class="nx">all</span> <span class="nx">tfplan</span><span class="p">.</span><span class="nx">resources</span><span class="p">.</span><span class="nx">aws_instance</span> <span class="nx">as</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">instances</span> <span class="p">{</span>
     <span class="nx">all</span> <span class="nx">instances</span> <span class="nx">as</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">r</span> <span class="p">{</span>
       <span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">applied</span><span class="p">.</span><span class="nx">tags</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span> <span class="p">&gt;</span> <span class="mi">0</span>
@@ -112,7 +112,7 @@ kube-lint は決められた Kind (現在は Pod のみ) の決められたフ�
 こういったことからさまざまなユースケースをカバーするポリシーを定義するときは、ツール側で自由にルールを定義できるような機能を提供していなければならない。
 上の例で示したように、Sentinel では <a href="https://docs.hashicorp.com/sentinel/language/">Sentinel Language</a> という専用言語を用いてルールを定義できるようにしている。</p>
 <p>Stein では Terraform のように HCL で定義できるようにしている。</p>
-<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">rule</span> <span class="s2">&#34;replicas&#34;</span> {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">rule</span> <span class="s2">&#34;replicas&#34;</span> {
 <span class="n">  description</span> <span class="o">=</span> <span class="s2">&#34;Check the number of replicas is sufficient&#34;</span>
 
 <span class="n">  conditions</span> <span class="o">=</span> <span class="p">[</span>
@@ -128,7 +128,7 @@ kube-lint は決められた Kind (現在は Pod のみ) の決められたフ�
 この中でルールを定義していく。
 Stein では <strong>rule の conditions にある評価式が一つでも false になった場合、rule が fail して report にもとづいてエラーが返る</strong> ようになっている。
 上の例では、spec.replicas が 3 以上を満たさない場合、この rule が失敗し標準出力にレポートされる。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ stein apply
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ stein apply
 manifests/microservices/x-echo-jp/development/Deployment/test.yaml
   <span class="o">[</span>ERROR<span class="o">]</span>  rule.replicas            Too few replicas
 </code></pre></div><p>各要素へのアクセス (spec.replicas) は <a href="https://kubernetes.io/docs/reference/kubectl/jsonpath/">JSONPATH 形式</a>で jsonpath 関数によって提供される。
@@ -140,7 +140,7 @@ Stein では Terraform のように組み込み変数や組み込み関数を提
 <p>Stein を使うことで自由なルールをポリシーとして定義して、それをもとにテスト実行することができるようになる。
 HCL ベースとはいえ、Terraform のように少しの学習コストがあるので提供しているスキーマの使い方を示す。</p>
 <p>その前に、Stein のインターフェースを示すと、Stein は CLI コマンドとして動作する。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ stein --help
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ stein --help
 Usage: stein <span class="o">[</span>--version<span class="o">]</span> <span class="o">[</span>--help<span class="o">]</span> &lt;command&gt; <span class="o">[</span>&lt;args&gt;<span class="o">]</span>
 
 Available commands are:
@@ -151,14 +151,14 @@ Available commands are:
 apply は定義されたポリシーを元に引数に渡された YAML などに対してチェックを実行する。
 fmt は HCL のフォーマットチェックができる。</p>
 <p>ポリシーファイルは HCL で定義し、任意のディレクトリに置くことができる。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ stein apply -policy rule.hcl manifests/microservices/x-echo-jp/development/Deployment/test.yaml
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ <span class="nb">export</span> <span class="nv">STEIN_POLICY</span><span class="o">=</span>rule.hcl
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ stein apply -policy rule.hcl manifests/microservices/x-echo-jp/development/Deployment/test.yaml
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ <span class="nb">export</span> <span class="nv">STEIN_POLICY</span><span class="o">=</span>rule.hcl
 $ stein apply manifests/microservices/x-echo-jp/development/Deployment/test.yaml
 </code></pre></div><p>apply のフラグで指定するか環境変数で指定することができる。ちなみにカンマ区切りで複数指定できるので、Terraform のように自由な単位でファイル分割ができる。</p>
 <p>また、<code>.policy</code> ディレクトリをデフォルトのポリシーファイル置き場として認識するのでその場合は指定しなくて良い。
 <code>.policy</code> が認識されるのは引数に渡されたファイルが置かれているディレクトリの階層すべて、になる。
 上の例だと次のディレクトリが対象になる。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">manifests/.policy/
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">manifests/.policy/
 manifests/microservices/.policy/
 manifests/microservices/x-echo-jp/.policy/
 manifests/microservices/x-echo-jp/development/.policy/
@@ -170,40 +170,40 @@ manifests/microservices/x-echo-jp/development/Deployment/.policy/
 <li><a href="https://github.com/b4b4r07/stein/tree/master/_examples">stein/_examples at master · b4b4r07/stein</a></li>
 </ul>
 <p>次に DSL の書き方について示す。</p>
-<div class="highlight"><pre class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">rule</span> <span class="s2">&#34;namespace_name_irregular&#34;</span> {
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="k">rule</span> <span class="s2">&#34;namespace_name_irregular&#34;</span> {
 <span class="n">  description</span> <span class="o">=</span> <span class="s2">&#34;Check namespace name is valid&#34;</span>
 
-  <span class="err">/</span><span class="err">/</span> <span class="p">(</span><span class="k">省略できる</span><span class="p">)</span>
-  <span class="err">/</span><span class="err">/</span> <span class="k">このルールが依存するルールを書くことができる</span>
-  <span class="err">/</span><span class="err">/</span> <span class="k">この場合</span><span class="err">、</span><span class="k">rule</span><span class="p">.</span><span class="k">namespace_specification</span> <span class="k">が失敗した場合このルールは</span> <span class="k">apply</span> <span class="k">されない</span>
+  <span class="err">//</span> <span class="p">(</span><span class="k">省略できる</span><span class="p">)</span>
+  <span class="err">//</span> <span class="k">このルールが依存するルールを書くことができる</span>
+  <span class="err">//</span> <span class="k">この場合</span><span class="err">、</span><span class="k">rule</span><span class="p">.</span><span class="k">namespace_specification</span> <span class="k">が失敗した場合このルールは</span> <span class="k">apply</span> <span class="k">されない</span>
 <span class="n">  depends_on</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;rule.namespace_specification&#34;</span><span class="p">]</span>
 
-  <span class="err">/</span><span class="err">/</span> <span class="p">(</span><span class="k">省略できる</span><span class="p">)</span>
-  <span class="err">/</span><span class="err">/</span> <span class="k">このルールを</span> <span class="k">apply</span> <span class="k">するにあたって満たすべき評価式を指定できる</span>
-  <span class="err">/</span><span class="err">/</span> <span class="k">cases</span> <span class="k">をすべて満たすとき</span><span class="err">、</span><span class="k">このルールが</span> <span class="k">apply</span> <span class="k">される</span>
+  <span class="err">//</span> <span class="p">(</span><span class="k">省略できる</span><span class="p">)</span>
+  <span class="err">//</span> <span class="k">このルールを</span> <span class="k">apply</span> <span class="k">するにあたって満たすべき評価式を指定できる</span>
+  <span class="err">//</span> <span class="k">cases</span> <span class="k">をすべて満たすとき</span><span class="err">、</span><span class="k">このルールが</span> <span class="k">apply</span> <span class="k">される</span>
   <span class="k">precondition</span> {
 <span class="n">    cases</span> <span class="o">=</span> <span class="p">[</span>
       <span class="s2">&#34;${is_irregular_namespace_pattern()}&#34;</span><span class="p">,</span>
     <span class="p">]</span>
   }
 
-  <span class="err">/</span><span class="err">/</span> <span class="p">(</span><span class="k">必須</span><span class="p">)</span>
-  <span class="err">/</span><span class="err">/</span> <span class="k">apply</span> <span class="k">したときにこのルールを成功させるか失敗させるかを決める</span>
-  <span class="err">/</span><span class="err">/</span> <span class="k">ひとつでも</span> <span class="kt">false</span> <span class="k">が返ったとき</span><span class="err">、</span><span class="k">このルールは失敗する</span>
+  <span class="err">//</span> <span class="p">(</span><span class="k">必須</span><span class="p">)</span>
+  <span class="err">//</span> <span class="k">apply</span> <span class="k">したときにこのルールを成功させるか失敗させるかを決める</span>
+  <span class="err">//</span> <span class="k">ひとつでも</span> <span class="kt">false</span> <span class="k">が返ったとき</span><span class="err">、</span><span class="k">このルールは失敗する</span>
 <span class="n">  conditions</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&#34;${contains(lookuplist(var.namespace_name_map, jsonpath(&#34;metadata.namespace&#34;)), get_service_id_with_env(filename))}&#34;</span><span class="p">,</span>
   <span class="p">]</span>
 
-  <span class="err">/</span><span class="err">/</span> <span class="p">(</span><span class="k">必須</span><span class="p">)</span>
-  <span class="err">/</span><span class="err">/</span> <span class="k">ルールが失敗したときのレポートフォーマットを指定できる</span>
-  <span class="err">/</span><span class="err">/</span> <span class="k">ERROR</span> <span class="k">の場合</span><span class="err">、</span><span class="k">stein</span> <span class="k">の終了値は</span> <span class="m">1</span> <span class="k">になり</span><span class="err">、</span><span class="k">WARN</span> <span class="k">のときはエラー表示はされるが終了値は</span> <span class="m">0</span> <span class="k">になる</span>
+  <span class="err">//</span> <span class="p">(</span><span class="k">必須</span><span class="p">)</span>
+  <span class="err">//</span> <span class="k">ルールが失敗したときのレポートフォーマットを指定できる</span>
+  <span class="err">//</span> <span class="k">ERROR</span> <span class="k">の場合</span><span class="err">、</span><span class="k">stein</span> <span class="k">の終了値は</span> <span class="m">1</span> <span class="k">になり</span><span class="err">、</span><span class="k">WARN</span> <span class="k">のときはエラー表示はされるが終了値は</span> <span class="m">0</span> <span class="k">になる</span>
   <span class="k">report</span> {
 <span class="n">    level</span>   <span class="o">=</span> <span class="s2">&#34;ERROR&#34;</span>
 <span class="n">    message</span> <span class="o">=</span> <span class="s2">&#34;${format(&#34;This case is irregular pattern, so %q is invalid&#34;, jsonpath(&#34;metadata.namespace&#34;))}&#34;</span>
   }
 }
 
-<span class="err">/</span><span class="err">/</span> <span class="k">Terraform</span> <span class="k">の変数定義と同じ</span>
+<span class="err">//</span> <span class="k">Terraform</span> <span class="k">の変数定義と同じ</span>
 <span class="k">variable</span> <span class="s2">&#34;namespace_name_map&#34;</span> {
 <span class="n">  type</span> <span class="o">=</span> <span class="s2">&#34;map&#34;</span>
 
@@ -215,26 +215,26 @@ manifests/microservices/x-echo-jp/development/Deployment/.policy/
   }
 }
 
-<span class="err">/</span><span class="err">/</span> <span class="k">ユーザ定義関数を定義できる</span>
+<span class="err">//</span> <span class="k">ユーザ定義関数を定義できる</span>
 <span class="k">function</span> <span class="s2">&#34;get_service_name&#34;</span> {
 <span class="n">  params</span> <span class="o">=</span> <span class="p">[</span><span class="k">file</span><span class="p">]</span>
-<span class="n">  result</span> <span class="o">=</span> <span class="k">basename</span><span class="p">(</span><span class="k">dirname</span><span class="p">(</span><span class="k">dirname</span><span class="p">(</span><span class="k">dirname</span><span class="p">(</span><span class="k">file</span><span class="p">)</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+<span class="n">  result</span> <span class="o">=</span> <span class="k">basename</span><span class="p">(</span><span class="k">dirname</span><span class="p">(</span><span class="k">dirname</span><span class="p">(</span><span class="k">dirname</span><span class="p">(</span><span class="k">file</span><span class="p">))))</span>
 }
 
 <span class="k">function</span> <span class="s2">&#34;get_env&#34;</span> {
 <span class="n">  params</span> <span class="o">=</span> <span class="p">[</span><span class="k">file</span><span class="p">]</span>
-<span class="n">  result</span> <span class="o">=</span> <span class="k">basename</span><span class="p">(</span><span class="k">dirname</span><span class="p">(</span><span class="k">dirname</span><span class="p">(</span><span class="k">file</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+<span class="n">  result</span> <span class="o">=</span> <span class="k">basename</span><span class="p">(</span><span class="k">dirname</span><span class="p">(</span><span class="k">dirname</span><span class="p">(</span><span class="k">file</span><span class="p">)))</span>
 }
 
 <span class="k">function</span> <span class="s2">&#34;get_service_id_with_env&#34;</span> {
 <span class="n">  params</span> <span class="o">=</span> <span class="p">[</span><span class="k">file</span><span class="p">]</span>
-<span class="n">  result</span> <span class="o">=</span> <span class="k">format</span><span class="p">(</span><span class="s2">&#34;%s-%s&#34;</span><span class="p">,</span> <span class="k">get_service_name</span><span class="p">(</span><span class="k">file</span><span class="p">)</span><span class="p">,</span> <span class="k">lookup</span><span class="p">(</span><span class="k">var</span><span class="p">.</span><span class="k">shortened_environment</span><span class="p">,</span> <span class="k">get_env</span><span class="p">(</span><span class="k">file</span><span class="p">)</span><span class="p">)</span><span class="p">)</span>
+<span class="n">  result</span> <span class="o">=</span> <span class="k">format</span><span class="p">(</span><span class="s2">&#34;%s-%s&#34;</span><span class="p">,</span> <span class="k">get_service_name</span><span class="p">(</span><span class="k">file</span><span class="p">),</span> <span class="k">lookup</span><span class="p">(</span><span class="k">var</span><span class="p">.</span><span class="k">shortened_environment</span><span class="p">,</span> <span class="k">get_env</span><span class="p">(</span><span class="k">file</span><span class="p">)))</span>
 }
 </code></pre></div><p>これ以外にも機能があるが長くなってしまうので省略する。
 他の使い方やユースケースなどは公式ドキュメントとしてまとめているので参考になるかもしれない。</p>
 <p><a href="https://b4b4r07.github.io/stein/">Stein Documentations</a></p>
 <p>また、リポジトリにある <a href="https://github.com/b4b4r07/stein/tree/master/_examples">_examples</a> ディレクトリは実際のユースケースに則した形でのせたのでこれも参考になる。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ tree -a _examples
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ tree -a _examples
 _examples
 ├── .policy/
 │   ├── config.hcl
@@ -266,7 +266,7 @@ _examples
     └── x-echo-jp/
         └── development/
             └── deploy-to-dev-v2.yaml
-</code></pre></div><div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># _examples にある例をもとに stein を実行する</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># _examples にある例をもとに stein を実行する</span>
 $ make run
 </code></pre></div><h2 id="まとめ">まとめ</h2>
 <p>本記事では、</p>

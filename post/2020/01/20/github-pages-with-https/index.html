@@ -71,7 +71,7 @@
 めんどくさくて移行していなかったんだけど HTTPS 化するのも GitHub Pages の設定画面からできるようなのでやっていく<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。</p>
 <h2 id="1-ip-をレジストラに追加する">1. IP をレジストラに追加する</h2>
 <p><a href="https://help.github.com/en/github/working-with-github-pages/managing-a-custom-domain-for-your-github-pages-site#configuring-a-records-with-your-dns-provider">公式ガイドにある通り</a>、GitHub の A レコードをすべて登録する。</p>
-<pre><code>185.199.108.153
+<pre tabindex="0"><code>185.199.108.153
 185.199.109.153
 185.199.110.153
 185.199.111.153
@@ -89,10 +89,10 @@
 
 
 <p>待っていると数分でつながるようになる。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ dig babarot.me +nostats +nocomments +nocmd
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ dig babarot.me +nostats +nocomments +nocmd
 
 <span class="p">;</span> &lt;&lt;&gt;&gt; DiG 9.10.6 &lt;&lt;&gt;&gt; babarot.me +nostats +nocomments +nocmd
-<span class="p">;</span><span class="p">;</span> global options: +cmd
+<span class="p">;;</span> global options: +cmd
 <span class="p">;</span>babarot.me.                    IN      A
 babarot.me.             <span class="m">3185</span>    IN      A       185.199.110.153
 babarot.me.             <span class="m">3185</span>    IN      A       185.199.108.153
@@ -130,10 +130,10 @@ babarot.me.             <span class="m">3185</span>    IN      A       185.199.1
 <hr>
 <ol>
 <li id="fn:1" role="doc-endnote">
-<p><a href="https://qiita.com/noraworld/items/89dd85a434a7b759e00c">GitHub Pages + CloudFlare で独自ドメインをSSL化する - Qiita</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://qiita.com/noraworld/items/89dd85a434a7b759e00c">GitHub Pages + CloudFlare で独自ドメインをSSL化する - Qiita</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 <li id="fn:2" role="doc-endnote">
-<p><a href="https://help.github.com/ja/github/working-with-github-pages/securing-your-github-pages-site-with-https">HTTPS で GitHub Pages サイトを保護する - GitHub ヘルプ</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+<p><a href="https://help.github.com/ja/github/working-with-github-pages/securing-your-github-pages-site-with-https">HTTPS で GitHub Pages サイトを保護する - GitHub ヘルプ</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
 </li>
 </ol>
 </section>

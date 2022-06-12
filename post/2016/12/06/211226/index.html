@@ -84,7 +84,7 @@
   scrolling="no">
 </iframe>
 
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ date -d @1478745332.2113 +<span class="s2">&#34;%Y/%m/%d %T&#34;</span> <span class="c1"># GNU date</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ date -d @1478745332.2113 +<span class="s2">&#34;%Y/%m/%d %T&#34;</span> <span class="c1"># GNU date</span>
 </code></pre></div><p>これ非常に面倒なんですよね。さらに言えば GNU date である必要があったり((<a href="http://qiita.com/albatross/items/b97df73dcfcedabb070d">GNU date コマンドで unix time 変換</a>))して、ただログの時間を読みたいだけなのに無駄に考えることが多いです。</p>
 <h2 id="こまけぇこたぁいいから">こまけぇこたぁいいから</h2>
 <p>時と場合であれこれ考えずに丸っとよしなにやってくれるフィルタあったら便利そう、ってことで書いてみました。</p>
@@ -93,7 +93,7 @@
 </ul>
 <p>別に難しいことはしてなく、cat コマンドの要領で UNIX 時間っぽい数字を <a href="https://www.ietf.org/rfc/rfc3339.txt">RFC3339 形式</a>に変換します。数値を何でもかんでも変換していたらとてもやってやれないので、誤爆を防ぐために <code>2000-01-01 00:00:00+00:00</code> 以降の UNIX 時間 (946684800) にのみ反応します。ロケールは TZ 環境変数に従ってローカライズされます。</p>
 <p>それでも誤爆する場合 (例えば、9桁以上のユーザ ID が頻繁に登場するなど) は、<code>-p</code> オプションで検索用のプレフィックスをつければ良いです。</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ cat error_log <span class="p">|</span> epoch-cat -p <span class="s1">&#39;&#34;time&#34;:&#39;</span> -q <span class="p">|</span> jq .
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ cat error_log <span class="p">|</span> epoch-cat -p <span class="s1">&#39;&#34;time&#34;:&#39;</span> -q <span class="p">|</span> jq .
 <span class="o">{</span>
   <span class="s2">&#34;time&#34;</span>: <span class="s2">&#34;2016-12-05T21:51:26Z&#34;</span>,
   <span class="s2">&#34;user_id&#34;</span>: 987654321,

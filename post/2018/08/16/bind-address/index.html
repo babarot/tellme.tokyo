@@ -83,7 +83,7 @@
 <!-- raw HTML omitted -->
 <!-- raw HTML omitted -->
 <p>動作確認として適当に Serve するスクリプトで :1313 を LISTEN して nmap してみた。</p>
-<div class="highlight"><pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
 
 <span class="kn">import</span> <span class="p">(</span>
 	<span class="s">&#34;net/http&#34;</span>
@@ -94,38 +94,38 @@
 	<span class="nx">io</span><span class="p">.</span><span class="nf">WriteString</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;Hello world!&#34;</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="kd">func</span> <span class="nf">main</span><span class="p">(</span><span class="p">)</span> <span class="p">{</span>
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
 	<span class="nx">http</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="nx">helloHandler</span><span class="p">)</span>
 	<span class="nx">http</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:1313&#34;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
 <span class="p">}</span>
-</code></pre></div><pre><code class="language-console" data-lang="console">$ nmap -p 1313 &lt;ip_address&gt;
-...
-PORT     STATE SERVICE
-1313/tcp open  bmc_patroldb
-
-Nmap done: 1 IP address (1 host up) scanned in 0.37 seconds
-</code></pre><p>問題なさそうなので、</p>
-<pre><code class="language-console" data-lang="console">[b4b4r07@instance-1 site] hugo server
-</code></pre><p>次はこれで行けるかとローカルから <code>http://&lt;ip_address&gt;:1313/</code> でリクエストすると Connection refused になった。</p>
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>nmap -p <span class="m">1313</span> &lt;ip_address&gt;
+<span class="go">...
+</span><span class="go">PORT     STATE SERVICE
+</span><span class="go">1313/tcp open  bmc_patroldb
+</span><span class="go"></span><span class="err">
+</span><span class="err"></span><span class="go">Nmap done: 1 IP address (1 host up) scanned in 0.37 seconds
+</span></code></pre></div><p>問題なさそうなので、</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="go">[b4b4r07@instance-1 site] hugo server
+</span></code></pre></div><p>次はこれで行けるかとローカルから <code>http://&lt;ip_address&gt;:1313/</code> でリクエストすると Connection refused になった。</p>
 <p><code>ps</code> しても hugo プロセスはいるし、</p>
-<pre><code class="language-console" data-lang="console">[b4b4r07@instance-1 site] curl localhost:1313
-</code></pre><p>しても問題ない。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="go">[b4b4r07@instance-1 site] curl localhost:1313
+</span></code></pre></div><p>しても問題ない。</p>
 <p>しかし、よく hugo の STDOUT を見ると、</p>
-<pre><code class="language-console" data-lang="console">...
-Total in 11 ms
-Watching for changes in /home/user/site/{content,data,layouts,static,themes}
-Watching for config changes in /home/user/site/config.toml
-Serving pages from memory
-Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
-Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
-Press Ctrl+C to stop
-</code></pre><p>bind address が 127.0.0.1 になっていた。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="go">...
+</span><span class="go">Total in 11 ms
+</span><span class="go">Watching for changes in /home/user/site/{content,data,layouts,static,themes}
+</span><span class="go">Watching for config changes in /home/user/site/config.toml
+</span><span class="go">Serving pages from memory
+</span><span class="go">Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
+</span><span class="go">Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
+</span><span class="go">Press Ctrl+C to stop
+</span></code></pre></div><p>bind address が 127.0.0.1 になっていた。</p>
 <p>これだとローカルからのリクエストしか受け付けないので、次のようにして起動し直した。</p>
-<pre><code class="language-console" data-lang="console">[b4b4r07@instance-1 site] hugo server --bind 0.0.0.0
-...
-Web Server is available at http://localhost:1313/ (bind address 0.0.0.0)
-Press Ctrl+C to stop
-</code></pre><p>手元から <code>http://&lt;ip_address&gt;:1313/</code> すると 200 になった。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="go">[b4b4r07@instance-1 site] hugo server --bind 0.0.0.0
+</span><span class="go">...
+</span><span class="go">Web Server is available at http://localhost:1313/ (bind address 0.0.0.0)
+</span><span class="go">Press Ctrl+C to stop
+</span></code></pre></div><p>手元から <code>http://&lt;ip_address&gt;:1313/</code> すると 200 になった。</p>
 <p>これの理解にはこの記事が役立った。</p>
 <iframe
   class="hatenablogcard"
