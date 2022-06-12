@@ -90,7 +90,7 @@
 <span class="n">  name</span>     <span class="o">=</span> <span class="k">each</span><span class="p">.</span><span class="k">key</span>
 <span class="n">  location</span> <span class="o">=</span> <span class="k">each</span><span class="p">.</span><span class="k">value</span>
 }
-</code></pre></div><p>for_each では要素は <a href="https://www.terraform.io/language/meta-arguments/for_each#the-each-object">each</a> というオブジェクトで参照する。Map の場合は、each.key と each.value で、配列 (Set) の場合は、each.key と each.value のどちらを使っても要素を参照できる。</p>
+</code></pre></div><p>for_each では要素は <a href="https://www.terraform.io/language/meta-arguments/for_each#the-each-object">each</a> というオブジェクトで参照する。Map の場合は、each.key でキーが each.value で値が参照でき、配列 (Set) の場合は、each.key と each.value のどちらを使っても参照できる。</p>
 <h2 id="count-と-for_each-の使い分け">count と for_each の使い分け</h2>
 <p><strong>基本的に count を使用しない</strong>。count だとリソースのアドレス (state) が配列となり、途中のリソースを削除するとその index が飛ぶので Terraform が配列の詰め直しをしてしまう。それにより、リソースの削除と作成が行われてしまい予期せぬアクシデントを引き起こす可能性がある。</p>
 <p>例えば、次のようなリソースの定義があるとする。<a href="https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project_service">google_project_service</a> は指定した GCP プロジェクトで使用するサービスの API を有効化するリソースである。</p>
