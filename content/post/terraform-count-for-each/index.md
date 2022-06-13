@@ -34,7 +34,7 @@ resource "aws_iam_user" "the-accounts" {
 }
 ```
 
-どちらも for ループとして利用できるが count はリソースが配列として作成され、for_each はリソースがマップとして作成される。for_each に配列を渡す場合は明示的に [`toset`](https://www.terraform.io/language/functions/toset) で [Set](https://www.terraform.io/language/expressions/type-constraints#collection-types) (重複する値がないことが保証された配列) に変換して渡す必要がある (Map はそのまま渡す)。
+どちらも for ループとして利用できるが count はリソースを配列として作成し、for_each はマップとして作成する (リソースは state に保存されこのときの状態の持ち方が配列とマップという違いがある)。また、for_each では配列とマップの型を渡すことができ、配列を渡す場合は明示的に [`toset`](https://www.terraform.io/language/functions/toset) で [Set](https://www.terraform.io/language/expressions/type-constraints#collection-types) (重複する値がないことが保証された配列) に変換して渡す必要がある。マップはそのまま渡す。
 
 ```hcl
 # for_each に Map を渡す
@@ -48,7 +48,9 @@ resource "azurerm_resource_group" "rg" {
 }
 ```
 
-for_each では要素は [each](https://www.terraform.io/language/meta-arguments/for_each#the-each-object) というオブジェクトで参照する。Map の場合は、each.key でキーが each.value で値が参照でき、配列 (Set) の場合は、each.key と each.value のどちらを使っても参照できる。
+for_each ではループしたあとの配列 (もしくはマップ) の各要素は [each](https://www.terraform.io/language/meta-arguments/for_each#the-each-object) というオブジェクトで参照する。Map の場合は、each.key でキーが each.value で値が参照でき、配列 (Set) の場合は、each.key と each.value のどちらを使っても参照できる。
+
+count の場合は [count.index](https://www.terraform.io/language/meta-arguments/count#count-index) という定義済みの attribute でループ中の index を参照することができる。
 
 ## count と for_each の使い分け
 
