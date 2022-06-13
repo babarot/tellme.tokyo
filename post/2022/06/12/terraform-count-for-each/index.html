@@ -80,7 +80,7 @@
 <span class="n">  for_each</span> <span class="o">=</span> <span class="k">toset</span><span class="p">(</span> <span class="p">[</span><span class="s2">&#34;Todd&#34;, &#34;James&#34;, &#34;Alice&#34;, &#34;Dottie&#34;</span><span class="p">]</span> <span class="p">)</span>
 <span class="n">  name</span>     <span class="o">=</span> <span class="k">each</span><span class="p">.</span><span class="k">key</span>
 }
-</code></pre></div><p>どちらも for ループとして利用できるが count はリソースが配列として作成され、for_each はリソースがマップとして作成される。for_each に配列を渡す場合は明示的に <a href="https://www.terraform.io/language/functions/toset"><code>toset</code></a> で <a href="https://www.terraform.io/language/expressions/type-constraints#collection-types">Set</a> (重複する値がないことが保証された配列) に変換して渡す必要がある (Map はそのまま渡す)。</p>
+</code></pre></div><p>どちらも for ループとして利用できるが count はリソースを配列として作成し、for_each はマップとして作成する (リソースは state に保存されこのときの状態の持ち方が配列とマップという違いがある)。また、for_each では配列とマップの型を渡すことができ、配列を渡す場合は明示的に <a href="https://www.terraform.io/language/functions/toset"><code>toset</code></a> で <a href="https://www.terraform.io/language/expressions/type-constraints#collection-types">Set</a> (重複する値がないことが保証された配列) に変換して渡す必要がある。マップはそのまま渡す。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="c1"># for_each に Map を渡す
 </span><span class="c1"></span><span class="k">resource</span> <span class="s2">&#34;azurerm_resource_group&#34; &#34;rg&#34;</span> {
 <span class="n">  for_each</span> <span class="o">=</span> {
@@ -90,7 +90,8 @@
 <span class="n">  name</span>     <span class="o">=</span> <span class="k">each</span><span class="p">.</span><span class="k">key</span>
 <span class="n">  location</span> <span class="o">=</span> <span class="k">each</span><span class="p">.</span><span class="k">value</span>
 }
-</code></pre></div><p>for_each では要素は <a href="https://www.terraform.io/language/meta-arguments/for_each#the-each-object">each</a> というオブジェクトで参照する。Map の場合は、each.key でキーが each.value で値が参照でき、配列 (Set) の場合は、each.key と each.value のどちらを使っても参照できる。</p>
+</code></pre></div><p>for_each ではループしたあとの配列 (もしくはマップ) の各要素は <a href="https://www.terraform.io/language/meta-arguments/for_each#the-each-object">each</a> というオブジェクトで参照する。Map の場合は、each.key でキーが each.value で値が参照でき、配列 (Set) の場合は、each.key と each.value のどちらを使っても参照できる。</p>
+<p>count の場合は <a href="https://www.terraform.io/language/meta-arguments/count#count-index">count.index</a> という定義済みの attribute でループ中の index を参照することができる。</p>
 <h2 id="count-と-for_each-の使い分け">count と for_each の使い分け</h2>
 <p><strong>基本的に count を使用しない</strong>。count だとリソースのアドレス (state) が配列となり、途中のリソースを削除するとその index が飛ぶので Terraform が配列の詰め直しをしてしまう。それにより、リソースの削除と作成が行われてしまい予期せぬアクシデントを引き起こす可能性がある。</p>
 <p>例えば、次のようなリソースの定義があるとする。<a href="https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project_service">google_project_service</a> は指定した GCP プロジェクトで使用するサービスの API を有効化するリソースである。</p>

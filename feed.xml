@@ -15,8 +15,7 @@
       
       <guid>https://tellme.tokyo/post/2022/06/12/terraform-count-for-each/</guid>
       <description>count と for_each Terraform には &amp;ldquo;繰り返す&amp;rdquo; 処理として count と for_each がある。
-resource &amp;#34;aws_instance&amp;#34; &amp;#34;server&amp;#34; { count = 4# create four similar EC2 instances  ami = &amp;#34;ami-a1b2c3d4&amp;#34; instance_type = &amp;#34;t2.micro&amp;#34; tags = { Name = &amp;#34;Server ${count.index}&amp;#34; } } resource &amp;#34;aws_iam_user&amp;#34; &amp;#34;the-accounts&amp;#34; { for_each = toset( [&amp;#34;Todd&amp;#34;, &amp;#34;James&amp;#34;, &amp;#34;Alice&amp;#34;, &amp;#34;Dottie&amp;#34;] ) name = each.key } どちらも for ループとして利用できるが count はリソースが配列として作成され、for_each はリソースがマップとして作成される。for_each に配列を渡す場合は明示的に toset で Set (重複する値がないことが保証された配列) に変換して渡す必要がある (Map はそのまま渡す)。
-# for_each に Map を渡す resource &amp;#34;azurerm_resource_group&amp;#34; &amp;#34;rg&amp;#34; { for_each = { a_group = &amp;#34;eastus&amp;#34; another_group = &amp;#34;westus2&amp;#34; } name = each.</description>
+resource &amp;#34;aws_instance&amp;#34; &amp;#34;server&amp;#34; { count = 4# create four similar EC2 instances  ami = &amp;#34;ami-a1b2c3d4&amp;#34; instance_type = &amp;#34;t2.micro&amp;#34; tags = { Name = &amp;#34;Server ${count.index}&amp;#34; } } resource &amp;#34;aws_iam_user&amp;#34; &amp;#34;the-accounts&amp;#34; { for_each = toset( [&amp;#34;Todd&amp;#34;, &amp;#34;James&amp;#34;, &amp;#34;Alice&amp;#34;, &amp;#34;Dottie&amp;#34;] ) name = each.key } どちらも for ループとして利用できるが count はリソースを配列として作成し、for_each はマップとして作成する (リソースは state に保存されこのときの状態の持ち方が配列とマップという違いがある)。また、for_each では配列とマップの型を渡すことができ、配列を渡す場合は明示的に toset で Set (重複する値がないことが保証された配列) に変換して渡す必要がある。マップはそのまま渡す。</description>
     </item>
     
     <item>
