@@ -138,20 +138,22 @@ Variables と Outputs はユーザに公開されたインターフェイスで�
 
 ## どのような API を定義するべきか
 
-Module を定義して外部に公開する場合 (ここでいう外部とは Module 管理者以外を指し必ずしもインターネットで公開することを意味しない) 常にどんな Variables を定義するかを考える必要がある。Outputs についても同様で、一度公開しひとたび参照されてしまうと、うかつに削除することができなくなる。
+ではどのような Variables や Outputs を API として考えるべきか。
 
-例えば「サービスの立ち上げに必要なツールセットを作成する」Module (service-kit とする) があったとする。
+Module を定義して外部に公開する場合 (ここでいう外部とは Module 管理者以外を指し必ずしもインターネットで公開することを意味しない) 常にどんなインターフェイスにするべきかを考える必要がある。一度公開し、ひとたび参照されてしまうと、うかつに削除することができなくなる。
+
+Module のインターフェイスを考えるために、「サービスの立ち上げに必要なツールセットを作成する Module」(名前を service-kit とする) があったとする。
 
 サービスの立ち上げ時に必要なもの:
 
-- GCP プロジェクト
+- GCP (Project / Firebase / GCS Bucket / IAM / ...)
 - GitHub Team
 - PagerDuty (Service / Team / Escalation Policy / Schedule)
 - Datadog (Monitor / Alert)
 - Slack (mention group / channel)
 - ...
 
-それぞれの機能を有効にするかどうかを variable `enable_xxx` として定義することが考えられる。サービスによっては PagerDuty による OnCall 設定を必要としたり、しなかったりが想定できるからである。また、PagerDuty の基本的な設定はするが [Schedule](https://support.pagerduty.com/docs/schedule-examples) (OnCall Shift) の機能だけ使わないケースがあるとする。その場合もそれだけを無効にしたりと外部から変更できるようになっていると嬉しい。
+まずはじめに、それぞれの機能 (GCP など) を有効にするかどうかを variable `enable_xxx` として定義することが考えられる。サービスによっては例えば PagerDuty を必要としたりしなかったりが想定できるからである。また、PagerDuty の基本的な設定はするが [Schedule](https://support.pagerduty.com/docs/schedule-examples) (OnCall Shift) の機能だけ使わないことも (公開する範囲内では) 一般的なユースケースだったとする。その場合もそれだけを無効にしたりと外部から変更できるようになっていると嬉しい。
 
 ```hcl
 # モジュール側
@@ -169,7 +171,7 @@ variable "pagerduty" {
 }
 ```
 
-こうすることで、ユーザのユースケースに応じて Module の振る舞いを変更できる余地を与える。
+こうすることで、ユーザのユースケースに応じて Module の振る舞いを変更できる余地をユーザに与えることができる。このとき提供する機能はデフォルトでオフになっていることが好ましい。
 
 ```hcl
 # ユーザ側
@@ -184,7 +186,7 @@ module "myservice" {
 }
 ```
 
-一方で良くない Variables の定義は何かを考えてみる。
+一方で、良くないインターフェイスは何かを考えてみる。
 
 例えば次のような variable を定義したとする。GCP プロジェクトを作成したときに紐付ける Billing account の設定である。
 
@@ -196,7 +198,7 @@ variable "billing_account" {
 }
 ```
 
-何度もいうように Variables は API であり常にユーザに公開されている。つまりこの値をユーザは変更することができる。入力として正しくないものを弾く場合は validation を設定することで Input を制御することができるが、"正しい Billing account かどうか" を判断するのは難しい。こういったものは Variables として定義するべきではない。仮に作成する GCP プロジェクトごとに Billing account を変更できるようにするのであれば、ユーザが変更できない場所 (Locals) で定義した値を選択させるようなインターフェイスにするべきである。
+何度もいうように Variables は API であり常にユーザに公開されている。つまりユーザはこの値を変更することができる。入力として正しくないものを弾く場合は validation を設定することで Input を制御することができるが、"正しい Billing account かどうか" を Module で判断するのは難しい。こういったものは Variables として定義するべきではない。Locals に置くことを考えるべきである。仮に作成する GCP プロジェクトごとに Billing account をユーザが変更できるようにするのであれば、Locals (ユーザが変更できない場所) で定義した値を選択させるようなインターフェイスにするべきである。
 
 ```hcl
 # モジュール側
@@ -228,26 +230,28 @@ resource "google_project" "service" {
 }
 ```
 
-こうすることでユーザは紐付けたい Billing account を選んだ上で安全に Module に渡すことができ、Module としても予期せぬ文字列を受け取らないようにすることができる。
-
 ```hcl
 # ユーザ側
 module "myservice" {
   source = "git://..."
 
+  # ユーザはどの Billing account を使うか選ぶだけ
   gcp_billing_account = "account-a"
 }
 ```
 
+こうすることでユーザは紐付けたい Billing account を選んだ上で安全に Module に渡すことができ、Module としても予期せぬ文字列を受け取らないようにすることができる。
 このように、ユーザに隠したい変数は可能な限り Locals に定義するべきである。Variables に定義するとユーザが変更できてしまうこと忘れてはいけない。
 
-## Output としての API
+## Outputs のインターフェイスを考える
 
-Variables の例でもわかったように公開するべきものは慎重に選ぶ必要がある。Outputs についても同様で、常にユーザに参照されうることを考慮するべきである。ではどんな Outputs を定義するべきか。
+Variables の例でもわかったように公開するべきものは慎重に選ぶ必要がある。Outputs についても同様で、常にユーザに参照されることを考慮するべきである。ではどんな Outputs を定義するべきか。
 
-PagerDuty を例に考えてみる。上でも説明したとおり、使いたい機能を選べるように Input Variables が定義されているとする。Module 内で作成するリソースについては多少の挙動を変更できる余地を残した上で可能な限り隠蔽する。こうすることでユーザに余分な選択を与えないようにできる (逆に多くのものの挙動を Module 外から操作できるように Variables を事細かく定義してユーザに公開する場合、それはインターフェイスとして優れておらず Module 内に閉じ込めないほうがいいリソースだといえる)。
+PagerDuty を例に考えてみる。上でも説明したとおり、使いたい機能を選べるように Input Variables が定義されているとする。Module 内で作成するリソースについては多少の挙動を変更できる余地を残した上で可能な限り隠蔽する。こうすることでユーザに余分な選択を与えないようにできる。逆に多くのものの挙動を Module 外から操作できるように Variables を事細かく定義してユーザに公開する場合、それはインターフェイスとして優れておらず、そもそもそのリソースは Module 内に閉じ込めないほうがいいと考えられる。
 
-良くない Variables の定義:
+良くない隠蔽の仕方:
+
+(これほどユーザに設定させる必要があるリソースは Module にいれるべきではない可能性が高い)
 
 ```hcl
 # モジュール側
@@ -286,10 +290,9 @@ variable "pagerduty" {
 ```
 
 Module とは抽象度を上げるためのものであるのにも関わらず、これほどまで多くの項目を Variables に定義して Module 外部から変更できるようにする場合、それは Module に含めるリソースであるのかどうかを改めて考える必要がある。
-
 こうしたリソースを Module に入れない場合、ユーザが自分たちで定義する必要が出てくる。そのとき、Module 内で作成したリソースやデータとやりとりをするためのブリッヂになるのが Outputs である。
 
-以下のものが service-kit というサービス立ち上げに必要なツールセットを作成する Module で定義されており、
+以下のリソースが service-kit module で定義されており、
 
 ```console
 $ ls  modules/service-kit/pagerduty_*
@@ -299,7 +302,7 @@ pagerduty_service.tf
 pagerduty_user.tf
 ```
 
-以下のものが Root Module (ユーザによる service-kit の呼び出し元) にあるとする。
+以下のリソースが Root Module (ユーザ側: service-kit の呼び出し元) にあるとする。
 
 ```console
 $ ls
@@ -307,7 +310,7 @@ pagerduty_ruleset.tf
 pagerduty_ruleset_rule.tf
 ```
 
-PagerDuty Ruleset は Module 側で定義されておらず (設定項目がユーザに依存しすぎて抽象化できなかったとする)、ユーザが自身で定義する必要がある。
+PagerDuty RuleSet (pagerduty_ruleset.tf) は Module 側で定義されておらず (設定項目がユーザに依存しすぎて抽象化できなかったとする)、ユーザが自身で定義する必要がある。
 
 [pagerduty_ruleset_rule](https://registry.terraform.io/providers/PagerDuty/pagerduty/latest/docs/resources/ruleset_rule#route) では PagerDuty Service の Service ID を参照する箇所がある。PagerDuty Service (pagerduty_service.tf) は Module 側に定義されており、ユーザは参照することができない。しかし、Service ID をハードコードするのではなく、リソース参照により取得したいと考える。
 
@@ -334,6 +337,18 @@ resource "pagerduty_ruleset_rule" "service" {
   }
   ...
 }
+```
+
+State から見ても Module 側とユーザ側で分離されていることがわかる。ここのブリッヂになるのが Outputs である。
+
+```console
+$ teraform state list
+data.pagerduty_ruleset.default_global
+pagerduty_ruleset_rule.service          ---------------reference--------\
+module.myservice.data.pagerduty_user.oncall_members["babarot@xxx.com"]   |
+module.myservice.pagerduty_escalation_policy.service                     |
+module.myservice.pagerduty_service.service   <---------(output)---------/
+...
 ```
 
 ## Root Module の場合は Variables を使うか、Locals を使うか
