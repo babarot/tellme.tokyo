@@ -148,12 +148,13 @@
 </span></code></pre></div><p>Variables と Outputs はユーザに公開されたインターフェイスであり、API と同様の性質を持つ。一度公開すると簡単には変更できず削除できない。どのような Input として Variables を定義し、どのような Output をすべきかを考えて Outputs を定義する必要がある。</p>
 <p><img src="api.png" alt=""></p>
 <h2 id="どのような-api-を定義するべきか">どのような API を定義するべきか</h2>
-<p>ではどのような Variables や Outputs を API として考えるべきか。</p>
+<p>ではどのようなインターフェイスとして Variables や Outputs を定義するべきか。</p>
 <p>Module を定義して外部に公開する場合 (ここでいう外部とは Module 管理者以外を指し必ずしもインターネットで公開することを意味しない) 常にどんなインターフェイスにするべきかを考える必要がある。一度公開し、ひとたび参照されてしまうと、うかつに削除することができなくなる。</p>
 <p>Module のインターフェイスを考えるために、「サービスの立ち上げに必要なツールセットを作成する Module」(名前を service-kit とする) があったとする。</p>
 <p>サービスの立ち上げ時に必要なもの:</p>
 <ul>
 <li>GCP (Project / Firebase / GCS Bucket / IAM / &hellip;)</li>
+<li>Google Group</li>
 <li>GitHub Team</li>
 <li>PagerDuty (Service / Team / Escalation Policy / Schedule)</li>
 <li>Datadog (Monitor / Alert)</li>
@@ -188,11 +189,11 @@
 </code></pre></div><p>一方で、良くないインターフェイスは何かを考えてみる。</p>
 <p>例えば次のような variable を定義したとする。GCP プロジェクトを作成したときに紐付ける Billing account の設定である。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="c1"># モジュール側
-</span><span class="c1"></span><span class="k">variable</span> <span class="s2">&#34;billing_account&#34;</span> {
+</span><span class="c1"></span><span class="k">variable</span> <span class="s2">&#34;gcp_billing_account&#34;</span> {
 <span class="n">  type</span>    <span class="o">=</span> <span class="k">string</span>
 <span class="n">  default</span> <span class="o">=</span> <span class="s2">&#34;01234-ABCDEF-56789&#34;</span>
 }
-</code></pre></div><p>何度もいうように Variables は API であり常にユーザに公開されている。つまりユーザはこの値を変更することができる。入力として正しくないものを弾く場合は validation を設定することで Input を制御することができるが、&ldquo;正しい Billing account かどうか&rdquo; を Module で判断するのは難しい。こういったものは Variables として定義するべきではない。Locals に置くことを考えるべきである。仮に作成する GCP プロジェクトごとに Billing account をユーザが変更できるようにするのであれば、Locals (ユーザが変更できない場所) で定義した値を選択させるようなインターフェイスにするべきである。</p>
+</code></pre></div><p>何度も言うように Variables は API であり常にユーザに公開されている。つまりユーザはこの値を変更することができる。入力として正しくないものを弾く場合は validation を設定することで Input を制御することができるが、&ldquo;正しい Billing account かどうか&rdquo; を Module で判断するのは難しい。こういったものは Variables として定義するべきではない。Locals に置くことを考えるべきである。仮に作成する GCP プロジェクトごとに Billing account をユーザが変更できるようにするのであれば、Locals (ユーザが変更できない場所) で定義した値を選択させるようなインターフェイスにするべきである。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="c1"># モジュール側
 </span><span class="c1"></span><span class="k">variable</span> <span class="s2">&#34;gcp_billing_account&#34;</span> {
 <span class="n">  type</span>    <span class="o">=</span> <span class="k">string</span>
@@ -316,7 +317,7 @@
 </code></pre></div><p>(variable の default を書かないことで Git に含めないで環境変数やプロンプト経由で Terraform に渡すことができる)</p>
 <h2 id="まとめ">まとめ</h2>
 <ul>
-<li>Variables は API である。公開するものは常にユーザによって上書きされる可能性がある</li>
+<li>Variables は API の性質を持つ。公開するものは常にユーザによって上書きされる可能性がある</li>
 <li>Variables は多くを定義しないほうが良い。定義が多い場合、ユーザに選択させすぎている良くないインターフェイスかもしれない</li>
 <li>Module 内部に閉じ込めておきたい変数は Locals に書く。必然的に Locals での定義が一番多くなるべきである</li>
 <li>Outputs も多くを定義しない。Variables 同様に API としての側面を持つ。Module 内と外をつなぐブリッヂとして必要なユースケースが考えられる場合のみ定義する</li>
