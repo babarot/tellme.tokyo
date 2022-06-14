@@ -138,7 +138,7 @@ Variables と Outputs はユーザに公開されたインターフェイスで�
 
 ## どのような API を定義するべきか
 
-ではどのような Variables や Outputs を API として考えるべきか。
+ではどのようなインターフェイスとして Variables や Outputs を定義するべきか。
 
 Module を定義して外部に公開する場合 (ここでいう外部とは Module 管理者以外を指し必ずしもインターネットで公開することを意味しない) 常にどんなインターフェイスにするべきかを考える必要がある。一度公開し、ひとたび参照されてしまうと、うかつに削除することができなくなる。
 
@@ -147,6 +147,7 @@ Module のインターフェイスを考えるために、「サービスの立�
 サービスの立ち上げ時に必要なもの:
 
 - GCP (Project / Firebase / GCS Bucket / IAM / ...)
+- Google Group
 - GitHub Team
 - PagerDuty (Service / Team / Escalation Policy / Schedule)
 - Datadog (Monitor / Alert)
@@ -192,13 +193,13 @@ module "myservice" {
 
 ```hcl
 # モジュール側
-variable "billing_account" {
+variable "gcp_billing_account" {
   type    = string
   default = "01234-ABCDEF-56789"
 }
 ```
 
-何度もいうように Variables は API であり常にユーザに公開されている。つまりユーザはこの値を変更することができる。入力として正しくないものを弾く場合は validation を設定することで Input を制御することができるが、"正しい Billing account かどうか" を Module で判断するのは難しい。こういったものは Variables として定義するべきではない。Locals に置くことを考えるべきである。仮に作成する GCP プロジェクトごとに Billing account をユーザが変更できるようにするのであれば、Locals (ユーザが変更できない場所) で定義した値を選択させるようなインターフェイスにするべきである。
+何度も言うように Variables は API であり常にユーザに公開されている。つまりユーザはこの値を変更することができる。入力として正しくないものを弾く場合は validation を設定することで Input を制御することができるが、"正しい Billing account かどうか" を Module で判断するのは難しい。こういったものは Variables として定義するべきではない。Locals に置くことを考えるべきである。仮に作成する GCP プロジェクトごとに Billing account をユーザが変更できるようにするのであれば、Locals (ユーザが変更できない場所) で定義した値を選択させるようなインターフェイスにするべきである。
 
 ```hcl
 # モジュール側
@@ -368,7 +369,7 @@ variable "pagerduty_token" {
 
 ## まとめ
 
-- Variables は API である。公開するものは常にユーザによって上書きされる可能性がある
+- Variables は API の性質を持つ。公開するものは常にユーザによって上書きされる可能性がある
 - Variables は多くを定義しないほうが良い。定義が多い場合、ユーザに選択させすぎている良くないインターフェイスかもしれない
 - Module 内部に閉じ込めておきたい変数は Locals に書く。必然的に Locals での定義が一番多くなるべきである
 - Outputs も多くを定義しない。Variables 同様に API としての側面を持つ。Module 内と外をつなぐブリッヂとして必要なユースケースが考えられる場合のみ定義する
