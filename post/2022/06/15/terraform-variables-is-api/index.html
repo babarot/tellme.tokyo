@@ -212,14 +212,12 @@
 }
 
 <span class="k">resource</span> <span class="s2">&#34;google_project&#34; &#34;service&#34;</span> {
-<span class="n">  count</span> <span class="o">=</span> <span class="k">var</span><span class="p">.</span><span class="k">gcp</span><span class="p">.</span><span class="k">enable</span> <span class="err">?</span> <span class="m">1</span> <span class="err">:</span> <span class="m">0</span>
+<span class="n">  count</span> <span class="o">=</span> <span class="k">var</span><span class="p">.</span><span class="k">enable_gcp</span> <span class="err">?</span> <span class="m">1</span> <span class="err">:</span> <span class="m">0</span>
 
 <span class="n">  name</span>       <span class="o">=</span> <span class="k">var</span><span class="p">.</span><span class="k">gcp_project_id</span>
 <span class="n">  project_id</span> <span class="o">=</span> <span class="k">var</span><span class="p">.</span><span class="k">gcp_project_id</span>
 
 <span class="n">  billing_account</span> <span class="o">=</span> <span class="k">local</span><span class="p">.</span><span class="k">billing_accounts</span><span class="p">[</span><span class="k">var</span><span class="p">.</span><span class="k">gcp_billing_account</span><span class="p">]</span>
-
-<span class="n">  skip_delete</span> <span class="o">=</span> <span class="kt">false</span>
 }
 </code></pre></div><p>こうすることでユーザは紐付けたい Billing account を選んだ上で安全に Module に渡すことができ、Module としても予期せぬ文字列を受け取らないようにすることができる。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="c1"># ユーザ側
