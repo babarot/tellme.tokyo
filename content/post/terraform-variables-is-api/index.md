@@ -219,14 +219,12 @@ locals {
 }
 
 resource "google_project" "service" {
-  count = var.gcp.enable ? 1 : 0
+  count = var.enable_gcp ? 1 : 0
 
   name       = var.gcp_project_id
   project_id = var.gcp_project_id
 
   billing_account = local.billing_accounts[var.gcp_billing_account]
-
-  skip_delete = false
 }
 ```
 
