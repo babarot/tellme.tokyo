@@ -212,9 +212,9 @@ variable "gcp_billing_account" {
 
 locals {
   billing_accounts = {
-    foo = "01234-ABCDEF-56789-A"
-    bar = "01234-ABCDEF-56789-B"
-    baz = "01234-ABCDEF-56789-C"
+    account-a = "01234-ABCDEF-56789-A"
+    account-b = "01234-ABCDEF-56789-B"
+    account-c = "01234-ABCDEF-56789-C"
   }
 }
 
