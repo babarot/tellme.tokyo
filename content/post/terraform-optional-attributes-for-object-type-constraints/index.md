@@ -98,14 +98,18 @@ pagerduty = {
 }
 ```
 
-## object of object で object 自体を optional にする場合
+## (応用) object of object で object 自体を optional にする場合
 
-この場合、object of object は pagerduty.schedule で pagerduty.schedule.timezone を optional にし、そもそも pagerduty.schedule 自体も optional にしようというケース (pagerduty.schedule object を新たに追加したユースケース) を考える。
+次のようなユースケースを考える。
 
-次の HCL が期待した動作をする。
+object of object (pagerduty.schedule) を追加した場合、
 
-- pagerduty.schedule (object) 自体を optional にする
-- pagerduty.schedule (object) の中の attribute をそれぞれ optional にする
+1. object of object (pagerduty.schedule) 自体も optional にして省略できるようにしたい
+2. object of object の attribute (pagerduty.schedule.timezone) を optional にして省略できるようにしたい
+
+このようなことを要求があったとする。
+
+それに対応する Terraform ファイルを書くとこうなる (variable の部分)。
 
 ```hcl
 # main.tf
@@ -137,7 +141,32 @@ output "pagerduty" {
 }
 ```
 
-### 1. object の中身 (schedule.timezone) を省略した場合
+### 1. object of object (pagerduty.schedule) 自体も optional にして省略できるようにしたい
+
+schedule 自体が optional() で囲まれていることで object ごと省略できていることがわかる (default である `{create: false, timezone: "Asia/Tokyo"}` が挿入されている)
+
+```hcl
+# example.tfvars
+pagerduty = {
+  enable = true
+}
+```
+
+```console
+$ terraform plan -var-file=example.tfvars
+Changes to Outputs:
+  + pagerduty = {
+      + enable   = true
+      + schedule = {
+          + create   = false
+          + timezone = "Asia/Tokyo"
+        }
+    }
+```
+
+### 2. object of object の attribute (pagerduty.schedule.timezone) を optional にして省略できるようにしたい
+
+schedule (object) の中の timezone (attribute) が optional() で囲まれていることで省略できていることがわかる (指定されている attribute の create は true に変更され、省略された attribute の timezone は default である `"Asia/Tokyo"` に置き換わっている)
 
 ```hcl
 # example.tfvars
@@ -156,27 +185,6 @@ Changes to Outputs:
       + enable   = true
       + schedule = {
           + create   = true
-          + timezone = "Asia/Tokyo"
-        }
-    }
-```
-
-### 2. object (schedule) 自体を省略した場合
-
-```hcl
-# example.tfvars
-pagerduty = {
-  enable = true
-}
-```
-
-```console
-$ terraform plan -var-file=example.tfvars
-Changes to Outputs:
-  + pagerduty = {
-      + enable   = true
-      + schedule = {
-          + create   = false
           + timezone = "Asia/Tokyo"
         }
     }
