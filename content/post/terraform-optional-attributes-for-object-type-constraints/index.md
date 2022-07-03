@@ -20,9 +20,9 @@ Terraform v1.3.0 から object variable の optional default が使えるよう�
 - [Optional arguments in object variable type definition · Issue #19898 · hashicorp/terraform](https://github.com/hashicorp/terraform/issues/19898)
 - [[Request] module_variable_optional_attrs: Optional default · Issue #30750 · hashicorp/terraform](https://github.com/hashicorp/terraform/issues/30750)
 
-どういう機能かというと、object type の variable にて、object attribute (object の key に対応する value) で optional を指定したときに一緒に default value を設定できるようにするもの。
+どういう機能かというと、object type の variable にて、object attribute (object の key に対応する value) で optional() を設定したときに一緒に default value を指定できるようにするもの。
 
-こうすることで optional のパラメータに対してユーザからの Input がなかった場合、null ではなく指定した default value が使用される。
+こうすることで optional のパラメータ (object attribute) に対してユーザからの Input がなかった場合、null ではなく指定した default value が使用される。
 
 例: 次のような variable があるとき
 
@@ -56,17 +56,18 @@ Changes to Outputs:
 
 ## どういうときに使えるか
 
-モジュール開発者が object type の variable を使って設定変更のインターフェイス[^1]を提供している場合を考える。モジュール開発者は新しい機能を追加したときに、モジュール利用者がその設定を変更できるようにパラメータ (object の attribute) もあわせて追加するとする。
+モジュール開発者が object type の variable を使って設定変更のインターフェイス[^1]を提供している場合を考える。モジュール開発者は新しい機能を追加したときに、モジュール利用者がその設定を変更できるように attribute もあわせて追加するとする。
 
-そのとき、モジュール利用者も同じようにモジュールファイル側でその attribute をたとえ使わなかったとしても (= default value でよかったとしても) 追加しないと object error になってしまう。つまり設定ファイルを変更していないのに plan が通らなくなってしまう。
+そのとき、モジュール利用者がその attribute をたとえ使わなかったとしても (= default value でよかったとしても) 同じようにモジュールファイル側で追加しないと attribute 不足エラーになってしまう。つまりモジュールをアップグレードしただけで、設定ファイルを変更していないのにもかかわらず plan が通らなくなってしまう。
 
-これを回避するには、モジュールのバージョン管理をするしかなかった。基本的に、Module Registory を使う場合などについては Terraform としてもモジュールのバージョン管理することを推奨されているが、必ずしもそうではない場合 (local など) は都度エラーに対応する必要があった _(これについては、新しいバージョンが公開されたら上げ続ける or 上げるようにお願いして回る必要があるという面倒くさい作業が発生するジレンマがある)_。
+これを回避するには、モジュールのバージョン管理をするしかない。利用するモジュールのバージョンを固定することで、latest に変更があったとしても plan に影響が出ないようにする。基本的にこれは正しい方法で、とくに Module Registory を使う場合などについては Terraform としてもモジュールのバージョン管理することを推奨されている。しかし必ずしもそうではない場合 (local source など) は都度エラーに対応する必要があった _(これについては、新しいバージョンが公開されたら上げ続ける or 上げるようにお願いして回る必要があるという面倒くさい作業が発生するジレンマがある)_。
 
-しかし、この default optional をうまく使うことでユーザに不用意な対応をお願いすることなく、新しいインターフェイスを提供することができるようになった。また、モジュールファイル側に必ずしもすべての attribute を記載する必要がなくなったのでファイル自体の見通しも良くなる。
+しかし、この default optional をうまく使うことでユーザに不用意な対応をお願いすることなく (バージョン管理を強要することなく)、新しいインターフェイスを提供することができるようになった。また、モジュールファイル側に必ずしもすべての attribute を記載する必要がなくなったのでファイル自体の見通しも良くなる。
 
-例えば次のようなモジュール設定が object variable によって提供されていた場合を考える。この例ではすべての attribute を記述しているが、実際にユーザが default から値を変えているのは schedule.interval だけである。つまり、他の設定については変更する必要もなくファイルに記述する必要がない。
+例えば以下のような設定が object variable によって提供されていた場合を考える。この例ではすべての attribute を記述しているが、実際にユーザが default から値を変えているのは schedule.interval だけである。つまり、他の設定については変更する必要がないのでファイルに記述する必要がない。
 
 ```hcl
+# (before)
 pagerduty = {
   enable = true
   service = {
@@ -87,6 +88,7 @@ pagerduty = {
 それを optional default によって他を省略することができるので設定ファイルは次のようになる。
 
 ```hcl
+# (after)
 pagerduty = {
   enable = true
   schedule = {
