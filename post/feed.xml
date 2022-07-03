@@ -15,9 +15,8 @@
       
       <guid>https://tellme.tokyo/post/2022/07/03/terraform-optional-attributes-for-object-type-constraints/</guid>
       <description>object variable の optional default とは Terraform v1.3.0 から object variable の optional default が使えるようになる (現在は experimental で v1.3.0-alpha で利用可能)
- Optional arguments in object variable type definition · Issue #19898 · hashicorp/terraform [Request] module_variable_optional_attrs: Optional default · Issue #30750 · hashicorp/terraform  どういう機能かというと、object type の variable にて、object attribute (object の key に対応する value) で optional を指定したときに一緒に default value を設定できるようにするもの。
-こうすることで optional のパラメータに対してユーザからの Input がなかった場合、null ではなく指定した default value が使用される。
-例: 次のような variable があるとき</description>
+ Optional arguments in object variable type definition · Issue #19898 · hashicorp/terraform [Request] module_variable_optional_attrs: Optional default · Issue #30750 · hashicorp/terraform  どういう機能かというと、object type の variable にて、object attribute (object の key に対応する value) で optional() を設定したときに一緒に default value を指定できるようにするもの。
+こうすることで optional のパラメータ (object attribute) に対してユーザからの Input がなかった場合、null ではなく指定した default value が使用される。</description>
     </item>
     
     <item>
