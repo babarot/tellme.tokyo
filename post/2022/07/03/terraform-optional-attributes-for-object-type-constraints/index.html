@@ -125,13 +125,15 @@
 <span class="n">    interval</span> <span class="o">=</span> <span class="s2">&#34;30m&#34;</span><span class="c1"> # default is 5m
 </span><span class="c1"></span>  }
 }
-</code></pre></div><h2 id="object-of-object-で-object-自体を-optional-にする場合">object of object で object 自体を optional にする場合</h2>
-<p>この場合、object of object は pagerduty.schedule で pagerduty.schedule.timezone を optional にし、そもそも pagerduty.schedule 自体も optional にしようというケース (pagerduty.schedule object を新たに追加したユースケース) を考える。</p>
-<p>次の HCL が期待した動作をする。</p>
-<ul>
-<li>pagerduty.schedule (object) 自体を optional にする</li>
-<li>pagerduty.schedule (object) の中の attribute をそれぞれ optional にする</li>
-</ul>
+</code></pre></div><h2 id="応用-object-of-object-で-object-自体を-optional-にする場合">(応用) object of object で object 自体を optional にする場合</h2>
+<p>次のようなユースケースを考える。</p>
+<p>object of object (pagerduty.schedule) を追加した場合、</p>
+<ol>
+<li>object of object (pagerduty.schedule) 自体も optional にして省略できるようにしたい</li>
+<li>object of object の attribute (pagerduty.schedule.timezone) を optional にして省略できるようにしたい</li>
+</ol>
+<p>このようなことを要求があったとする。</p>
+<p>それに対応する Terraform ファイルを書くとこうなる (variable の部分)。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="c1"># main.tf
 </span><span class="c1"></span>
 <span class="k">terraform</span> {
@@ -159,7 +161,23 @@
 <span class="k">output</span> <span class="s2">&#34;pagerduty&#34;</span> {
 <span class="n">  value</span> <span class="o">=</span> <span class="k">var</span><span class="p">.</span><span class="k">pagerduty</span>
 }
-</code></pre></div><h3 id="1-object-の中身-scheduletimezone-を省略した場合">1. object の中身 (schedule.timezone) を省略した場合</h3>
+</code></pre></div><h3 id="1-object-of-object-pagerdutyschedule-自体も-optional-にして省略できるようにしたい">1. object of object (pagerduty.schedule) 自体も optional にして省略できるようにしたい</h3>
+<p>schedule 自体が optional() で囲まれていることで object ごと省略できていることがわかる (default である <code>{create: false, timezone: &quot;Asia/Tokyo&quot;}</code> が挿入されている)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="c1"># example.tfvars
+</span><span class="c1"></span><span class="n">pagerduty</span> <span class="o">=</span> {
+<span class="n">  enable</span> <span class="o">=</span> <span class="kt">true</span>
+}
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>terraform plan -var-file<span class="o">=</span>example.tfvars
+<span class="go">Changes to Outputs:
+</span><span class="go">  + pagerduty = {
+</span><span class="go">      + enable   = true
+</span><span class="go">      + schedule = {
+</span><span class="go">          + create   = false
+</span><span class="go">          + timezone = &#34;Asia/Tokyo&#34;
+</span><span class="go">        }
+</span><span class="go">    }
+</span></code></pre></div><h3 id="2-object-of-object-の-attribute-pagerdutyscheduletimezone-を-optional-にして省略できるようにしたい">2. object of object の attribute (pagerduty.schedule.timezone) を optional にして省略できるようにしたい</h3>
+<p>schedule (object) の中の timezone (attribute) が optional() で囲まれていることで省略できていることがわかる (指定されている attribute の create は true に変更され、省略された attribute の timezone は default である <code>&quot;Asia/Tokyo&quot;</code> に置き換わっている)</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="c1"># example.tfvars
 </span><span class="c1"></span><span class="n">pagerduty</span> <span class="o">=</span> {
 <span class="n">  enable</span> <span class="o">=</span> <span class="kt">true</span>
@@ -173,20 +191,6 @@
 </span><span class="go">      + enable   = true
 </span><span class="go">      + schedule = {
 </span><span class="go">          + create   = true
-</span><span class="go">          + timezone = &#34;Asia/Tokyo&#34;
-</span><span class="go">        }
-</span><span class="go">    }
-</span></code></pre></div><h3 id="2-object-schedule-自体を省略した場合">2. object (schedule) 自体を省略した場合</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-hcl" data-lang="hcl"><span class="c1"># example.tfvars
-</span><span class="c1"></span><span class="n">pagerduty</span> <span class="o">=</span> {
-<span class="n">  enable</span> <span class="o">=</span> <span class="kt">true</span>
-}
-</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>terraform plan -var-file<span class="o">=</span>example.tfvars
-<span class="go">Changes to Outputs:
-</span><span class="go">  + pagerduty = {
-</span><span class="go">      + enable   = true
-</span><span class="go">      + schedule = {
-</span><span class="go">          + create   = false
 </span><span class="go">          + timezone = &#34;Asia/Tokyo&#34;
 </span><span class="go">        }
 </span><span class="go">    }
