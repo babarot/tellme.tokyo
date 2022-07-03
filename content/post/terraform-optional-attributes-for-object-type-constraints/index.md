@@ -11,7 +11,7 @@ tags: ["terraform"]
 
 ---
 
-[^1]: Terraform の variable は "変数" ではなく、Module の挙動を外部から変更するためのインターフェイスである https://tellme.tokyo/post/2022/06/15/terraform-variables-is-api/
+[^1]: [Terraform の variable は "変数" ではなく、Module の挙動を外部から変更するためのインターフェイスである](https://tellme.tokyo/post/2022/06/15/terraform-variables-is-api/)
 
 ## object variable の optional default とは
 
