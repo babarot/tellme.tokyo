@@ -105,15 +105,7 @@ Microservices Platform チーム (のちに Platform チーム) として動き�
 
 10X では SRE エンジニアとしての入社です。SRE ロールを持つのは自分ひとりなので人手が足りません。10X のインフラ課題を一緒に解決してくれる人を探しています。10X に入社してやりたいこと、その他詳しいことは入社時に語った Podcast があるので気になる方は試聴してみてください。
 
-<!--
-
-{{< twitter "1494160257513263113" >}}
-
--->
-
 {{< spotify "368dieIZeYabeHAw2fH0Y7" "black" "big" >}}
-
-
 
 Twitter [@babarot](https://twitter.com/b4b4r07)
 
