@@ -7,7 +7,24 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Sun, 03 Jul 2022 02:55:06 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 28 Dec 2022 11:47:42 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>転職して1年が経つので振り返り。来年の抱負など</title>
+      <link>https://tellme.tokyo/post/2022/12/28/10x-1st-y-aniv/</link>
+      <pubDate>Wed, 28 Dec 2022 11:47:42 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2022/12/28/10x-1st-y-aniv/</guid>
+      <description>この記事は 10X アドベントカレンダー2022 28日目のエントリーです。
+シリーズ共通のお題、「好きなスーパーと商品は？」について。好きなスーパーはクイーンズ伊勢丹です。高輪に住んでいたとき最初はほかに選択肢がなく利用しはじめたのですが、通うたびに気になる商品に出会うことが多く好きになりました。好きな商品は石野味噌です。天明元年から続く歴史ある白味噌です。
+今回のエントリーの投稿に際し、ちょうど転職をして1年になるので入社から今までのタイムラインの振り返りと、来年以降の自分の考えについて書き留めておきます。
+2022/1 チームづくり 退職と転職。人生の振り返り
+今年の1月に 10X へ転職しました。10X では初の SRE Job description での採用ということで、チーム作りや Stailer 事業の拡大を支えるインフラづくりやそのビジョンを描くために入社しました。詳しくは上のエントリにあります。
+入社してから4月ころまではチームビルディングやロードマップづくりなどから始まり、今後さらに広がっていく Stailer 事業のパートナー展開をインフラ面からどのように支えられるのか、スケールに耐えられる基盤のデザインが中心でした。
+  Datadog 導入 Kubernetes Cluster のデザイン Kubernetes manifest management のデザイン Incident 対応のワークフロー整備 Terraform 導入検討 デプロイの高速化、リリースフローの刷新 &amp;hellip;  10X に SRE Team ができるまでとこれから - 10X Product Blog より抜粋
+ 2022/4 大きな種まき 4月からは新しい FY がスタートし、前 Q に設定したロードマップをベースに事業マイルストーンから逆算した種まき的な施策を進めました。前 Q はチーム作りを筆頭としてデザインやコトモノの言語化、文化づくりなどが主でしたが、4月からの Q1 はシステム構成に手を加えるような施策や前 Q で PoC したデザインなどを実装・導入するなど、SRE チームとしては大きなインパクトを残すことができた3ヶ月となりました。
+ Istio の削除  Too much な構成からよりメンテナブルな構成に変更   メインクラスタの Namespace 設計  パートナーごとの isolation を意識して分割、リソースの引っ越し   Terraform の導入  既存インフラのコード化と apply ワークフローのデザイン・構築   Terraform module の作成  パートナーローンチごとに設定していたインフラのリソースセット (GCP/PagerDuty/GitHub/&amp;hellip;) を一撃で準備できるように   SLI/SLO の策定 オーナーシップづくり  各パートナー開発部が開発と運用、両方にオーナーシップをもてるような構成変更 また、オーナーシップを持つことがどのように重要なのかを全社的に説明    事業スケール確実のタイムラインが見えている中、中長期的に効いてくるものから優先的に着手しました。エンジニア全体に広めに付与されていた権限を整理し、権限ください依頼やリソース作成の依頼など SRE がボトルネックになっていた作業を自分たちでできるようにするために Terraform によるインフラのコード化を行い、またパートナーの横展開がしやすいように module による自動化を進めたり、過去の歴史的経緯によって生まれそしてそのまま残ってしまっている直したい部分をきれいにするなどをすすめました。</description>
+    </item>
+    
     <item>
       <title>Terraform の object variable で柔軟なパラメータ設定を提供する (optional default)</title>
       <link>https://tellme.tokyo/post/2022/07/03/terraform-optional-attributes-for-object-type-constraints/</link>
@@ -211,7 +228,7 @@ $ dig babarot.me +nostats +nocomments +nocmd ; &amp;lt;&amp;lt;&amp;gt;&amp;gt; 
       <guid>https://tellme.tokyo/post/2019/10/03/hashiconf2019/</guid>
       <description>HashConf &amp;lsquo;19 (9/9 - 9/11) に行ってきた。 HashiConf とは HashiCorp 製品自体の発表であったりそれと使って構築したアーキテクチャやノウハウについて共有するカンファレンスになっている。 今年はシアトルで開催された。
 First time #HashiConf attendee from 🇯🇵 Excited for this conference! pic.twitter.com/ApdtsTenWu
-&amp;mdash; @babarot 🗿 (@b4b4r07) September 10, 2019  たくさん面白いキーノートがあったが中でも開発者の多くが歓声をあげていたのははやり初日の Armon (Co-Founder/CTO) の Terraform Cloud に関する発表だったと思う。ローンチ以降 Remote State しか扱えなかった Terraform Cloud が、このタイミングで大きく強化され Enterprise 版と遜色ないくらいにまで機能拡張されていた。今後、（個人ユースは Free ということもあり）サクッと Terraform 環境を構築したいときにマッチすると思う。
+&amp;mdash; @babarot 🏔 (@b4b4r07) September 10, 2019  たくさん面白いキーノートがあったが中でも開発者の多くが歓声をあげていたのははやり初日の Armon (Co-Founder/CTO) の Terraform Cloud に関する発表だったと思う。ローンチ以降 Remote State しか扱えなかった Terraform Cloud が、このタイミングで大きく強化され Enterprise 版と遜色ないくらいにまで機能拡張されていた。今後、（個人ユースは Free ということもあり）サクッと Terraform 環境を構築したいときにマッチすると思う。
 Announcing Terraform Cloudさらに、Terraform Cloud / Enterprise に Cost Estimation の機能が追加された。これを有効にすると、「この apply によってクラウド使用量からこのくらいのコスト増減が見込める」といった見積もりがとれるようになる。たとえば、Policy を定義できる HashiCorp Sentinel と組み合わせて「このマイクロサービスは 1000USD まで」といったポリシーを書くことでコストの意図しない増加を防ぐといったことができるようになった。この機能はめっちゃ便利なので、これを使うためだけに Terraform Cloud を使う価値すらあると思う。</description>
     </item>
     
@@ -229,7 +246,7 @@ Twitter では告知したのですが前に2017年7月号を書かせていた�
 前回に引き続き2回目です。 Goは好きな言語であり、なおかつ自作ツールの紹介だったのでとても嬉しいです。 ありがとうございました。
  関連  Software Design 2017年7月号に寄稿しました | tellme.tokyo  明日発売のSoftware Design 2019年9月号に寄稿しました。「作品で魅せるGoプログラミング」というテーマで、YAMLなどの設定ファイルに対してカスタムルールでlintできるsteinというツールについて紹介しました。ぜひご覧ください。
 Software Design 2019年9月号｜技術評論社 https://t.co/kP4N2SdxEG
-&amp;mdash; @babarot 🗿 (@b4b4r07) August 16, 2019  </description>
+&amp;mdash; @babarot 🏔 (@b4b4r07) August 16, 2019  </description>
     </item>
     
     <item>

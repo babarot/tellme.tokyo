@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="転職して1年が経つので振り返り。来年の抱負など - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2022/12/28/10x-1st-y-aniv/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>転職して1年が経つので振り返り。来年の抱負など | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">転職して1年が経つので振り返り。来年の抱負など</h1>
+    <h2 class="subtitle is-5">December 28, 2022 </h2>
+    
+    <br>
+    <div class="content">
+      <p>この記事は <a href="https://10xall.notion.site/10X-2022-9dafcb8ca4114804a78e4354e062ff64">10X アドベントカレンダー2022</a> 28日目のエントリーです。</p>
+<p>シリーズ共通のお題、「好きなスーパーと商品は？」について。好きなスーパーはクイーンズ伊勢丹です。高輪に住んでいたとき最初はほかに選択肢がなく利用しはじめたのですが、通うたびに気になる商品に出会うことが多く好きになりました。好きな商品は<a href="http://www.ishinomiso.co.jp/">石野味噌</a>です。天明元年から続く歴史ある白味噌です。</p>
+<p>今回のエントリーの投稿に際し、ちょうど転職をして1年になるので入社から今までのタイムラインの振り返りと、来年以降の自分の考えについて書き留めておきます。</p>
+<h2 id="20221-チームづくり">2022/1 チームづくり</h2>
+<p><a href="https://tellme.tokyo/post/2022/02/28/mercari-to-10x/">退職と転職。人生の振り返り</a></p>
+<p>今年の1月に 10X へ転職しました。10X では初の SRE Job description での採用ということで、チーム作りや Stailer 事業の拡大を支えるインフラづくりやそのビジョンを描くために入社しました。詳しくは上のエントリにあります。</p>
+<p>入社してから4月ころまではチームビルディングやロードマップづくりなどから始まり、今後さらに広がっていく Stailer 事業のパートナー展開をインフラ面からどのように支えられるのか、スケールに耐えられる基盤のデザインが中心でした。</p>
+<blockquote>
+<ul>
+<li>Datadog 導入</li>
+<li>Kubernetes Cluster のデザイン</li>
+<li>Kubernetes manifest management のデザイン</li>
+<li>Incident 対応のワークフロー整備</li>
+<li>Terraform 導入検討</li>
+<li>デプロイの高速化、リリースフローの刷新</li>
+<li>&hellip;</li>
+</ul>
+<p><a href="https://product.10x.co.jp/entry/2022/04/21/160000">10X に SRE Team ができるまでとこれから - 10X Product Blog</a> より抜粋</p>
+</blockquote>
+<h2 id="20224-大きな種まき">2022/4 大きな種まき</h2>
+<p>4月からは新しい FY がスタートし、前 Q に設定したロードマップをベースに事業マイルストーンから逆算した種まき的な施策を進めました。前 Q はチーム作りを筆頭としてデザインやコトモノの言語化、文化づくりなどが主でしたが、4月からの Q1 はシステム構成に手を加えるような施策や前 Q で PoC したデザインなどを実装・導入するなど、SRE チームとしては大きなインパクトを残すことができた3ヶ月となりました。</p>
+<ul>
+<li>Istio の削除
+<ul>
+<li>Too much な構成からよりメンテナブルな構成に変更</li>
+</ul>
+</li>
+<li>メインクラスタの Namespace 設計
+<ul>
+<li>パートナーごとの isolation を意識して分割、リソースの引っ越し</li>
+</ul>
+</li>
+<li>Terraform の導入
+<ul>
+<li>既存インフラのコード化と apply ワークフローのデザイン・構築</li>
+</ul>
+</li>
+<li>Terraform module の作成
+<ul>
+<li>パートナーローンチごとに設定していたインフラのリソースセット (GCP/PagerDuty/GitHub/&hellip;) を一撃で準備できるように</li>
+</ul>
+</li>
+<li>SLI/SLO の策定</li>
+<li>オーナーシップづくり
+<ul>
+<li>各パートナー開発部が開発と運用、両方にオーナーシップをもてるような構成変更</li>
+<li>また、オーナーシップを持つことがどのように重要なのかを全社的に説明</li>
+</ul>
+</li>
+</ul>
+<p>事業スケール確実のタイムラインが見えている中、中長期的に効いてくるものから優先的に着手しました。エンジニア全体に広めに付与されていた権限を整理し、権限ください依頼やリソース作成の依頼など SRE がボトルネックになっていた作業を自分たちでできるようにするために Terraform によるインフラのコード化を行い、またパートナーの横展開がしやすいように module による自動化を進めたり、過去の歴史的経緯によって生まれそしてそのまま残ってしまっている直したい部分をきれいにするなどをすすめました。</p>
+<p>また、サービスにおけるオーナーシップとはなにか？というものをドキュメントに落として、サービスチームは自身のサービスの開発だけではなく運用にもオーナーシップを持つことが健全であるとしました。10X にはさまざまなパートナーがおり、パートナーごとにサービスをもっています。そして様々な Deployment や Job が動いていました。ドメインロジックはもちろん開発チームのほうが長けているため、SRE チームに飛んだ開発に起因するアラートを開発チームにエスカレーションすることが多く、これを最初から開発チームが見るように（見れるように）することで、アラート対応にかかるオーバーヘッドを減らし SRE が全アラートに忙殺されるということを解消しました。</p>
+<p>また自分の書いたコードによって夜中起こされたくないというモチベーションが発生させることでコードの品質があがるという狙いがありました。この考え方に従って、PagerDuty を使ったインシデント対応のフロー（労務周りや待機手当などの設計を含む）や Kubernetes クラスタの Namespace 設計や権限設計を行いました（責任は権限付与とセットでなくては意味をなさない）。</p>
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">前Qのアウトプットをチームで書いて共有した。10X SRE は立ち上がったばかりだけど Istio→Contour 移行や Kubernetes Namespace 移行、Terraform 導入や Module の開発など中長期的に効いてくるものを着実に進められたQだった <a href="https://t.co/FXa9fzMUuG">pic.twitter.com/FXa9fzMUuG</a></p>&mdash; @babarot 🏔 (@b4b4r07) <a href="https://twitter.com/b4b4r07/status/1542830835698929664?ref_src=twsrc%5Etfw">July 1, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<h2 id="20227-チームの拡大">2022/7 チームの拡大</h2>
+<p>7月は Leader role の明確な transition がありました。SRE チームは SRE JD で採用された自分とこれまでのインフラを見ていてくれたメンバーと SRE チームアサインされた SWE によって組成されました。僕のオンボーディングをふくめて、これまでインフラを見ていてくれたメンバーが Lead を担ってくれていたのですが、このタイミングでバトンタッチしました。チーム初期の段階からスイッチすることを念頭にチームビルディングをしていたのでサプライズではなかったですが、より一層チームをドライブさせていくぞと意気込む Q 始まりとなりました。</p>
+<ul>
+<li>Monitoring 改善</li>
+<li>コスト見直し</li>
+<li>採用</li>
+<li>ローンチサポート
+<ul>
+<li>この Q では複数のローンチが控えていたので SRE サポートが求められました</li>
+</ul>
+</li>
+<li>Terraform コードカバレッジを上げる</li>
+<li>Terraform module の機能追加
+<ul>
+<li>パートナーローンチにかかわる共通化部分をどんどん module に取り込んで自動化の限りを尽くしました</li>
+</ul>
+</li>
+</ul>
+<p>この Q は複数のローンチのサポートが山を迎えてました。前 Q で撒いた種を急いで芽吹かせながらローンチをバックアップしました。それとこの時期は何よりも採用でした。イベントや Podcast 公開なども併せて行ったのですが、功を奏してカジュアル面談や面接まで来てくれる方がとても増えました。採用は両方向のマッチングです。お互いハッピーになるようにはかるのはとても難しいことでしたが、なんとか新しいメンバーを迎え入れることができました。</p>
+<h2 id="202210-engineering-manager-に">2022/10 Engineering Manager に</h2>
+<p>10月は大きな組織改変と人事制度 (評価/報酬/等級) の刷新があり、このタイミングで SRE/Security div の EM となりました。これまでのエンジニア人生ではすべてを IC として働いてきましたが、EM はどうかという打診があったときに両方知っていることが強みになるなと思い挑戦の意味を込めて引き受けることにしました。</p>
+<p>EM となることでより LB として機能しやすくなりました。すべての一旦の口になることで SRE/Security へ流れ込んでくる interruptive なタスクが見えるようになり、全体のリードを取りやすくなったことと、ある種それに先回りしてチームの Focus を計画できるようになったなと感じました (reactive → proactive)。</p>
+<p>取り組んだこととして前 Q に撒いた種に水をやりつづけるように手を入れました。また、組織変更に影響されないサービス管理ができるようにサービスとメンバーを直接紐付けるのではなくチームというレイヤでワンクッション置けるようにしました。</p>
+<ul>
+<li>Datadog の利用拡大</li>
+<li>manifest 管理の刷新
+<ul>
+<li>デプロイ高速化</li>
+<li>Kubernetes manifest をどのように扱うべきか、抽象化するべきか</li>
+<li>manifest の共通化</li>
+</ul>
+</li>
+<li>パートナー展開をスケーラブルにするための施策
+<ul>
+<li>Terraform へのさらなる投資</li>
+</ul>
+</li>
+<li>チームの概念を整備
+<ul>
+<li>サービスとは別にチームという単位でインフラリソースをグルーピングできるように整備</li>
+<li>PagerDuty &ldquo;team&rdquo;、GitHub &ldquo;team&rdquo;、Google &ldquo;group&rdquo;&hellip;</li>
+</ul>
+</li>
+<li>検証環境の改善</li>
+</ul>
+<h2 id="20231-来年の抱負">2023/1~ 来年の抱負</h2>
+<p>怒涛の1年でした。荒野<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>を耕すところからはじまり、大きなものから小さなものまでたくさんの種まきをし、ようやく小さな芽がではじめたのではないかなという1年でした。これが大きく芽吹くのは2023年以降だと思っています。より Stailer 事業が大きくなるにつれてやっておいてよかったと思えることに集中的に投資できました。来年が楽しみです。僕自身 Stailer というサービスに可能性を感じるし、大きくしていきたいと思って今の仕事をさせてもらっています。とても良いチームメンバーにも恵まれました<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>。Lead や EM といったチャンスももらうことができました。あとはやっていくだけです。</p>
+<p>明日は YamasakiYuji さんで「ワインへの愛を語ります」です。</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p>これはディスではなく褒め言葉です。荒野になろうともビジネスを成長させるために邁進したエンジニアたちの成果です。デカイ石が転がっていようとも草木が生い茂っていても良くて、フェーズが変わって SRE というものが求められたときに初めて To-be を設計し荒野を開墾していけばいいのです&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p>SRE はまだ募集中です。興味がある方は <a href="https://twitter.com/b4b4r07">@babarot</a> まで DM ください&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2022 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+

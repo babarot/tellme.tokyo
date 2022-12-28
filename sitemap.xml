@@ -3,12 +3,15 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://tellme.tokyo/post/</loc>
-    <lastmod>2022-07-03T02:55:06+09:00</lastmod>
-  </url><url>
-    <loc>https://tellme.tokyo/tags/</loc>
-    <lastmod>2022-07-03T02:55:06+09:00</lastmod>
+    <lastmod>2022-12-28T11:47:42+09:00</lastmod>
   </url><url>
     <loc>https://tellme.tokyo/</loc>
+    <lastmod>2022-12-28T11:47:42+09:00</lastmod>
+  </url><url>
+    <loc>https://tellme.tokyo/post/2022/12/28/10x-1st-y-aniv/</loc>
+    <lastmod>2022-12-28T11:47:42+09:00</lastmod>
+  </url><url>
+    <loc>https://tellme.tokyo/tags/</loc>
     <lastmod>2022-07-03T02:55:06+09:00</lastmod>
   </url><url>
     <loc>https://tellme.tokyo/tags/terraform/</loc>
