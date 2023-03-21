@@ -7,7 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Wed, 28 Dec 2022 11:47:42 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 21 Mar 2023 13:46:10 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>gh extension の管理</title>
+      <link>https://tellme.tokyo/post/2023/03/21/manage-gh-extensions/</link>
+      <pubDate>Tue, 21 Mar 2023 13:46:10 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2023/03/21/manage-gh-extensions/</guid>
+      <description>gh GitHub が公式で開発している GitHub CLI クライアントである gh コマンドが cli/cli で公開されているのだが今まで使ってこなかった。
+そんなある日、いつものようにMarkdown を書いていると、見慣れた GitHub の CSS でプレビューしたいな (N 度目) と思いいくつかの Markdown エディタで GitHub テーマを適用してほぼオリジナルに近いプレビューできるのはどれだと探してきたが、どこかしら微妙に違ってまだ出ていないかと諦めていた。
+そんなときにこのブログを見た。
+READMEをpush前にプレビューできるGitHub CLI拡張を作った - ゆーすけべー日記
+ めっちゃ GitHub。Live-reloading もできるし「これだよ! これ!」という感じ。するとどうやらこれは gh コマンドの拡張機能として公開されているらしい。
+https://github.com/yusukebe/gh-markdown-preview
+$ gh extension install yusukebe/gh-markdown-preview これでインストールができる。めっちゃかんたん。ここで gh extension というのがあるのだと知り探してみるとたくさんあることに気づいた。gh コマンドが出た当初はこんなものはなかった気がするので自分が使わなかったうちに相当開発が進んでいたらしい。
+GitHub CLI extension
+そうなると色々試したくなる。おもろそうと思って色々インストールしているうちにたくさんになった。
+$ gh extension list gh branch mislav/gh-branch b2e79733 gh dash dlvhdr/gh-dash 50cd7818 gh md yusukebe/gh-markdown-preview v1.4.0 gh poi seachicken/gh-poi v0.9.0 gh q kawarimidoll/gh-q 5dc627f3 手持ちの環境は2台 (会社用、個人用) なのでいい感じに同期しておきたく dotfiles にブチ込むようのスクリプト1を書いた。</description>
+    </item>
+    
     <item>
       <title>転職して1年が経つので振り返り。来年の抱負など</title>
       <link>https://tellme.tokyo/post/2022/12/28/10x-1st-y-aniv/</link>

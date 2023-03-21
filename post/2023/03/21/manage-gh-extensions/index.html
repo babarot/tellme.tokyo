@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="ja-jp">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="b4b4r07, babarot" name="keywords">
+<meta content="b4b4r07" name="author">
+<meta property="og:title" content="gh extension の管理 - tellme.tokyo">
+<meta property="og:url" content="https://tellme.tokyo/post/2023/03/21/manage-gh-extensions/">
+<meta property="og:description" content="Masaki ISHIYAMA">
+<meta property="og:type" content="website" />
+
+<meta property="og:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg">
+
+<title>gh extension の管理 | tellme.tokyo</title>
+<link rel="stylesheet" href="https://tellme.tokyo/css/style.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/custom.css">
+<link rel="stylesheet" href="https://tellme.tokyo/css/highlight-solarized-light.css">
+<link rel="shortcut icon" href="https://tellme.tokyo/favicon.ico">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/github.min.css">
+
+
+<section class="section">
+  <div class="container">
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="https://tellme.tokyo"><h1 class="title is-4">tellme.tokyo</h1></a>
+      </div>
+      <div class="nav-right">
+        <nav class="nav-item level is-mobile">
+          
+          <a class="level-item" href="https://github.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-github"></i>
+            </span>
+          </a>
+          
+          <a class="level-item" href="https://twitter.com/b4b4r07" target="_blank">
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+          </a>
+          
+        </nav>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h1 class="title">gh extension の管理</h1>
+    <h2 class="subtitle is-5">March 21, 2023 </h2>
+    
+    <br>
+    <div class="content">
+      <h2 id="gh">gh</h2>
+<p>GitHub が公式で開発している GitHub CLI クライアントである gh コマンドが <a href="https://github.com/cli/cli">cli/cli</a> で公開されているのだが今まで使ってこなかった。</p>
+<p>そんなある日、いつものようにMarkdown を書いていると、見慣れた GitHub の CSS でプレビューしたいな (N 度目) と思いいくつかの Markdown エディタで GitHub テーマを適用してほぼオリジナルに近いプレビューできるのはどれだと探してきたが、どこかしら微妙に違ってまだ出ていないかと諦めていた。</p>
+<p>そんなときにこのブログを見た。</p>
+<p><a href="https://yusukebe.com/posts/2021/gh-markdown-preview/">READMEをpush前にプレビューできるGitHub CLI拡張を作った - ゆーすけべー日記</a></p>
+
+<figure >
+  
+    <img
+    src="https://user-images.githubusercontent.com/10682/138411417-dd12a831-bacc-4b05-a33d-47d3f6b45483.png"
+    
+    width="600"
+    />
+    
+  
+</figure>
+
+
+<p>めっちゃ GitHub。Live-reloading もできるし「これだよ! これ!」という感じ。するとどうやらこれは gh コマンドの拡張機能として公開されているらしい。</p>
+<p><a href="https://github.com/yusukebe/gh-markdown-preview">https://github.com/yusukebe/gh-markdown-preview</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>gh extension install yusukebe/gh-markdown-preview
+</code></pre></div><p>これでインストールができる。めっちゃかんたん。ここで gh extension というのがあるのだと知り探してみるとたくさんあることに気づいた。gh コマンドが出た当初はこんなものはなかった気がするので自分が使わなかったうちに相当開発が進んでいたらしい。</p>
+<p><a href="https://github.com/topics/gh-extension">GitHub CLI extension</a></p>
+<p>そうなると色々試したくなる。おもろそうと思って色々インストールしているうちにたくさんになった。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>gh extension list
+<span class="go">gh branch  mislav/gh-branch              b2e79733
+</span><span class="go">gh dash    dlvhdr/gh-dash                50cd7818
+</span><span class="go">gh md      yusukebe/gh-markdown-preview  v1.4.0
+</span><span class="go">gh poi     seachicken/gh-poi             v0.9.0
+</span><span class="go">gh q       kawarimidoll/gh-q             5dc627f3
+</span></code></pre></div><p>手持ちの環境は2台 (会社用、個人用) なのでいい感じに同期しておきたく <a href="https://github.com/b4b4r07/dotfiles/commit/c3da13fc27b4aad165487043b894c7c69c6e343f">dotfiles にブチ込むようのスクリプト</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>を書いた。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
+</span><span class="cp"></span>gh extension install mislav/gh-branch
+gh extension install dlvhdr/gh-dash
+gh extension install yusukebe/gh-markdown-preview
+gh extension install seachicken/gh-poi
+gh extension install kawarimidoll/gh-q
+</code></pre></div><p>これでもいいけど install とスクリプトの追記が別手段になっているとインストールはしたけどスクリプト側を更新するの忘れてた、になるのがイケてない。</p>
+<p>どうしたかねと思っていたら <a href="https://github.com/b4b4r07/afx/">afx</a> があったじゃないかと思い出す。afx は開発ツール版 Terraform みたいなもので、YAML に書いたものをインストール・アップデートなど持続的に管理することができる。これに gh extension を対応させてしまおうというのが今回のお話。</p>
+<h2 id="gh-を-afx-で管理する">gh を afx で管理する</h2>
+<p>本題。</p>
+<p><a href="https://github.com/b4b4r07/afx/pull/58">Support gh extension by b4b4r07 · Pull Request #58 · b4b4r07/afx</a></p>
+<p>afx に as.gh-extension というパラメータを追加して gh extension ですよと認識させることにした。あとは YAML を書いて afx install するだけになる。ちなみに rename-to というパラメータを追加したので、<code>gh markdown-preview</code> のように長いコマンドも <code>gh md</code> にエイリアスすることができて便利になった。</p>
+<p>(gh は呼び出す実装が gh 側のロジックによる部分が大きいため <code>alias gh-md=gh-markdown-preview</code> では動かない)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">github</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">yusukebe/gh-markdown-preview</span><span class="w">
+</span><span class="w">  </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l">GitHub CLI extension to preview Markdown looks like GitHub.</span><span class="w">
+</span><span class="w">  </span><span class="nt">owner</span><span class="p">:</span><span class="w"> </span><span class="l">yusukebe</span><span class="w">
+</span><span class="w">  </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l">gh-markdown-preview</span><span class="w">
+</span><span class="w">  </span><span class="nt">as</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">gh-extension</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">gh-markdown-preview</span><span class="w">
+</span><span class="w">      </span><span class="nt">tag</span><span class="p">:</span><span class="w"> </span><span class="l">v1.4.0</span><span class="w">
+</span><span class="w">      </span><span class="nt">rename-to</span><span class="p">:</span><span class="w"> </span><span class="l">gh-md</span><span class="w">
+</span></code></pre></div><ul>
+<li>例: <a href="https://github.com/b4b4r07/dotfiles/blob/main/.config/afx/gh-extensions.yaml">gh-extensions.yaml</a></li>
+<li>ドキュメント: <a href="https://babarot.me/afx/configuration/package/github/#as">GitHub - AFX</a></li>
+</ul>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://github.com/b4b4r07/dotfiles/commit/439c1580c1eade1f979e65460de860bbb30fac2c">その後</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+    </div>
+    <br>
+    <div class="social">
+  
+  
+    
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="b4b4r07" data-count="horizontal" lang="en">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+  
+  
+  
+  
+</div>
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered header-logo">
+    <a href="https://b4b4r07.github.io"><img src="/images/profile.jpg" width="64" height="64"></a><br><br>
+    <p>Copyright &copy; 2023 BABAROT All Right Reserved.</p>
+  </div>
+</section>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/go.min.js"></script>
+
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/dockerfile.min.js"></script>
+
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-44183504-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
