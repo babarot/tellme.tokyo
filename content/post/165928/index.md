@@ -7,7 +7,6 @@ draft: false
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2015/11/07/165928"
 tags:
-- zsh
 - shellscript
 ---
 

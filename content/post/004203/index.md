@@ -3,7 +3,7 @@ title: "今まで作っていた tellme.tokyo というブログ"
 date: 2016-09-20T00:42:03+09:00
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2016/09/20/004203"
 tags:

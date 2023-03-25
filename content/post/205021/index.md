@@ -3,7 +3,7 @@ title: "特定のワードで Twitter を監視して、検知したら Slack �
 date: 2016-10-17T20:50:21+09:00
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2016/10/17/205021"
 tags:

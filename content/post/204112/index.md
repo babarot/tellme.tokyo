@@ -3,7 +3,7 @@ title: "2016年振り返り"
 date: 2016-12-31T20:41:12+09:00
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2016/12/31/204112"
 tags:

@@ -3,7 +3,7 @@ title: "アドベントカレンダーに登録した"
 date: 2015-11-13T23:36:49+09:00
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2015/11/13/233649"
 tags:

@@ -7,7 +7,7 @@ draft: false
 author: "b4b4r07"
 oldlink: ""
 image: ""
-tags: ["CLI"]
+tags: ["cli", "afx"]
 ---
 
 最近、[afx](https://babarot.me/afx/) という CLI 向けのパッケージマネージャを公開した。ここで "CLI のパッケージ" とは例えば jq のようなコマンドラインツールや [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) のようなヒストリ補完をするシェルのプラグインを指す (bash/zsh/fish)。afx ではこれらを 1 つのツールで管理すること、コードで表現して管理することを目的としている。コードには YAML を使用する。

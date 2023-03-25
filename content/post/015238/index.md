@@ -3,7 +3,7 @@ title: 'ブログを GKE #k8s に移した'
 date: 2017-08-03T01:52:38+09:00
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2017/08/03/015238"
 tags:

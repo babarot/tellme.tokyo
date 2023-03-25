@@ -3,7 +3,7 @@ title: "今年つくったものリスト 2015"
 date: 2015-12-31T00:53:00+09:00
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2015/12/31/005300"
 tags:

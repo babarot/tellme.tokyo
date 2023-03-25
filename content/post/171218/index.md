@@ -3,7 +3,7 @@ title: "書くのが面倒な zsh 補完関数を簡単に生成するツール�
 date: 2015-03-24T17:12:18+09:00
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2015/03/24/171218"
 tags:

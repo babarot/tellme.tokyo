@@ -1,5 +1,5 @@
 ---
-title: "zplug 流 zsh プラグイン管理術"
+title: "zplug を使った zsh プラグイン管理術"
 date: 2015-12-13T17:42:09+09:00
 description: ""
 categories: []
@@ -11,21 +11,9 @@ tags:
 - zplug
 ---
 
-[repo]: https://github.com/b4b4r07/zplug
+zplug とは zsh のプラグインマネージャ。
 
-とある引用から。
-
->技術者であればだれでも経験することでしょうけれども、自分が作ったものを他人に理解させるというのは存外に難しく、なぜかというと開発者自身はどうしても開発した時の思考の流れを重視してしまい、読者にとって理解しやすい話の流れで話すという思考の大転換が困難だからです。そういえば、開発者自身による解説書の名著って意外なくらい少ないと思いませんか？
-
-私は先月末に zplug という zsh 用のプラグインマネージャーをリリースした。以下の記事では、zplug が生まれた背景やその周辺事情を導入として書いたため、もしかするとユーザ目線からでは分かりづらかったかもしれない。
-
-- [おい、Antigen もいいけど zplug 使えよ](http://qiita.com/b4b4r07/items/cd326cd31e01955b788b)
-
-そこで今回は開発者としての記事ではなく、いちユーザとして（といっても開発者がユーザ目線でプロダクトを語るのは冒頭の引用にもある通りひどく難しいことである）使い方を紹介していく。
-
-# 特徴
-
-[![](https://raw.githubusercontent.com/b4b4r07/screenshots/master/zplug/logo.png)][repo]
+https://github.com/b4b4r07/zplug
 
 - 何でも管理できる（コマンド、Gist、oh-my-zsh のプラグイン、GitHub Releases のバイナリ）
 - 非同期インストール/アップデート
@@ -42,8 +30,8 @@ tags:
 
 zplug はタグという概念を持っている。タグとはプラグインの属性情報を表したもので、`タグ:値` のセットで記述していく。
 
-```sh
-$ zplug "foo/bar", as:command, of:"*.sh"
+```bash
+zplug "foo/bar", as:command, of:"*.sh"
 ```
 
 こんな具合である。各タグ間はカンマと一つ以上のスペース（`,　`）で区切る必要がある。タグの値は必ずしもクォートで括る必要はないが、ワイルドカードなどファイルグロブを値と指定する場合、シェルに展開されないようにクォーティングする。
@@ -73,13 +61,13 @@ $ zplug "foo/bar", as:command, of:"*.sh"
 
 タグは限りなく怠惰な指定が可能である。例えば、
 
-```sh
+```bash
 zplug "zsh-users/zsh-history-substring-search"
 ```
 
 は
 
-```sh
+```bash
 zplug "zsh-users/zsh-history-substring-search", as:plugin, from:github, of:"*.zsh"
 ```
 
@@ -104,13 +92,13 @@ zplug "zsh-users/zsh-history-substring-search", as:plugin, from:github, of:"*.zs
 
 また、zplug check は（例えるなら）Boolean な関数なので以下の様な書き方ができる。
 
-```sh
+```bash
 zplug check || zplug install
 ```
 
 また、インストール済みかどうかのチェックで設定項目を書くのにも使用されるべきである。
 
-```sh
+```bash
 if zplug check "zsh-users/zsh-history-substring-search"; then
     bindkey '^P' history-substring-search-up
     bindkey '^N' history-substring-search-down
@@ -118,9 +106,3 @@ fi
 ```
 
 これでインストールされていないときに、不要なキーバインドの設定を防ぐことができる。
-
-# まとめ
-
-うまく説明できたかわからない。ただ、zplug が持つポテンシャルは zsh プラグイン管理を革新するだけのものがある。みなさん使ってみてください。
-
-- [zplug][repo]

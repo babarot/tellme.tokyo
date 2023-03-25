@@ -3,7 +3,7 @@ title: "開いたファイルに対して ansible-vault を Vim から実行す�
 date: "2018-01-31T00:20:45+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: "b4b4r07"
 oldlink: ""
 tags: ["vim", "ansible-vault"]

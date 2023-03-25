@@ -9,6 +9,7 @@ oldlink: "https://b4b4r07.hatenadiary.com/entry/2014/11/20/134901"
 tags:
 - bash
 - zsh
+- enhancd
 ---
 
 【追記 2015-07-21】
@@ -30,20 +31,22 @@ tags:
 
 >ブラウザの「戻る」や「進む」のようにカレントディレクトリを行ったりきたりできるコマンド。これはリング状のディレクトリバッファを持っており以下の様な使われ方をする...（※都合により引用を解釈の変わらない程度に変更）
 
-	yusuke ~[1]$ . cdhist.sh         (cdhist を起動)
-	yusuke ~[2]$ cd /tmp             (カレントディレクトリが /tmp に移る)
-	yusuke /tmp[3]$ cd /usr/bin      (カレントディレクトリが /usr/bin に移る)
-	yusuke /usr/bin[4]$ -            (ひとつ前に戻る)
-	yusuke /tmp[5]$ cd /etc          (カレントディレクトリが /etc に移る)
-	yusuke /etc[6]$ -                (ひとつ前に戻る)
-	yusuke /tmp[7]$ +                (ひとつ後に進む)
-	yusuke /etc[8]$ =                (ディレクトリの履歴一覧表示)
-	 3 /usr/bin
-	 2 ~
-	 1 /tmp
-	 0 /etc
-	yusuke /etc[9]$ = 2              (リスト上のディレクトリを直接指定)
-	yusuke ~[10]$ 
+```console
+yusuke ~[1]$ . cdhist.sh         # (cdhist を起動)
+yusuke ~[2]$ cd /tmp             # (カレントディレクトリが /tmp に移る)
+yusuke /tmp[3]$ cd /usr/bin      # (カレントディレクトリが /usr/bin に移る)
+yusuke /usr/bin[4]$ -            # (ひとつ前に戻る)
+yusuke /tmp[5]$ cd /etc          # (カレントディレクトリが /etc に移る)
+yusuke /etc[6]$ -                # (ひとつ前に戻る)
+yusuke /tmp[7]$ +                # (ひとつ後に進む)
+yusuke /etc[8]$ =                # (ディレクトリの履歴一覧表示)
+ 3 /usr/bin
+ 2 ~
+ 1 /tmp
+ 0 /etc
+yusuke /etc[9]$ = 2              # (リスト上のディレクトリを直接指定)
+yusuke ~[10]$ 
+```
 
 というスクリプトである。しばらくこれを満足して使っていたのだが、いくつかの不満点を抱くようになった。
 
@@ -109,13 +112,17 @@ tags:
 
 ## インストール方法
 
-	$ git clone http://github.com/b4b4r07/enhancd.git
+```console
+$ git clone http://github.com/b4b4r07/enhancd.git
+```
 
 `~/.bashrc` なり `~/.zshrc` なりに以下を記述する。
 
-	if [ -f ~/enhancd/enhancd.sh ]; then
-		source ~/enhancd/enhancd.sh
-	fi
+```bash
+if [ -f ~/enhancd/enhancd.sh ]; then
+  source ~/enhancd/enhancd.sh
+fi
+```
 
 ## 使い方
 
@@ -192,4 +199,3 @@ MIT
 - 重大なバグは今のところ見受けられない
 - 問題点は issues まで
 - ちなみに、*enhanced* + *cd* = *enhancd*
-- 高機能化された *cd* という意味を込めて命名

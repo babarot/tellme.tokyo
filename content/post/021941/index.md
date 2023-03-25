@@ -3,7 +3,7 @@ title: "Vimでcdしたときにそのディレクトリの中身を自動でリ�
 date: 2014-07-31T02:19:41+09:00
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2014/07/31/021941"
 tags:

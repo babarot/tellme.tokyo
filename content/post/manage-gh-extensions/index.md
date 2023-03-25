@@ -7,7 +7,7 @@ draft: false
 author: "b4b4r07"
 oldlink: ""
 image: ""
-tags: []
+tags: ["cli", "afx", "gh"]
 
 ---
 
@@ -23,19 +23,19 @@ GitHub が公式で開発している GitHub CLI クライアントである gh 
 
 {{< img src="https://user-images.githubusercontent.com/10682/138411417-dd12a831-bacc-4b05-a33d-47d3f6b45483.png" width="600" >}}
 
-めっちゃ GitHub。Live-reloading もできるし「これだよ! これ!」という感じ。するとどうやらこれは gh コマンドの拡張機能として公開されているらしい。
+めっちゃ GitHub。Live-reloading もできるし「これだよ! これ!」という感じ。どうやら gh コマンドの拡張機能 (extension) として公開されているらしい。
 
-https://github.com/yusukebe/gh-markdown-preview
+[yusukebe/gh-markdown-preview](https://github.com/yusukebe/gh-markdown-preview)
 
 ```console
 $ gh extension install yusukebe/gh-markdown-preview
 ```
 
-これでインストールができる。めっちゃかんたん。ここで gh extension というのがあるのだと知り探してみるとたくさんあることに気づいた。gh コマンドが出た当初はこんなものはなかった気がするので自分が使わなかったうちに相当開発が進んでいたらしい。
+これでインストールができる。めっちゃかんたん。ここで gh extension というのがあるのだと知り、探してみると色々あることに気づく。gh コマンドが出た当初はこんなものはなかった気がするので、自分が使わなかったうちに相当開発が進んでいたらしい。
 
 [GitHub CLI extension](https://github.com/topics/gh-extension)
 
-そうなると色々試したくなる。おもろそうと思って色々インストールしているうちにたくさんになった。
+そうなると色々試したくなる。おもしろそうと思って色々インストールしているうちにたくさんになった。
 
 ```console
 $ gh extension list
@@ -46,7 +46,7 @@ gh poi     seachicken/gh-poi             v0.9.0
 gh q       kawarimidoll/gh-q             5dc627f3
 ```
 
-手持ちの環境は2台 (会社用、個人用) なのでいい感じに同期しておきたく [dotfiles にブチ込むようのスクリプト](https://github.com/b4b4r07/dotfiles/commit/c3da13fc27b4aad165487043b894c7c69c6e343f)[^1]を書いた。
+手持ちの環境は2台 (会社用、個人用) なのでいい感じに同期しておきたく [dotfiles にブチ込む用のスクリプト](https://github.com/b4b4r07/dotfiles/commit/c3da13fc27b4aad165487043b894c7c69c6e343f)[^1]を書いた。
 
 ```bash
 #!/bin/bash
@@ -57,9 +57,9 @@ gh extension install seachicken/gh-poi
 gh extension install kawarimidoll/gh-q
 ```
 
-これでもいいけど install とスクリプトの追記が別手段になっているとインストールはしたけどスクリプト側を更新するの忘れてた、になるのがイケてない。
+これでもいいけど install とスクリプトへの追加が別になっているとインストールはしたけどスクリプト側を更新するの忘れてた、になるのがイケてない。
 
-どうしたかねと思っていたら [afx](https://github.com/b4b4r07/afx/) があったじゃないかと思い出す。afx は開発ツール版 Terraform みたいなもので、YAML に書いたものをインストール・アップデートなど持続的に管理することができる。これに gh extension を対応させてしまおうというのが今回のお話。
+どうしたものかと思っていたら [afx](https://github.com/b4b4r07/afx/) があったじゃないかと思い出す。afx は開発ツール版 Terraform みたいなもので、YAML に書いたものをインストール・アップデートできるなど持続的な管理ができる。これに gh extension を対応させてしまおうというのが今回のお話。
 
 
 ## gh を afx で管理する

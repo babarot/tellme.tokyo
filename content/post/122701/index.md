@@ -12,9 +12,9 @@ tags:
 - zplug
 ---
 
-テック系でも Qiita ってところはブログではないので書けないことがある。しかしブログはそういうことが書けるのがいいなと思う。自分の庭みたいなもの。
+zplug 公開から今日で1ヶ月。いくつかの機能を追加した
 
-## ローカルプラグインを管理できるようになった
+## 1. ローカルプラグインを管理できるようになった
 
 先日の issue（[#54](https://github.com/b4b4r07/zplug/issues/54)）によってローカルリポジトリをロード対象とすることが可能になった。neobundle.vim や vim-plug にもあるお馴染みの機能だ。
 
@@ -24,7 +24,7 @@ zplug "~/.zsh", from:local
 
 `from` タグを使って指定する。自分の場合、`~/.zsh` 以下で zsh の設定ファイルを次のように分割しているため、この機能はとても便利に働く。デフォルトでは `"*.zsh"` が読み込み対象になっているので `~/.zsh` 以下の zsh ファイルを簡単に zplug で管理できる
 
-```
+```console
 $ tree ~/.zsh
 /Users/b4b4r07/.zsh
 ├── 10_utils.zsh
@@ -49,7 +49,7 @@ $ tree ~/.zsh
 zplug "repos/user/repo", from:local
 ```
 
-## 読み込むファイルを一部無視できるようになった
+## 2. 読み込むファイルを一部無視できるようになった
 
 これもまた issue（[#56](https://github.com/b4b4r07/zplug/issues/56)）によって導入された機能で、`of` タグと逆の指定をするためのタグ `ignore` が使用できるようになった。
 
@@ -69,12 +69,6 @@ zplug "b4b4r07/enhancd", of:enhancd.sh, ignore:enhancd.sh
 
 とすると、何もされないことになる。
 
-## Wiki が捗った
-
-一部コントリビュータが zplug を大変気に入ってくれたようで、Wiki のアップデートを申し出てくれた。大変わかり易くまとめられたので、他のプラグインマネージャからの乗り換え案内時に一役買いそうだ。
+## 3. Wiki を書いた
 
 - [Configurations・b4b4r07/zplug Wiki](https://github.com/b4b4r07/zplug/wiki/Configurations)
-
-### 追記
-
-ちなみに今日が zplug 公開から1ヶ月である。

@@ -31,4 +31,4 @@ Monolith の場合だと、新機能の追加は同じコードベースをい�
 
 詳しくはスライドにて。
 
-{{% speakerdeck "71ecf5f02c2a4e949ad4b2fd3c56269f" %}}
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/6fa99cd5a1e64db9ae61f638c2711377" title="Micoservices Platform in Mercari" allowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 314;" data-ratio="1.78343949044586"></iframe>

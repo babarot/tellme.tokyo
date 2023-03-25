@@ -3,7 +3,7 @@ title: "ほんの 1分で GitHub に公開鍵を登録して SSH 接続する"
 date: 2015-11-11T23:01:38+09:00
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2015/11/11/230138"
 tags:
