@@ -7,25 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Wed, 31 Jan 2018 00:20:45 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/vim/feed.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>開いたファイルに対して ansible-vault を Vim から実行する</title>
-      <link>https://tellme.tokyo/post/2018/01/31/vim-ansible-vault/</link>
-      <pubDate>Wed, 31 Jan 2018 00:20:45 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/post/2018/01/31/vim-ansible-vault/</guid>
-      <description>生の何かをそのままリポジトリの置いておくのが微妙ということで特定のファイルを ansible-vault で暗号化してプッシュする、ということはよくあると思います。
-例えば、Kubernetes の Secret を管理した YAML ファイルとかですね (例として正しいかは別の話ですが)。
-その場合、こんな感じで暗号化する必要があります。
-$ ansible-vault encrypt --vault-password-file=~/.vault_password secret.yaml 初回だけで済むならそこまで不便ではないのですが、このファイルを編集し再度リポジトリに上げるには復号と暗号化のセットも必要になります。 これがとても面倒です。 編集が必要ということは Vim なりのエディタで開くわけなので、そこでこのセットもいっぺんにできたら便利なわけです。
-というわけで開いているファイル (バッファ) に対して ansible-vault (encrypt|decrypt) を実行するプラグインをつくりました。
- GIF イメージにある Credentials はサンプルです。
- filetype が ansible-vault であれば yes/no で復号するかどうか聞いてあげると、もう一手間省けるのでさらに便利な気もしますが、とりあえずの不便さは解消されたので現状使える Vim コマンドと機能はこれだけです。
- :AnsibleVaultEncrypt :AnsibleVaultDecrypt  便利になりました。
-追記 (2018-10-25) chase/vim-ansible-yaml: Add additional support for Ansible in VIM
-先行実装がありました。ただメンテが滞っておりメンテナーを募集しているみたいです。</description>
-    </item>
-    
+    <lastBuildDate>Mon, 05 Dec 2016 02:18:06 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/vim/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>最近の Vim のプラグイン管理について考える</title>
       <link>https://tellme.tokyo/post/2016/12/05/021806/</link>
@@ -67,35 +49,6 @@ $ git clone https://github.com/vim/vim $ cd vim $ ./configure #好きな引数 $
 変更点はリリースノートを見ましょう。私は絶賛試している最中です。
  Happy Vimming!
 [https://github.com/vim/vim:embed:cite]</description>
-    </item>
-    
-    <item>
-      <title>Vim からシェルコマンドを実行するプラグインを作った</title>
-      <link>https://tellme.tokyo/post/2014/10/05/234607/</link>
-      <pubDate>Sun, 05 Oct 2014 23:46:07 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/post/2014/10/05/234607/</guid>
-      <description>GitHub・b4b4r07/vim-shellutils
-Vim の魅力の1つにシェルとの親和性が挙げられます。GUIじゃない Vim を使っている時にどうしてもさっと ls したかったり、さっとファイルの中身を cat してみたかったりしたときに、Vim を終了したくない、なんてことはありませんか。Ctrl-z で Vim を中断し、コマンドをタイプし処理して戻ってきた頃には、「あれ、、、なんだったっけ」なんてこともしばしば。思いつきやアイデアは1分1秒が大事なのです。
-そこで Vim のコマンドライン領域からシェルコマンドもどきを実行できるプラグインを作成しました。もどきと書いたのは call system() や !command の類を使用しないためです（シェルコマンドをエミュレート）。どちらもシェルのコマンドに依存する上に一時的に Vim 画面が切り替わったり、あまり挙動が好みではありませんでした。そこで純 Vim script で作成することで Vim さえあればシェルコマンドを実行出来るようにしました。
-詳しくは
- README.md doc/shellutils.txt  をご覧ください。</description>
-    </item>
-    
-    <item>
-      <title>Vimでcdしたときにそのディレクトリの中身を自動でリストアップするプラグイン作った</title>
-      <link>https://tellme.tokyo/post/2014/07/31/021941/</link>
-      <pubDate>Thu, 31 Jul 2014 02:19:41 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/post/2014/07/31/021941/</guid>
-      <description>Vim 内で :cd したときに、そのディレクトリにあるファイル一覧を取得したくありませんか。:!ls でも解決できますが内部的に処理したかったので却下。イメージとしては、シェルなどでいうところの cd() { builtin cd &amp;quot;$@&amp;quot; &amp;amp;&amp;amp; ls -F; } です。Vim内で明示的に :cd したときに自動で ls します。もっと他に簡単なやり方があるかもしれませんが、当方としてはこのやり方で満足していますし、plugin 作成してみたかったという背景もあるので。
-b4b4r07/vim-autocdls インストール方法 NeoBundleの利用者は以下でいいです。
-NeoBundle &#39;b4b4r07/autocdls.vim&#39; とりあえず、パスの通ったディレクトリに配置すればいいです。
-使い方 cd するだけです。すると勝手に ls されファイル一覧を取得出来ます。:cd だけでなく、:lcd や :chdir などでもいいです。もちろん、その省略形も可です。また、:Ls とすると、カレントディレクトリのファイル一覧が取得できます。引数を省略すればカレントディレクトリですが、与えてやれば存在する引数先のディレクトリ内のファイルを取得します。ここらへんは、シェルの ls と同じです。
-:Ls! とすると、ls -A と同様の働きをします。
-オプション シェルの ls よりすこしリッチになっていて、自動でファイル数も取得します。この機能を切りたい場合は、g:autocdls_show_filecounter = 0 とすればよいです（デフォルトでは1）。また、カレントディレクトリ情報（:pwd）も同時に欲しい場合は、g:autocdls_show_pwd = 1 としてください。
-以下に設定例を載せておきます。
-&amp;quot; コマンドラインの高さを上げる let g:autocdls_set_cmdheight = 2 &amp;quot; Ls したときにファイル数をカウントする let g:autocdls_show_filecounter = 1 &amp;quot; Ls したときに pwd を表示しない let g:autocdls_show_pwd = 0 &amp;quot; ls と打つと Ls に置換される let g:autocdls_alter_letter = 1 &amp;quot; 表示方法をスペース区切りから改行にしない let g:autocdls_newline_disp = 0 </description>
     </item>
     
   </channel>

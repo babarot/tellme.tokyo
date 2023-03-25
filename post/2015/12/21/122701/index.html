@@ -66,30 +66,30 @@
     
     <br>
     <div class="content">
-      <p>テック系でも Qiita ってところはブログではないので書けないことがある。しかしブログはそういうことが書けるのがいいなと思う。自分の庭みたいなもの。</p>
-<h2 id="ローカルプラグインを管理できるようになった">ローカルプラグインを管理できるようになった</h2>
+      <p>zplug 公開から今日で1ヶ月。いくつかの機能を追加した</p>
+<h2 id="1-ローカルプラグインを管理できるようになった">1. ローカルプラグインを管理できるようになった</h2>
 <p>先日の issue（<a href="https://github.com/b4b4r07/zplug/issues/54">#54</a>）によってローカルリポジトリをロード対象とすることが可能になった。neobundle.vim や vim-plug にもあるお馴染みの機能だ。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">zplug <span class="s2">&#34;~/.zsh&#34;</span>, from:local
 </code></pre></div><p><code>from</code> タグを使って指定する。自分の場合、<code>~/.zsh</code> 以下で zsh の設定ファイルを次のように分割しているため、この機能はとても便利に働く。デフォルトでは <code>&quot;*.zsh&quot;</code> が読み込み対象になっているので <code>~/.zsh</code> 以下の zsh ファイルを簡単に zplug で管理できる</p>
-<pre tabindex="0"><code>$ tree ~/.zsh
-/Users/b4b4r07/.zsh
-├── 10_utils.zsh
-├── 20_keybinds.zsh
-├── 30_aliases.zsh
-├── 40_prompt.zsh
-├── 50_setopt.zsh
-├── 60_export.zsh
-├── Completion
-│   ├── _ack
-│   ├── _add-sshkey-remote
-│   ├── _ag
-...
-│   └── _path
-├── Makefile
-└── README.md
-</code></pre><p>フルパスでない場合は <code>$ZPLUG_HOME</code> を基準にパス解決される。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>tree ~/.zsh
+<span class="go">/Users/b4b4r07/.zsh
+</span><span class="go">├── 10_utils.zsh
+</span><span class="go">├── 20_keybinds.zsh
+</span><span class="go">├── 30_aliases.zsh
+</span><span class="go">├── 40_prompt.zsh
+</span><span class="go">├── 50_setopt.zsh
+</span><span class="go">├── 60_export.zsh
+</span><span class="go">├── Completion
+</span><span class="go">│   ├── _ack
+</span><span class="go">│   ├── _add-sshkey-remote
+</span><span class="go">│   ├── _ag
+</span><span class="go">...
+</span><span class="go">│   └── _path
+</span><span class="go">├── Makefile
+</span><span class="go">└── README.md
+</span></code></pre></div><p>フルパスでない場合は <code>$ZPLUG_HOME</code> を基準にパス解決される。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">zplug <span class="s2">&#34;repos/user/repo&#34;</span>, from:local
-</code></pre></div><h2 id="読み込むファイルを一部無視できるようになった">読み込むファイルを一部無視できるようになった</h2>
+</code></pre></div><h2 id="2-読み込むファイルを一部無視できるようになった">2. 読み込むファイルを一部無視できるようになった</h2>
 <p>これもまた issue（<a href="https://github.com/b4b4r07/zplug/issues/56">#56</a>）によって導入された機能で、<code>of</code> タグと逆の指定をするためのタグ <code>ignore</code> が使用できるようになった。</p>
 <p><code>of</code> タグはデフォルトで <code>*.zsh</code> を読みに行く（<code>as:plugin</code> のとき）が一部ファイルを除外したい、なんてときに有効である。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">zplug <span class="s2">&#34;foo/bar&#34;</span>, as:plugin, of:<span class="s2">&#34;*.zsh&#34;</span>, ignore:some_file.zsh
@@ -97,13 +97,10 @@
 <p>優先度は <code>of</code>&lt;<code>ignore</code>なので、</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">zplug <span class="s2">&#34;b4b4r07/enhancd&#34;</span>, of:enhancd.sh, ignore:enhancd.sh
 </code></pre></div><p>とすると、何もされないことになる。</p>
-<h2 id="wiki-が捗った">Wiki が捗った</h2>
-<p>一部コントリビュータが zplug を大変気に入ってくれたようで、Wiki のアップデートを申し出てくれた。大変わかり易くまとめられたので、他のプラグインマネージャからの乗り換え案内時に一役買いそうだ。</p>
+<h2 id="3-wiki-を書いた">3. Wiki を書いた</h2>
 <ul>
 <li><a href="https://github.com/b4b4r07/zplug/wiki/Configurations">Configurations・b4b4r07/zplug Wiki</a></li>
 </ul>
-<h3 id="追記">追記</h3>
-<p>ちなみに今日が zplug 公開から1ヶ月である。</p>
 
     </div>
     <br>

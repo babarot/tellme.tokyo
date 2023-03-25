@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>enhancd on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/enhancd/</link>
+    <description>Recent content in enhancd on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Thu, 20 Nov 2014 13:49:01 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/enhancd/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>enhancd という autojump/z ライクな bash/zsh プラグインを書いた</title>
+      <link>https://tellme.tokyo/post/2014/11/20/134901/</link>
+      <pubDate>Thu, 20 Nov 2014 13:49:01 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2014/11/20/134901/</guid>
+      <description>【追記 2015-07-21】
+拡張版 cd コマンドの enhancd が生まれ変わった - tellme.tokyo
+enhancd v2.0 として生まれ変わりました。 enhancd [ɛnhǽn-síːdí] b4b4r07/enhancd.sh - GitHub  enhancd.sh とは autojump や z.sh などにインスパイアされて、後述する cdhist.sh をベースに作成されたディレクトリ移動をサポートするツールのことで、今回はそれらにも勝るとも劣らない機能を追加・拡張したので公開することにした。
+作った経緯 Bashの小枝集にて紹介されている cdhist.sh というものがある。これは説明にもある通り
+ ブラウザの「戻る」や「進む」のようにカレントディレクトリを行ったりきたりできるコマンド。これはリング状のディレクトリバッファを持っており以下の様な使われ方をする&amp;hellip;（※都合により引用を解釈の変わらない程度に変更）
+ yusuke ~[1]$ . cdhist.sh # (cdhist を起動) yusuke ~[2]$ cd /tmp # (カレントディレクトリが /tmp に移る) yusuke /tmp[3]$ cd /usr/bin # (カレントディレクトリが /usr/bin に移る) yusuke /usr/bin[4]$ - # (ひとつ前に戻る) yusuke /tmp[5]$ cd /etc # (カレントディレクトリが /etc に移る) yusuke /etc[6]$ - # (ひとつ前に戻る) yusuke /tmp[7]$ + # (ひとつ後に進む) yusuke /etc[8]$ = # (ディレクトリの履歴一覧表示) 3 /usr/bin 2 ~ 1 /tmp 0 /etc yusuke /etc[9]$ = 2 # (リスト上のディレクトリを直接指定) yusuke ~[10]$ というスクリプトである。しばらくこれを満足して使っていたのだが、いくつかの不満点を抱くようになった。</description>
+    </item>
+    
+  </channel>
+</rss>

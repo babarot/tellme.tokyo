@@ -25,21 +25,5 @@ finder - GoDoc
 fzf, err := finder.New(&amp;#34;fzf&amp;#34;, &amp;#34;--reverse&amp;#34;, &amp;#34;--height&amp;#34;, &amp;#34;40&amp;#34;) if err != nil { panic(err) } fzf.Run() peco, err := finder.New(&amp;#34;peco&amp;#34;, &amp;#34;--layout=bottom-up&amp;#34;) if err !</description>
     </item>
     
-    <item>
-      <title>私の fzf 活用事例</title>
-      <link>https://tellme.tokyo/post/2015/11/08/013526/</link>
-      <pubDate>Sun, 08 Nov 2015 01:35:26 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/post/2015/11/08/013526/</guid>
-      <description>peco、使ってますか。この記事を見ている人なら peco 知っていると思います。fzf は、peco と同じようなツールでこちらも同じく Go 言語で書かれています。
-以前、Qiita に以下のような記事を書いたところ、意外にも良い反応を得られたので今回はその続編といきます。
- おい、peco もいいけど fzf 使えよ - Qiita  タイトルは id:k0kubun さんの私のpeco活用事例のオマージュです。
-fzf を酷使する 最近開いたファイル 最近使ったファイル（MRU; Most Recently Used）にアクセスしたい、なんて局面ありません？僕はしょっちゅうです。Vim では mru.vim や neomru などがあるので困りませんが、それをコマンドラインから操作するには意外と手段がありませんでした。そこで、Vim で使われている MRU の履歴ファイルをシェルから開いてうまいことやろうとなりました。
-GIF アニメを見ればどんな具合か一発でわかります。mru とすると Vim の MRU プラグインで使用されている履歴ファイルを開き、fzf 上で Ctrl-l とすると less で開き、Ctrl-v とすると Vim で開きます。GIF には出ていませんが、Ctrl-x を 2 回押すとカーソル下のファイルを削除します。Ctrl-r を押せば、その親ディレクトリを表示します。Tab を押せば複数選択もできます。
-
-cp $(mru) . とコマンドラインから指定してやって、最近開いたファイルをコピーしてくるとかも簡単です。これはライフチェンジングです。また、less に色が付いているのは Pygments を通しているからです。pygmentize がインストールされている環境ならソースコードに色がつきます。
-mru() { local -a f f=( ~/.</description>
-    </item>
-    
   </channel>
 </rss>

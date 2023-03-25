@@ -61,6 +61,8 @@
     
         <a class="button is-link" href="/tags/zsh">zsh</a>
     
+        <a class="button is-link" href="/tags/enhancd">enhancd</a>
+    
 </div>
 
     
@@ -80,22 +82,21 @@
 <blockquote>
 <p>ブラウザの「戻る」や「進む」のようにカレントディレクトリを行ったりきたりできるコマンド。これはリング状のディレクトリバッファを持っており以下の様な使われ方をする&hellip;（※都合により引用を解釈の変わらない程度に変更）</p>
 </blockquote>
-<pre><code>yusuke ~[1]$ . cdhist.sh         (cdhist を起動)
-yusuke ~[2]$ cd /tmp             (カレントディレクトリが /tmp に移る)
-yusuke /tmp[3]$ cd /usr/bin      (カレントディレクトリが /usr/bin に移る)
-yusuke /usr/bin[4]$ -            (ひとつ前に戻る)
-yusuke /tmp[5]$ cd /etc          (カレントディレクトリが /etc に移る)
-yusuke /etc[6]$ -                (ひとつ前に戻る)
-yusuke /tmp[7]$ +                (ひとつ後に進む)
-yusuke /etc[8]$ =                (ディレクトリの履歴一覧表示)
- 3 /usr/bin
- 2 ~
- 1 /tmp
- 0 /etc
-yusuke /etc[9]$ = 2              (リスト上のディレクトリを直接指定)
-yusuke ~[10]$ 
-</code></pre>
-<p>というスクリプトである。しばらくこれを満足して使っていたのだが、いくつかの不満点を抱くようになった。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="go">yusuke ~[1]$ . cdhist.sh         # (cdhist を起動)
+</span><span class="go">yusuke ~[2]$ cd /tmp             # (カレントディレクトリが /tmp に移る)
+</span><span class="go">yusuke /tmp[3]$ cd /usr/bin      # (カレントディレクトリが /usr/bin に移る)
+</span><span class="go">yusuke /usr/bin[4]$ -            # (ひとつ前に戻る)
+</span><span class="go">yusuke /tmp[5]$ cd /etc          # (カレントディレクトリが /etc に移る)
+</span><span class="go">yusuke /etc[6]$ -                # (ひとつ前に戻る)
+</span><span class="go">yusuke /tmp[7]$ +                # (ひとつ後に進む)
+</span><span class="go">yusuke /etc[8]$ =                # (ディレクトリの履歴一覧表示)
+</span><span class="go"> 3 /usr/bin
+</span><span class="go"> 2 ~
+</span><span class="go"> 1 /tmp
+</span><span class="go"> 0 /etc
+</span><span class="go">yusuke /etc[9]$ = 2              # (リスト上のディレクトリを直接指定)
+</span><span class="go">yusuke ~[10]$ 
+</span></code></pre></div><p>というスクリプトである。しばらくこれを満足して使っていたのだが、いくつかの不満点を抱くようになった。</p>
 <ul>
 <li>メモリ利用（ディレクトリ移動履歴はキュー変数に保持）なので、シェルを終了すると履歴は消滅する</li>
 <li>補完が効かないので、履歴一覧を一度表示した後（<code>=</code> コマンド）、移動先を選ぶ（<code>-</code> コマンドや <code>+</code> コマンド）ので2段階の操作が必要</li>
@@ -161,14 +162,12 @@ yusuke ~[10]$
 <li>スクリプト読み込み時に有効でないディレクトリパスは消去できる</li>
 </ul>
 <h2 id="インストール方法">インストール方法</h2>
-<pre><code>$ git clone http://github.com/b4b4r07/enhancd.git
-</code></pre>
-<p><code>~/.bashrc</code> なり <code>~/.zshrc</code> なりに以下を記述する。</p>
-<pre><code>if [ -f ~/enhancd/enhancd.sh ]; then
-	source ~/enhancd/enhancd.sh
-fi
-</code></pre>
-<h2 id="使い方">使い方</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>git clone http://github.com/b4b4r07/enhancd.git
+</code></pre></div><p><code>~/.bashrc</code> なり <code>~/.zshrc</code> なりに以下を記述する。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="k">if</span> <span class="o">[</span> -f ~/enhancd/enhancd.sh <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+  <span class="nb">source</span> ~/enhancd/enhancd.sh
+<span class="k">fi</span>
+</code></pre></div><h2 id="使い方">使い方</h2>
 <ul>
 <li>いつもの要領で <code>cd</code> するだけ。</li>
 <li>ちょっと「あのディレクトリにいきたいな」と思ったらそのディレクトリ名で <code>cd that_dir</code> するだけ、カレントディレクトリにない限りジャンプできる。</li>
@@ -282,7 +281,6 @@ fi
 <li>重大なバグは今のところ見受けられない</li>
 <li>問題点は issues まで</li>
 <li>ちなみに、<em>enhanced</em> + <em>cd</em> = <em>enhancd</em></li>
-<li>高機能化された <em>cd</em> という意味を込めて命名</li>
 </ul>
 
     </div>

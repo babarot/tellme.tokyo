@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>afx on tellme.tokyo</title>
+    <link>https://tellme.tokyo/tags/afx/</link>
+    <description>Recent content in afx on tellme.tokyo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>BABAROT All Right Reserved.</copyright>
+    <lastBuildDate>Tue, 21 Mar 2023 13:46:10 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/afx/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>gh extension の管理</title>
+      <link>https://tellme.tokyo/post/2023/03/21/manage-gh-extensions/</link>
+      <pubDate>Tue, 21 Mar 2023 13:46:10 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2023/03/21/manage-gh-extensions/</guid>
+      <description>gh GitHub が公式で開発している GitHub CLI クライアントである gh コマンドが cli/cli で公開されているのだが今まで使ってこなかった。
+そんなある日、いつものようにMarkdown を書いていると、見慣れた GitHub の CSS でプレビューしたいな (N 度目) と思いいくつかの Markdown エディタで GitHub テーマを適用してほぼオリジナルに近いプレビューできるのはどれだと探してきたが、どこかしら微妙に違ってまだ出ていないかと諦めていた。
+そんなときにこのブログを見た。
+READMEをpush前にプレビューできるGitHub CLI拡張を作った - ゆーすけべー日記
+ めっちゃ GitHub。Live-reloading もできるし「これだよ! これ!」という感じ。どうやら gh コマンドの拡張機能 (extension) として公開されているらしい。
+yusukebe/gh-markdown-preview
+$ gh extension install yusukebe/gh-markdown-preview これでインストールができる。めっちゃかんたん。ここで gh extension というのがあるのだと知り、探してみると色々あることに気づく。gh コマンドが出た当初はこんなものはなかった気がするので、自分が使わなかったうちに相当開発が進んでいたらしい。
+GitHub CLI extension
+そうなると色々試したくなる。おもしろそうと思って色々インストールしているうちにたくさんになった。
+$ gh extension list gh branch mislav/gh-branch b2e79733 gh dash dlvhdr/gh-dash 50cd7818 gh md yusukebe/gh-markdown-preview v1.4.0 gh poi seachicken/gh-poi v0.</description>
+    </item>
+    
+    <item>
+      <title>新しいコマンドラインツール向けのパッケージマネージャ</title>
+      <link>https://tellme.tokyo/post/2022/03/02/package-manager-for-cli/</link>
+      <pubDate>Wed, 02 Mar 2022 20:35:20 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2022/03/02/package-manager-for-cli/</guid>
+      <description>最近、afx という CLI 向けのパッケージマネージャを公開した。ここで &amp;ldquo;CLI のパッケージ&amp;rdquo; とは例えば jq のようなコマンドラインツールや zsh-history-substring-search のようなヒストリ補完をするシェルのプラグインを指す (bash/zsh/fish)。afx ではこれらを 1 つのツールで管理すること、コードで表現して管理することを目的としている。コードには YAML を使用する。
+また afx では、管理するパッケージとそのツールの設定を一緒に保つことができる。例えば jq 自体の管理とその jq で使う環境変数やエイリアスの設定などを同じ YAML ファイルに記述できる。これによって、各種ツールの設定が bashrc/zshrc などに散乱することや、もう使っていないなどの理由でツール自体はインストールされていないのに設定だけが残っている、みたいなことを防ぐことができる。
+# ~/.config/afx/commands.yamlgithub:- name:stedolan/jqdescription:Command-line JSON processorowner:stedolanrepo:jqrelease:name:jqtag:jq-1.6command:link:- from:&amp;#39;*jq*&amp;#39;to:jqalias:jq:jq -Csnippet:|# you can write shell script here # -&amp;gt; define global alias (zsh feature) if [[ $SHELL == *zsh* ]]; then alias -g J=&amp;#39;| jq -C . | less -F&amp;#39; fi# ~/.config/afx/plugins.yamlgithub:- name:b4b4r07/enhancddescription:A next-generation cd command with your interactive filterowner:b4b4r07repo:enhancdplugin:env:ENHANCD_FILTER:fzf --height 25% --reverse --ansi:fzy:pecosources:- init.</description>
+    </item>
+    
+  </channel>
+</rss>

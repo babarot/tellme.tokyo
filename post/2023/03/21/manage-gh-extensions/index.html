@@ -55,6 +55,17 @@
     <h1 class="title">gh extension の管理</h1>
     <h2 class="subtitle is-5">March 21, 2023 </h2>
     
+      <div class="tags">
+    
+        <a class="button is-link" href="/tags/cli">cli</a>
+    
+        <a class="button is-link" href="/tags/afx">afx</a>
+    
+        <a class="button is-link" href="/tags/gh">gh</a>
+    
+</div>
+
+    
     <br>
     <div class="content">
       <h2 id="gh">gh</h2>
@@ -75,27 +86,27 @@
 </figure>
 
 
-<p>めっちゃ GitHub。Live-reloading もできるし「これだよ! これ!」という感じ。するとどうやらこれは gh コマンドの拡張機能として公開されているらしい。</p>
-<p><a href="https://github.com/yusukebe/gh-markdown-preview">https://github.com/yusukebe/gh-markdown-preview</a></p>
+<p>めっちゃ GitHub。Live-reloading もできるし「これだよ! これ!」という感じ。どうやら gh コマンドの拡張機能 (extension) として公開されているらしい。</p>
+<p><a href="https://github.com/yusukebe/gh-markdown-preview">yusukebe/gh-markdown-preview</a></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>gh extension install yusukebe/gh-markdown-preview
-</code></pre></div><p>これでインストールができる。めっちゃかんたん。ここで gh extension というのがあるのだと知り探してみるとたくさんあることに気づいた。gh コマンドが出た当初はこんなものはなかった気がするので自分が使わなかったうちに相当開発が進んでいたらしい。</p>
+</code></pre></div><p>これでインストールができる。めっちゃかんたん。ここで gh extension というのがあるのだと知り、探してみると色々あることに気づく。gh コマンドが出た当初はこんなものはなかった気がするので、自分が使わなかったうちに相当開発が進んでいたらしい。</p>
 <p><a href="https://github.com/topics/gh-extension">GitHub CLI extension</a></p>
-<p>そうなると色々試したくなる。おもろそうと思って色々インストールしているうちにたくさんになった。</p>
+<p>そうなると色々試したくなる。おもしろそうと思って色々インストールしているうちにたくさんになった。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="gp">$ </span>gh extension list
 <span class="go">gh branch  mislav/gh-branch              b2e79733
 </span><span class="go">gh dash    dlvhdr/gh-dash                50cd7818
 </span><span class="go">gh md      yusukebe/gh-markdown-preview  v1.4.0
 </span><span class="go">gh poi     seachicken/gh-poi             v0.9.0
 </span><span class="go">gh q       kawarimidoll/gh-q             5dc627f3
-</span></code></pre></div><p>手持ちの環境は2台 (会社用、個人用) なのでいい感じに同期しておきたく <a href="https://github.com/b4b4r07/dotfiles/commit/c3da13fc27b4aad165487043b894c7c69c6e343f">dotfiles にブチ込むようのスクリプト</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>を書いた。</p>
+</span></code></pre></div><p>手持ちの環境は2台 (会社用、個人用) なのでいい感じに同期しておきたく <a href="https://github.com/b4b4r07/dotfiles/commit/c3da13fc27b4aad165487043b894c7c69c6e343f">dotfiles にブチ込む用のスクリプト</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>を書いた。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="cp">#!/bin/bash
 </span><span class="cp"></span>gh extension install mislav/gh-branch
 gh extension install dlvhdr/gh-dash
 gh extension install yusukebe/gh-markdown-preview
 gh extension install seachicken/gh-poi
 gh extension install kawarimidoll/gh-q
-</code></pre></div><p>これでもいいけど install とスクリプトの追記が別手段になっているとインストールはしたけどスクリプト側を更新するの忘れてた、になるのがイケてない。</p>
-<p>どうしたかねと思っていたら <a href="https://github.com/b4b4r07/afx/">afx</a> があったじゃないかと思い出す。afx は開発ツール版 Terraform みたいなもので、YAML に書いたものをインストール・アップデートなど持続的に管理することができる。これに gh extension を対応させてしまおうというのが今回のお話。</p>
+</code></pre></div><p>これでもいいけど install とスクリプトへの追加が別になっているとインストールはしたけどスクリプト側を更新するの忘れてた、になるのがイケてない。</p>
+<p>どうしたものかと思っていたら <a href="https://github.com/b4b4r07/afx/">afx</a> があったじゃないかと思い出す。afx は開発ツール版 Terraform みたいなもので、YAML に書いたものをインストール・アップデートできるなど持続的な管理ができる。これに gh extension を対応させてしまおうというのが今回のお話。</p>
 <h2 id="gh-を-afx-で管理する">gh を afx で管理する</h2>
 <p>本題。</p>
 <p><a href="https://github.com/b4b4r07/afx/pull/58">Support gh extension by b4b4r07 · Pull Request #58 · b4b4r07/afx</a></p>

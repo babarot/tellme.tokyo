@@ -27,42 +27,25 @@ if (( $#unclassified_plugins == 0 )); then # If $tags[use] is a regular file, # 
       <pubDate>Mon, 21 Dec 2015 12:27:01 +0900</pubDate>
       
       <guid>https://tellme.tokyo/post/2015/12/21/122701/</guid>
-      <description>テック系でも Qiita ってところはブログではないので書けないことがある。しかしブログはそういうことが書けるのがいいなと思う。自分の庭みたいなもの。
-ローカルプラグインを管理できるようになった 先日の issue（#54）によってローカルリポジトリをロード対象とすることが可能になった。neobundle.vim や vim-plug にもあるお馴染みの機能だ。
+      <description>zplug 公開から今日で1ヶ月。いくつかの機能を追加した
+1. ローカルプラグインを管理できるようになった 先日の issue（#54）によってローカルリポジトリをロード対象とすることが可能になった。neobundle.vim や vim-plug にもあるお馴染みの機能だ。
 zplug &amp;#34;~/.zsh&amp;#34;, from:local from タグを使って指定する。自分の場合、~/.zsh 以下で zsh の設定ファイルを次のように分割しているため、この機能はとても便利に働く。デフォルトでは &amp;quot;*.zsh&amp;quot; が読み込み対象になっているので ~/.zsh 以下の zsh ファイルを簡単に zplug で管理できる
 $ tree ~/.zsh /Users/b4b4r07/.zsh ├── 10_utils.zsh ├── 20_keybinds.zsh ├── 30_aliases.zsh ├── 40_prompt.zsh ├── 50_setopt.zsh ├── 60_export.zsh ├── Completion │ ├── _ack │ ├── _add-sshkey-remote │ ├── _ag ... │ └── _path ├── Makefile └── README.md フルパスでない場合は $ZPLUG_HOME を基準にパス解決される。
-zplug &amp;#34;repos/user/repo&amp;#34;, from:local 読み込むファイルを一部無視できるようになった これもまた issue（#56）によって導入された機能で、of タグと逆の指定をするためのタグ ignore が使用できるようになった。</description>
+zplug &amp;#34;repos/user/repo&amp;#34;, from:local 2. 読み込むファイルを一部無視できるようになった これもまた issue（#56）によって導入された機能で、of タグと逆の指定をするためのタグ ignore が使用できるようになった。</description>
     </item>
     
     <item>
-      <title>zplug 流 zsh プラグイン管理術</title>
+      <title>zplug を使った zsh プラグイン管理術</title>
       <link>https://tellme.tokyo/post/2015/12/13/174209/</link>
       <pubDate>Sun, 13 Dec 2015 17:42:09 +0900</pubDate>
       
       <guid>https://tellme.tokyo/post/2015/12/13/174209/</guid>
-      <description>とある引用から。
- 技術者であればだれでも経験することでしょうけれども、自分が作ったものを他人に理解させるというのは存外に難しく、なぜかというと開発者自身はどうしても開発した時の思考の流れを重視してしまい、読者にとって理解しやすい話の流れで話すという思考の大転換が困難だからです。そういえば、開発者自身による解説書の名著って意外なくらい少ないと思いませんか？
- 私は先月末に zplug という zsh 用のプラグインマネージャーをリリースした。以下の記事では、zplug が生まれた背景やその周辺事情を導入として書いたため、もしかするとユーザ目線からでは分かりづらかったかもしれない。
- おい、Antigen もいいけど zplug 使えよ  そこで今回は開発者としての記事ではなく、いちユーザとして（といっても開発者がユーザ目線でプロダクトを語るのは冒頭の引用にもある通りひどく難しいことである）使い方を紹介していく。
-特徴 
+      <description>zplug とは zsh のプラグインマネージャ。
+https://github.com/b4b4r07/zplug
  何でも管理できる（コマンド、Gist、oh-my-zsh のプラグイン、GitHub Releases のバイナリ） 非同期インストール/アップデート ブランチロック・リビジョンロック インストール後の コマンド実行 hook あり oh-my-zsh などの外部プラグインをサポート バイナリを管理できる（GitHub Releases） shallow clone できる（オン・オフ） 依存関係の記述ができる ユーザはプラグインマネージャのことを考えなくていい（*.plugin.zsh 不必要） 選択的インターフェイスとの連携（fzf, peco, percol, zaw）  書き方 zplug はタグという概念を持っている。タグとはプラグインの属性情報を表したもので、タグ:値 のセットで記述していく。
-$ zplug &amp;#34;foo/bar&amp;#34;, as:command, of:&amp;#34;*.sh&amp;#34; こんな具合である。各タグ間はカンマと一つ以上のスペース（,　）で区切る必要がある。タグの値は必ずしもクォートで括る必要はないが、ワイルドカードなどファイルグロブを値と指定する場合、シェルに展開されないようにクォーティングする。
+zplug &amp;#34;foo/bar&amp;#34;, as:command, of:&amp;#34;*.sh&amp;#34; こんな具合である。各タグ間はカンマと一つ以上のスペース（,　）で区切る必要がある。タグの値は必ずしもクォートで括る必要はないが、ワイルドカードなどファイルグロブを値と指定する場合、シェルに展開されないようにクォーティングする。
 タグ一覧 現在利用できるタグは以下のとおり。
-   タグ 説明 値 (デフォルト値) 例     as コマンドかプラグインかを指定する plugin,command (plugin) as:command   of source するファイルへの相対パスかパスを通すコマンドへの相対パスを指定する（glob パターンでも可） - (&amp;quot;*.</description>
-    </item>
-    
-    <item>
-      <title>プラグインマネージャ zplug リリース前夜</title>
-      <link>https://tellme.tokyo/post/2015/12/01/113422/</link>
-      <pubDate>Tue, 01 Dec 2015 11:34:22 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/post/2015/12/01/113422/</guid>
-      <description>ここしばらく zplug という zsh 用のプラグインマネージャを作っていた（GitHub でも開発を始めたのは 11/22）。これは、Antigen alternative としてではなく、イチから作ったもので、今までよりも簡単に不都合が少なく高速に管理が可能になる予定（予定）。
-一応、正式リリース（RC 版？）を明日に公開しようかなと。
-そして昨日今日ではバージョンテストをしていて、5.x 系では問題なく動いている。4.x 系になると一部で動かなくなる。zsh の場合 4.x から 4.2.7 までが安定版ブランチのようになっていて（見る限り）、4.3.4 から 4.3.17 までが開発版ブランチのような分かれ方をしていた（5.x に移行するためのテストなのかな？とか）。zplug では 4.3.9 以上での動作を確認した。ひとつ下のバージョンの 4.3.6 では無名関数がうまく動いていなかった（修正すれば動いたんだけどリリースノートに無名関数のことが記載されていないし、深堀りするのも面倒なのでサポートはここで区切ろうと思った次第）
-あとは「テスト」を書いていきたい（1500 Lines な zsh script のテスト誰が書きたいんだ…）
-P.S. 公式の wiki を編集してくれる方いないですかね。他のプラグインマネージャからの乗り換え方法など
-zsh のプラグインマネージャ - tellme.tokyo</description>
+   タグ 説明 値 (デフォルト値) 例     as コマンドかプラグインかを指定する plugin,command (plugin) as:command   of source するファイルへの相対パスかパスを通すコマンドへの相対パスを指定する（glob パターンでも可） - (&amp;quot;*.zsh&amp;quot;) of:bin,of:&amp;quot;*.sh&amp;quot;   from 外部からの取得を行う gh-r,gist,oh-my-zsh,github,bitbucket (github) from:gh-r   at ブランチ/タグを指定したインストールをサポートする ブランチかタグの名前 (master) at:v1.</description>
     </item>
     
     <item>

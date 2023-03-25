@@ -26,18 +26,5 @@ https://github.com/b4b4r07/yamato-bot
  [WebAPI]ヤマト運輸の配送状況を確認するAPIを作ってみた [YamaTrack]ヤマト運輸の荷物問合せサイトを作成しました  終わりに この bot は Node.</description>
     </item>
     
-    <item>
-      <title>特定のワードで Twitter を監視して、検知したら Slack に投げる</title>
-      <link>https://tellme.tokyo/post/2016/10/17/205021/</link>
-      <pubDate>Mon, 17 Oct 2016 20:50:21 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/post/2016/10/17/205021/</guid>
-      <description>&amp;hellip; というツールを書きました。Twitter Streaming Daemon なので twistd です。最近話題の名前衝突ですが、こっちは個人のツールだし一旦気にしないことにします (リポジトリ作ってから気づいた)。
- tl;dr  Twitter Streaming API を利用してツイートを監視する 特定のワードで引っかかったら Slack に通知する 2つをいっぺんに行うコマンドを書いた (デーモンとして利用しましょう)  
-※ [&#39;tomato&#39;, &#39;potato&#39;] で引っ掛けてる例
-モチベーション zplug (GitHub Organization) ではオーナーの他に数名のコラボレーターの方たちがいます。開発者同士のコミュニケーションには Slack を用い、GitHub Issues で issue トラッキングをしています。Slack への GitHub の通知は、Slack のインテグレーション機能 (issue が作られたり P-R が投げられると通知される) を使っています。これはよくあるスタイルだと思います。
-ところが、数ヶ月 Organization を運用して気づいたのが GitHub Issues に上がってこないバグレポートや機能改善、機能要望も結構あるということです。その多くは Twitter 上でつぶやかれていて、それからは時折 zplug -RT とかで Twitter 検索をしていたのですが、それを他のコラボレーターに共有するのが面倒なことと、定期的なエゴサーチが面倒 (見逃すということもある) で、Twitter を常時監視して zplug についてつぶやかれていたら Slack にポストしてくれるツールはないかと探しておりました。ちょうど良さそうなツールはないようなので、じゃあ作りましょうかとなった次第です (すでにあったらごめんなさい。そして twistd より優れていたら教えてください)。</description>
-    </item>
-    
   </channel>
 </rss>
