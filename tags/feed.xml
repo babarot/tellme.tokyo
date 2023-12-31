@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Tue, 21 Mar 2023 13:46:10 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 31 Dec 2023 17:44:22 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/tags/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>review</title>
+      <link>https://tellme.tokyo/tags/review/</link>
+      <pubDate>Sun, 31 Dec 2023 17:44:22 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/tags/review/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>afx</title>
       <link>https://tellme.tokyo/tags/afx/</link>
@@ -122,15 +131,6 @@
       <pubDate>Tue, 28 Jan 2020 22:04:26 +0900</pubDate>
       
       <guid>https://tellme.tokyo/tags/gist/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>review</title>
-      <link>https://tellme.tokyo/tags/review/</link>
-      <pubDate>Tue, 31 Dec 2019 23:59:04 +0900</pubDate>
-      
-      <guid>https://tellme.tokyo/tags/review/</guid>
       <description></description>
     </item>
     
