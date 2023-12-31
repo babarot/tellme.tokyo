@@ -110,8 +110,9 @@
 <p>事業スケール確実のタイムラインが見えている中、中長期的に効いてくるものから優先的に着手しました。エンジニア全体に広めに付与されていた権限を整理し、権限ください依頼やリソース作成の依頼など SRE がボトルネックになっていた作業を自分たちでできるようにするために Terraform によるインフラのコード化を行い、またパートナーの横展開がしやすいように module による自動化を進めたり、過去の歴史的経緯によって生まれそしてそのまま残ってしまっている直したい部分をきれいにするなどをすすめました。</p>
 <p>また、サービスにおけるオーナーシップとはなにか？というものをドキュメントに落として、サービスチームは自身のサービスの開発だけではなく運用にもオーナーシップを持つことが健全であるとしました。10X にはさまざまなパートナーがおり、パートナーごとにサービスをもっています。そして様々な Deployment や Job が動いていました。ドメインロジックはもちろん開発チームのほうが長けているため、SRE チームに飛んだ開発に起因するアラートを開発チームにエスカレーションすることが多く、これを最初から開発チームが見るように（見れるように）することで、アラート対応にかかるオーバーヘッドを減らし SRE が全アラートに忙殺されるということを解消しました。</p>
 <p>また自分の書いたコードによって夜中起こされたくないというモチベーションが発生させることでコードの品質があがるという狙いがありました。この考え方に従って、PagerDuty を使ったインシデント対応のフロー（労務周りや待機手当などの設計を含む）や Kubernetes クラスタの Namespace 設計や権限設計を行いました（責任は権限付与とセットでなくては意味をなさない）。</p>
-<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">前Qのアウトプットをチームで書いて共有した。10X SRE は立ち上がったばかりだけど Istio→Contour 移行や Kubernetes Namespace 移行、Terraform 導入や Module の開発など中長期的に効いてくるものを着実に進められたQだった <a href="https://t.co/FXa9fzMUuG">pic.twitter.com/FXa9fzMUuG</a></p>&mdash; @babarot 🏔 (@b4b4r07) <a href="https://twitter.com/b4b4r07/status/1542830835698929664?ref_src=twsrc%5Etfw">July 1, 2022</a></blockquote>
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">前Qのアウトプットをチームで書いて共有した。10X SRE は立ち上がったばかりだけど Istio→Contour 移行や Kubernetes Namespace 移行、Terraform 導入や Module の開発など中長期的に効いてくるものを着実に進められたQだった <a href="https://t.co/FXa9fzMUuG">pic.twitter.com/FXa9fzMUuG</a></p>&mdash; @babarot ⚡️ (@b4b4r07) <a href="https://twitter.com/b4b4r07/status/1542830835698929664?ref_src=twsrc%5Etfw">July 1, 2022</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 
 <h2 id="20227-チームの拡大">2022/7 チームの拡大</h2>
 <p>7月は Leader role の明確な transition がありました。SRE チームは SRE JD で採用された自分とこれまでのインフラを見ていてくれたメンバーと SRE チームアサインされた SWE によって組成されました。僕のオンボーディングをふくめて、これまでインフラを見ていてくれたメンバーが Lead を担ってくれていたのですが、このタイミングでバトンタッチしました。チーム初期の段階からスイッチすることを念頭にチームビルディングをしていたのでサプライズではなかったですが、より一層チームをドライブさせていくぞと意気込む Q 始まりとなりました。</p>

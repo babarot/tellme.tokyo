@@ -7,7 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>BABAROT All Right Reserved.</copyright>
-    <lastBuildDate>Tue, 21 Mar 2023 13:46:10 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 31 Dec 2023 17:44:22 +0900</lastBuildDate><atom:link href="https://tellme.tokyo/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2023年振り返り</title>
+      <link>https://tellme.tokyo/post/2023/12/31/2023-review/</link>
+      <pubDate>Sun, 31 Dec 2023 17:44:22 +0900</pubDate>
+      
+      <guid>https://tellme.tokyo/post/2023/12/31/2023-review/</guid>
+      <description>転職して2年経った 2022年1月に転職して 10X に入社した。SRE として入社してリライアビリティ &amp;amp; セキュリティ部に所属している。今年は色々なことがあった
+ EM になって1年以上経った 部長になった SLO を真剣にやった チームマネジメントちゃんと思考し始めた (IC→Mgr) リライアビリティとセキュリティの両方で成果が出るような体制づくりを始めた  良い意味で忙しくできているので会社のブログも個人のブログも書けていない (書きたい)。来年は成果の取り組みとかをアウトプットしていきたい。
+EM を1年やった 2022年の10月から Engineering Manager を引き受けることになったのでかれこれ1年以上経過した。夏頃には部長にもなった。&amp;ldquo;部長&amp;quot;というと大層なロールに感じるが、10X では Tech Lead を置いていないので部の技術的な意思決定とピープルマネジメントの両方をやる役職が部長となっている。
+前職では人の評価をする人間になるとはこれっぽちも思っていなかったが、当時の Mgr が育休に入ることになってバトンタッチして引き受けることになった。もともと技術が好きでソフトウェアエンジニアになったつもりでいたんだけど、EM をお願いされたときは不思議と嫌な気分はしなかった。なんでかなと思ったら作っているプロダクトに興味があって事業が大きくなったりプロダクトがうまくいく (ために技術を使う) ことが好きなのであって、技術自体が HOW なわけではないからだと気づいた。なので結果として楽しく EM 業ができている。経験自体はないのでインプットしながら試行錯誤はしている。
+Z 買った (車買い替えた) RZ34型のフェアレディZ。発売してすぐの2022年7月末で受注停止になってしまい現在なお再開されていない。2023年12月時点でバックオーダーに6000台以上あって毎月60-100台程度しか生産できておらず(登録台数)このペースだとバックオーダーの納車まで4年以上かかる。
+Zの発表時はかっこいいなあとは思ったけど、まさか現行でスポーツカーを買うとは思ってなかった。というのも小さいときから憧れのクルマだったR34スカイラインにずっと乗りたかったから。けれど25年近く経つため内外装の状態や価格面とかで諸々条件に見合うものに巡り会えずにいた。
+そんなときZ NISMOの追加が発表されてますます興味出てきて、日産グローバル本社行って試乗したりしてた。そのときはまだいいなぁくらいだったけどNDロードスター(6MT)に数日乗る機会があって乗ったら久しぶりに乗ったMTがめちゃ楽しくて今すぐMT乗りたいと思った。R34買うまで待てなくてとりあえずMT乗りたい欲でソワソワしてたときに、そうだ、Zあるじゃんとおもって取り扱ってるお店に行って即契約した。
+契約したZは20kmしか走ってないいわゆる登録済み未使用車で、納車時のビニールとかも被ったようなほぼ新車。最高の状態だった。バージョンSTのプロトスペック6速MT。240台しか生産されていない限定車。それも購入の決め手だった。前オーナーさんは地元の社長やっている人で乗らずに車庫保管してくれていた。あと次の買い手が20代ということを知って色々と融通して譲ってくれた。
+納車して1ヶ月半くらい4500kmくらい走った。とりあえず楽しいクルマ。しばらくはノーマルで乗るつもり。
+ ※ R34 は今もほしい。
+PFCをコントロールしはじめた PFCを意識した食事を始めた。ジムも行き始めた。長時間何か (外出,ドライブ,旅行,リュックを背負う, &amp;hellip;) をするには体力が必要だと気づいた。あと今年ついに30代にも突入した。筋肉があればまず困ることはないだろうと9月ころから筋トレと食事コントロールを始めた。上半身(胸,肩,背中)と下半身(脚)の2回を週3-4で通ってる。筋肉つ作り変わりの周期的にあと1−2ヶ月しないと実感する効果は出てこないが、まずは一生続けられるようにひたすら打ち込んでいる。
+目安1600kcal
+ Pタンパク質 120g 480kcal F脂質 35g 320kcal C炭水化物 200g 800kcal  使っているアプリはカロミル。課金もしてかなりいい感じに (ラクに) 食事管理ができている。</description>
+    </item>
+    
     <item>
       <title>gh extension の管理</title>
       <link>https://tellme.tokyo/post/2023/03/21/manage-gh-extensions/</link>
@@ -246,7 +267,7 @@ $ dig babarot.me +nostats +nocomments +nocmd ; &amp;lt;&amp;lt;&amp;gt;&amp;gt; 
       <guid>https://tellme.tokyo/post/2019/10/03/hashiconf2019/</guid>
       <description>HashConf &amp;lsquo;19 (9/9 - 9/11) に行ってきた。 HashiConf とは HashiCorp 製品自体の発表であったりそれと使って構築したアーキテクチャやノウハウについて共有するカンファレンスになっている。 今年はシアトルで開催された。
 First time #HashiConf attendee from 🇯🇵 Excited for this conference! pic.twitter.com/ApdtsTenWu
-&amp;mdash; @babarot 🏔 (@b4b4r07) September 10, 2019  たくさん面白いキーノートがあったが中でも開発者の多くが歓声をあげていたのははやり初日の Armon (Co-Founder/CTO) の Terraform Cloud に関する発表だったと思う。ローンチ以降 Remote State しか扱えなかった Terraform Cloud が、このタイミングで大きく強化され Enterprise 版と遜色ないくらいにまで機能拡張されていた。今後、（個人ユースは Free ということもあり）サクッと Terraform 環境を構築したいときにマッチすると思う。
+&amp;mdash; @babarot ⚡️ (@b4b4r07) September 10, 2019  たくさん面白いキーノートがあったが中でも開発者の多くが歓声をあげていたのははやり初日の Armon (Co-Founder/CTO) の Terraform Cloud に関する発表だったと思う。ローンチ以降 Remote State しか扱えなかった Terraform Cloud が、このタイミングで大きく強化され Enterprise 版と遜色ないくらいにまで機能拡張されていた。今後、（個人ユースは Free ということもあり）サクッと Terraform 環境を構築したいときにマッチすると思う。
 Announcing Terraform Cloud
 さらに、Terraform Cloud / Enterprise に Cost Estimation の機能が追加された。これを有効にすると、「この apply によってクラウド使用量からこのくらいのコスト増減が見込める」といった見積もりがとれるようになる。たとえば、Policy を定義できる HashiCorp Sentinel と組み合わせて「このマイクロサービスは 1000USD まで」といったポリシーを書くことでコストの意図しない増加を防ぐといったことができるようになった。この機能はめっちゃ便利なので、これを使うためだけに Terraform Cloud を使う価値すらあると思う。</description>
     </item>
@@ -265,7 +286,7 @@ Twitter では告知したのですが前に2017年7月号を書かせていた�
 前回に引き続き2回目です。 Goは好きな言語であり、なおかつ自作ツールの紹介だったのでとても嬉しいです。 ありがとうございました。
  関連  Software Design 2017年7月号に寄稿しました | tellme.tokyo  明日発売のSoftware Design 2019年9月号に寄稿しました。「作品で魅せるGoプログラミング」というテーマで、YAMLなどの設定ファイルに対してカスタムルールでlintできるsteinというツールについて紹介しました。ぜひご覧ください。
 Software Design 2019年9月号｜技術評論社 https://t.co/kP4N2SdxEG
-&amp;mdash; @babarot 🏔 (@b4b4r07) August 16, 2019  </description>
+&amp;mdash; @babarot ⚡️ (@b4b4r07) August 16, 2019  </description>
     </item>
     
     <item>

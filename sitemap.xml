@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://tellme.tokyo/post/2023/12/31/2023-review/</loc>
+    <lastmod>2023-12-31T17:44:22+09:00</lastmod>
+  </url><url>
+    <loc>https://tellme.tokyo/post/</loc>
+    <lastmod>2023-12-31T17:44:22+09:00</lastmod>
+  </url><url>
+    <loc>https://tellme.tokyo/</loc>
+    <lastmod>2023-12-31T17:44:22+09:00</lastmod>
+  </url><url>
     <loc>https://tellme.tokyo/tags/afx/</loc>
     <lastmod>2023-03-21T13:46:10+09:00</lastmod>
   </url><url>
@@ -14,13 +23,7 @@
     <loc>https://tellme.tokyo/post/2023/03/21/manage-gh-extensions/</loc>
     <lastmod>2023-03-21T13:46:10+09:00</lastmod>
   </url><url>
-    <loc>https://tellme.tokyo/post/</loc>
-    <lastmod>2023-03-21T13:46:10+09:00</lastmod>
-  </url><url>
     <loc>https://tellme.tokyo/tags/</loc>
-    <lastmod>2023-03-21T13:46:10+09:00</lastmod>
-  </url><url>
-    <loc>https://tellme.tokyo/</loc>
     <lastmod>2023-03-21T13:46:10+09:00</lastmod>
   </url><url>
     <loc>https://tellme.tokyo/post/2022/12/28/10x-1st-y-aniv/</loc>
