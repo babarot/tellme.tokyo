@@ -3,7 +3,7 @@ title: "『ルポ川崎』を読んだ"
 date: "2018-05-29T12:18:56+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: "b4b4r07"
 oldlink: ""
 tags: ["book"]

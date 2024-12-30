@@ -3,7 +3,7 @@ title: "Microservices Platform Meetupで話した"
 date: "2018-07-23T14:35:00+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: "b4b4r07"
 oldlink: ""
 tags: ["microservices", "talk", "terraform"]

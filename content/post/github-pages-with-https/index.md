@@ -3,7 +3,7 @@ title: "GitHub Pages で HTTPS を有効にする"
 date: "2020-01-20T19:58:54+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: ""
 tags: ["github-pages", "blog"]

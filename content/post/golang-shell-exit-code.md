@@ -3,7 +3,7 @@ title: "Go でシェルの Exit code を扱う"
 date: "2018-04-02T23:42:39+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: "b4b4r07"
 oldlink: ""
 tags: ["go", "cli"]

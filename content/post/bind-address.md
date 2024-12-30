@@ -3,7 +3,7 @@ title: "Bind Address で少しハマった話"
 date: "2018-08-16T00:55:17+09:00"
 description: "特定条件を満たして hugo server しローカルからアクセスする必要がありその際に bind address でハマった"
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: ""
 tags:

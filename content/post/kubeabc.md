@@ -3,7 +3,7 @@ title: "Kubernetes 開発環境構築のいろは"
 date: "2017-12-01T00:54:11+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: "b4b4r07"
 oldlink: ""
 tags: ["kubernetes"]

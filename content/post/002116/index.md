@@ -3,7 +3,7 @@ title: "実用 Slack bot ヤマト編"
 date: 2016-12-12T00:21:16+09:00
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2016/12/12/002116"
 tags:

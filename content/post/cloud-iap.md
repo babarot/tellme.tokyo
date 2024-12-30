@@ -3,7 +3,7 @@ title: "Cloud Identity-Aware Proxy を使って GCP backend を保護する"
 date: "2017-10-30T15:02:23+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: "b4b4r07"
 oldlink: ""
 tags: ["IAP", "GCP", "GKE", "GCE"]

@@ -3,7 +3,7 @@ title: "zplug では Collaborators を募集しています"
 date: 2016-09-22T00:34:48+09:00
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2016/09/22/003448"
 tags:

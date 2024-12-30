@@ -3,7 +3,7 @@ title: "『僕たちはファッションの力で世界を変える』を読ん
 date: "2018-11-08T22:37:54+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: ""
 tags:

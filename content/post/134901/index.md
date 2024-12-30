@@ -12,16 +12,17 @@ tags:
 - enhancd
 ---
 
-【追記 2015-07-21】
+<!-- 【追記 2015-07-21】 -->
+<!---->
+<!-- [拡張版 cd コマンドの enhancd が生まれ変わった - tellme.tokyo](https://b4b4r07.hatenadiary.com/entry/2015/07/21/142826) -->
+<!---->
+<!-- <b>enhancd v2.0 として生まれ変わりました。</b> -->
+<!---->
+<!-- * **enhancd** \[ɛnhǽn-síːdí\] -->
+<!-- * [b4b4r07/enhancd.sh - GitHub](http://github.com/b4b4r07/enhancd)  -->
+<!-- ![](http://cl.ly/image/252w3b0f1b2P/enhancd.gif) -->
 
-[拡張版 cd コマンドの enhancd が生まれ変わった - tellme.tokyo](https://b4b4r07.hatenadiary.com/entry/2015/07/21/142826)
-
-<b>enhancd v2.0 として生まれ変わりました。</b>
-
-* **enhancd** \[ɛnhǽn-síːdí\]
-* [b4b4r07/enhancd.sh - GitHub](http://github.com/b4b4r07/enhancd) 
-
-![](http://cl.ly/image/252w3b0f1b2P/enhancd.gif, "enhancd")
+## [b4b4r07/enhancd](http://github.com/b4b4r07/enhancd)
 
 [`enhancd.sh`](http://github.com/b4b4r07/enhancd)  とは [`autojump`](https://github.com/joelthelion/autojump) や [`z.sh`](https://github.com/rupa/z) などにインスパイアされて、後述する `cdhist.sh` をベースに作成されたディレクトリ移動をサポートするツールのことで、今回はそれらにも勝るとも劣らない機能を追加・拡張したので公開することにした。
 

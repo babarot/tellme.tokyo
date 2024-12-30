@@ -3,7 +3,7 @@ title: "Hugo で PlantUML のようなシーケンス図を描画する"
 date: "2018-08-13T18:58:07+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: ""
 tags:

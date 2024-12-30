@@ -3,7 +3,7 @@ title: "GitHub のラベルを宣言的に管理する"
 date: "2018-11-19T20:08:07+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: ""
 tags:

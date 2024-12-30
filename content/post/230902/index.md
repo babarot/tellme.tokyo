@@ -3,7 +3,7 @@ title: "運営として VimConf 2016 に参加してきた"
 date: 2016-11-06T23:09:02+09:00
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2016/11/06/230902"
 tags:

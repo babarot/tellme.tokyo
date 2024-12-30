@@ -4,7 +4,7 @@ category:
 date: 2015-12-21T12:27:01+09:00
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2015/12/21/122701"
 tags:

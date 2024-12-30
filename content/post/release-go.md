@@ -3,7 +3,7 @@ title: "Go のコマンドラインツールを簡単にリリースする"
 date: "2019-02-15T01:09:19+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: ""
 tags:

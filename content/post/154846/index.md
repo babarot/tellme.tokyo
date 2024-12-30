@@ -3,7 +3,7 @@ title: "builderscon tokyo 2016 に参加してきました"
 date: 2016-12-04T15:48:46+09:00
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: "https://b4b4r07.hatenadiary.com/entry/2016/12/04/154846"
 tags:

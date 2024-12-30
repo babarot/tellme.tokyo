@@ -3,7 +3,7 @@ title: "Kubernetes 上で Credentials を扱う"
 date: "2018-08-07T01:01:47+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: ""
 tags:

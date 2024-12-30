@@ -3,7 +3,7 @@ title: "メソッドを持った interface を要素に持つ struct への JSON
 date: "2019-04-10T23:42:51+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: ""
 tags:

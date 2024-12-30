@@ -10,12 +10,12 @@ tags:
 - windows
 ---
 
-〜2013 年ごろまで Windows を使っていた (Windows 7 SP2 が最後)。
+2013 年ごろまで Windows を使っていた (Windows 7 SP2 が最後)。
 そのころはいろいろなフリーソフトにお世話になった。
 
-画像はマイベストフリーソフト「あふｗ」。
+画像はマイベストフリーソフト「[あふｗ](http://akt.d.dooo.jp/akt_afxw.html)」。
 
-<img src="http://akt.d.dooo.jp/afxwss/afxwss_b0.png" width="400">
+{{< img src="./afxw.png" >}}
 
 # 一覧
 

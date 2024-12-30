@@ -3,7 +3,7 @@ title: "Kubernetes などの YAML を独自のルールをもとにテストす�
 date: "2019-02-19T21:40:24+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: b4b4r07
 oldlink: ""
 tags:
