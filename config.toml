@@ -18,14 +18,14 @@ category = "categories"
 [params]
 description = "Masaki ISHIYAMA"
 keywords = ["b4b4r07", "babarot"]
-author = "b4b4r07"
+author = "babarot"
 profile = "profile.jpg"
-website = "https://b4b4r07.github.io"
+website = "https://babarot.github.io"
 sharingicons = true
 displayauthor = false
 displayoldlink = true
 readmore = false
-avatar = "https://raw.githubusercontent.com/b4b4r07/tellme.tokyo/master/static/images/profile.jpg"
+avatar = "https://raw.githubusercontent.com/babarot/tellme.tokyo/main/static/images/profile.jpg"
 
 # [params.permalinks]
 # post = "/post/:year/:month/:day/:filename/"
@@ -43,12 +43,12 @@ style = "github"
 languages = ["go", "dockerfile"]
 
 [[params.social]]
-url = "https://github.com/b4b4r07"
+url = "https://github.com/babarot"
 fa_icon = "fa-github"
 
 [[params.social]]
-url = "https://twitter.com/b4b4r07"
-fa_icon = "fa-twitter"
+url = "https://x.com/b4b4r07"
+fa_icon = "fa-x-twitter"
 
 [outputFormats]
   [outputFormats.RSS]

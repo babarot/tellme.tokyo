@@ -1,0 +1,3 @@
+[submodule "themes/mini"]
+	path = themes/mini
+	url = https://github.com/babarot/mini

@@ -41,11 +41,7 @@ Z の発表時はかっこいいなあとは思ったけど、まさか現行で
 
 納車して1ヶ月半くらい。4500km以上走った。とりあえず楽しい。しばらくはノーマルで乗るつもり。
 
-{{< img src="rz34.jpg" width="800" >}}
-
-<!-- <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">新型フェアレディZ納車した！よろしくZ😎 <a href="https://twitter.com/hashtag/RZ34?src=hash&amp;ref_src=twsrc%5Etfw">#RZ34</a> <a href="https://t.co/oGf2tAuKMm">pic.twitter.com/oGf2tAuKMm</a></p>&mdash; @babarot ⚡️ (@b4b4r07) <a href="https://twitter.com/b4b4r07/status/1723351558404919596?ref_src=twsrc%5Etfw">November 11, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
-
-※ R34 は今もほしい (ちなみに34の予算より高くなってしまった..)
+{{< img src="rz34.jpg" width="800" caption="R34 は今もほしい (ちなみに34の予算より高くなってしまった..)" >}}
 
 ## PFC のコントロールをはじめた
 
