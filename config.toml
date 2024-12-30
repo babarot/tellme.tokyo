@@ -8,8 +8,8 @@ publishDir = "docs"
 pygmentsUseClasses = true
 pygmentsCodefences = true
 
-# default is 10
-paginate = 10
+[pagination]
+  pagerSize = 10
 
 [taxonomies]
 tag = "tags"
