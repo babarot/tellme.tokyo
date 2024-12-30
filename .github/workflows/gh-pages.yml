@@ -13,17 +13,18 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
+        submodules: recursive
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v3
       with:
         hugo-version: '0.140.0'
     - name: Build
       run: |
-        hugo
+        hugo -t mini
         cp -v ./CNAME ./docs/CNAME
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v4
-      if: ${{ github.ref == 'refs/heads/master' }}
+      if: ${{ github.ref == 'refs/heads/main' }}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./docs
