@@ -11,11 +11,11 @@ tags: ["cli", "afx", "gh"]
 
 ---
 
-## gh
+## gh とは
 
-GitHub が公式で開発している GitHub CLI クライアントである gh コマンドが [cli/cli](https://github.com/cli/cli) で公開されているのだが今まで使ってこなかった。
+[gh](https://github.com/cli/cli) とは GitHub が公式で開発している GitHub CLI クライアントである。
 
-そんなある日、いつものようにMarkdown を書いていると、見慣れた GitHub の CSS でプレビューしたいな (N 度目) と思いいくつかの Markdown エディタで GitHub テーマを適用してほぼオリジナルに近いプレビューできるのはどれだと探してきたが、どこかしら微妙に違ってまだ出ていないかと諦めていた。
+いつものようにMarkdown を書いていると、見慣れた GitHub の CSS でプレビューしたいな (N 度目) と思いいくつかの Markdown エディタで GitHub テーマを適用してほぼオリジナルに近いプレビューできるのはどれだと探してきたが、どこかしら微妙に違ってまだ出ていないかと諦めていた。
 
 そんなときにこのブログを見た。
 
@@ -62,13 +62,13 @@ gh extension install kawarimidoll/gh-q
 どうしたものかと思っていたら [afx](https://github.com/b4b4r07/afx/) があったじゃないかと思い出す。afx は開発ツール版 Terraform みたいなもので、YAML に書いたものをインストール・アップデートできるなど持続的な管理ができる。これに gh extension を対応させてしまおうというのが今回のお話。
 
 
-## gh を afx で管理する
+## gh を管理する
 
 本題。
 
 [Support gh extension by b4b4r07 · Pull Request #58 · b4b4r07/afx](https://github.com/b4b4r07/afx/pull/58)
 
-afx に as.gh-extension というパラメータを追加して gh extension ですよと認識させることにした。あとは YAML を書いて afx install するだけになる。ちなみに rename-to というパラメータを追加したので、`gh markdown-preview` のように長いコマンドも `gh md` にエイリアスすることができて便利になった。
+CLI コマンド向けパッケージマネージャーである [afx](https://github.com/babarot/afx) に as.gh-extension というパラメータを追加して gh extension ですよと認識させるようにした。あとは YAML を書いて afx install するだけになる。ちなみに rename-to というパラメータを追加したので、`gh markdown-preview` のように長いコマンドも `gh md` にエイリアスすることができて便利になった。
 
 (gh は呼び出す実装が gh 側のロジックによる部分が大きいため `alias gh-md=gh-markdown-preview` では動かない)
 

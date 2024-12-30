@@ -1,5 +1,5 @@
 ---
-title: "新しいコマンドラインツール向けのパッケージマネージャ"
+title: "コマンドラインツール向けのpackage managerを作った"
 date: "2022-03-02T20:35:20+09:00"
 description: ""
 categories: []

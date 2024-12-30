@@ -97,7 +97,9 @@ Microservices Platform チーム (のちに Platform チーム) として動き�
 
 退職する際に、Terraform を管理するリポジトリに定義された自分を削除するプルリクエスト (消すことですべての権限を失う) で同僚から Hotel California の歌詞になぞらえて、
 
-> *You can checkout any time you like* *But you can never leave!*
+> You can checkout any time you like
+>
+> But you can never leave!
 
 と言われました。これはまさしくメルカリの Platform チームです。改めて居心地のいい空間から出る勇気は相当な覚悟がいるなと感じます。
 
