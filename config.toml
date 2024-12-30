@@ -47,8 +47,8 @@ url = "https://github.com/babarot"
 fa_icon = "fa-github"
 
 [[params.social]]
-url = "https://twitter.com/b4b4r07"
-fa_icon = "fa-twitter"
+url = "https://x.com/b4b4r07"
+fa_icon = "fa-x-twitter"
 
 [outputFormats]
   [outputFormats.RSS]
