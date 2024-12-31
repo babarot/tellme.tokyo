@@ -1,0 +1,58 @@
+title: tellme.tokyo
+baseurl: https://tellme.tokyo
+languageCode: ja-jp
+copyright: BABAROT All Right Reserved.
+googleAnalytics: UA-44183504-2
+publishDir: docs
+theme:
+  - mini
+  - hugo-shortcode-gallery
+pygmentsUseClasses: true
+pygmentsCodefences: true
+pagination:
+  pagerSize: 10
+taxonomies:
+  tag: tags
+  category: categories
+permalinks:
+  post: /post/:year/:month/:day/:filename/
+outputFormats:
+  RSS:
+    baseName: feed
+params:
+  description: Masaki ISHIYAMA
+  keywords:
+    - b4b4r07
+    - babarot
+  author: babarot
+  profile: profile.jpg
+  website: https://babarot.github.io
+
+  # for theme "mini"
+  customCSS:
+    - /css/overlay.css
+  # github: null
+  # mastodon: null
+  # footer: |-
+  #   test
+
+  # for theme "yrryrr"
+  sharingicons: true
+  displayauthor: false
+  displayoldlink: true
+  readmore: false
+  avatar: https://raw.githubusercontent.com/babarot/tellme.tokyo/main/static/images/profile.jpg
+  sharing:
+    twitter: true
+    hatebu: false
+    pocket: false
+  highlight:
+    style: github
+    languages:
+      - go
+      - dockerfile
+  social:
+    - url: https://github.com/babarot
+      fa_icon: fa-github
+    - url: https://x.com/b4b4r07
+      fa_icon: fa-x-twitter
