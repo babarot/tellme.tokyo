@@ -3,7 +3,7 @@ title: "2024年振り返り"
 date: "2024-12-31"
 description: ""
 categories: []
-draft: true
+draft: false
 ---
 
 今年を振り返る。
