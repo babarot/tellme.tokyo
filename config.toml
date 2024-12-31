@@ -27,6 +27,7 @@ displayauthor = false
 displayoldlink = true
 readmore = false
 avatar = "https://raw.githubusercontent.com/babarot/tellme.tokyo/main/static/images/profile.jpg"
+customCSS = ["/css/overlay.css"]
 
 # [params.permalinks]
 # post = "/post/:year/:month/:day/:filename/"

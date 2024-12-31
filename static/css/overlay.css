@@ -1,0 +1,5 @@
+/* override CSS of mfg92/hugo-shortcode-gallery */
+.gallery-wrapper {
+  margin-top: 1.2rem;
+  margin-button: 1.2rem;
+}

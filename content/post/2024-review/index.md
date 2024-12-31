@@ -156,8 +156,6 @@ SLOやオーナーシップあたりが主にコミットしたポイントだ�
 - 仙台
 - 名古屋
 
-大阪は新幹線で。車でも行きたい。
-
 {{< gallery
   match="images/travel/*"
   sortOrder="desc"
