@@ -19,7 +19,12 @@ permalinks:
 outputFormats:
   RSS:
     baseName: feed
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
 params:
+  # for theme "yrryrr"
   description: Masaki ISHIYAMA
   keywords:
     - b4b4r07
@@ -27,16 +32,6 @@ params:
   author: babarot
   profile: profile.jpg
   website: https://babarot.github.io
-
-  # for theme "mini"
-  customCSS:
-    - /css/overlay.css
-  # github: null
-  # mastodon: null
-  # footer: |-
-  #   test
-
-  # for theme "yrryrr"
   sharingicons: true
   displayauthor: false
   displayoldlink: true
@@ -56,3 +51,13 @@ params:
       fa_icon: fa-github
     - url: https://x.com/b4b4r07
       fa_icon: fa-x-twitter
+
+  # for theme "mini"
+  customCSS:
+    - /css/overlay.css
+  github: babarot
+  x: b4b4r07
+  # mastodon: null
+  footer: |-
+    Software engineer, SRE at 10X, Inc. working as an engineering manager also.
+    id:@babarot #kubernetes #terraform
