@@ -55,9 +55,9 @@ params:
   # for theme "mini"
   customCSS:
     - /css/overlay.css
-  github: babarot
-  x: b4b4r07
+  # github: babarot
+  # x: b4b4r07
   # mastodon: null
-  footer: |-
-    Software engineer, SRE at 10X, Inc. working as an engineering manager also.
-    id:@babarot #kubernetes #terraform
+  # footer: |-
+  #   Software engineer, SRE at 10X, Inc. working as an engineering manager also.
+  #   id:@babarot #kubernetes #terraform
