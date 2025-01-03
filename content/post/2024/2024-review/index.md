@@ -4,9 +4,8 @@ date: "2024-12-31"
 description: ""
 categories: []
 draft: false
+toc: true
 ---
-
-今年を振り返る。
 
 # Work
 
