@@ -2,7 +2,9 @@ title: tellme.tokyo
 baseurl: https://tellme.tokyo
 languageCode: ja-jp
 copyright: BABAROT All Right Reserved.
-googleAnalytics: UA-44183504-2
+services:
+  googleAnalytics:
+    id: UA-44183504-2
 publishDir: docs
 theme:
   - mini
@@ -27,6 +29,9 @@ markup:
   goldmark:
     renderer:
       unsafe: true
+    parser:
+      attribute:
+        block: true
 params:
   # for theme "yrryrr"
   description: Masaki ISHIYAMA
