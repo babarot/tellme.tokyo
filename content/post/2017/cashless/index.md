@@ -10,8 +10,6 @@ tags: ["life"]
 
 ---
 
-<a data-flickr-embed="true"  href="https://www.flickr.com/photos/edc-joost/15119850715/in/photolist-ei2SCF-FQ4Fg3-dRBv9D-VE3dF6-Et7ip6-DUBRmB-DUBRg6-EqMCA3-bH2KUB-gRAFP3-p36bRi-EknczV-DV7i5K-apUXyZ-gRAjQs-gRCBpY-mBSyXD-rymz2f-bqHWtC-WKHYff-dCeWQz-8mdbCX-q8GdCu-moiqvx-8Hn56u-oN11pe-rjPnSX-PFFqb3-EF4cMs-CfPkYW-SfViXz-nestbr-Gm8mHW-uPiiFo-GfcHfb-tvAvMF-NucyFY-y6ZdoZ-uLiwjY-qBbZF9" title="SecrID Cardholder"><img src="https://farm4.staticflickr.com/3922/15119850715_dc3da5f323_b.jpg" width="800" height="297" alt="SecrID Cardholder"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
-
 # 現状
 
 キャッシュレスに切り替えて1年以上になる。
@@ -59,10 +57,8 @@ iPhone 7/Apple Watch 2 以降は Apple Pay に対応しているため、iPhone 
 以上のように現金を使わなくなったので、普通の財布というものは不要になった。
 そのため、カードの出し入れに特化したものを使っている。
 
-いろいろ試したが、一番の良かったのは SECRID のウォレット。
+いろいろ試したが、一番の良かったのは [SECRID](https://www.secrid.com/) のウォレット。
 これのいいところは、クレジットカードなどが 5 枚近く収納できる上に、通行証といったタッチカードも収納でき[^5]、さらに畳んだ紙幣も数枚入れることができるのでマネークリップ的な要素もあること。
-
-{{< hatena "https://www.secrid.com/" >}}
 
 - コンパクトで機能的でカードの出し入れが財布よりも早いこと
 - 少なくともクレジットカード3枚、ID (免許証など) 1 枚が収納できる
@@ -72,7 +68,8 @@ iPhone 7/Apple Watch 2 以降は Apple Pay に対応しているため、iPhone 
 
 長年探し求めたいたのだけれど、上記ような欲しいと思っていた機能をすべて持っていて満足度が高い。
 
-{{< img src="secrid.jpg" >}}
+{{< figure src="secrid.jpg" caption="KubeCon + CloudNativeCon North America 2017の参加中に撮った写真" width="500" >}}
+
 
 # 仮想通貨
 

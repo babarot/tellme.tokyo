@@ -17,7 +17,7 @@ tags:
 HashiConf とは HashiCorp 製品自体の発表であったりそれと使って構築したアーキテクチャやノウハウについて共有するカンファレンスになっている。
 今年はシアトルで開催された。
 
-twitter "1171452762116091905"
+{{< twitter user="b4b4r07" id="1171452762116091905" >}}
 
 たくさん面白いキーノートがあったが中でも開発者の多くが歓声をあげていたのははやり初日の [Armon](https://twitter.com/armon) (Co-Founder/CTO) の [Terraform Cloud](https://www.terraform.io/) に関する発表だったと思う。ローンチ以降 Remote State しか扱えなかった Terraform Cloud が、このタイミングで大きく強化され Enterprise 版と遜色ないくらいにまで機能拡張されていた。今後、（個人ユースは Free ということもあり）サクッと Terraform 環境を構築したいときにマッチすると思う。
 
