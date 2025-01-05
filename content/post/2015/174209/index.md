@@ -47,12 +47,12 @@ zplug "foo/bar", as:command, of:"*.sh"
 | `from`    | 外部からの取得を行う | `gh-r`,`gist`,`oh-my-zsh`,`github`,`bitbucket` (`github`) | `from:gh-r` |
 | `at`      | ブランチ/タグを指定したインストールをサポートする | ブランチかタグの名前 (`master`) | `at:v1.5.6` |
 | `file`    | リネームしたい名前（コマンド時に有用） | 好きなファイル名 (-) | `file:fzf` |
-| `dir`     | インストール先のディレクトリパス | **READ ONLY** | - 
+| `dir`     | インストール先のディレクトリパス | (設定不可,read only) | - 
 | `if`      | 真のときダウンロードしたコマンド/プラグインを有効化する | 真か偽 (-) | `if:"[ -d ~/.zsh ]"` |
 | `do`      | インストール後に実行するコマンド | コマンド (-) | `do:make install` |
 | `frozen`  | 直接指定しないかぎりアップデートを禁止する | 0か1 (0) | `frozen:1` |
 | `commit`  | コミットを指定してインストールする (`$ZPLUG_SHALLOW` が真かどうかに関わらず) | コミットのハッシュ値 (-) | `commit:4428d48` |
-| `on`      | 依存関係 | **READ ONLY** | - |
+| `on`      | 依存関係 | (設定不可,read only) | - |
 | `nice`    | 優先度（高 -20 〜 19 低）の設定をする。優先度の高いものから読み込む。10 以上を設定すると compinit のあとにロードされる | -20..19 (0) | `nice:10` |
 
 具体的な書き方については [README](https://github.com/b4b4r07/zplug) か [公式の Wiki](https://github.com/b4b4r07/zplug/wiki/zshrc) を参照。
