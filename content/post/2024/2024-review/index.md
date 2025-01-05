@@ -47,7 +47,7 @@ SLOやオーナーシップあたりが主にコミットしたポイントだ�
   sortOrder="asc"
   rowHeight="150"
   margins="5"
-  thumbnailResizeOptions="600x600 q90 Lanczos"
+  thumbnailResizeOptions="200x200 q90 Lanczos"
   thumbnailHoverEffect="enlarge"
   showExif=false
   previewType="none"
