@@ -3,7 +3,7 @@ title: "Go で書いた CLI ツールのリリースは GoReleaser と GitHub Ac
 date: "2020-02-04T00:32:10+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: "b4b4r07"
 oldlink: ""
 image: ""
@@ -13,7 +13,7 @@ tags:
 - release
 ---
 
-## lt;dr
+## tl;dr
 
 [GoReleaser](https://goreleaser.com/) と [GitHub Actions](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/about-github-actions) を使うと簡単にビルドしたバイナリを作ってアップロードできる。
 
