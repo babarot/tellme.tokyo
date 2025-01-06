@@ -25,7 +25,6 @@ toc: true
 
 ネットワークに繋がっているHDDなので家からはもちろん、VPNを通して家の外からもアクセスできる。iPhone/iPad、Mac/WindowsなどデバイスやOSを問わずデータにアクセスできるし、通常のフォルダを開く感覚でFinderからアクセスできる[^mount]。外付けSSDのように接続のためにケーブルを抜き差しする手間も必要ない。Google Driveと同じように使えるのにデータ自体は自宅のHDDに置くことができる。他所に預けなくてよい。中を見られているかもという心配やサービスの終了に怯えなくてよいという安心感もある。冗長化は専用のアプリ (提供元による) があってデータの書き込みをミラーリングして前日との差分をバックアップもできる。また、VPSのようにSSH接続でマシンに入ってLinuxコマンドを使ったファイル操作をしたりアプリケーションのインストールができる。
 
-
 ## Synology DS220+
 
 {{< figure 
@@ -68,15 +67,14 @@ NAS導入後はiPhone、iPad、MacからWi-Fi経由で同じデータにアク�
 
 ## 写真を管理する
 
-写真をファイルとして管理するなら他のファイルと同様にフォルダに入れてFinderで触るという形で良い。
-が、普通は写真はプレビューしたいし、フォルダという括りだけではない写真が持つメタデータ (撮影日時や撮影機材など) でフィルタしたいものだ。SynologyではSynology製のアプリである[Synology Photos](https://www.synology.com/ja-jp/DSM70/SynologyPhotos)がそれをかなえてくれる。
+写真をファイルとして管理するなら他のファイルと同様にフォルダに入れてFinderで触るという形で良い。が、普通は写真はプレビューしたいし、フォルダという括りだけではない写真が持つメタデータ (撮影日時や撮影機材など) でフィルタしたいものだ。SynologyではSynology製のアプリである[Synology Photos](https://www.synology.com/ja-jp/DSM70/SynologyPhotos)がそれをかなえてくれる。
 
 {{< figure 
 src="https://www.synology.com/img/beta/dsm70/photos/all_in_one_1.png"
 caption="via \"[Synology Photos](https://www.synology.com/ja-jp/DSM70/SynologyPhotos)\""
 class="text_center" >}}
 
-DSMからPhotosを有効にするだけで使える。複数人でのアルバム管理もでき、NASのユーザ管理機能を使って人を追加したあとPhotosに権限を振れば使えるようになる。今は共有領域にアップロードし、フォルダ/タイムライン形式で見れるようにしている。
+DSMからPhotosを有効にするだけで使える。複数人でのアルバム管理もでき、NASのユーザ管理機能を使って人を追加したあとPhotosに権限を振れば使えるようになる。今は共有領域に置いてフォルダ/タイムライン形式で見れるようにしている。
 
 ```bash
 /photo       #共有スペース
@@ -93,9 +91,9 @@ DSMからPhotosを有効にするだけで使える。複数人でのアルバ�
 
 ## 自分で書いたWebアプリを動かす
 
-Synology NASではDSMのパッケージマネージャから[Container Manager](https://www.synology.com/ja-jp/dsm/feature/container-manager)というものがインストールできるが要するにDockerである。つまりDockerが動かせるので大抵のソフトウェアは動かすことができる。自分でアプリを書いてDocker化して動かせるし、[compose](https://docs.docker.com/compose/)を使えばDBやキャッシュサーバなどもまとめてNAS上で動かすことができる。
+Synology NASではDSMのパッケージマネージャから[Container Manager](https://www.synology.com/ja-jp/dsm/feature/container-manager)というものがインストールできるが要するにDockerである。つまりDockerが動かせるので大抵のソフトウェアを動かすことができる。自分でアプリを書いてDocker化して動かせるし、[compose](https://docs.docker.com/compose/)を使えばDBやキャッシュサーバなどもまとめてNAS上で動かすことができる。
 
-今は自分で撮った旅の動画などを閲覧するU-NEXTのようなアプリを Go + React + SQLite で書きそれをNASで動かしている。旅の思い出など細切れに取った動画データを見返すのはファイル単位だとしづらく、WebアプリのUIで視聴できたほうが楽だなと思いアプリを作り始めた。いざデプロイとなってもサーバの準備や自分だけが使えれば良いアプリなので認証の仕組みなどを用意する必要があり面倒だなと思っていたがNASがこれを簡単に解決してくれた。NASだとYouTubeやどこかのクラウドに上げるわけではないので安心してデータを置けるのも良い点だ。
+今は自分で撮った旅の動画などを閲覧するU-NEXTのようなアプリを Go + React + SQLite で書きそれをNASで動かしている。旅の思い出など細切れに取った動画データを見返すのはファイル単位だとしづらく、WebアプリのUIで視聴できたほうが楽だなと思いアプリを作り始めた。しかし、いざデプロイとなってもサーバの準備や自分だけが使えれば良いアプリなので、認証の仕組みなどを用意する必要があり面倒だなと思っていたがNASがこれを簡単に解決してくれた。NASだとYouTubeやどこかのクラウドに上げるわけではないので安心してデータを置けるのも良い点だ。
 
 Container Managerアプリからもコンテナの起動や停止ができるがコマンドのほうが慣れているため、NASにsshしてcompose upするスクリプトを書きNAS内からサーバを立ち上げている。
 
@@ -108,7 +106,7 @@ $ docker compose up --build -d
   sortOrder="desc"
   rowHeight="150"
   margins="5"
-  thumbnailResizeOptions="600x600 q90 Lanczos"
+  thumbnailResizeOptions="700x700 q90 Lanczos"
   thumbnailHoverEffect="enlarge"
   showExif=false
   previewType="none"
@@ -122,20 +120,6 @@ $ docker compose up --build -d
 QuickConnectによるインターネット経由のアクセスも可能だがVPNによる接続も可能だ。
 
 [Tailscale](https://tailscale.com/)とはVPN (Virtual Private Network) 実装のひとつで、これまでのようなHub & Spoke型のVPNのようにTailescaleが接続を取りまとめるのではなくクライアント同士が直接接続されるMesh型のVPNを提供する。このように分散型VPNはVPNサーバを必要としないゆえに中央に負荷がかからない、プライバシーリスクがない、SPoFにならないなどのメリットもある。
-
-<!--
-{{< figure
-src="home-network-before.svg"
-width="400"
-caption="従来型VPN via \"[Tailscale · Best VPN Service for Secure Networks](https://tailscale.com/)\""
-class="text_center" >}}
-
-{{< figure
-src="home-network-after.svg"
-width="400"
-caption="分散型VPN via \"[Tailscale · Best VPN Service for Secure Networks](https://tailscale.com/)\""
-class="text_center" >}}
--->
 
 Tailscaleはイニシャルにかかるセットアップも少ないところ良い点だ。クライアント同士にTailscaleをインストールしアカウント作成をすればすぐに使い始めることができる。詳しい設定は以下の記事が参考になる。
 
@@ -152,7 +136,7 @@ width="300"
 caption="Anker Solix C1000"
 class="text_center" >}}
 
-NASは24時間365日稼働させておくものである。常時電源 (コンセントなど) に挿しっぱなしになる。ブレーカーが落ちたり停電したりすると電源を喪失するので、データ書き込み中であれば破損する恐れがある。また、立ち上げているサーバのプロセスも死ぬのでやっかいなことが想像つく。
+NASは24時間365日稼働させておくものである。つまり常時電源 (コンセントなど) に挿しっぱなしになる。ブレーカーが落ちたり停電したりすると電源を喪失するので、データ書き込み中であれば破損する恐れがある。また、立ち上げているサーバのプロセスも死ぬのでやっかいなことが想像つく。
 
 UPSとは無停電電源装置のことであり、電源とNASの間に噛ませるモバイルバッテリーみたいなやつである。通常時はUPS内臓のバッテリーを通さず電源から直接機器側(NAS)に通電するが、電源が落ちた際に数msの一瞬でUPSバッテリーからの電力供給に切り替えてくれて瞬断を防いでくれるというもの。
 
