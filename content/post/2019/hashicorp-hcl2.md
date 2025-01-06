@@ -44,14 +44,14 @@ JSON や YAML のパーサでは、バイト列を Go の構造体に落とし�
 HCL でも同様のアプローチを取りますが、内部で中間表現として別の Go 構造体に落とし込んでいます。
 具体的に Decode (HCL ファイルから Go 構造体に落とし込む) までの流れを見てみます。
 
-{{< mermaid >}}
+```mermaid
 graph TB;
   hcl(HCL)   -- "hclparse.ParseHCL()"  --> file1("*hcl.File")
   json(JSON) -- "hclparse.ParseJSON()" --> file2("*hcl.File")
   file1      -- "hcl.MergeFiles()"     --> body((*hcl.File))
   file2      -- "hcl.MergeFiles()"     --> body((*hcl.File))
   body       -- "gohcl.DecodeBody()"   --> struct("struct")
-{{< /mermaid >}}
+```
 
 HCL は JSON と互換性を持つので、hcl2 は両ファイル形式をサポートします。
 HCL が読み込まれると [`hclparse.ParseHCL()`](https://godoc.org/github.com/hashicorp/hcl2/hclparse#Parser.ParseHCL) によって [*hcl.File](https://godoc.org/github.com/hashicorp/hcl2/hcl#File) に変換されます。
@@ -171,11 +171,11 @@ stein という YAML ファイルなどの設定ファイル言語に対して�
 
 上で述べたように、*hcl.File での中間表現を経由して構造体に落とし込まれる過程を次のように表します。
 
-{{< mermaid >}}
+```mermaid
 graph TB;
   hcl(HCL)   -- "hclparse.ParseHCL()"  --> file("*hcl.File")
   file       -- "gohcl.DecodeBody()"   --> struct("struct")
-{{< /mermaid >}}
+```
 
 まずはじめに、`hclparse.ParseHCL()` の部分です。
 ソースコードからスキーマの定義を見ていきましょう。スキーマは HCL を *hcl.File にパースする際に使用します。

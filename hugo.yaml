@@ -67,6 +67,6 @@ params:
   # github: babarot
   # x: b4b4r07
   # mastodon: null
-  # footer: |-
-  #   Software engineer, SRE at 10X, Inc. working as an engineering manager also.
-  #   id:@babarot #kubernetes #terraform
+  # footer: |
+  #   ©︎ babarot<br>
+  #   Served by **[babarot/tellme.tokyo](https://github.com/babarot/tellme.tokyo)**

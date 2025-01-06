@@ -43,7 +43,7 @@ sequenceDiagram
 
 次のようにレンダリングされる。
 
-{{< mermaid align="left" >}}
+```mermaid
 sequenceDiagram
     participant Alice
     participant Bob
@@ -55,7 +55,7 @@ sequenceDiagram
     John-->Alice: Great!
     John->Bob: How about you?
     Bob-->John: Jolly good!
-{{< /mermaid >}}
+```
 
 便利になった。
 
