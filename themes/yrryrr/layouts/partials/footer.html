@@ -9,6 +9,3 @@
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/languages/{{ . }}.min.js"></script>
 {{ end }}
 <script>hljs.initHighlightingOnLoad();</script>
-{{ if .Site.GoogleAnalytics }}
-{{ template "_internal/google_analytics_async.html" . }}
-{{ end }}
