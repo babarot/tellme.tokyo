@@ -22,7 +22,13 @@ tags:
 <!-- * [b4b4r07/enhancd.sh - GitHub](http://github.com/b4b4r07/enhancd)  -->
 <!-- ![](http://cl.ly/image/252w3b0f1b2P/enhancd.gif) -->
 
-## [b4b4r07/enhancd](http://github.com/b4b4r07/enhancd)
+<!-- [![](https://api.star-history.com/svg?repos=babarot/enhancd&type=Date)](https://star-history.com/#babarot/enhancd&Date) -->
+
+{{< figure
+src="https://api.star-history.com/svg?repos=babarot/enhancd&type=Date"
+link="https://star-history.com/#babarot/enhancd&Date"
+caption="\"[babarot/enhancd](http://github.com/babarot/enhancd)\""
+class="text_center" >}}
 
 [`enhancd.sh`](http://github.com/b4b4r07/enhancd)  とは [`autojump`](https://github.com/joelthelion/autojump) や [`z.sh`](https://github.com/rupa/z) などにインスパイアされて、後述する `cdhist.sh` をベースに作成されたディレクトリ移動をサポートするツールのことで、今回はそれらにも勝るとも劣らない機能を追加・拡張したので公開することにした。
 
@@ -32,7 +38,7 @@ tags:
 
 >ブラウザの「戻る」や「進む」のようにカレントディレクトリを行ったりきたりできるコマンド。これはリング状のディレクトリバッファを持っており以下の様な使われ方をする...（※都合により引用を解釈の変わらない程度に変更）
 
-```console
+```bash
 yusuke ~[1]$ . cdhist.sh         # (cdhist を起動)
 yusuke ~[2]$ cd /tmp             # (カレントディレクトリが /tmp に移る)
 yusuke /tmp[3]$ cd /usr/bin      # (カレントディレクトリが /usr/bin に移る)
@@ -132,7 +138,7 @@ fi
 - 直近10件の移動履歴はリング上にバッファされているので `cd =` してみればよい
 - `cd -` で戻ったり `cd +` で進んだりできる
 
-詳しくは `man enhancd` と `cd --help` を参照されたし。
+詳しくは `man enhancd` と `cd --help` を参照。
 
 ## オプション
 
@@ -190,10 +196,6 @@ fi
 - `ENHANCD_DISP_QUEUE`
 	- デフォルト `false`
 	- キューの機能を使って （`cd -/+` などで）ディレクトリ移動をした時に、キュー変数の内容を標準出力に吐き出す
-
-## ライセンス
-
-MIT
 
 ## その他
 

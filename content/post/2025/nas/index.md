@@ -115,6 +115,8 @@ $ docker compose up --build -d
   loadJQuery=true
 >}}
 
+_※これはデモデータを入れてlocalで立ち上げたアプリのスクショ。_
+
 ## 家の外からアクセスする
 
 QuickConnectによるインターネット経由のアクセスも可能だがVPNによる接続も可能だ。
@@ -192,7 +194,7 @@ NASはめちゃくちゃ良い。もっと早く導入すればよかった[^res
 
 {{< figure 
 src="nas.png"
-caption="空き容量がなく警告が出ている"
+caption="Synology管理画面。空き容量がなく警告が出ている"
 class="text_center" >}}
 
 ちなみにDS220+というモデル名は2020年製の2ベイNAS (Disk Station) ということを示している。型番の命名規則は `製品タイプ`+`最大ベイ数`+`リリース年度`+`シリーズ名` になっている[^syno_model]。

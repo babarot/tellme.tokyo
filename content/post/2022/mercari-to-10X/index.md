@@ -74,7 +74,7 @@ Microservices Platform チーム (のちに Platform チーム) として動き�
 
 その後は、[クラスタ移行](https://engineering.mercari.com/blog/entry/2020-06-02-090450/)などの大規模イベントを経て、[チーム再編](https://engineering.mercari.com/blog/entry/2020-07-16-083548/)も行われ、チームメンバーも20人超にまで成長していました。働き方では、[Six week release cycle](https://3.basecamp-help.com/article/35-the-six-week-cycle) というワークスタイルを導入して軌道に乗ってきていました。
 
-アウトプットは、[Speakerdeck](https://speakerdeck.com/b4b4r07) やこのブログ、メルカリのエンジニアブログに残してきました。
+アウトプットは、[Speakerdeck](https://speakerdeck.com/babarot) やこのブログ、メルカリのエンジニアブログに残してきました。
 
 ## 2021年
 

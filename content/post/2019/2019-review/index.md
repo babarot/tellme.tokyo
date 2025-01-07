@@ -12,7 +12,7 @@ tags:
 
 ## 仕事
 
-{{< img src="https://user-images.githubusercontent.com/4442708/66998223-d52f6500-f10e-11e9-818a-64165f296466.png" >}}
+{{< figure src="https://user-images.githubusercontent.com/4442708/66998223-d52f6500-f10e-11e9-818a-64165f296466.png" >}}
 
 1月からはメルペイの仕事に積極的に関わる機会があり、そのときに HashiCorp Vault を深ぼることから始まった。
 Vault のドキュメントを漁って Vault on GKE のデザインからやることができた。しかしまだまだVaultビギナーなのでもっと追えるようにしようと思っている。
@@ -29,7 +29,7 @@ Platform のグローバル化は Platform チームの目指すべきところ�
 
 - [Software Design 2019年9月号](https://tellme.tokyo/post/2019/08/27/sd1909/)
 - [12 OSS projects (incl. private repos)](https://github.com/search?q=user%3Ab4b4r07+created%3A2019-01-01..2019-12-31)
-  - b4b4r07/stein https://github.com/b4b4r07/stein/
+  - [babarot/stein](https://github.com/babarot/stein)
 
 ### 海外カンファレンス
 
@@ -38,27 +38,27 @@ Platform のグローバル化は Platform チームの目指すべきところ�
 
 ### 登壇
 
-- (mercari.go#6) [Testing with YAML - Speaker Deck](https://speakerdeck.com/b4b4r07/testing-with-yaml)
-- (GoConference '19 Summer in Fukuoka) [Cloud Functions in Go at Mercari - Speaker Deck](https://speakerdeck.com/b4b4r07/cloud-functions-in-go-at-mercari)
-- (Kubernetes Meetup Tokyo #18) [Kubernetes manifests management and operation in Mercari - Speaker Deck](https://speakerdeck.com/b4b4r07/kubernetes-manifests-management-and-operation-in-mercari)
-- (未来大×企業エンジニア 春のLT大会) [Insert an Example of Software Engineer Here - Speaker Deck](https://speakerdeck.com/b4b4r07/insert-an-example-of-software-engineer-here)
+- (mercari.go#6) [Testing with YAML - Speaker Deck](https://speakerdeck.com/babarot/testing-with-yaml)
+- (GoConference '19 Summer in Fukuoka) [Cloud Functions in Go at Mercari - Speaker Deck](https://speakerdeck.com/babarot/cloud-functions-in-go-at-mercari)
+- (Kubernetes Meetup Tokyo #18) [Kubernetes manifests management and operation in Mercari - Speaker Deck](https://speakerdeck.com/babarot/kubernetes-manifests-management-and-operation-in-mercari)
+- (未来大×企業エンジニア 春のLT大会) [Insert an Example of Software Engineer Here - Speaker Deck](https://speakerdeck.com/babarot/insert-an-example-of-software-engineer-here)
 
 ## プライベート
 
-{{< img src="home.jpg" >}}
-
-越して2年を迎えた。そろそろ引っ越したいなぁ
+{{< figure
+src="home.jpg"
+caption="越して2年を迎えた。そろそろ引っ越したいなぁ" >}}
 
 ### 本、映画
 
 最近、今年分のインプットをまとめた記事を書いた。
 
-- [2019年に読んだ本、観た映画 | tellme.tokyo](https://tellme.tokyo/post/2019/12/28/2019-books-movies/)
+[2019年に読んだ本、観た映画 | tellme.tokyo](https://tellme.tokyo/post/2019/12/28/2019-books-movies/)
 
 今年は途中から地球の歴史に飲み込まれた。
 [日本沿岸でリュウグウノツカイが相次いで見つかったという記事](https://www.cnn.co.jp/fringe/35132176.html)をみて「そういえば昔はよく深海とか好きで見ていたなぁ」と思い、改めて調べ直してみることに。チャレンジャー海溝のことを色々調べていくうちに、宇宙に通ずることが多いなぁと思い、今度は宇宙のことを調べ始めることにした。宇宙についても小さい頃から興味があってよく調べていたので、これもハマった。 いろいろな記事や本を漁ったけど体系的に学ぶって意味では次の動画はすごく参考になった。動画に出てきているピースをまた自分なりに因数分解する感じで調べていくと更に楽しかった。
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/GPdLEKzHd1g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{{< youtube "GPdLEKzHd1g" >}}
 
 あとは、政治経済の勉強もし直すことにした。そのための戦後の歴史、近現代史から見直している。
 それプラス、MMT と世界銀行史。高校時代にハマって読んでいた「TPP亡国論」著者、中野剛志の本や三橋貴明の本、藤井聡の経済系の本はおもしろくてチラホラ読んだ。
@@ -78,16 +78,16 @@ Platform のグローバル化は Platform チームの目指すべきところ�
 
 ### アクティビティ
 
-色々行った（国外は出張なので上に挙げた）。
+色々行った。
 
 - 福岡、大分
 - 新潟
 - 静岡
 - 新島、神津島
 
-とくに伊豆七島は良かった。
+とくに新島、神津島 (伊豆七島) は良かった。
 
-あと運転も再開した。7年ぶりとか。運転が好きだったので、都内でいつか車を持ちたい！とは思っていたけど、都内でいい車を所持するとなると時間がかかりそうだなーと思っていたんだけど所有欲さえ満たさなきゃシェアカーはいい選択肢だったので Careco に契約して乗りまくった。
+あと運転も再開した。7年ぶりとか。運転が好きだったので、都内でいつか車を持ちたい！とは思っていたけど、都内でいい車を所持するとなると時間がかかりそうだなーと思っていたんだけど所有欲さえ満たさなきゃシェアカーはいい選択肢だったので[カレコ](https://www.carshares.jp/)に契約して乗りまくった。
 
 Osmo Pocket を買ったのであちこち撮って歩いた。めっちゃ使いやすいしかんたんに良い感じの映像が出来上がる。
 ブログ書くノリで動画撮って YouTube でもいいなぁなんて思ってる。特に読書感想文とか映画感想文とか書くよりそのときの熱量で勢いで喋って収録したほうがラクそうだなって。まぁそれなら Osmo Pocket すらいらなくて適当に iPhone でいいんだけどね.
