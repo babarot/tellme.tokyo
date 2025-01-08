@@ -7,8 +7,10 @@ draft: false
 author: "b4b4r07"
 oldlink: ""
 image: ""
-tags: ["terraform"]
-
+tags:
+- terraform
+aliases:
+- /post/2022/07/03/terraform-optional-attributes-for-object-type-constraints/
 ---
 
 [^1]: [Terraform の variable は "変数" ではなく、Module の挙動を外部から変更するためのインターフェイスである](https://tellme.tokyo/post/2022/06/15/terraform-variables-is-api/)
