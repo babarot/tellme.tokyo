@@ -17,16 +17,16 @@ https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/shor
     {{- end -}}
   {{- end -}}
 
-  {{- if or (.Get "light-src") (.Get "dark-src") }}
+  {{- if or (.Get "src-dark") (.Get "src-light") }}
   <picture>
   {{- end -}}
 
-  {{- if .Get "dark-src" }}
-  <source media="(prefers-color-scheme: dark)" {{- with .Get "dark-src" }} srcset="{{ . }}"{{ end -}}>
+  {{- if .Get "src-dark" }}
+  <source media="(prefers-color-scheme: dark)" {{- with .Get "src-dark" }} srcset="{{ . }}"{{ end -}}>
   {{- end -}}
 
-  {{- if .Get "light-src" }}
-  <source media="(prefers-color-scheme: light)" {{- with .Get "light-src" }} srcset="{{ . }}"{{ end -}}>
+  {{- if .Get "src-light" }}
+  <source media="(prefers-color-scheme: light)" {{- with .Get "src-light" }} srcset="{{ . }}"{{ end -}}>
   {{- end -}}
 
   <img src="{{ $src }}"
@@ -38,7 +38,7 @@ https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/shor
     {{- with .Get "loading" }} loading="{{ . }}"{{ end -}}
   ><!-- Closing img tag -->
 
-  {{- if or (.Get "light-src") (.Get "dark-src") }}
+  {{- if or (.Get "src-dark") (.Get "src-light") }}
   </picture>
   {{- end -}}
 

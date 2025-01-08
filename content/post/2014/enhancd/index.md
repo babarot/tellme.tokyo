@@ -36,8 +36,8 @@ class="text_center" >}}
 
 {{< figure
 src="https://user-images.githubusercontent.com/4442708/229307417-50cf53de-594f-4a19-8547-9820d3af2f1c.gif"
-light-src="https://user-images.githubusercontent.com/4442708/229307415-32cb36ee-491d-47c5-b852-e94d802e9584.gif"
-dark-src="https://user-images.githubusercontent.com/4442708/229307417-50cf53de-594f-4a19-8547-9820d3af2f1c.gif"
+src-dark="https://user-images.githubusercontent.com/4442708/229307417-50cf53de-594f-4a19-8547-9820d3af2f1c.gif"
+src-light="https://user-images.githubusercontent.com/4442708/229307415-32cb36ee-491d-47c5-b852-e94d802e9584.gif"
 caption="\"[babarot/enhancd](http://github.com/babarot/enhancd)\""
 class="text_center" >}}
 
