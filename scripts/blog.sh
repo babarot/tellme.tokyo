@@ -97,10 +97,10 @@ edit() {
     else
       fd -tf '\.md$' ${content_dir} | tac
     fi |
-      fzf \
-      --header 'Press CTRL-R to reveal in Finder, CTRL-V to move to...' \
+      content_dir=${content_dir} fzf \
+      --header 'Press CTRL-R to reveal in Finder, CTRL-V to move files...' \
       --preview 'bat --language=markdown --color=always --style=numbers {}' \
-      --bind 'ctrl-r:execute-silent(open -R {}),ctrl-v:execute-silent(mmv $(dirname {})/*)'
+      --bind 'ctrl-r:execute-silent(open -R {}),ctrl-v:execute-silent(mmv $(dirname {})/*),change:reload(fd -tf "\.md$" ${content_dir} | tac)'
     )
     if [[ ${#files[@]} == 0 ]]; then
       return 0
