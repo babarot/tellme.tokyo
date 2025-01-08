@@ -7,7 +7,8 @@ draft: false
 author: "b4b4r07"
 oldlink: ""
 tags: ["review"]
-
+aliases:
+- /post/2018/01/05/looking-back-on-2017/
 ---
 
 もう年も変わってしまったけれど、去年どのような1年を過ごしたのかを振り返る。
