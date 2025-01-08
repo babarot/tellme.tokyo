@@ -1,5 +1,6 @@
 .DS_Store
 public
-
+.hugo_build.lock
+resources/
 docs
 blog
