@@ -169,6 +169,16 @@ SLOやオーナーシップあたりが主にコミットしたポイントだ�
   loadJQuery=true
 >}}
 
+## 服
+
+在宅だし前ほど買わなくなった。けれどアップデート自体は常にあるのでメモ。
+
+今年買ったのはこのへん。毎シーズンなんだかんだ買っていた[Story mfg.](https://www.storymfg.com/)とかは買わなくなったし着なくなったな。
+
+- [Product Twelve](http://www.producttwelve.jp/)
+- [POLYPLOID](https://poly-ploid.com/)
+- [DAIRIKU](https://shop.dairiku-cinema.com/)
+
 ## サウナ
 
 今年はよく行った。週末ペースで通っていた。買ってよかったのパートで書かなかったけど[Loop](https://www.loopearplugs.jp/)というイヤープラグ (要は耳栓,高級耳栓だが) がサウナに良かった。これ買ったことで行く頻度増えたまである。周りがうるさくても落ち着けるので今や必須である。ちなみに無くしてしまい今はない (見つからないので買い直す予定..)
