@@ -130,7 +130,7 @@ Tailscaleはイニシャルにかかるセットアップも少ないところ�
 - [Access Synology NAS from anywhere · Tailscale Docs](https://tailscale.com/kb/1131/synology)
 - [Synology NAS に Tailscale を設定する | text.Baldanders.info](https://text.baldanders.info/remark/2021/10/tailscale-with-synology-nas/)
 
-## UPS
+## UPSを使う
 
 {{< figure 
 src="anker.webp"
@@ -168,7 +168,7 @@ PT-->|充電100%|N
 
 参考記事: [バックアップ電源をUPSからポータブル電源に替えてみる（Anker Solix C1000） – Chase The Core](https://chasethecore.run/%E3%83%90%E3%83%83%E3%82%AF%E3%82%A2%E3%83%83%E3%83%97%E9%9B%BB%E6%BA%90%E3%82%92ups%E3%81%8B%E3%82%89%E3%83%9D%E3%83%BC%E3%82%BF%E3%83%96%E3%83%AB%E9%9B%BB%E6%BA%90%E3%81%AB%E6%9B%BF%E3%81%88/)
 
-## バックアップ
+## バックアップを取る
 
 Synologyでは[Hyper Backup](https://www.synology.com/ja-jp/dsm/feature/hyper_backup)というアプリが提供されており次のようなバックアップ体制を簡単につくることができる。
 
