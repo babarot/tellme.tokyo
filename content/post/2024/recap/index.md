@@ -4,6 +4,8 @@ date: "2024-12-31"
 description: ""
 categories: []
 draft: false
+aliases:
+- /post/2024/12/31/2024-review/
 toc: true
 ---
 

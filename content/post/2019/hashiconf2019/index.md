@@ -7,8 +7,8 @@ draft: false
 author: b4b4r07
 oldlink: ""
 tags:
-  - hashicorp
-  - hashiconf
+- hashicorp
+- hashiconf
 ---
 
 {{< img src="session.png" width="600" >}}
