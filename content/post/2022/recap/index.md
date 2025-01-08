@@ -8,7 +8,8 @@ author: "b4b4r07"
 oldlink: ""
 image: ""
 tags: []
-
+aliases:
+- /post/2022/12/28/10x-1st-y-aniv/
 ---
 
 この記事は [10X アドベントカレンダー2022](https://10xall.notion.site/10X-2022-9dafcb8ca4114804a78e4354e062ff64) 28日目のエントリーです。

@@ -8,6 +8,8 @@ author: b4b4r07
 oldlink: ""
 tags:
 - review
+aliases:
+- /post/2019/12/31/2019-review/
 ---
 
 ## 仕事

@@ -133,7 +133,7 @@ Tailscaleはイニシャルにかかるセットアップも少ないところ�
 ## UPS
 
 {{< figure 
-src="https://www.ankerjapan.com/cdn/shop/files/A1761_listing_product.jpg"
+src="anker.webp"
 width="300"
 caption="Anker Solix C1000"
 class="text_center" >}}

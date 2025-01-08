@@ -8,8 +8,9 @@ author: "b4b4r07"
 oldlink: ""
 image: ""
 tags: ["review"]
+aliases:
+- /post/2023/12/31/2023-review/
 toc: true
-
 ---
 
 # Work
