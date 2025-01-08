@@ -11,6 +11,7 @@
 # - mmv (itchyny/mmv)
 # - nvim
 
+content_dir="content/post"
 front_matter=$(cat <<EOF
 ---
 title: "%s"
@@ -55,7 +56,7 @@ main() {
       edit)
         if [[ -z ${json} ]] && ${no_draft}; then
           json="$(
-          for file in $(fd -tf '\.md$' content/post)
+          for file in $(fd -tf '\.md$' "${content_dir}")
           do
             yq -o json --no-colors --front-matter="extract" "${file}" |
               jq -c ". + {\"file\": \"${file}\"}"
@@ -78,7 +79,7 @@ main() {
 create() {
   local dir
   read -p "Title? (used as URL): " input
-  dir="content/post/${input}"
+  dir="${content_dir}/${input}"
   mkdir -p "${dir}"
   printf -- "${front_matter}\n" "${input}" > "${dir}/index.md"
   nvim "${dir}/index.md"
@@ -94,12 +95,12 @@ edit() {
     if [[ -n ${json} ]]; then
       echo "${json}" | jq -r 'reverse | .[] | select(.draft | not) | .file'
     else
-      fd -tf '\.md$' content/post | tac
+      fd -tf '\.md$' ${content_dir} | tac
     fi |
       fzf \
       --header 'Press CTRL-R to reveal in Finder, CTRL-V to move to...' \
       --preview 'bat --language=markdown --color=always --style=numbers {}' \
-      --bind 'ctrl-r:execute-silent(open -R {}),ctrl-v:execute-silent(mmv {})'
+      --bind 'ctrl-r:execute-silent(open -R {}),ctrl-v:execute-silent(mmv $(dirname {})/*)'
     )
     if [[ ${#files[@]} == 0 ]]; then
       return 0
