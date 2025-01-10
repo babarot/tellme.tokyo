@@ -4,9 +4,9 @@ date: "2024-12-31"
 description: ""
 categories: []
 draft: false
+toc: true
 aliases:
 - /post/2024/12/31/2024-review/
-toc: true
 ---
 
 # Work
@@ -80,7 +80,7 @@ SLOやオーナーシップあたりが主にコミットしたポイントだ�
 
 ### 4. [Anker Prime Charger (250W, 6 Ports, GaN)](https://www.ankerjapan.com/products/a2345)
 
-パワーのある充電ステーション。250WまでいけるのでスマホとPCとなにかを繋いでも余裕がある。ロングランアイテムになりそう。また、最近は特にUSB-Cで充電できる機材が増えたので重宝する。
+パワーのある充電ステーション。250WまでいけるのでスマホとPCとなにかを繋いでも余裕がある。ロングランアイテムになりそう。また、最近は特にUSB-Cで充電できる機材が増えたので重宝する。入出力が見られるディスプレイが付いていてどのデバイスに対してどれくらいのInputが出ているかわかる。iPhoneだと25W出てるなとか、髭剃りとかライトは2Wだとか。充電が終わったらそれもディスプレイでわかるのも良い。
 
 ### 5. [Anker Solix C1000 Portable Power Station](https://www.ankerjapan.com/products/a1761)
 

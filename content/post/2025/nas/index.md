@@ -121,9 +121,11 @@ _※これはデモデータを入れてlocalで立ち上げたアプリのス�
 
 QuickConnectによるインターネット経由のアクセスも可能だがVPNによる接続も可能だ。
 
-[Tailscale](https://tailscale.com/)とはVPN (Virtual Private Network) 実装のひとつで、これまでのようなHub & Spoke型のVPNのようにTailescaleが接続を取りまとめるのではなくクライアント同士が直接接続されるMesh型のVPNを提供する。このように分散型VPNはVPNサーバを必要としないゆえに中央に負荷がかからない、プライバシーリスクがない、SPoFにならないなどのメリットもある。
+[Tailscale](https://tailscale.com/)とはVPN (Virtual Private Network) 実装のひとつで、これまでのようなHub & Spoke型のVPNのようにTailescaleが接続を取りまとめるのではなくクライアント同士が直接接続されるMesh型のVPNを提供する。このように分散型VPNはVPNサーバを必要としないゆえに中央に負荷がかからない、プライバシーリスクがない、SPoFにならないなどのメリットもある。Tailscaleではアカウントを作成しクライアント同士にTailscaleをインストールするだけで簡単に使い始めることができる。セットアップにかかる手間が少ないのも良い点だ。また、ほぼZero configなので設定の手間や漏れも起きにくい。
 
-Tailscaleはイニシャルにかかるセットアップも少ないところ良い点だ。クライアント同士にTailscaleをインストールしアカウント作成をすればすぐに使い始めることができる。詳しい設定は以下の記事が参考になる。
+TailscaleはP2PなのでSynology NASと手持ちのMacにTailscaleを入れると直接やり取りすることができるようになる。デバイス名(`babarot-nas`とつけたとする)でアクセスできるので例えば `http://babarot-nas:5000` でNAS上で待ち受けるSynologyの管理画面を見ることができる。
+
+詳しい設定は以下の記事が参考になる。
 
 参考記事:
 

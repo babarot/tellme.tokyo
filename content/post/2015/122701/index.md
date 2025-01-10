@@ -1,6 +1,5 @@
 ---
 title: "最近の zplug の変更について"
-category:
 date: 2015-12-21T12:27:01+09:00
 description: ""
 categories: []
