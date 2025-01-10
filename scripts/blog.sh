@@ -8,6 +8,7 @@
 # - tac
 # - fd (sharkdp/fd)
 # - bat (sharkdp/bat)
+# - exa
 # - mmv (itchyny/mmv)
 # - nvim
 
@@ -24,16 +25,16 @@ EOF
 )
 
 main() {
-  local json
+  local json action
   local actions=(edit create)
-  local no_draft=false
+  local exclude_draft=false
   local -a args
 
   while (( ${#} > 0 ))
   do
     case "${1}" in
-      --no-draft)
-        no_draft=true
+      --exclude-draft)
+        exclude_draft=true
         ;;
       -*)
         echo "${1}: no such option" >&2
@@ -54,7 +55,7 @@ main() {
         create
         ;;
       edit)
-        if [[ -z ${json} ]] && ${no_draft}; then
+        if [[ -z ${json} ]] && ${exclude_draft}; then
           json="$(
           for file in $(fd -tf '\.md$' "${content_dir}")
           do
@@ -63,7 +64,9 @@ main() {
           done | jq --slurp
           )"
         fi
+        hugo --quiet server &
         edit "${json}"
+        kill "$(jobs -p)"
         ;;
       "")
         break
@@ -77,8 +80,8 @@ main() {
 }
 
 create() {
-  local dir
-  read -p "Title? (used as URL): " input
+  local dir input
+  read -r -p "Title? (used as URL): " input
   dir="${content_dir}/${input}"
   mkdir -p "${dir}"
   printf -- "${front_matter}\n" "${input}" > "${dir}/index.md"
@@ -87,7 +90,40 @@ create() {
 
 edit() {
   local json="${1}"
+  local -a files
+  local exa_snippet
 
+  # shellcheck disable=SC2016
+  exa_snippet='
+    dir=$(dirname {})
+    if [[ ${dir} =~ 20[0-9]+$ ]]; then
+      exa -a --tree --group-directories-first --git-ignore {}
+      echo
+      echo "PARENT DIR:"
+      exa -a --tree --level 1 --group-directories-first --git-ignore ${dir}
+    else
+      exa -a --tree --group-directories-first --git-ignore ${dir}
+    fi
+  '
+  # shellcheck disable=SC2016
+  help_snippet='
+    echo "FILE OPS"
+    echo " [ctrl-r] reveal the file on the cursor with Finder"
+    echo " [ctrl-v] move or rename files"
+    echo ""
+    echo "PREVIEW"
+    echo " [ctrl-l] show file content with syntax highlight"
+    echo " [ctrl-/] toggle(hide/show) preview window"
+    echo " [?]      show this help"
+    echo " [right]  look inside the directory of the file on the cursor"
+    echo " [left]   refresh preview window"
+    echo ""
+    echo "CURSOR"
+    echo " [tab]    select + down"
+    echo " [S-tab]  deselect + down"
+  '
+
+  # shellcheck disable=SC2016
   while true
   do
     # mapfile requires bash 4.4+
@@ -98,9 +134,18 @@ edit() {
       fd -tf '\.md$' ${content_dir} | tac
     fi |
       content_dir=${content_dir} fzf \
-      --header 'Press CTRL-R to reveal in Finder, CTRL-V to move files...' \
-      --preview 'bat --language=markdown --color=always --style=numbers {}' \
-      --bind 'ctrl-r:execute-silent(open -R {}),ctrl-v:execute-silent(mmv $(dirname {})/*),change:reload(fd -tf "\.md$" ${content_dir} | tac)'
+      --header 'Press "?" to show help of key bindings!' \
+      --preview 'yq --colors --prettyPrint --front-matter=extract {}' \
+      --bind 'tab:select+down' \
+      --bind 'shift-tab:deselect+up' \
+      --bind 'ctrl-r:execute-silent(open -R {})' \
+      --bind 'ctrl-v:execute-silent(mmv $(dirname {})/*)' \
+      --bind 'ctrl-l:preview(bat --language=markdown --color=always --style=numbers {})' \
+      --bind 'ctrl-/:change-preview-window(hidden|down,border-top|)' \
+      --bind "?:preview:$help_snippet" \
+      --bind "right:preview:$exa_snippet" \
+      --bind 'left:refresh-preview' \
+      --bind 'change:reload(fd -tf "\.md$" ${content_dir} | tac)'
     )
     if [[ ${#files[@]} == 0 ]]; then
       return 0
