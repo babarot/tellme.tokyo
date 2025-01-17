@@ -24,11 +24,21 @@ toc: false
 EOF
 )
 
+if [[ -z $FZF_DEFAULT_OPTS ]]; then
+  FZF_DEFAULT_OPTS="--height 75% --multi --layout=reverse"
+fi
+
 main() {
   local json action
   local actions=(edit create)
   local exclude_draft=false
   local -a args
+
+  bash_version=$(bash --version | sed -nE 's/^.* version ([0-9]+\.[0-9]+\.[0-9]+).*$/\1/p')
+  if vercomp ${bash_version} "4.4"; then
+    echo "requires bash 4.4+" >&2
+    return 1
+  fi
 
   while (( ${#} > 0 ))
   do
@@ -49,7 +59,7 @@ main() {
 
   while true
   do
-    action=$(printf "%s\n" "${actions[@]}" | fzf --header 'Any action? Press CTRL-C to quit')
+    action=$(printf "%s\n" "${actions[@]}" | fzf --no-multi --header 'Any action? Press CTRL-C to quit')
     case "${action}" in
       create)
         create
@@ -153,5 +163,19 @@ edit() {
     nvim "${files[@]}"
   done
 }
+
+# https://stackoverflow.com/questions/4023830/how-to-compare-two-strings-in-dot-separated-version-format-in-bash
+vercomp() {
+  # args: min, actual, max
+  printf '%s\n' "$@" | sort -C -V
+}
+
+# https://apple.stackexchange.com/questions/83939/compare-multi-digit-version-numbers-in-bash/123408#123408
+# e.g.
+# if (( ! $(version "${bash_version}") > $(version 4.4) )); then
+version() {
+  echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'
+}
+
 
 main "${@}"
