@@ -9,21 +9,21 @@ toc: false
 
 昔に [gomi](https://github.com/babarot/gomi) というターミナルにゴミ箱の概念を実装する CLI コマンドを作っていて、久しぶりに土日使ってガッツリ書き換えた。ファイルをゴミ箱に移動したり戻したりといった根幹の機能は変えてなくて UI 部分だけ更新した。
 
-これまでは UI の実装は [promptui](https://github.com/manifoldco/promptui) を使っていたが、Ctrl+W (単語の削除) ができなかったり Ctrl+C で interrupt したときに UI が崩れたり、そもそもライブラリの開発がしばらく止まっていたりしてずっと気になっていた。[bubbletea](https://github.com/charmbracelet/bubbletea) というイケてる UI ライブラリを見つけてしまい、めんどくさい半分、興味半分で置き換えてみた[^newui]。bubbletea は Elm Architecture が採用されたフレームワークで、Model という Interface で以下のメソッドが保証されている。
+これまでは UI の実装は [promptui](https://github.com/manifoldco/promptui) を使っていたが、Ctrl+W (単語の削除) ができなかったり Ctrl+C で interrupt したときに UI が崩れたり、そもそも開発がしばらく止まっていたりしてずっと気になっていた。[bubbletea](https://github.com/charmbracelet/bubbletea) というイケてる UI ライブラリを見つけてしまい、めんどくさい半分、興味半分で置き換えてみた[^newui]。bubbletea は Elm Architecture が採用されたフレームワークで、Model という Interface で以下のメソッドが保証されている。
 
 - Init()
-    - 初回のデータソースの読み込み (View でレンダリングするデータを読み込む)
+    - 初回の Message を送信する
 - Update()
-    - Key input などいろいろな Event に反応して処理を実行し新しい Model を返す
+    - Message (キー入力といったイベント) に反応して処理を実行し新しい Model を返す
 - View()
     - Update が終わったら View に反映されてレンダリングされる
     - 文字列が返されるので TUI であればターミナル上に出力される
 
-キーの入力やデータの変更などいわゆる Event は Message と呼ばれており、Message を受け取った Update はそれぞれに応じた処理をして View を呼ぶというライフサイクルをしている。Quit などもユーザ実装によるところなので bubbletea はひたすらに Update ←(Msg)→ View を繰り返すというわけだ。詳しくは [@motemen さんのブログ](https://motemen.hatenablog.com/entry/2022/06/introduction-to-go-bubbletea)で勉強した。
+キーの入力やデータの変更などいわゆる Event は Message と呼ばれており、Message を受け取った Update はそれぞれに応じた処理をして View を呼ぶというライフサイクルをしている。Quit (サイクルの終了) などもユーザ実装によるところなので bubbletea はひたすらに Update ←(Msg)→ View を繰り返すというわけだ。詳しくは [@motemen さんのブログ](https://motemen.hatenablog.com/entry/2022/06/introduction-to-go-bubbletea)で勉強した。
 
 久しぶりの実装はめんどくさかったけど結果満足する仕上がりになってよかった。ちなみに、gomi の[初回のリリース](https://github.com/babarot/gomi/releases/tag/v0.1.2)は2015年のようだ。あの頃はまだ大学生で、10年経ってもまだいじってるなんて我ながら物好きだなと思う。
 
-実は UI の書き換えは2回目で初代 UI[^first] と二代目 UI[^second] がこんな感じ。こうみると今回は結構いい感じに仕上がったかなと思う。
+実は UI の書き換えはこれで2回目で初代 UI[^first] と二代目 UI[^second] がこんな感じ。こうみると今回は結構いい感じに仕上がったかなと思う。
 
 {{< figure 
 src="./demo-3.gif"
