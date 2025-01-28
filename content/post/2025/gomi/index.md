@@ -27,17 +27,17 @@ toc: false
 
 {{< figure 
 src="./demo-3.gif"
-caption="三代目UI (今回)"
+caption="三代目UI (2025)"
 class="text_center" >}}
 
 {{< figure 
 src="./demo-2.png"
-caption="二代目UI"
+caption="二代目UI (2020)"
 class="text_center" >}}
 
 {{< figure 
 src="./demo-1.gif"
-caption="初代 UI"
+caption="初代 UI (2015)"
 class="text_center" >}}
 
 [^newui]: かなりめんどくさかった。[Pull Request #44 · babarot/gomi](https://github.com/babarot/gomi/pull/44)
