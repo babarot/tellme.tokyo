@@ -9,7 +9,7 @@ toc: false
 
 昔に [gomi](https://github.com/babarot/gomi) というターミナルにゴミ箱の概念を実装する CLI コマンドを作っていて、久しぶりに土日使ってガッツリ書き換えた。ファイルをゴミ箱に移動したり戻したりといった根幹の機能は変えてなくて UI 部分だけ更新した。
 
-これまでは UI の実装は [promptui](https://github.com/manifoldco/promptui) を使っていたが、Ctrl+W (単語の削除) ができなかったり Ctrl+C で interrupt したときに UI が崩れたり、そもそも開発がしばらく止まっていたりしてずっと気になっていた。[bubbletea](https://github.com/charmbracelet/bubbletea) というイケてる UI ライブラリを見つけてしまい、めんどくさい半分、興味半分で置き換えてみた[^newui]。bubbletea は Elm Architecture が採用されたフレームワークで、Model という Interface で以下のメソッドが保証されている。
+これまでは UI の実装は [promptui](https://github.com/manifoldco/promptui) を使っていたが、Ctrl+W (単語の削除) ができなかったり Ctrl+C で interrupt したときに UI が崩れたり、そもそも開発がしばらく止まっていたりしてずっと気になっていた。しかし最近 [bubbletea](https://github.com/charmbracelet/bubbletea) というイケてる UI ライブラリを見つけてしまい、めんどくさい半分、興味半分で[置き換えてみた](https://github.com/babarot/gomi/pull/44)。bubbletea は Elm Architecture が採用されたフレームワークで、Model という Interface で以下のメソッドが保証されている。
 
 - Init()
     - 初回の Message を送信する
@@ -40,6 +40,5 @@ src="./demo-1.gif"
 caption="初代 UI (2015)"
 class="text_center" >}}
 
-[^newui]: かなりめんどくさかった。[Pull Request #44 · babarot/gomi](https://github.com/babarot/gomi/pull/44)
 [^first]: コードを見てみたら UI はなんと自前実装で [termbox-go](https://github.com/nsf/termbox-go) を使っていたようだ。まだコードが小さかったときの peco とか fzf を参考に書いたような気がする
 [^second]: termbox-go の実装もパクった部分が多くて自分でよくわかってない部分があったのでメンテできなくなっていた。UI は外部に任せたほうがいいなーと思っていて [promptui](https://github.com/manifoldco/promptui) を見つけてからはこっちに乗り換えた
