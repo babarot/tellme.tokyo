@@ -1,6 +1,6 @@
 ---
 title: "2024年振り返り"
-date: "2024-12-31"
+date: "2024-12-31T00:00:00+09:00"
 description: ""
 categories: []
 draft: false
