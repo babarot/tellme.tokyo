@@ -96,6 +96,11 @@ do_something() { date; }
 do_something | notify
 ```
 
-![](result.png)
+{{< figure
+src="result-light.png"
+src-dark="result-dark.png"
+src-light="result-light.png"
+caption="実行した様子"
+class="text_center" >}}
 
 [^1]: [コマンド置換](https://www.gnu.org/software/bash/manual/html_node/Command-Substitution.html)ではない
