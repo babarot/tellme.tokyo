@@ -17,9 +17,9 @@ tags:
 
 {{< img src="./afxw.png" >}}
 
-# 一覧
+## 一覧
 
-## ファイル管理
+### ファイル管理
 
 - あふｗ
 - 内骨格
@@ -29,47 +29,47 @@ tags:
 - X-Finder
 - Easy File Locker
 
-## ファイル比較
+### ファイル比較
 
 - df
 
-## ファイル名変更
+### ファイル名変更
 
 - 練馬
 - Flexible Renamer
 - ファイル名変更君
 - お～瑠璃ね～ま～
 
-## ファイル圧縮
+### ファイル圧縮
 
 - Lhaplus
 - Noah
 - 7-Zip
 - caldix
 
-## ファイル検索
+### ファイル検索
 
 - Everything
 - FileSeeker3
 - Locate32
 
-## ファイル暗号化
+### ファイル暗号化
 
 - アタッシェケース
 - ED
 - TrueCrypt
 
-## ファイル移動
+### ファイル移動
 
 - FireFikeCopy
 - FastCopy
 
-## ブラウザ
+### ブラウザ
 
 - Sleipnir
 - kiki
 
-## アプリランチャ
+### アプリランチャ
 
 - CLaunch
 - Fenrir
@@ -77,15 +77,15 @@ tags:
 - Clock Launcher
 - cltc
 
-## IME
+### IME
 
 - Google IME
 
-## テキストエディタ
+### テキストエディタ
 
 - Vim
 
-## オフィス
+### オフィス
 
 - PDForcel
 - pdfi
@@ -95,7 +95,7 @@ tags:
 - i2pdf
 - LibreOffice
 
-## 画像
+### 画像
 
 - ViX
 - JTrim
@@ -104,7 +104,7 @@ tags:
 - ToYcon
 - ConvertIcon
 
-## 音声
+### 音声
 
 - AIMP3
 - uLilith
@@ -115,7 +115,7 @@ tags:
 - Exact Audio Copy
 - 午後のこ～だ
 
-## 映像
+### 映像
 
 - VLCplayer
 - SMPlayer
@@ -127,7 +127,7 @@ tags:
 - cutmovie
 - unitemovie
 
-## システム
+### システム
 
 - CCleaner
 - 窓の手
@@ -135,14 +135,14 @@ tags:
 - Win高速化
 - Option Operator
 
-## ユーティリティ
+### ユーティリティ
 
 - LyricsMaster
 - MacType
 - AutoHotkey
 - migemo
 
-# 所感
+## 所感
 
 [AutoHotkey](https://autohotkey.com/) を使った各種自動化と[低機能二画面ファイラ「あふｗ」](http://akt.d.dooo.jp/akt_afxw.html) の拡張に励んでいた。
 完全カスタマイズされた Windows は今の自分が触ったら、もう扱うことは出来ない。

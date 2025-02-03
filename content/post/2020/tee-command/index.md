@@ -10,67 +10,92 @@ image: ""
 tags:
 - shellscript
 - unix
-
 ---
 
-コマンドの結果を目で見ながら、パイプに渡すなどするときのこと。
-
-よくやるのに忘れるのでメモする。
+コマンドの出力をターミナル (stdout) に出しながらパイプに繋いだ別のコマンドの stdin に流すとき、どう書くか。
 
 ## 結論
 
 ```bash
-some-command | tee >(pipe-command)
+command1 | tee >(command2)
 ```
+
+```mermaid
+flowchart LR
+  command1 -->|out| out[stdout]
+  command1 -->|in| command2
+  command2 -->|out| out
+```
+
 
 ## 解説
 
-[tee コマンド](http://man7.org/linux/man-pages/man1/tee.1.html)を使うとできる。
+[tee コマンド](http://man7.org/linux/man-pages/man1/tee.1.html)を使うとできる。tee は標準入力から来たデータを標準出力とリダイレクト先にストリーム出力することができる。
 
-肝は tee が input されたデータを、
-
-- 標準出力
-- リダイレクト先
-
-これらに output することができるので、リダイレクト先を[プロセス置換](https://www.tldp.org/LDP/abs/html/process-sub.html)[^1]を使ってパイプに渡したいコマンドを指定することで標準出力に出しつつ、特定のコマンドにパイプすることができる。
-
-実際のデモ:
+そこでリダイレクト先を[プロセス置換](https://www.tldp.org/LDP/abs/html/process-sub.html) (_Process Substitution_)[^1]でパイプでつなぎたいコマンドを指定することで、標準出力に出しつつ特定のコマンドの入力に接続できる。
 
 ```bash
 seq 15 | tee >(grep 4)
 ```
 
-![](demo.png)
+```bash
+1      # seq
+2      # |
+3      # |
+4      # |
+5      # |
+6      # |
+7      # |
+8      # |
+9      # |
+10     # |
+11     # |
+12     # |
+13     # |
+14     # |
+15     # |
+4      # grep
+14     # |
+```
 
-tee は標準出力ではなく、標準エラー出力にも出すことができる。
-普通に file descriptor 2番に出力する。
+標準出力ではなく標準エラー出力に出したい場合は次のようにする (やっていることは FD 1番を FD 2番に向けるだけ)。
 
 ```bash
 seq 15 | tee >(grep 4) >&2
-# もしくは
+# Or
 seq 15 | tee >&2 >(grep 4)
 ```
 
-よくやるシーンとして、CI のコンソールにも出しつつ、結果を GitHub コメントに POST する、といったときにやる。
+
+実際の利用事例として「何かしらのコマンドを実行し CI のコンソールにも出しつつ GitHub にもコメントにする」ときとかに便利。
+
+```bash
+date | tee >(gh issue comment --repo babarot/sandbox 12 --body-file -)
+```
+
+![](demo.gif)
+
+[mercari/tfnotify](https://github.com/mercari/tfnotify) も最初はこういう感じのシェルスクリプトから始まったことを思い出した。
 
 ```bash
 notify() {
-  local comment template
-
-  comment="$(tee >(cat) >&2)" # pipe and output stderr
-  template="## Some results
+  local comment="$(tee >(cat) >&2)"
+  local template="## Some results
 \`\`\`
 %s
 \`\`\`
 "
 
   comment="$(printf "${template}" "${comment}")"
-  github_comment "${comment}"
+  gh issue comment --repo babarot/sandbox 12 --body "${comment}"
 }
 
-some_output_func | notify
+do_something() { date; }
+
+# main
+do_something | notify
 ```
 
-[mercari/tfnotify](https://github.com/mercari/tfnotify) も最初はこういう感じのシェルスクリプトから始まったことを思い出した。
+![](result.png)
 
 [^1]: [コマンド置換](https://www.gnu.org/software/bash/manual/html_node/Command-Substitution.html)ではない
