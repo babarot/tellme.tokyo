@@ -138,7 +138,7 @@ Variables と Outputs はユーザに公開されたインターフェイスで�
 src="api-default.svg"
 src-dark="api-tellme-tokyo.svg"
 src-light="api-default.svg"
-class="text_center_no_margin" >}}
+class="text-center fit-content" >}}
 
 ## どのような API を定義するべきか
 
