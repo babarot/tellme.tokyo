@@ -27,15 +27,15 @@ View | Model から UI を描画する <br> Elm では Html を返すが Bubble 
      |                 |
      |                 |
      |                 v
-                        
-   update             view
-                        
+                       
+   Update             View
+                       
      ^                 |
-     |Msg              |String
+     | Msg             | String
      |                 v
 +----+-----------------+----+
 |        Elm Runtime        | <-------- Init
-+---------------------------+     Msg
++---------------------------+    Msg
 
                                                             .
 ```
@@ -74,6 +74,6 @@ src="./demo-1.gif"
 caption="初代 UI (2015)"
 class="text_center" >}}
 
-[^tea]: Bubble Tea の Tea は The Elm Architecture からきているのかも
+[^tea]: Bubble Tea の Tea は **T**he **E**lm **A**rchitecture からきているのかも
 [^first]: コードを見てみたら UI はなんと自前実装で [termbox-go](https://github.com/nsf/termbox-go) を使っていたようだ。まだコードが小さかったときの peco とか fzf を参考に書いたような気がする
 [^second]: termbox-go の実装もパクった部分が多くて自分でよくわかってない部分があったのでメンテできなくなっていた。UI は外部に任せたほうがいいなーと思っていて [promptui](https://github.com/manifoldco/promptui) を見つけてからはこっちに乗り換えた
