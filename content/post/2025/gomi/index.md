@@ -23,21 +23,21 @@ View | Model から UI を描画する <br> Elm では Html を返すが Bubble 
 
 ```goat
 
-            .--->  Model ---.
-           |                 |
-           |                 |
-           |                 v
- Msg
-   .-->  Update             View
-  |
-  |        ^                 |
-Init       | Msg             | String
-  |        |                 v
-  |   +----+-----------------+----+
-   '--+        Elm Runtime        |
-      +---------------------------+
+              .--->  Model ---.
+             |                 |
+             |                 |
+             |                 v
+   Msg
+     .-->  Update             View
+    |
+    |        ^                 |
+  Init       | Msg             | String
+    |        |                 v
+    |   +----+-----------------+----+
+     '--+        Elm Runtime        |
+        +---------------------------+
 
-                                                          .
+                                                       .
 ```
 
 <!-- https://github.com/blampe/goat -->

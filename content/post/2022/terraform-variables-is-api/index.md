@@ -134,7 +134,11 @@ You can apply this plan to save these new output values to the Terraform state, 
 
 Variables と Outputs はユーザに公開されたインターフェイスであり、API と同様の性質を持つ。一度公開すると簡単には変更できず削除できない。どのような Input として Variables を定義し、どのような Output をすべきかを考えて Outputs を定義する必要がある。
 
-![](api.png)
+{{< figure
+src="api-default.svg"
+src-dark="api-tellme-tokyo.svg"
+src-light="api-default.svg"
+class="text_center" >}}
 
 ## どのような API を定義するべきか
 
