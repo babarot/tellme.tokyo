@@ -33,7 +33,11 @@ Terraform では "変数" 以外に "返り値" (Return value) に相当する�
 
 それぞれの役割をプログラミング言語に例えるとイメージしやすいかもしれない。
 
-![](signature.png)
+{{< figure
+src="signature-default.svg"
+src-dark="signature-tellme-tokyo.svg"
+src-light="signature-default.svg"
+class="text-center fit-content" >}}
 
 そうすると、関数の中身を Module と捉えることができ、Locals はローカル変数であるといえる。
 
