@@ -17,37 +17,37 @@ Elm Architecture では主に3つの要素で構成される。
 ---|---
 Model |  アプリのステート管理をする
 Update | UI 操作や Message を受け取り処理をして Model を更新する
-View | Model から UI を描画する <br> Elm では Html を返すが Bubble Tea では String を返す
+View | Model から UI を描画する <br> Elm では Html を返すが Bubble Tea では文字列を返す
 
 実装者は Model (ステート) を介して Update (処理) と View (見た目) を実装するだけでよく、データの流れは Runtime 任せで良いのだ。
 
 ```goat
 
-      .--->  Model ---.
-     |                 |
-     |                 |
-     |                 v
-                       
-   Update             View
-                       
-     ^                 |
-     | Msg             | String
-     |                 v
-+----+-----------------+----+
-|        Elm Runtime        | <-------- Init
-+---------------------------+    Msg
+            .--->  Model ---.
+           |                 |
+           |                 |
+           |                 v
+ Msg
+   .-->  Update             View
+  |
+  |        ^                 |
+Init       | Msg             | String
+  |        |                 v
+  |   +----+-----------------+----+
+   '--+        Elm Runtime        |
+      +---------------------------+
 
-                                                            .
+                                                          .
 ```
 
 <!-- https://github.com/blampe/goat -->
 
-Bubble Tea では Model という interface で以下のメソッドを定義して Elm Architecture を表現している。Model interface を実装する構造体 model を作り Update() と View()、およびそれらを行き来する Msg を実装していく流れだ。
+Bubble Tea では Model という interface で以下のメソッドを定義して Elm Architecture を表現している。Model interface を満たす構造体 model を作り Update() と View()、およびそれらを行き来する Msg を実装していく流れだ。
 
 - Init()
-    - 初回の Message を送信し、Runtime をスタートさせる
+    - 初回の Message を送信し、サイクルをスタートさせる
 - Update()
-    - Message (キー入力といったイベント) を受け取って何かしらの処理を実行し新しい Model を返す
+    - Message (キー入力といったイベント) を受け取って何かしらの処理を行い新しい Model を返す
 - View()
     - 出力する文字列を組み立てて String を返す
 
