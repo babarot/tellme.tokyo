@@ -20,9 +20,9 @@ aliases:
 一方で、メルカリが新卒採用を始めたのは今年からなので一期目の新卒としての採用となった。
 メルカリは国内での勢いはもちろんのことアメリカ市場でも急成長してきており社員としても一ユーザとしても今後の動向にわくわくしている。
 
-<!-- {{< img src="mercari.png" caption="<https://www.mercari.com>" class="text_center" >}} -->
+<!-- {{< img src="mercari.png" caption="<https://www.mercari.com>" class="text-center" >}} -->
 
-{{< figure src="mercari.png" caption="<https://www.mercari.com>" class="text_center" >}}
+{{< figure src="mercari.png" caption="<https://www.mercari.com>" class="text-center" >}}
 
 16新卒の同期は6人 (3 SWE, 1 PdM, 1 Desinger) だった。
 今は17や18の新卒採用に向けて動いてる。

@@ -31,7 +31,7 @@ toc: true
 src="https://www.synology.com/img/products/detail/DS220plus/heading.png"
 width="400"
 caption="Synology DS220+"
-class="text_center" >}}
+class="text-center" >}}
 
 最初のNASには[Synology DS220+](https://global.download.synology.com/download/Document/Hardware/DataSheet/DiskStation/20-year/DS220+/jpn/Synology_DS220_Plus_Data_Sheet_jpn.pdf)を選んだ。[Synology](https://www.synology.com/ja-jp)は台湾の企業で、他にもQNAPなど有名なNASメーカーがあるが、Synologyを選んだのには次のような理由がある。
 
@@ -72,7 +72,7 @@ NAS導入後はiPhone、iPad、MacからWi-Fi経由で同じデータにアク�
 {{< figure 
 src="https://www.synology.com/img/beta/dsm70/photos/all_in_one_1.png"
 caption="via \"[Synology Photos](https://www.synology.com/ja-jp/DSM70/SynologyPhotos)\""
-class="text_center" >}}
+class="text-center" >}}
 
 DSMからPhotosを有効にするだけで使える。複数人でのアルバム管理もでき、NASのユーザ管理機能を使って人を追加したあとPhotosに権限を振れば使えるようになる。今は共有領域に置いてフォルダ/タイムライン形式で見れるようにしている。
 
@@ -138,7 +138,7 @@ TailscaleはP2PなのでSynology NASと手持ちのMacにTailscaleを入れる�
 src="anker.webp"
 width="300"
 caption="Anker Solix C1000"
-class="text_center" >}}
+class="text-center" >}}
 
 NASは24時間365日稼働させておくものである。つまり常時電源 (コンセントなど) に挿しっぱなしになる。ブレーカーが落ちたり停電したりすると電源を喪失するので、データ書き込み中であれば破損する恐れがある。また、立ち上げているサーバのプロセスも死ぬのでやっかいなことが想像つく。
 
@@ -185,7 +185,7 @@ NASでRAIDを構成していてもあくまでもNASのバックアップは別�
 src="https://www.synology.com/img/dsm/hyper_backup/extensive_backup_destinations@2x.png"
 caption="いろいろなエクスポート先を選択できる"
 width="400"
-class="text_center" >}}
+class="text-center" >}}
 
 
 # 今後
@@ -197,7 +197,7 @@ NASはめちゃくちゃ良い。もっと早く導入すればよかった[^res
 {{< figure 
 src="nas.png"
 caption="Synology管理画面。空き容量がなく警告が出ている"
-class="text_center" >}}
+class="text-center" >}}
 
 ちなみにDS220+というモデル名は2020年製の2ベイNAS (Disk Station) ということを示している。型番の命名規則は `製品タイプ`+`最大ベイ数`+`リリース年度`+`シリーズ名` になっている[^syno_model]。
 

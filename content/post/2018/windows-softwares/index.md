@@ -13,9 +13,11 @@ tags:
 2013 年ごろまで Windows を使っていた (Windows 7 SP2 が最後)。
 そのころはいろいろなフリーソフトにお世話になった。
 
-画像はマイベストフリーソフト「[あふｗ](http://akt.d.dooo.jp/akt_afxw.html)」。
-
-{{< img src="./afxw.png" >}}
+{{< img src="./afxw.png" 
+caption="超低機能 ２画面ファイラー「[![](afxwico.png)](http://akt.d.dooo.jp/akt_afxw.html)」"
+class="text-center"
+link="https://afxw.sakura.ne.jp/akt_afxw.html"
+>}}
 
 ## 一覧
 

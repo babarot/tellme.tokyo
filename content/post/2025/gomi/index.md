@@ -62,17 +62,17 @@ View が終わったら Runtime によってターミナルにレンダリング
 {{< figure 
 src="./demo-3.gif"
 caption="三代目UI (2025)"
-class="text_center" >}}
+class="text-center" >}}
 
 {{< figure 
 src="./demo-2.png"
 caption="二代目UI (2020)"
-class="text_center" >}}
+class="text-center" >}}
 
 {{< figure 
 src="./demo-1.gif"
 caption="初代 UI (2015)"
-class="text_center" >}}
+class="text-center" >}}
 
 [^tea]: Bubble Tea の Tea は **T**he **E**lm **A**rchitecture からきているのかも
 [^first]: コードを見てみたら UI はなんと自前実装で [termbox-go](https://github.com/nsf/termbox-go) を使っていたようだ。まだコードが小さかったときの peco とか fzf を参考に書いたような気がする

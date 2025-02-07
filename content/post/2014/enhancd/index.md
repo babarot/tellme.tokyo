@@ -31,7 +31,7 @@ aliases:
 src="https://api.star-history.com/svg?repos=babarot/enhancd&type=Date"
 link="https://star-history.com/#babarot/enhancd&Date"
 caption="\"[babarot/enhancd](http://github.com/babarot/enhancd)\""
-class="text_center" >}}
+class="text-center" >}}
 -->
 
 {{< figure
@@ -39,7 +39,7 @@ src="https://user-images.githubusercontent.com/4442708/229307417-50cf53de-594f-4
 src-dark="https://user-images.githubusercontent.com/4442708/229307417-50cf53de-594f-4a19-8547-9820d3af2f1c.gif"
 src-light="https://user-images.githubusercontent.com/4442708/229307415-32cb36ee-491d-47c5-b852-e94d802e9584.gif"
 caption="\"[babarot/enhancd](http://github.com/babarot/enhancd)\""
-class="text_center" >}}
+class="text-center fit-content" >}}
 
 [`enhancd.sh`](http://github.com/b4b4r07/enhancd)  とは [`autojump`](https://github.com/joelthelion/autojump) や [`z.sh`](https://github.com/rupa/z) などにインスパイアされて、後述する `cdhist.sh` をベースに作成されたディレクトリ移動をサポートするツールのことで、今回はそれらにも勝るとも劣らない機能を追加・拡張したので公開することにした。
 
