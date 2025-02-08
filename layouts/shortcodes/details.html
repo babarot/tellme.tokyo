@@ -1,11 +1,20 @@
 <style type="text/css">
 :root {
-  --gray-200: #e9ecef;
+  --details-border: #e9ecef;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --details-border: #2D3748;
+  }
+  summary {
+    color: #999999;
+  }
 }
 
 details {
   padding: 1rem;
-  border: 1px solid var(--gray-200);
+  border: 1px solid var(--details-border);
   border-radius: .25rem;
 }
 

@@ -1,0 +1,139 @@
+{{- $url := (.Get 0) -}}
+{{- with $result := resources.GetRemote $url -}}
+    {{- with $result.Err -}}
+        {{- warnf "Error fetching URL: %s" . -}}{{- . -}}
+    {{- else -}}
+        {{- $title := "" -}}
+        {{- $description := "" -}}
+        {{- $image := "" -}}
+
+        {{- with $findHead := index (findRE "(?s)<head>.*?</head>" $result.Content) 0 -}}
+            {{- range $meta := findRE "<meta[^>]+>" $findHead -}}
+                {{- $name := replaceRE ".*name=[\"'](.*?)[\"'].*" "$1" $meta -}}
+                {{- $property := replaceRE ".*property=[\"'](.*?)[\"'].*" "$1" $meta -}}
+                {{- $content := replaceRE ".*content=[\"'](.*?)[\"'].*" "$1" $meta -}}
+
+                {{- if eq $property "og:title" -}}
+                    {{- $title = $content -}}
+                {{- else if eq $property "og:description" -}}
+                    {{- $description = $content -}}
+                {{- else if eq $property "og:image" -}}
+                    {{- $image = $content -}}
+                {{- end -}}
+
+                {{- if and (eq $description "") (eq $name "description") -}}
+                    {{- $description = $content -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+
+        {{- if eq $title "" -}}
+            {{- with index (findRE "<title>(.*?)</title>" $result.Content) 0 -}}
+                {{- $title = replaceRE "<title>(.*?)</title>" "$1" . -}}
+            {{- end -}}
+        {{- end -}}
+
+        {{- if eq $image "" -}}
+            {{- $image = $.Site.Params.defaultNoimage -}}
+        {{- end -}}
+
+        <a href="{{- $url -}}" class="mini-blogcard" target="_blank" rel="noopener noreferrer">
+            <div class="mini-blogcard__image">
+                <img src="{{- $image -}}" alt="Thumbnail" loading="lazy">
+            </div>
+            <div class="mini-blogcard__content">
+                <div class="mini-blogcard__title">{{- $title -}}</div>
+                <p class="mini-blogcard__description">{{- $description | plainify | safeHTML -}}</p>
+                <div class="mini-blogcard__domain">{{- $url | replaceRE "^https?://([^/]+).*" "$1" -}}</div>
+            </div>
+        </a>
+
+        <style>
+        :root {
+            --mini-blogcard-bg: #ffffff;
+            --mini-blogcard-border: #e2e8f0;
+            --mini-blogcard-text-primary: #1a202c;
+            --mini-blogcard-text-secondary: #4a5568;
+            --mini-blogcard-text-domain: #718096;
+            --mini-blogcard-image-bg: #e2e8f0;
+            --mini-blogcard-hover-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --mini-blogcard-bg: #24283B; /* #2C2C3E, #2D3748, #273244, #1E2633 */
+                --mini-blogcard-border: #2D3748;
+                --mini-blogcard-text-primary: rgb(255, 255, 255);
+                --mini-blogcard-text-secondary: rgb(220, 220, 220);
+                --mini-blogcard-text-domain: rgb(180, 180, 180);
+                --mini-blogcard-image-bg: #22222E;
+                --mini-blogcard-hover-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.06);
+            }
+        }
+
+        .mini-blogcard {
+            display: flex !important;
+            align-items: center !important;
+            padding: 16px !important;
+            border: 1px solid var(--mini-blogcard-border) !important;
+            border-radius: 8px !important;
+            background: var(--mini-blogcard-bg) !important;
+            text-decoration: none !important;
+            color: var(--mini-blogcard-text-primary) !important;
+            transition: box-shadow 0.3s ease !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .mini-blogcard:hover {
+            box-shadow: var(--mini-blogcard-hover-shadow) !important;
+        }
+        .mini-blogcard__image {
+            flex-shrink: 0 !important;
+            width: 80px !important;
+            height: 80px !important;
+            overflow: hidden !important;
+            border-radius: 6px !important;
+            background: var(--mini-blogcard-image-bg) !important;
+            margin-right: 16px !important;
+        }
+        .mini-blogcard__image img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .mini-blogcard__content {
+            flex-grow: 1 !important;
+            min-width: 0 !important;
+        }
+        .mini-blogcard__title {
+            margin: 0 0 8px 0 !important;
+            font-size: 16px !important;
+            font-weight: bold !important;
+            color: var(--mini-blogcard-text-primary) !important;
+            display: -webkit-box !important;
+            -webkit-box-orient: vertical !important;
+            -webkit-line-clamp: 2 !important;
+            overflow: hidden !important;
+            line-height: 1.4 !important;
+        }
+        .mini-blogcard__description {
+            margin: 0 0 8px 0 !important;
+            font-size: 14px !important;
+            color: var(--mini-blogcard-text-secondary) !important;
+            display: -webkit-box !important;
+            -webkit-box-orient: vertical !important;
+            -webkit-line-clamp: 2 !important;
+            overflow: hidden !important;
+            line-height: 1.4 !important;
+        }
+        .mini-blogcard__domain {
+            font-size: 12px !important;
+            color: var(--mini-blogcard-text-domain) !important;
+        }
+        </style>
+    {{- end -}}
+{{- end -}}
