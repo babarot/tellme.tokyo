@@ -9,7 +9,7 @@ toc: false
 
 昔、[gomi](https://github.com/babarot/gomi) というターミナルにゴミ箱の概念を実装する CLI コマンドを作っていたのだが、久しぶりに土日を使ってガッツリ書き換えた。ファイルをゴミ箱に移動したり戻したりするという根幹の機能は変えず、UI 部分だけを更新した。
 
-これまでは UI の実装に [promptui](https://github.com/manifoldco/promptui) を使っていた。しかし、Ctrl+W（単語の削除）ができなかったり、Ctrl+C で interrupt した際に UI が崩れたり、そもそも開発がしばらく止まっていたりと、ずっと気になっていた。そんな中、最近 [bubbletea](https://github.com/charmbracelet/bubbletea) (Bubble Tea) というイケてる UI ライブラリを見つけてしまい、めんどくさい半分、興味半分で[置き換えてみた](https://github.com/babarot/gomi/pull/44)。
+これまでは UI の実装に [promptui](https://github.com/manifoldco/promptui) を使っていた。しかし、Ctrl+W（単語の削除）ができなかったり、Ctrl+C で interrupt した際に UI が崩れたり、そもそも開発がしばらく止まっていたりと、ずっと気になっていた。そんな中、最近 [bubbletea](https://github.com/charmbracelet/bubbletea) (Bubble Tea)[^tea] というイケてる UI ライブラリを見つけてしまい、めんどくさい半分、興味半分で[置き換えてみた](https://github.com/babarot/gomi/pull/44)。
 
 Bubble Tea は **Elm Architecture（TEA: The Elm Architecture）** が採用されたフレームワークだ。Elm Architecture とは、関数型プログラミングの概念を取り入れたフロントエンドの設計パターンで、シンプルで管理しやすい UI の構築を目的としている。もともとは Elm という言語で使われているが、React や Redux の設計にも影響を与えているらしい。
 
@@ -81,6 +81,10 @@ class="text-center" >}}
 src="./demo-1.gif"
 caption="初代 UI (2015)"
 class="text-center" >}}
+
+(2025/02/08追記): サイトも更新した。
+
+{{< link "https://babarot.me/gomi" >}}
 
 [^tea]: Bubble Tea の Tea は **T**he **E**lm **A**rchitecture からきているのかも
 [^first]: コードを見てみたら UI はなんと自前実装で [termbox-go](https://github.com/nsf/termbox-go) を使っていたようだ。まだコードが小さかったときの peco とか fzf を参考に書いたような気がする
