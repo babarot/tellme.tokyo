@@ -1,0 +1,27 @@
+<style type="text/css">
+:root {
+  --gray-200: #e9ecef;
+}
+
+details {
+  padding: 1rem;
+  border: 1px solid var(--gray-200);
+  border-radius: .25rem;
+}
+
+summary {
+  line-height: 1;
+  padding: 1rem;
+  margin: -1rem;
+  cursor: pointer;
+}
+
+details[open] summary {
+  margin-bottom: 0;
+}
+</style>
+
+<details>
+  <summary>{{ .Get "title" | default "Click to expand" | markdownify }}</summary>
+  {{ .Inner | markdownify }}
+</details>
