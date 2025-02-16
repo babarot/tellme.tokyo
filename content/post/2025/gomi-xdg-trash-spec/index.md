@@ -153,7 +153,7 @@ type Storage interface {
 
 標準仕様に準拠したことで、他のツールとシームレスに連携できるようになったことは改めて良い体験なんだなと気づいた。
 
-[trash-cli](https://github.com/andreafrancia/trash-cli) で消したやつを gomi で戻したり、gomi で消したやつを [gtrash](https://github.com/umlx5h/gtrash) で戻せたりする。実際はそんなに CLI ツールを行き来することは、標準仕様に乗っかっているということはそういうこともできるということだ。Linux デスクトップ環境を持っている人は GUI から戻せるのだろう。XDG Trash に対応したというだけだが、これで gomi も標準仕様に仲間入りできた。
+[trash-cli](https://github.com/andreafrancia/trash-cli) で消したやつを gomi で戻したり、gomi で消したやつを [gtrash](https://github.com/umlx5h/gtrash) で戻せたりする。実際はこんなに CLI ツールを行き来することはそうそうないが、標準仕様に乗っかっているということはそういうこともできるということだ。また、Linux デスクトップ環境を持っている人は GUI から戻せるのだろう。XDG Trash に対応したというだけだが、これで gomi も標準仕様に仲間入りできた。
 
 ちなみに、XDG Trash の実装中に知ったのだが Homebrew の [Core Formula](https://formulae.brew.sh/formula/gomi) に入ることができた。誰かが追加してくれたようだ[^brew]。
 
