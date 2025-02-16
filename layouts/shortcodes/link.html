@@ -80,7 +80,7 @@
             </div>
             <div class="mini-blogcard__content">
                 <div class="mini-blogcard__title">{{- $title -}}</div>
-                <p class="mini-blogcard__description">{{- $description | plainify | safeHTML -}}</p>
+                <div class="mini-blogcard__description {{- if eq $description "No description available" -}}-is-placeholder{{- end -}}">{{- $description | plainify | safeHTML -}}</div>
                 <div class="mini-blogcard__domain">{{- $url | replaceRE "^https?://([^/]+).*" "$1" -}}</div>
             </div>
         </a>
@@ -88,12 +88,13 @@
         <style>
         :root {
             --mini-blogcard-bg: #ffffff;
+            --mini-blogcard-hover-bg: #f8fafc;
             --mini-blogcard-border: #e2e8f0;
             --mini-blogcard-text-primary: #1a202c;
-            --mini-blogcard-text-secondary: #4a5568;
+            --mini-blogcard-text-secondary: #64748b;
+            --mini-blogcard-text-placeholder: #94a3b8;
             --mini-blogcard-text-domain: #718096;
             --mini-blogcard-image-bg: #e2e8f0;
-            --mini-blogcard-hover-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --mini-blogcard-initial-color: #ffffff;
             --mini-blogcard-initial-bg: #e2e8f0;
         }
@@ -101,12 +102,13 @@
         @media (prefers-color-scheme: dark) {
             :root {
                 --mini-blogcard-bg: #24283B;
+                --mini-blogcard-hover-bg: #2a2f44;
                 --mini-blogcard-border: #2D3748;
                 --mini-blogcard-text-primary: rgb(255, 255, 255);
-                --mini-blogcard-text-secondary: rgb(220, 220, 220);
+                --mini-blogcard-text-secondary: rgb(180, 180, 180);
+                --mini-blogcard-text-placeholder: rgb(140, 140, 140);
                 --mini-blogcard-text-domain: rgb(180, 180, 180);
                 --mini-blogcard-image-bg: #22222E;
-                --mini-blogcard-hover-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.06);
                 --mini-blogcard-initial-bg: #4a5568;
             }
         }
@@ -120,14 +122,14 @@
             background: var(--mini-blogcard-bg) !important;
             text-decoration: none !important;
             color: var(--mini-blogcard-text-primary) !important;
-            transition: box-shadow 0.3s ease !important;
+            transition: background-color 0.2s ease !important;
             max-width: 100% !important;
             box-sizing: border-box !important;
             margin-top: 10px;
             margin-bottom: 10px;
         }
         .mini-blogcard:hover {
-            box-shadow: var(--mini-blogcard-hover-shadow) !important;
+            background: var(--mini-blogcard-hover-bg) !important;
         }
         .mini-blogcard__image {
             flex-shrink: 0 !important;
@@ -184,6 +186,15 @@
             -webkit-line-clamp: 2 !important;
             overflow: hidden !important;
             line-height: 1.4 !important;
+        }
+        .mini-blogcard__description-is-placeholder {
+            margin: 0 0 8px 0 !important;
+            padding: 0 !important;
+            font-size: 14px !important;
+            color: var(--mini-blogcard-text-placeholder) !important;
+            display: block !important;
+            line-height: 1.4 !important;
+            font-style: italic !important;
         }
         .mini-blogcard__domain {
             font-size: 12px !important;
