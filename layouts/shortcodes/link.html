@@ -6,40 +6,77 @@
         {{- $title := "" -}}
         {{- $description := "" -}}
         {{- $image := "" -}}
+        {{- $hasValidImage := false -}}
 
-        {{- with $findHead := index (findRE "(?s)<head>.*?</head>" $result.Content) 0 -}}
-            {{- range $meta := findRE "<meta[^>]+>" $findHead -}}
-                {{- $name := replaceRE ".*name=[\"'](.*?)[\"'].*" "$1" $meta -}}
-                {{- $property := replaceRE ".*property=[\"'](.*?)[\"'].*" "$1" $meta -}}
-                {{- $content := replaceRE ".*content=[\"'](.*?)[\"'].*" "$1" $meta -}}
+        {{- /* Debug: Count meta tags */ -}}
+        {{- $allMetaTags := findRE "<meta[^>]+>" $result.Content -}}
+        {{- /* warnf "Found %d meta tags" (len $allMetaTags) */ -}}
 
-                {{- if eq $property "og:title" -}}
-                    {{- $title = $content -}}
-                {{- else if eq $property "og:description" -}}
-                    {{- $description = $content -}}
-                {{- else if eq $property "og:image" -}}
-                    {{- $image = $content -}}
+        {{- range $meta := $allMetaTags -}}
+            {{- /* Extract the content of property/name and content attributes */ -}}
+            {{- $property := "" -}}
+            {{- $content := "" -}}
+
+            {{- /* Try to find property attribute */ -}}
+            {{- with findRE `property=["']([^"']+)["']` $meta -}}
+                {{- $property = replaceRE `property=["']([^"']+)["']` "$1" (index . 0) -}}
+            {{- end -}}
+
+            {{- /* If no property, try name attribute */ -}}
+            {{- if eq $property "" -}}
+                {{- with findRE `name=["']([^"']+)["']` $meta -}}
+                    {{- $property = replaceRE `name=["']([^"']+)["']` "$1" (index . 0) -}}
                 {{- end -}}
+            {{- end -}}
 
-                {{- if and (eq $description "") (eq $name "description") -}}
-                    {{- $description = $content -}}
-                {{- end -}}
+            {{- /* Get content attribute */ -}}
+            {{- with findRE `content=["']([^"']+)["']` $meta -}}
+                {{- $content = replaceRE `content=["']([^"']+)["']` "$1" (index . 0) -}}
+            {{- end -}}
+
+            {{- /* Debug: Print what we found */ -}}
+            {{- /* warnf "Found meta tag - property: '%s', content: '%s'" $property $content */ -}}
+
+            {{- if eq $property "og:title" -}}
+                {{- $title = $content | htmlUnescape -}}
+            {{- else if eq $property "og:description" -}}
+                {{- $description = $content | htmlUnescape -}}
+            {{- else if eq $property "og:image" -}}
+                {{- $image = $content | htmlUnescape -}}
+            {{- else if and (eq $description "") (eq $property "description") -}}
+                {{- $description = $content | htmlUnescape -}}
+            {{- else if and (eq $description "") (eq $property "twitter:description") -}}
+                {{- $description = $content | htmlUnescape -}}
             {{- end -}}
         {{- end -}}
 
+        {{- /* Fallback to title tag if og:title is not found */ -}}
         {{- if eq $title "" -}}
-            {{- with index (findRE "<title>(.*?)</title>" $result.Content) 0 -}}
-                {{- $title = replaceRE "<title>(.*?)</title>" "$1" . -}}
+            {{- with index (findRE "<title>([^<]+)</title>" $result.Content) 0 -}}
+                {{- $title = replaceRE "<title>([^<]+)</title>" "$1" . | htmlUnescape -}}
             {{- end -}}
         {{- end -}}
 
-        {{- if eq $image "" -}}
-            {{- $image = $.Site.Params.defaultNoimage -}}
+        {{- /* Fallback to empty description if none found */ -}}
+        {{- if eq $description "" -}}
+            {{- $description = "No description available" -}}
+        {{- end -}}
+
+        {{- if ne $image "" -}}
+            {{- with resources.GetRemote $image -}}
+                {{- if not .Err -}}
+                    {{- $hasValidImage = true -}}
+                {{- end -}}
+            {{- end -}}
         {{- end -}}
 
         <a href="{{- $url -}}" class="mini-blogcard" target="_blank" rel="noopener noreferrer">
             <div class="mini-blogcard__image">
+            {{- if $hasValidImage -}}
                 <img src="{{- $image -}}" alt="Thumbnail" loading="lazy">
+            {{- else -}}
+                <div class="mini-blogcard__initial">{{- substr $title 0 1 -}}</div>
+            {{- end -}}
             </div>
             <div class="mini-blogcard__content">
                 <div class="mini-blogcard__title">{{- $title -}}</div>
@@ -57,17 +94,20 @@
             --mini-blogcard-text-domain: #718096;
             --mini-blogcard-image-bg: #e2e8f0;
             --mini-blogcard-hover-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --mini-blogcard-initial-color: #ffffff;
+            --mini-blogcard-initial-bg: #e2e8f0;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --mini-blogcard-bg: #24283B; /* #2C2C3E, #2D3748, #273244, #1E2633 */
+                --mini-blogcard-bg: #24283B;
                 --mini-blogcard-border: #2D3748;
                 --mini-blogcard-text-primary: rgb(255, 255, 255);
                 --mini-blogcard-text-secondary: rgb(220, 220, 220);
                 --mini-blogcard-text-domain: rgb(180, 180, 180);
                 --mini-blogcard-image-bg: #22222E;
                 --mini-blogcard-hover-shadow: 0 4px 6px -1px rgba(255, 255, 255, 0.1), 0 2px 4px -1px rgba(255, 255, 255, 0.06);
+                --mini-blogcard-initial-bg: #4a5568;
             }
         }
 
@@ -97,6 +137,9 @@
             border-radius: 6px !important;
             background: var(--mini-blogcard-image-bg) !important;
             margin-right: 16px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
         }
         .mini-blogcard__image img {
             width: 100% !important;
@@ -104,6 +147,18 @@
             object-fit: cover !important;
             margin: 0 !important;
             padding: 0 !important;
+        }
+        .mini-blogcard__initial {
+            font-size: 32px !important;
+            font-weight: bold !important;
+            color: var(--mini-blogcard-initial-color) !important;
+            background-color: var(--mini-blogcard-initial-bg) !important;
+            width: 100% !important;
+            height: 100% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-transform: uppercase !important;
         }
         .mini-blogcard__content {
             flex-grow: 1 !important;
