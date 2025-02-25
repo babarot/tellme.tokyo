@@ -12,3 +12,19 @@
   margin-block: 1em;
   margin-inline: 0;
 }
+
+.mini-carousel {
+  --mini-primary-color: #0366d6; /* mini テーマのプライマリカラーに合わせる */
+  --mini-border-radius: 4px; /* mini テーマの角丸に合わせる */
+
+  border-radius: var(--mini-border-radius);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.mini-carousel-indicator.active {
+  background-color: var(--mini-primary-color);
+}
+
+.mini-carousel-control:hover {
+  background-color: var(--mini-primary-color);
+}

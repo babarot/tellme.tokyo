@@ -1,0 +1,390 @@
+{{- /*
+  カルーセルショートコード for miniテーマ (Blowfish参考実装)
+  使用方法: {{< carousel images="画像1.jpg,画像2.jpg,画像3.jpg" >}}
+  パラメータ:
+    - images: カンマ区切りの画像パス
+    - ratio: アスペクト比 (デフォルト: 16x9)
+    - interval: スライド切り替え間隔（ミリ秒）(デフォルト: 3000)
+    - autoplay: 自動再生するかどうか (デフォルト: true)
+*/ -}}
+
+{{- $images := .Get "images" | default "" -}}
+{{- $ratio := .Get "ratio" | default "16x9" -}}
+{{- $interval := .Get "interval" | default 3000 -}}
+{{- $autoplay := .Get "autoplay" | default true -}}
+{{- $id := printf "carousel-%d" now.UnixNano -}}
+
+{{- if $images -}}
+  {{- $imageList := split $images "," -}}
+  <div class="carousel-container" id="{{ $id }}" data-interval="{{ $interval }}" data-autoplay="{{ $autoplay }}">
+    <div class="carousel-wrapper ratio ratio-{{ $ratio }}">
+      <div class="carousel-slides">
+        {{- range $index, $image := $imageList -}}
+          <div class="carousel-slide{{ if eq $index 0 }} active{{ end }}">
+            <figure>
+              <img src="{{ $image | strings.TrimSpace }}" alt="スライド {{ add $index 1 }}" loading="lazy" />
+            </figure>
+          </div>
+        {{- end -}}
+      </div>
+
+      <div class="carousel-controls">
+        <button class="carousel-control-prev" aria-label="前のスライド">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="carousel-control-next" aria-label="次のスライド">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      </div>
+
+      <div class="carousel-indicators">
+        {{- range $index, $image := $imageList -}}
+          <button class="carousel-indicator{{ if eq $index 0 }} active{{ end }}" data-slide-to="{{ $index }}" aria-label="スライド {{ add $index 1 }}"></button>
+        {{- end -}}
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* カルーセルの基本スタイル */
+    .carousel-container {
+      margin: 2rem 0;
+      width: 100%;
+    }
+
+    /* アスペクト比の管理 */
+    .carousel-wrapper {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* アスペクト比クラス */
+    .ratio {
+      position: relative;
+      width: 100%;
+    }
+
+    .ratio::before {
+      content: "";
+      display: block;
+      width: 100%;
+    }
+
+    .ratio-16x9::before {
+      padding-top: 56.25%; /* 9/16 = 0.5625 */
+    }
+
+    .ratio-4x3::before {
+      padding-top: 75%; /* 3/4 = 0.75 */
+    }
+
+    .ratio-1x1::before {
+      padding-top: 100%; /* 1/1 = 1 */
+    }
+
+    .ratio-3x2::before {
+      padding-top: 66.67%; /* 2/3 = 0.6667 */
+    }
+
+    /* スライドの管理 */
+    .carousel-slides {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      z-index: 1;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    .carousel-slide figure {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .carousel-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* コントロールの管理 */
+    .carousel-controls {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border: none;
+      background-color: transparent;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: all;
+      opacity: 0.5;
+      transition: opacity 0.3s ease;
+    }
+
+    .carousel-control-prev:hover,
+    .carousel-control-next:hover {
+      opacity: 0.8;
+    }
+
+    .carousel-control-prev {
+      left: 1rem;
+    }
+
+    .carousel-control-next {
+      right: 1rem;
+    }
+
+    .carousel-control-prev svg,
+    .carousel-control-next svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 1.5;
+    }
+
+    /* インジケータの管理 */
+    .carousel-indicators {
+      position: absolute;
+      bottom: 1rem;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      z-index: 10;
+    }
+
+    .carousel-indicator {
+      width: 2rem;
+      height: 0.1rem;
+      background-color: rgba(255, 255, 255, 0.5);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+      transition: background-color 0.3s ease;
+    }
+
+    .carousel-indicator.active,
+    .carousel-indicator:hover {
+      background-color: rgba(255, 255, 255, 1);
+    }
+
+    /* アニメーション用クラス */
+    .carousel-slide.slide-left-enter {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+
+    .carousel-slide.slide-left-exit {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+
+    .carousel-slide.slide-right-enter {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+
+    .carousel-slide.slide-right-exit {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+
+    /* レスポンシブ対応 */
+    @media (max-width: 768px) {
+      .carousel-control-prev,
+      .carousel-control-next {
+        width: 32px;
+        height: 32px;
+      }
+
+      .carousel-control-prev svg,
+      .carousel-control-next svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .carousel-indicator {
+        width: 1.5rem;
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const carousel = document.getElementById('{{ $id }}');
+      if (!carousel) return;
+
+      const slides = carousel.querySelectorAll('.carousel-slide');
+      const indicators = carousel.querySelectorAll('.carousel-indicator');
+      const prevButton = carousel.querySelector('.carousel-control-prev');
+      const nextButton = carousel.querySelector('.carousel-control-next');
+
+      let currentIndex = 0;
+      let interval = parseInt(carousel.dataset.interval, 10) || 3000;
+      const autoplay = carousel.dataset.autoplay === 'true';
+      let timer = null;
+
+      // スライドを表示する関数
+      function showSlide(index, direction = 'next') {
+        // 同じスライドの場合は何もしない
+        if (index === currentIndex) return;
+
+        // 現在のスライドから active クラスを削除
+        slides[currentIndex].classList.remove('active');
+        indicators[currentIndex].classList.remove('active');
+
+        // アニメーション用クラスを追加
+        if (direction === 'next') {
+          slides[currentIndex].classList.add('slide-left-exit');
+          slides[index].classList.add('slide-left-enter');
+        } else {
+          slides[currentIndex].classList.add('slide-right-exit');
+          slides[index].classList.add('slide-right-enter');
+        }
+
+        // 少し遅延させてからアニメーション用クラスを削除し、active クラスを追加
+        setTimeout(() => {
+          slides[index].classList.add('active');
+          indicators[index].classList.add('active');
+
+          slides[currentIndex].classList.remove('slide-left-exit', 'slide-right-exit');
+          slides[index].classList.remove('slide-left-enter', 'slide-right-enter');
+
+          currentIndex = index;
+        }, 50);
+      }
+
+      // 次のスライドを表示
+      function nextSlide() {
+        const newIndex = (currentIndex + 1) % slides.length;
+        showSlide(newIndex, 'next');
+      }
+
+      // 前のスライドを表示
+      function prevSlide() {
+        const newIndex = (currentIndex - 1 + slides.length) % slides.length;
+        showSlide(newIndex, 'prev');
+      }
+
+      // 自動再生を開始
+      function startAutoplay() {
+        if (autoplay && slides.length > 1) {
+          stopAutoplay();
+          timer = setInterval(nextSlide, interval);
+        }
+      }
+
+      // 自動再生を停止
+      function stopAutoplay() {
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
+      }
+
+      // イベントリスナーを設定
+      if (prevButton) {
+        prevButton.addEventListener('click', () => {
+          prevSlide();
+          stopAutoplay();
+          startAutoplay();
+        });
+      }
+
+      if (nextButton) {
+        nextButton.addEventListener('click', () => {
+          nextSlide();
+          stopAutoplay();
+          startAutoplay();
+        });
+      }
+
+      indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+          const direction = index > currentIndex ? 'next' : 'prev';
+          showSlide(index, direction);
+          stopAutoplay();
+          startAutoplay();
+        });
+      });
+
+      carousel.addEventListener('mouseenter', stopAutoplay);
+      carousel.addEventListener('mouseleave', startAutoplay);
+
+      // タッチスワイプ対応
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      carousel.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      carousel.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      }, { passive: true });
+
+      function handleSwipe() {
+        const swipeThreshold = 50;
+        if (touchEndX < touchStartX - swipeThreshold) {
+          // 左スワイプ (次へ)
+          nextSlide();
+          stopAutoplay();
+          startAutoplay();
+        }
+
+        if (touchEndX > touchStartX + swipeThreshold) {
+          // 右スワイプ (前へ)
+          prevSlide();
+          stopAutoplay();
+          startAutoplay();
+        }
+      }
+
+      // 自動再生を開始
+      startAutoplay();
+    });
+  </script>
+{{- else -}}
+  <div class="alert alert-warning">
+    カルーセルを表示するには少なくとも1つの画像を指定してください。
+  </div>
+{{- end -}}

@@ -122,18 +122,12 @@ SLOやオーナーシップあたりが主にコミットしたポイントだ�
 
 ## 車
 
-{{< gallery
-  match="images/car/z*"
-  sortOrder="desc"
-  rowHeight="150"
-  margins="5"
-  thumbnailResizeOptions="600x600 q90 Lanczos"
-  thumbnailHoverEffect="enlarge"
-  showExif=false
-  previewType="none"
-  lastRow="justify"
-  embedPreview=true
-  loadJQuery=true
+{{< carousel 
+    images="images/car/z3.jpg,images/car/z4.jpg,images/car/_z1.jpg,images/car/_z2.jpg" 
+    height="25rem" 
+    interval="7000" 
+    aspectRatio="16/9" 
+    autoplay="true" 
 >}}
 
 納車して1年たった。初のFR、初のMT、初のスポーツカーだったが今ではすっかり板についてきた気がする。ODOメーターは18,000kmになった。北は北海道、南(西)は名古屋まで行った。東北道680kmを走破するのは大変だったが逆にもうどこへでも行けるぞという自信にもなった。マニュアル車は面倒ではないかとよく聞かれるが1年乗ってみて全然大変ではなかった。運転そのもの自体が苦でない人間であればATもMTもそんなに変わらないと思う。それよりもFRによる走りの違いを感じることがあるのでそういう意味で気にすることは多々あった。
@@ -176,6 +170,7 @@ SLOやオーナーシップあたりが主にコミットしたポイントだ�
   embedPreview=true
   loadJQuery=true
 >}}
+
 
 ## 服
 
