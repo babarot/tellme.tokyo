@@ -105,7 +105,7 @@
       width: 100%;
       height: 100%;
       opacity: 0;
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition: opacity 0.3s ease, transform 0.3s ease;
       z-index: 1;
     }
 
@@ -154,13 +154,13 @@
       align-items: center;
       justify-content: center;
       pointer-events: all;
-      opacity: 0.5;
-      transition: opacity 0.3s ease;
+      opacity: 0.7;
+      transition: opacity 0.3s ease, background-color 0.3s ease;
     }
 
     .carousel-control-prev:hover,
     .carousel-control-next:hover {
-      opacity: 0.8;
+      opacity: 1;
     }
 
     .carousel-control-prev {
@@ -175,7 +175,7 @@
     .carousel-control-next svg {
       width: 20px;
       height: 20px;
-      stroke-width: 1.5;
+      stroke-width: 2;
     }
 
     /* インジケータの管理 */
@@ -192,7 +192,7 @@
 
     .carousel-indicator {
       width: 2rem;
-      height: 0.1rem;
+      height: 0.15rem;
       background-color: rgba(255, 255, 255, 0.5);
       border: none;
       cursor: pointer;
@@ -231,18 +231,52 @@
     @media (max-width: 768px) {
       .carousel-control-prev,
       .carousel-control-next {
-        width: 32px;
-        height: 32px;
+        width: 44px;
+        height: 44px;
+        opacity: 0.9;
       }
 
       .carousel-control-prev svg,
       .carousel-control-next svg {
-        width: 18px;
-        height: 18px;
+        width: 24px;
+        height: 24px;
+        stroke-width: 2.5;
+      }
+
+      .carousel-control-prev {
+        left: 0.5rem;
+      }
+
+      .carousel-control-next {
+        right: 0.5rem;
       }
 
       .carousel-indicator {
         width: 1.5rem;
+      }
+    }
+
+    /* 小さい画面用の追加調整 */
+    @media (max-width: 480px) {
+      .carousel-control-prev,
+      .carousel-control-next {
+        width: 48px;
+        height: 48px;
+        opacity: 1;
+      }
+
+      .carousel-control-prev svg,
+      .carousel-control-next svg {
+        width: 28px;
+        height: 28px;
+      }
+
+      .carousel-control-prev {
+        left: 0.3rem;
+      }
+
+      .carousel-control-next {
+        right: 0.3rem;
       }
     }
   </style>
@@ -261,11 +295,14 @@
       let interval = parseInt(carousel.dataset.interval, 10) || 3000;
       const autoplay = carousel.dataset.autoplay === 'true';
       let timer = null;
+      let isAnimating = false; // アニメーション中フラグを追加
 
       // スライドを表示する関数
       function showSlide(index, direction = 'next') {
-        // 同じスライドの場合は何もしない
-        if (index === currentIndex) return;
+        // アニメーション中または同じスライドの場合は何もしない
+        if (isAnimating || index === currentIndex) return;
+
+        isAnimating = true;
 
         // 現在のスライドから active クラスを削除
         slides[currentIndex].classList.remove('active');
@@ -289,7 +326,8 @@
           slides[index].classList.remove('slide-left-enter', 'slide-right-enter');
 
           currentIndex = index;
-        }, 50);
+          isAnimating = false; // アニメーション完了
+        }, 100); // トランジション時間と同じ
       }
 
       // 次のスライドを表示
@@ -355,11 +393,13 @@
 
       carousel.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].screenX;
+        stopAutoplay();
       }, { passive: true });
 
       carousel.addEventListener('touchend', (e) => {
         touchEndX = e.changedTouches[0].screenX;
         handleSwipe();
+        startAutoplay();
       }, { passive: true });
 
       function handleSwipe() {
@@ -367,15 +407,11 @@
         if (touchEndX < touchStartX - swipeThreshold) {
           // 左スワイプ (次へ)
           nextSlide();
-          stopAutoplay();
-          startAutoplay();
         }
 
         if (touchEndX > touchStartX + swipeThreshold) {
           // 右スワイプ (前へ)
           prevSlide();
-          stopAutoplay();
-          startAutoplay();
         }
       }
 
