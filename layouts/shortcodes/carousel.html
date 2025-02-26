@@ -6,12 +6,14 @@
     - ratio: アスペクト比 (デフォルト: 16x9)
     - interval: スライド切り替え間隔（ミリ秒）(デフォルト: 3000)
     - autoplay: 自動再生するかどうか (デフォルト: true)
+    - indicator: インジケーターのスタイル (デフォルト: bar, 選択肢: bar/dot)
 */ -}}
 
 {{- $images := .Get "images" | default "" -}}
 {{- $ratio := .Get "ratio" | default "16x9" -}}
 {{- $interval := .Get "interval" | default 3000 -}}
 {{- $autoplay := .Get "autoplay" | default true -}}
+{{- $indicator := .Get "indicator" | default "bar" -}}
 {{- $id := printf "carousel-%d" now.UnixNano -}}
 
 {{- if $images -}}
@@ -37,7 +39,7 @@
         </button>
       </div>
 
-      <div class="carousel-indicators">
+      <div class="carousel-indicators {{ $indicator }}-indicator">
         {{- range $index, $image := $imageList -}}
           <button class="carousel-indicator{{ if eq $index 0 }} active{{ end }}" data-slide-to="{{ $index }}" aria-label="スライド {{ add $index 1 }}"></button>
         {{- end -}}
@@ -190,11 +192,25 @@
       z-index: 10;
     }
 
-    .carousel-indicator {
+    /* バータイプのインジケーター */
+    .bar-indicator .carousel-indicator {
       width: 2rem;
       height: 0.15rem;
       background-color: rgba(255, 255, 255, 0.5);
       border: none;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+      transition: background-color 0.3s ease;
+    }
+
+    /* ドットタイプのインジケーター */
+    .dot-indicator .carousel-indicator {
+      width: 0.3rem;
+      height: 0.3rem;
+      background-color: rgba(255, 255, 255, 0.5);
+      border: none;
+      border-radius: 50%;
       cursor: pointer;
       padding: 0;
       margin: 0;
@@ -251,8 +267,13 @@
         right: 0.5rem;
       }
 
-      .carousel-indicator {
+      .bar-indicator .carousel-indicator {
         width: 1.5rem;
+      }
+
+      .dot-indicator .carousel-indicator {
+        width: 0.25rem;
+        height: 0.25rem;
       }
     }
 
@@ -277,6 +298,11 @@
 
       .carousel-control-next {
         right: 0.3rem;
+      }
+
+      .dot-indicator .carousel-indicator {
+        width: 0.25rem;
+        height: 0.25rem;
       }
     }
   </style>
