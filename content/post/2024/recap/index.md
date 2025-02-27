@@ -122,7 +122,6 @@ SLOやオーナーシップあたりが主にコミットしたポイントだ�
 
 ## 車
 
-
 {{< carousel 
     images="images/car/z3.jpg,images/car/z4.jpg,images/car/_z1.jpg,images/car/_z2.jpg" 
     height="25rem" 
