@@ -17,7 +17,7 @@ Obsidian でノートを書いているとき、画像の管理が地味に面�
 
 これを実現するうえで最大の制約は NAS を直接インターネットに晒したくないということだった。ポートフォワーディングで外からアクセスさせたくないし、自宅の IP を公開したくないし、DDoS を受けたら NAS ごと死ぬ。Tailscale で VPN は張っているが、これはあくまで自分用であってブログに貼った画像を誰でも見れるようにするには使えない。パブリックにアクセスできる URL が必要だ。
 
-そこで [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/) を使うことにした。NAS 側から Cloudflare に向けてトンネルを掘ると、外からのリクエストはすべて Cloudflare を経由するようになる。NAS の IP は隠蔽されるし、DDoS は Cloudflare が吸収するし、ポート開放は一切不要。NAS が自分から外に手を伸ばしてトンネルを維持する構成なのでルーターの設定を触る必要もない。ドメインは `babarot.dev` を Cloudflare Registrar で新規取得した。既存の `babarot.me`（GitHub Pages）のネームサーバーを移す手もあったが既存環境を触りたくなかったので新しく取り直した。
+そこで [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/) を使うことにした。NAS 側から Cloudflare に向けてトンネルを掘ると、外からのリクエストはすべて Cloudflare を経由するようになる。NAS の IP は隠蔽されるし、DDoS は Cloudflare が吸収するし、ポート開放は一切不要。NAS が自分から外に手を伸ばしてトンネルを維持する構成なのでルーターの設定を触る必要もない。
 
 NAS 上には Go で書いた API サーバーを Docker で動かしていて、cloudflared と同じ compose にまとめている。
 
