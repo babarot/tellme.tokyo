@@ -83,11 +83,16 @@ Obsidian 側では画像を貼り付けたときに自動でアップロード�
 | Upload Body | `{"file": "$FILE"}` |
 | Image Url Path | `url` |
 
-これで Obsidian 上でスクリーンショットを Cmd+V で貼り付けると、Image Uploader が画像をインターセプトして API にアップロードし、返ってきた URL を `![](https://assets.babarot.dev/files/2026/02/...)` として Markdown に挿入してくれる。めちゃくちゃ快適。curl からも普通に使える。
+これで Obsidian 上でスクリーンショットを Cmd+V で貼り付けると、Image Uploader が画像をインターセプトして API にアップロードし、返ってきた URL を `![](https://assets.babarot.dev/files/2026/02/...)` として Markdown に挿入してくれる。めちゃくちゃ快適。
+
+![](https://assets.babarot.dev/files/2026/02/67fdd0e4f74a2f52.png)
+
+curl からも普通に使える。そのため既存のメディアファイルたちをまとめて NAS に移行するのもスクリプトを書けば簡単に出来そうなのも良い。
 
 ```bash
 $ curl -X POST -H "X-API-Key: $KEY" -F "file=@screenshot.jpg" \
   https://assets.babarot.dev/api/upload
+
 
 {"filename":"2df20bfac0b76347.jpg",
  "path":"2026/02/2df20bfac0b76347.jpg",
@@ -95,7 +100,6 @@ $ curl -X POST -H "X-API-Key: $KEY" -F "file=@screenshot.jpg" \
  "url":"https://assets.babarot.dev/files/2026/02/2df20bfac0b76347.jpg"}
 ```
 
-![](https://assets.babarot.dev/files/2026/02/67fdd0e4f74a2f52.png)
 
 ## おわりに
 
