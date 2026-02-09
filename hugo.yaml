@@ -1,5 +1,6 @@
 title: tellme.tokyo
 baseurl: https://tellme.tokyo
+relativeURLs: true
 languageCode: ja-jp
 copyright: BABAROT All Right Reserved.
 services:
