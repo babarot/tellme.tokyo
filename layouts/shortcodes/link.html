@@ -1,8 +1,9 @@
 {{- $url := (.Get 0) -}}
-{{- with $result := resources.GetRemote $url -}}
-    {{- with $result.Err -}}
-        {{- warnf "Error fetching URL: %s" . -}}{{- . -}}
-    {{- else -}}
+{{- $tryResult := try (resources.GetRemote $url) -}}
+{{- with $tryResult.Err -}}
+    {{- warnf "Error fetching URL: %s" . -}}{{- . -}}
+{{- else -}}
+    {{- $result := $tryResult.Value -}}
         {{- $title := "" -}}
         {{- $description := "" -}}
         {{- $image := "" -}}
@@ -63,10 +64,9 @@
         {{- end -}}
 
         {{- if ne $image "" -}}
-            {{- with resources.GetRemote $image -}}
-                {{- if not .Err -}}
-                    {{- $hasValidImage = true -}}
-                {{- end -}}
+            {{- $imgResult := try (resources.GetRemote $image) -}}
+            {{- if and (not $imgResult.Err) $imgResult.Value -}}
+                {{- $hasValidImage = true -}}
             {{- end -}}
         {{- end -}}
 
@@ -201,5 +201,4 @@
             color: var(--mini-blogcard-text-domain) !important;
         }
         </style>
-    {{- end -}}
 {{- end -}}
