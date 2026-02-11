@@ -1,13 +1,10 @@
 ---
 title: "ログのタイムスタンプで UNIX 時間なのはツライって話"
-date: 2016-12-06T21:12:26+09:00
+date: "2016-12-06T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: b4b4r07
-oldlink: "https://b4b4r07.hatenadiary.com/entry/2016/12/06/211226"
-tags:
-- go
+toc: false
 ---
 
 ## tl;dr

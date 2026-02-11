@@ -1,14 +1,10 @@
 ---
 title: "zsh のプラグインマネージャ"
-date: 2015-11-24T14:21:43+09:00
+date: "2015-11-24T00:00:00+09:00"
 description: ""
 categories: []
 draft: false
-author: b4b4r07
-oldlink: "https://b4b4r07.hatenadiary.com/entry/2015/11/24/142143"
-tags:
-- zsh
-- zplug
+toc: false
 ---
 
 [antigen](https://github.com/zsh-usrs/antigen) ですよね、やっぱり。最近は antigen の軽量バージョンである [zgen](https://github.com/tarjoilija/zgen) もアツいようです。

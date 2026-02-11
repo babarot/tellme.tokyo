@@ -1,14 +1,10 @@
 ---
-title: 'ブログを GKE #k8s に移した'
-date: 2017-08-03T01:52:38+09:00
+title: "ブログを GKE"
+date: "2017-08-03T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: b4b4r07
-oldlink: "https://b4b4r07.hatenadiary.com/entry/2017/08/03/015238"
-tags:
-- GKE
-- blog
+toc: false
 ---
 
 このはてなブログで使っていたドメインを続用するため、移行後も [tellme.tokyo](https://tellme.tokyo) です。

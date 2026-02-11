@@ -1,13 +1,10 @@
 ---
 title: "今年つくったものリスト 2015"
-date: 2015-12-31T00:53:00+09:00
+date: "2015-12-31T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: b4b4r07
-oldlink: "https://b4b4r07.hatenadiary.com/entry/2015/12/31/005300"
-tags:
-- oss
+toc: false
 ---
 
 {{< img src="20151231005245.png" width="600" >}}

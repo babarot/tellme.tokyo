@@ -1,14 +1,10 @@
 ---
 title: "最近の zplug の変更について"
-date: 2015-12-21T12:27:01+09:00
+date: "2015-12-21T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: b4b4r07
-oldlink: "https://b4b4r07.hatenadiary.com/entry/2015/12/21/122701"
-tags:
-- zsh
-- zplug
+toc: false
 ---
 
 zplug 公開から今日で1ヶ月。いくつかの機能を追加した

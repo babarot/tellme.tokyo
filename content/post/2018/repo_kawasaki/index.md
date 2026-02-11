@@ -1,13 +1,10 @@
 ---
 title: "『ルポ川崎』を読んだ"
-date: "2018-05-29T12:18:56+09:00"
+date: "2018-05-29T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: "b4b4r07"
-oldlink: ""
-tags: ["book"]
-
+toc: false
 ---
 
 {{< img src="book.jpg" width="300" >}}

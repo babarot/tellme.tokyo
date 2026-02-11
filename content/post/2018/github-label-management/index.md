@@ -1,15 +1,10 @@
 ---
 title: "GitHub のラベルを宣言的に管理する"
-date: "2018-11-19T20:08:07+09:00"
+date: "2018-11-19T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: b4b4r07
-oldlink: ""
-tags:
-- github
-- go
-- yaml
+toc: false
 ---
 
 ## ソフトウェアの宣言的設定について

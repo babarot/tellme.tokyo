@@ -1,15 +1,10 @@
 ---
 title: "Bind Address で少しハマった話"
-date: "2018-08-16T00:55:17+09:00"
-description: "特定条件を満たして hugo server しローカルからアクセスする必要がありその際に bind address でハマった"
+date: "2018-08-16T00:00:00+09:00"
+description: ""
 categories: []
 draft: true
-author: b4b4r07
-oldlink: ""
-tags:
-- hugo
-- bind-address
-- network
+toc: false
 ---
 
 以下の要件を満たして `hugo server` を立ち上げたいという要求がありテンポラリで対応することになった。

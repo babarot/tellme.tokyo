@@ -4,10 +4,7 @@ date: "2016-09-25T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: "b4b4r07"
-oldlink: "http://b4b4r07.hatenadiary.com/entry/2016/09/25/213810"
-tags: ["cli", "shell", "http"]
-
+toc: false
 ---
 
 おそらく先行実装は python で書かれたこれです。

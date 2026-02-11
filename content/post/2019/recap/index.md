@@ -1,15 +1,10 @@
 ---
-title: 2019年振り返り
-date: "2019-12-31T23:59:04+09:00"
+title: "2019年振り返り"
+date: "2019-12-31T00:00:00+09:00"
 description: ""
 categories: []
 draft: false
-author: b4b4r07
-oldlink: ""
-tags:
-- review
-aliases:
-- /post/2019/12/31/2019-review/
+toc: false
 ---
 
 ## 仕事

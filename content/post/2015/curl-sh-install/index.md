@@ -1,13 +1,10 @@
 ---
 title: "dotfiles を curl -L dot.hoge.com | sh でインストールする方法"
-date: "2015-01-18T00:39:49+09:00"
+date: "2015-01-18T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: "b4b4r07"
-oldlink: "http://b4b4r07.hatenadiary.com/entry/2015/01/18/235212"
-tags: ["shell", "dotfiles"]
-
+toc: false
 ---
 
 dotfiles をインストールする際に、

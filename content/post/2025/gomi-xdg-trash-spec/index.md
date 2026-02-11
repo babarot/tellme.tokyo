@@ -1,14 +1,9 @@
 ---
-title: gomi を XDG Trash 仕様に対応させた
-date: "2025-02-16T20:09:06+09:00"
+title: "gomi を XDG Trash 仕様に対応させた"
+date: "2025-02-16T00:00:00+09:00"
 description: ""
 categories: []
 draft: false
-author: ""
-oldlink: ""
-image: ""
-tags: []
-aliases: []
 toc: false
 ---
 

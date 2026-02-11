@@ -1,15 +1,10 @@
 ---
 title: "私の fzf 活用事例"
-date: 2015-11-08T01:35:26+09:00
+date: "2015-11-08T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: b4b4r07
-oldlink: "https://b4b4r07.hatenadiary.com/entry/2015/11/08/013526"
-tags:
-- shellscript
-- zsh
-- fzf
+toc: false
 ---
 
 [peco](https://github.com/peco/peco)、使ってますか。この記事を見ている人なら peco 知っていると思います。[fzf](https://github.com/junegunn/fzf) は、peco と同じようなツールでこちらも同じく Go 言語で書かれています。

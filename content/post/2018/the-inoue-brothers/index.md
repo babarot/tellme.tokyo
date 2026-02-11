@@ -1,14 +1,10 @@
 ---
 title: "『僕たちはファッションの力で世界を変える』を読んだ"
-date: "2018-11-08T22:37:54+09:00"
+date: "2018-11-08T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: b4b4r07
-oldlink: ""
-tags:
-- fashion
-- book
+toc: false
 ---
 
 <img src="book.jpg" width="400">

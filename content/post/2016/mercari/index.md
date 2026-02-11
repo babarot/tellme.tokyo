@@ -4,11 +4,7 @@ date: "2016-10-01T00:00:00+09:00"
 description: ""
 categories: []
 draft: false
-author: "b4b4r07"
-oldlink: "http://b4b4r07.hatenadiary.com/entry/2016/10/01/191546"
-tags: ["mercari"]
-aliases:
-- /post/2016/10/01/191546/
+toc: false
 ---
 
 今年の4/1に新卒として[株式会社メルカリ](https://www.mercari.com/jp/about/corporate/)に入社した。

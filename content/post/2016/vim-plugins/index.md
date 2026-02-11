@@ -4,10 +4,7 @@ date: "2016-12-05T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: "b4b4r07"
-oldlink: "http://b4b4r07.hatenadiary.com/entry/2016/12/05/021806"
-tags: ["vim"]
-
+toc: false
 ---
 
 この記事は [Vim Advent Calendar 2016](http://qiita.com/advent-calendar/2016/vim) の 5 日目の記事です。

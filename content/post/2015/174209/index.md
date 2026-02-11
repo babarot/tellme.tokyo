@@ -1,14 +1,10 @@
 ---
 title: "zplug を使った zsh プラグイン管理術"
-date: 2015-12-13T17:42:09+09:00
+date: "2015-12-13T00:00:00+09:00"
 description: ""
 categories: []
 draft: false
-author: b4b4r07
-oldlink: "https://b4b4r07.hatenadiary.com/entry/2015/12/13/174209"
-tags:
-- zsh
-- zplug
+toc: false
 ---
 
 zplug とは zsh のプラグインマネージャ。
