@@ -1,40 +1,27 @@
 ---
-title: "GitHub PagesからCloudflare Pagesに移行した"
+title: "Obsidianからブログを更新できるようにした"
 date: "2026-02-09T00:00:00+09:00"
 description: ""
 categories: []
 draft: false
 toc: false
 ---
+## GitHub PagesからCloudflare Pagesに移行した
 
-このブログのホスティングをGitHub PagesからCloudflare Pagesに移行した。主な目的はPRプレビュー機能の実現だが、移行の過程でいくつかハマりどころがあったのでまとめる。
+このブログのホスティングをGitHub PagesからCloudflare Pagesに移行した。
 
-## モチベーション
+ブログを書くときの理想は「どこでも書けて、すぐ確認できる」ことだと思う。以前はMacでVimを開いて記事を書き、`hugo server`でプレビューして、pushしてデプロイする流れだった。執筆環境をObsidianに移してからは出先でも書けるようになったが、プレビューだけはローカルでHugoを動かす必要があり、結局Macの前に座らないと記事を仕上げられなかった。
 
-このブログはHugoで生成し、GitHub Pagesでホスティングしていた。記事の執筆にはObsidianを使っており、Obsidianで書いた記事をGitHub Actions経由でHugoリポジトリに同期する仕組みを構築した。
-
-この同期ワークフローではPRを介して記事を反映するのだが、GitHub PagesにはPRプレビュー機能がない。記事の見た目を確認するにはローカルで`hugo server`を立ち上げる必要があった。Cloudflare PagesにはPRごとにプレビューURLが自動生成される機能があり、これを使えばPRを作成するだけでブログの見た目を確認できる。
-
-## WorkerとPagesの違い
-
-Cloudflareには「Worker」と「Pages」という2つのデプロイ方式がある。最初に誤ってWorkerとしてプロジェクトを作成してしまった。
-
-| | Worker | Pages |
-|---|---|---|
-| PRプレビュー | なし | 自動 (PRにコメントでURL通知) |
-| デプロイ方式 | `wrangler deploy` (手動設定が多い) | Git pushで自動 |
-| ブランチデプロイ | mainのみ | 全ブランチ対応 |
-
-Workerはエッジで動くサーバーレス関数のランタイムであり、静的サイトのホスティングには向いていない。デプロイコマンドに`--assets`や`--compatibility-date`といったフラグを手動で設定する必要があり、何よりPRプレビュー機能がない。Workerを削除してPagesとして作り直した。
+Cloudflare Pagesに移行した最大の理由は、PRプレビュー機能にある。PRを作るだけでプレビューURLが自動生成されるので、Obsidianで書いてpush[^push]すればブラウザ上で見た目を確認できる。ローカル環境は不要になり、書いてから公開するまでの一連の作業がモバイルだけで完結するようになった。
 
 ## Pagesのビルド設定
 
-| 項目 | 値 |
-|---|---|
-| フレームワーク | Hugo |
-| ビルドコマンド | `hugo --gc --minify` |
-| ビルド出力ディレクトリ | `docs` |
-| 環境変数 | `HUGO_VERSION` = `0.152.2` |
+| 項目          | 値                          |
+| ----------- | -------------------------- |
+| フレームワーク     | Hugo                       |
+| ビルドコマンド     | `hugo --gc --minify`       |
+| ビルド出力ディレクトリ | `docs`                     |
+| 環境変数        | `HUGO_VERSION` = `0.152.2` |
 
 Cloudflare PagesはHugoのフレームワークプリセットを持っており、環境変数`HUGO_VERSION`を指定すれば対応するバージョンのHugoを自動でダウンロードしてくれる。
 
@@ -47,11 +34,11 @@ Cloudflare PagesはHugoのフレームワークプリセットを持っており
 1. Cloudflareに`tellme.tokyo`ゾーンを追加
 2. ムームードメインで「弊社サービス以外のネームサーバ」を選択
 3. Cloudflareが提示するネームサーバーを設定
+4. Pagesでカスタムドメインを設定し、`tellme.tokyo`を`tellme-tokyo.pages.dev`に向けるCNAMEを追加する
 
-注意点として、`.tokyo` TLDはネームサーバー変更の反映に時間がかかる。自分の場合は6時間以上かかった。また、Workerを削除してPagesを作り直した際にCloudflare側のゾーンが再作成され、ネームサーバーが変わった。ムームードメイン側のネームサーバー設定もやり直す必要があり、さらに反映待ちの時間が発生した。
 
-ネームサーバー変更中は旧DNSが無効になり新DNSがまだ反映されていない期間が生じるため、サイトにダウンタイムが発生する。事前にTTLを短くしておくなどの対策を取るべきだった。
 
+<!--
 ## プレビュー環境でリンクが壊れる問題
 
 Cloudflare Pagesの最大の魅力であるプレビュー環境で、記事リンクが本番URL (`https://tellme.tokyo`) を向いてしまう問題に遭遇した。トップページはプレビュー環境で表示できるが、各記事へのリンクをクリックすると本番サイトに飛ばされてしまう。
@@ -84,20 +71,22 @@ Cloudflare Pagesの最大の魅力であるプレビュー環境で、記事リ�
 
 当初はtellme.tokyoリポジトリの`layouts/`ディレクトリでテーマのテンプレートをオーバーライドしていたが、miniテーマは自分のフォークなのでテーマ側を直接修正する方がメンテしやすい。オーバーライドファイルは削除し、submoduleを更新した。
 
+-->
+
 ## 同期ワークフロー
 
 Obsidianで記事を書いたらGitHub Actionsでtellme.tokyoリポジトリにPRを作成する仕組みも同時に構築した。
 
 ```
-base repo (Obsidian)
-vault/LIFE/8-writing-書き物/tellme.tokyo/*.md
+`vault` repo (Obsidian)
+vault/blog/tellme.tokyo/*.md
     │ git push (main)
     ▼
-GitHub Actions (sync-blog.yml)
+GitHub Actions (sync-blog.yaml)
     │ front matter変換 + page bundle化
     │ tellme.tokyo に PR 作成/更新
     ▼
-tellme.tokyo repo (PR: preview ブランチ)
+`tellme.tokyo` repo (PR: preview ブランチ)
     │
     ▼
 Cloudflare Pages
@@ -105,6 +94,7 @@ Cloudflare Pages
     └── main (merge後) → https://tellme.tokyo
 ```
 
+<!--
 変換スクリプトはPython + PyYAMLで実装した。当初はbash + yqで書いたが、yq v4には`-r`フラグがなかったり、`draft: false`が文字列として評価されるなどの挙動があり、Pythonに切り替えた。
 
 ワークフロー設計ではいくつか試行錯誤があった。
@@ -113,14 +103,18 @@ Cloudflare Pages
 - **ブランチ名**: コミットSHAを含む動的ブランチを試したが、pushごとに新しいPRが作られてしまうため固定ブランチ`preview`に落ち着いた
 - **削除同期**: Obsidian側で記事を削除した場合の同期を試みたが、既存記事と新規記事の区別ができず断念した
 
+-->
+
 ## 移行前後の比較
 
-| 項目 | GitHub Pages | Cloudflare Pages |
-|---|---|---|
-| ビルド | GitHub Actions | Cloudflare Pages自動ビルド |
-| DNS | ムームーDNS | Cloudflare DNS |
-| PRプレビュー | なし | 自動 (ブランチごとに固有URL) |
+|            | GitHub Pages        | Cloudflare Pages             |
+| ---------- | ------------------- | ---------------------------- |
+| ビルド        | GitHub Actions      | Cloudflare Pages自動ビルド        |
+| DNS        | ムームーDNS             | Cloudflare DNS               |
+| PRプレビュー    | なし                  | 自動 (ブランチごとに固有URL)            |
 | Draftプレビュー | `hugo server`ローカルのみ | `--buildDrafts`でプレビュー環境に反映可能 |
-| デプロイ速度 | 1-2分 | 数秒〜1分 |
+| デプロイ速度     | 1-2分                | 数秒〜1分                        |
 
-PRプレビューのおかげでローカル環境なしに記事の見た目を確認できるようになった。Obsidianで書いてpushするだけで、あとはブラウザ上で完結する。
+PRプレビューのおかげでローカル環境なしに記事の見た目を確認できるようになった。Obsidianで書いてpush[^push]するだけで、あとはブラウザ上で完結する。
+
+[^push]: pushはObsidianからできる
