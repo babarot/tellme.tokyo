@@ -36,8 +36,6 @@ Cloudflare PagesはHugoのフレームワークプリセットを持っており
 3. Cloudflareが提示するネームサーバーを設定
 4. Pagesでカスタムドメインを設定し、`tellme.tokyo`を`tellme-tokyo.pages.dev`に向けるCNAMEを追加する
 
-
-
 <!--
 ## プレビュー環境でリンクが壊れる問題
 
@@ -105,9 +103,15 @@ Cloudflare Pages
 
 -->
 
+
+
+
+<picture> <!-- ダークモード用 --> <source srcset="https://assets.babarot.dev/files/2026/02/13bf1ac346eb9b17.png" media="(prefers-color-scheme: dark)" /> <!-- ライトモード用 --> <source srcset="https://assets.babarot.dev/files/2026/02/c6aa89cec4cf501a.png" /> <img src="preview.jpg" alt="" width="" height="" /> </picture>
+pushすると自動でPRが作成され、Cloudflare PagesのプレビューURLがコメントに投稿される。
+
 ## 移行前後の比較
 
-|            | GitHub Pages        | Cloudflare Pages             |
+|            | GitHub Pages | Cloudflare Pages             |
 | ---------- | ------------------- | ---------------------------- |
 | ビルド        | GitHub Actions      | Cloudflare Pages自動ビルド        |
 | DNS        | ムームーDNS             | Cloudflare DNS               |
