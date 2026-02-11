@@ -1,13 +1,10 @@
 ---
 title: "Vim 8.0 がリリースされた"
-date: 2016-09-12T23:23:37+09:00
+date: "2016-09-12T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: b4b4r07
-oldlink: "https://b4b4r07.hatenadiary.com/entry/2016/09/12/232337"
-tags:
-- vim
+toc: false
 ---
 
 本日 (2016-09-12 21:24:19 +09:00)、Vim 8.0 がリリースされました。

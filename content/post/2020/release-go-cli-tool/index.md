@@ -1,16 +1,10 @@
 ---
 title: "Go で書いた CLI ツールのリリースは GoReleaser と GitHub Actions で個人的には決まり"
-date: "2020-02-04T00:32:10+09:00"
+date: "2020-02-04T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: "b4b4r07"
-oldlink: ""
-image: ""
-tags:
-- go
-- cli
-- release
+toc: false
 ---
 
 ## tl;dr

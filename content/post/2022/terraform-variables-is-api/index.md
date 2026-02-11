@@ -1,14 +1,10 @@
 ---
 title: "Terraformの変数(variable, local, output)を理解する"
-date: "2022-06-15T00:08:10+09:00"
+date: "2022-06-15T00:00:00+09:00"
 description: ""
 categories: []
 draft: false
-author: "b4b4r07"
-oldlink: ""
-image: ""
-tags: ["terraform"]
-
+toc: false
 ---
 
 ## それぞれの役割

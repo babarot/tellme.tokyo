@@ -1,14 +1,10 @@
 ---
 title: "2017年振り返り"
-date: "2018-01-05T19:52:12+09:00"
+date: "2018-01-05T00:00:00+09:00"
 description: ""
 categories: []
 draft: false
-author: "b4b4r07"
-oldlink: ""
-tags: ["review"]
-aliases:
-- /post/2018/01/05/looking-back-on-2017/
+toc: false
 ---
 
 もう年も変わってしまったけれど、去年どのような1年を過ごしたのかを振り返る。

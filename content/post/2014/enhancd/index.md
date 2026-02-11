@@ -1,17 +1,10 @@
 ---
 title: "enhancd という autojump/z ライクな bash/zsh プラグインを書いた"
-date: 2014-11-20T13:49:01+09:00
+date: "2014-11-20T00:00:00+09:00"
 description: ""
 categories: []
 draft: false
-author: b4b4r07
-oldlink: "https://b4b4r07.hatenadiary.com/entry/2014/11/20/134901"
-tags:
-- bash
-- zsh
-- enhancd
-aliases:
-- /post/2014/11/20/134901/
+toc: false
 ---
 
 <!-- 【追記 2015-07-21】 -->

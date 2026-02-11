@@ -1,15 +1,9 @@
 ---
 title: "2023年振り返り"
-date: "2023-12-31T17:44:22+09:00"
+date: "2023-12-31T00:00:00+09:00"
 description: ""
 categories: []
 draft: false
-author: "b4b4r07"
-oldlink: ""
-image: ""
-tags: ["review"]
-aliases:
-- /post/2023/12/31/2023-review/
 toc: true
 ---
 

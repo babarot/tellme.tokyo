@@ -1,12 +1,10 @@
 ---
 title: "GitHub Pages で HTTPS を有効にする"
-date: "2020-01-20T19:58:54+09:00"
+date: "2020-01-20T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: b4b4r07
-oldlink: ""
-tags: ["github-pages", "blog"]
+toc: false
 ---
 
 GitHub Pages で静的ページを公開するのが簡単なのでよく使う。

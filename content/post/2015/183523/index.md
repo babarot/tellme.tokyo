@@ -1,16 +1,10 @@
 ---
 title: "ターミナルのディレクトリ移動を高速化するプラグイン「enhancd」のその後"
-date: 2015-08-12T18:35:23+09:00
-draft: true
+date: "2015-08-12T00:00:00+09:00"
 description: ""
 categories: []
-author: b4b4r07
-oldlink: "https://b4b4r07.hatenadiary.com/entry/2015/08/12/183523"
-tags:
-- bash
-- zsh
-- shellscript
-- enhancd
+draft: true
+toc: false
 ---
 
 事の発端はこのツイート（であろう）。

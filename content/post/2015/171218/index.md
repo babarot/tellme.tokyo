@@ -1,14 +1,10 @@
 ---
 title: "書くのが面倒な zsh 補完関数を簡単に生成するツール「zgencomp」つくった"
-date: 2015-03-24T17:12:18+09:00
+date: "2015-03-24T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: b4b4r07
-oldlink: "https://b4b4r07.hatenadiary.com/entry/2015/03/24/171218"
-tags:
-- go
-- zsh
+toc: false
 ---
 
 [b4b4r07/zgencomp・GitHub](https://github.com/b4b4r07/zgencomp)

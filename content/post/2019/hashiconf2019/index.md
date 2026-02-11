@@ -1,14 +1,10 @@
 ---
 title: "HashiConf '19 に行ってきた"
-date: "2019-10-03T17:15:22+09:00"
+date: "2019-10-03T00:00:00+09:00"
 description: ""
 categories: []
 draft: false
-author: b4b4r07
-oldlink: ""
-tags:
-- hashicorp
-- hashiconf
+toc: false
 ---
 
 {{< img src="session.png" width="600" >}}

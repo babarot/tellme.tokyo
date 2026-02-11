@@ -1,15 +1,10 @@
 ---
 title: "やったー！GitHub にスターが 200★ 付いた"
-date: 2015-11-12T17:05:36+09:00
+date: "2015-11-12T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: b4b4r07
-oldlink: "https://b4b4r07.hatenadiary.com/entry/2015/11/12/170536"
-tags:
-- bash
-- zsh
-- shellscript
+toc: false
 ---
 
 [repo]: https://github.com/b4b4r07/enhancd

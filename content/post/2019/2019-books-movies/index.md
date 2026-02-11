@@ -1,15 +1,10 @@
 ---
 title: "2019年に読んだ本、観た映画"
-date: "2019-12-28T19:01:59+09:00"
+date: "2019-12-28T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: b4b4r07
-oldlink: ""
-tags:
-- book
-- movie
-- review
+toc: false
 ---
 
 本に関しては記録がないので直近で記憶に残ってるやつ。映画は Filmarks ベース。

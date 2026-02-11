@@ -1,14 +1,10 @@
 ---
 title: "はてなブログの記事をインポートした"
-date: "2020-01-28T00:11:10+09:00"
+date: "2020-01-28T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: "b4b4r07"
-oldlink: ""
-image: ""
-tags: ["blog"]
-
+toc: false
 ---
 
 動機はこれ。

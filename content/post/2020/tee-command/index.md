@@ -1,15 +1,10 @@
 ---
 title: "標準出力に出しつつ、パイプ先のコマンドにも繋ぐ"
-date: "2020-02-07T12:27:21+09:00"
+date: "2020-02-07T00:00:00+09:00"
 description: ""
 categories: []
 draft: false
-author: "b4b4r07"
-oldlink: ""
-image: ""
-tags:
-- shellscript
-- unix
+toc: false
 ---
 
 コマンドの出力をターミナル (stdout) に出しながらパイプに繋いだ別のコマンドの stdin に流すとき、どう書くか。

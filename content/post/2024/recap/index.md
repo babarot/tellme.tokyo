@@ -5,8 +5,6 @@ description: ""
 categories: []
 draft: false
 toc: true
-aliases:
-- /post/2024/12/31/2024-review/
 ---
 
 # Work

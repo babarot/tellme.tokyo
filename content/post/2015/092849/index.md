@@ -1,16 +1,10 @@
 ---
 title: "ディレクトリ移動系プラグイン「enhancd」の実装"
-date: 2015-08-16T09:28:49+09:00
+date: "2015-08-16T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: b4b4r07
-oldlink: "https://b4b4r07.hatenadiary.com/entry/2015/08/16/092849"
-tags:
-- bash
-- shellscript
-- zsh
-- enhancd
+toc: false
 ---
 
 # まえがき

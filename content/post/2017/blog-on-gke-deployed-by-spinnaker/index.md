@@ -1,13 +1,10 @@
 ---
 title: "ブログをGKEで運用し、Spinnakerでデプロイする"
-date: "2017-07-30T12:37:33+09:00"
+date: "2017-07-30T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: "b4b4r07"
-oldlink: ""
-tags: ["kubernetes", "spinnaker", "GKE"]
-
+toc: false
 ---
 
 {{< img src="kubernetes.png" width="200" >}}

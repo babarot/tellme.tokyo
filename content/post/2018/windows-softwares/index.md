@@ -1,13 +1,10 @@
 ---
 title: "Windows 時代の使用ソフト晒し"
-date: "2018-09-27T20:06:55+09:00"
-description: "Windows を使っていたころによくお世話になったフリーソフトを一覧としてまとめる"
+date: "2018-09-27T00:00:00+09:00"
+description: ""
 categories: []
 draft: false
-author: b4b4r07
-oldlink: ""
-tags:
-- windows
+toc: false
 ---
 
 2013 年ごろまで Windows を使っていた (Windows 7 SP2 が最後)。

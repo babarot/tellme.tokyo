@@ -1,16 +1,10 @@
 ---
 title: "Cloudflare から GitHub Pages の HTTPS 機能に移行する"
-date: "2020-01-29T23:21:50+09:00"
+date: "2020-01-29T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: "b4b4r07"
-oldlink: ""
-image: ""
-tags:
-- github-pages
-- blog
-
+toc: false
 ---
 
 以前は GitHub Pages だけでは HTTPS 配信ができなかったので、Cloudflare をプロキシにして HTTPS 化させていた。

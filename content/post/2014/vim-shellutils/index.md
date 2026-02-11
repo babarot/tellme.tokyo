@@ -1,13 +1,10 @@
 ---
 title: "Vim からシェルコマンドを実行するプラグインを作った"
-date: "2014-10-05T00:52:51+09:00"
+date: "2014-10-05T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: "b4b4r07"
-oldlink: "http://b4b4r07.hatenadiary.com/entry/2014/10/05/234607"
-tags: ["vim"]
-
+toc: false
 ---
 
 {{< hatena "https://github.com/b4b4r07/vim-shellutils" >}}

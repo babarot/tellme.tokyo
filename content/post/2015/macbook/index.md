@@ -1,13 +1,10 @@
 ---
 title: "MacBook 12 inch を買った"
-date: "2015-08-14T00:57:24+09:00"
+date: "2015-08-14T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: "b4b4r07"
-oldlink: "http://b4b4r07.hatenadiary.com/entry/2015/08/14/120049"
-tags: ["macbook", "apple"]
-
+toc: false
 ---
 
 <blockquote class="twitter-tweet" data-partner="tweetdeck"><p lang="ja" dir="ltr">来ました <a href="http://t.co/nwUUZSogN6">pic.twitter.com/nwUUZSogN6</a></p>&mdash; BABAROT (@b4b4r07) <a href="https://twitter.com/b4b4r07/status/600917894566957058">May 20, 2015</a></blockquote>

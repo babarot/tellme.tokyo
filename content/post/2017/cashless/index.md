@@ -1,12 +1,10 @@
 ---
 title: "決済をキャッシュレス化している"
-date: "2017-12-05T08:57:17-06:00"
+date: "2017-12-05T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: "b4b4r07"
-oldlink: ""
-tags: ["life"]
+toc: false
 ---
 
 # 現状

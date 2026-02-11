@@ -1,13 +1,10 @@
 ---
 title: "アドベントカレンダーに登録した"
-date: 2015-11-13T23:36:49+09:00
+date: "2015-11-13T00:00:00+09:00"
 description: ""
 categories: []
 draft: true
-author: b4b4r07
-oldlink: "https://b4b4r07.hatenadiary.com/entry/2015/11/13/233649"
-tags:
-- blog
+toc: false
 ---
 
 - [Shell Script Advent Calendar 2015](http://qiita.com/advent-calendar/2015/shell-script)

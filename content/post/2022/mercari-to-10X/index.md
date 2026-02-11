@@ -1,13 +1,10 @@
 ---
 title: "退職と転職。人生の振り返り"
-date: "2022-02-28T21:00:12+09:00"
+date: "2022-02-28T00:00:00+09:00"
 description: ""
 categories: []
 draft: false
-author: "b4b4r07"
-oldlink: ""
-image: ""
-tags: ["mercari", "life"]
+toc: false
 ---
 
 お久しぶりです。
