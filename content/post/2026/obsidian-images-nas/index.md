@@ -68,6 +68,8 @@ services:
 
 API がやっていることはシンプルで、ファイルを受け取ってディスクに書き、公開 URL を返すだけ。ファイルは `/files/YYYY/MM/{random}.{ext}` というパスで保存される。ファイル名は暗号学的乱数の 16 文字 hex で、URL を知らない限りたどり着けない。GCS/S3 の公開バケットと同じモデルだ。上書きは不可（immutable）で、差し替えたければ削除して再アップロードする。DB は使わずファイルシステムが唯一の truth。`Cache-Control: public, max-age=31536000, immutable` を返すので Cloudflare CDN に長期キャッシュされて NAS への負荷も最小限になる。
 
+API のコードはここ: https://github.com/babarot/image-hosting-server
+
 セキュリティは個人利用とはいえ一応多層で考えた。Cloudflare Edge の DDoS 吸収と WAF、API Key 認証（constant-time compare）、IP ごとの Rate Limiting、アップロード時の拡張子と MIME sniffing の二重チェック。配信側（`/files/*`）はパブリック公開だがファイル名がランダムなので URL を知らなければ到達できない。
 
 ## Obsidian から画像を貼るだけ
