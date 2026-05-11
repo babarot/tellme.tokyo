@@ -3,7 +3,7 @@ title: "SREになった"
 date: "2017-11-02T01:33:34+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 author: "b4b4r07"
 oldlink: ""
 tags: ["SRE"]

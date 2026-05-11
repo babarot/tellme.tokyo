@@ -3,7 +3,7 @@ title: "新卒でメルカリに入社した"
 date: "2016-10-01T00:00:00+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 toc: false
 ---
 

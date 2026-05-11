@@ -3,7 +3,7 @@ title: "退職と転職。人生の振り返り"
 date: "2022-02-28T00:00:00+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 toc: false
 ---
 

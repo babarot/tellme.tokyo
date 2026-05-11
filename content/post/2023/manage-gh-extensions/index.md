@@ -3,7 +3,7 @@ title: "gh extension の管理"
 date: "2023-03-21T00:00:00+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 toc: false
 ---
 

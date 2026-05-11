@@ -3,7 +3,7 @@ title: "gomi を XDG Trash 仕様に対応させた"
 date: "2025-02-16T00:00:00+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 toc: false
 ---
 

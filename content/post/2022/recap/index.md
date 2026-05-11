@@ -3,7 +3,7 @@ title: "2022年振り返り。転職して1年、来年の抱負"
 date: "2022-12-28T00:00:00+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 toc: false
 ---
 

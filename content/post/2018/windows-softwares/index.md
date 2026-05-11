@@ -3,7 +3,7 @@ title: "Windows 時代の使用ソフト晒し"
 date: "2018-09-27T00:00:00+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 toc: false
 ---
 

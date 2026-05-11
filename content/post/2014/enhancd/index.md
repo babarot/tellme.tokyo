@@ -3,7 +3,7 @@ title: "enhancd という autojump/z ライクな bash/zsh プラグインを書
 date: "2014-11-20T00:00:00+09:00"
 description: ""
 categories: []
-draft: false
+draft: true
 toc: false
 ---
 
