@@ -1,10 +1,8 @@
 ---
 title: "シェルスクリプトで git gc してまわるやつ"
 date: "2015-12-26T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
+hidden: true
 ---
 
 <blockquote class="twitter-tweet" lang="ja"><p lang="ja" dir="ltr">GOPATH の git リポジトリを全部 git gc してまわるやつ。要 ghq <a href="https://t.co/c4igqWnWR0">https://t.co/c4igqWnWR0</a></p>&mdash; mattn (@mattn_jp) <a href="https://twitter.com/mattn_jp/status/675225401615122433">2015, 12月 11</a></blockquote> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -26,7 +24,7 @@ done
 wait
 ```
 
-{{< img src="20151215111759" >}}
+![](20151215111759.png)
 
 いい感じやで。
 

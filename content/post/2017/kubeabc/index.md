@@ -1,10 +1,8 @@
 ---
 title: "Kubernetes 開発環境構築のいろは"
 date: "2017-12-01T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
+hidden: true
 ---
 
 ## はじめに
@@ -27,7 +25,7 @@ Kubernetes の実行環境として GKE を例に取ると、GCP プロジェク
 Spinnaker は「デプロイ先のクラスタ」と「どのイメージを撒くか (manifest file)」をセットにして内部に持っているので「意図しないクラスタに対して意図しない manifest file をデプロイしてしまう」といった誤操作は防げるのですが、これが `kubectl apply` による手動だと今いるクラスタと `-f` に渡すファイル次第で、互い違いにデプロイしてしまうなどの事故も起こしかねません[^2]。
 毎回指差し確認するのも面倒ですし、そもそも確認を徹底するというのは有効打ではないので、常に見えるところに表示しておくのがおすすめです。
 
-{{< hatena "https://github.com/b4b4r07/kubeabc" >}}
+https://github.com/b4b4r07/kubeabc
 
 手前味噌ですが、現在の Kubernetes クラスタと GCP プロジェクトを表示できるコマンドを書きました。
 
@@ -51,7 +49,9 @@ gcalcli-1327
 set-option -g status-left 'tmux:[#P] #[fg=colour33](K) #(~/bin/kube-context)#[default] #[fg=colour1](G) #(~/bin/gcp-context 2>&1)#[default]'
 ```
 
-{{< img src="tmux-bar.png" width="400" >}}
+:::img{width=400}
+![](tmux-bar.png)
+:::
 
 シェルのプロンプトに表示できるプラグインも公開されています。
 
@@ -80,7 +80,9 @@ Dev / Prod のスイッチなど一日に何回もします。
 
 また、これも [fzf](https://github.com/junegunn/fzf)/[peco](https://github.com/peco/peco) を噛ませたラッパーを使うようにしました: https://github.com/b4b4r07/kubeabc/blob/master/cli/kubens
 
-{{< img src="kubens.gif" width="600" >}}
+:::img{width=600}
+![](kubens.gif)
+:::
 
 ## ログを見やすくする
 
@@ -98,7 +100,9 @@ $ stern wiki
 
 こんな感じに、ゆるく指定することができるので wiki に関する Pod のログをまとめてみることができます。
 
-{{< img src="stern.gif" width="600" >}}
+:::img{width=600}
+![](stern.gif)
+:::
 
 詳しくは: [kubernetes使いは全員 stern を導入すべき – Daisuke Maki – Medium](https://medium.com/@lestrrat/kubernetes使いは全員-stern-を導入すべき-bc9d3eb2c321/)
 
@@ -119,7 +123,9 @@ $ kubectl get P
 $ kubectl logs -f P
 ```
 
-{{< img src="global_alias.gif" width="600" >}}
+:::img{width=600}
+![](global_alias.gif)
+:::
 
 Pod 以外にもいろいろなリソースに対して Gloabl alias を設定しておくことで、短縮して実行することができるようになります。
 
@@ -142,7 +148,7 @@ https://github.com/b4b4r07/kubeabc/blob/master/scripts/alias.zsh
 
 ## kube 系のコマンドをまとめる
 
-{{< hatena "https://github.com/b4b4r07/kubeabc/blob/master/cli/kube" >}}
+https://github.com/b4b4r07/kubeabc/blob/master/cli/kube
 
 https://github.com/b4b4r07/kubeabc/blob/master/cli/kube
 
@@ -151,15 +157,21 @@ https://github.com/b4b4r07/kubeabc/blob/master/cli/kube
 例えば [kubeql](https://github.com/saracen/kubeql)、[kube-shell](https://github.com/cloudnativelabs/kube-shell) といったコマンドの名前の差異をいい感じに吸収して、`kubectl` のサブコマンドの一つとしてまとめて実行できるので便利です。
 内部はほとんど `kubectl` のラッパーとして書いています。
 
-{{< img src="kube_shell.png" width="600" >}}
+:::img{width=600}
+![](kube_shell.png)
+:::
 
 また、これも git と同じように、サブコマンドやリソースのタイポを直して実行してくれるようになっています (地味に便利)。
 
-{{< img src="kube_typo.png" width="600" >}}
+:::img{width=600}
+![](kube_typo.png)
+:::
 
 前述したように、クラスタを表示しておくというのも確認の延長線にすぎないので、apply などの前に「このクラスタに実行しますよ」という旨を表示します。
 
-{{< img src="kube_apply.png" width="600" >}}
+:::img{width=600}
+![](kube_apply.png)
+:::
 
 ## まとめ
 

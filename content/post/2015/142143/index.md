@@ -1,10 +1,7 @@
 ---
 title: "zsh のプラグインマネージャ"
 date: "2015-11-24T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 [antigen](https://github.com/zsh-usrs/antigen) ですよね、やっぱり。最近は antigen の軽量バージョンである [zgen](https://github.com/tarjoilija/zgen) もアツいようです。

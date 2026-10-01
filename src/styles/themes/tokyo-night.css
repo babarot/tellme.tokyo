@@ -1,0 +1,56 @@
+/* Theme "tokyo-night". Dark is the Night style of folke/tokyonight.nvim
+   (lua/tokyonight/colors/night.lua). Light is Tokyo Night Light from the
+   original VS Code theme (enkia/tokyo-night-vscode-theme,
+   themes/tokyo-night-light-color-theme.json): its slate body text reads far
+   better than tokyonight.nvim's Day, whose blue text is close to the link blue
+   and barely passes contrast (4.5:1). Code blocks use Shiki's tokyo-night in dark
+   (see "Shiki per theme" in global.css). The roles are listed in default.css. */
+
+[data-theme='tokyo-night'] {
+  --c-page: #e6e7ed; /* editor.background */
+  --c-ink: #363c4d; /* foreground */
+  --c-brand: #2959aa; /* textLink.foreground */
+  --c-heading: #343b59; /* editor.foreground */
+  --c-body: #343b59; /* editor.foreground */
+  --c-subtle: #9da0ab; /* editorLineNumber.foreground */
+  --c-muted: #707280; /* descriptionForeground */
+  --c-faint: #9da0ab; /* editorLineNumber.foreground */
+  --c-faint-hover: #2959aa; /* textLink.foreground */
+  --c-list-title: #343b59; /* editor.foreground */
+  --c-link: #2959aa; /* textLink.foreground */
+  --c-link-line: #9da0ab; /* editorLineNumber.foreground */
+  --c-line: #c1c2c7; /* panel.border */
+  --c-line-strong: #9da0ab; /* editorLineNumber.foreground */
+  --c-quote: #707280; /* descriptionForeground */
+  --c-surface: #d6d8df; /* sideBar.background */
+  --c-code-bg: #d6d8df; /* sideBar.background */
+  --c-code: #33635c; /* textPreformat.foreground */
+  --c-accent: #2959aa; /* textLink.foreground */
+  --c-draft: #965027; /* orange in the token colors */
+  --c-shade: rgb(52 59 89 / 0.15);
+}
+
+[data-theme='tokyo-night'].dark,
+[data-theme='tokyo-night'] .dark {
+  --c-page: #1a1b26; /* bg */
+  --c-ink: #c0caf5; /* fg */
+  --c-brand: #7aa2f7; /* blue */
+  --c-heading: #c0caf5; /* fg */
+  --c-body: #a9b1d6; /* fg_dark */
+  --c-subtle: #565f89; /* comment */
+  --c-muted: #737aa2; /* dark5 */
+  --c-faint: #545c7e; /* dark3 */
+  --c-faint-hover: #7aa2f7; /* blue */
+  --c-list-title: #c0caf5; /* fg */
+  --c-link: #7aa2f7; /* blue */
+  --c-link-line: #3d59a1; /* blue0 */
+  --c-line: #292e42; /* bg_highlight */
+  --c-line-strong: #3b4261; /* fg_gutter */
+  --c-quote: #737aa2; /* dark5 */
+  --c-surface: #16161e; /* bg_dark */
+  --c-code-bg: #292e42; /* bg_highlight */
+  --c-code: #7dcfff; /* cyan */
+  --c-accent: #7aa2f7; /* blue */
+  --c-draft: #ff9e64; /* orange */
+  --c-shade: rgb(192 202 245 / 0.12);
+}

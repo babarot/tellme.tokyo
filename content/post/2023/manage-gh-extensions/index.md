@@ -1,10 +1,7 @@
 ---
 title: "gh extension の管理"
 date: "2023-03-21T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 ## gh とは
@@ -17,7 +14,9 @@ toc: false
 
 [READMEをpush前にプレビューできるGitHub CLI拡張を作った - ゆーすけべー日記](https://yusukebe.com/posts/2021/gh-markdown-preview/)
 
-{{< img src="https://user-images.githubusercontent.com/10682/138411417-dd12a831-bacc-4b05-a33d-47d3f6b45483.png" width="600" >}}
+:::img{width=600}
+![](https://user-images.githubusercontent.com/10682/138411417-dd12a831-bacc-4b05-a33d-47d3f6b45483.png)
+:::
 
 めっちゃ GitHub。Live-reloading もできるし「これだよ! これ!」という感じ。どうやら gh コマンドの拡張機能 (extension) として公開されているらしい。
 
@@ -56,7 +55,6 @@ gh extension install kawarimidoll/gh-q
 これでもいいけど install とスクリプトへの追加が別になっているとインストールはしたけどスクリプト側を更新するの忘れてた、になるのがイケてない。
 
 どうしたものかと思っていたら [afx](https://github.com/b4b4r07/afx/) があったじゃないかと思い出す。afx は開発ツール版 Terraform みたいなもので、YAML に書いたものをインストール・アップデートできるなど持続的な管理ができる。これに gh extension を対応させてしまおうというのが今回のお話。
-
 
 ## gh を管理する
 

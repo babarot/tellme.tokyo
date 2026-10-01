@@ -1,0 +1,24 @@
+/* :::img. The figure carries the width limit; the image fills it at most.
+   Dark mode is a .dark class on an ancestor (the Tailwind convention). */
+.img {
+  margin: 2rem auto;
+}
+
+.img img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+
+.img[data-scheme='dark'] {
+  display: none;
+}
+
+.dark .img[data-scheme='dark'] {
+  display: block;
+}
+
+.dark .img[data-scheme='light'] {
+  display: none;
+}

@@ -1,10 +1,7 @@
 ---
 title: "zplug を使った zsh プラグイン管理術"
 date: "2015-12-13T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 zplug とは zsh のプラグインマネージャ。

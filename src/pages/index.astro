@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import { getPosts, postPath, formatDate } from '../lib/posts';
+
+const posts = await getPosts();
+---
+
+<Base>
+  <ul class="flex flex-col gap-4">
+    {
+      posts.map((post) => (
+        <li>
+          <a href={postPath(post)} class="group flex flex-col gap-0.5 md:flex-row md:items-baseline md:gap-4">
+            <time datetime={post.data.date} class="shrink-0 font-mono text-sm leading-7 text-subtle tabular-nums md:w-24">
+              {formatDate(post.data.date)}
+            </time>
+            <span class="leading-7 text-list-title transition-opacity group-hover:opacity-60">
+              {post.data.title}
+              {post.data.draft && <span class="ml-2 align-middle text-[10px] font-semibold tracking-wider text-draft uppercase">draft</span>}
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Base>

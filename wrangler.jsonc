@@ -1,0 +1,21 @@
+// The site on Cloudflare Workers: no Worker code, only the static files Astro
+// builds into dist/. Workers Builds (Cloudflare's CI, connected to GitHub)
+// builds every push: main to production, other branches to preview URLs,
+// which show drafts (src/lib/posts.ts).
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "tellme-tokyo",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // dist/404.html for any missing URL, with status 404
+    "not_found_handling": "404-page",
+    // /post/2025/01/29/gomi -> /post/2025/01/29/gomi/, as on Hugo
+    "html_handling": "auto-trailing-slash"
+  },
+  // a URL per uploaded version and per branch, for previews
+  "preview_urls": true,
+  // required by `wrangler preview`, the preview command of Workers Builds
+  // (Worker Previews); empty: previews use the settings above
+  "previews": {}
+}

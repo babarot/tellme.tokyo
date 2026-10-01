@@ -1,10 +1,8 @@
 ---
 title: "私の fzf 活用事例"
 date: "2015-11-08T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
+hidden: true
 ---
 
 [peco](https://github.com/peco/peco)、使ってますか。この記事を見ている人なら peco 知っていると思います。[fzf](https://github.com/junegunn/fzf) は、peco と同じようなツールでこちらも同じく Go 言語で書かれています。

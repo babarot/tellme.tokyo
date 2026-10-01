@@ -1,10 +1,7 @@
 ---
 title: "コマンドラインツール向けのpackage managerを作った"
 date: "2022-03-02T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 最近、[afx](https://babarot.me/afx/) という CLI 向けのパッケージマネージャを公開した。ここで "CLI のパッケージ" とは例えば jq のようなコマンドラインツールや [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) のようなヒストリ補完をするシェルのプラグインを指す (bash/zsh/fish)。afx ではこれらを 1 つのツールで管理すること、コードで表現して管理することを目的としている。コードには YAML を使用する。
@@ -152,7 +149,6 @@ afx では現在、次のパッケージタイプが用意されている:
   - バイナリのリネーム
   - ビルドコマンドの実行
   - ビルド実行の際の環境変数の設定
-
 
 その他の設定や詳しいことは[ドキュメント](https://babarot.me/afx/configuration/package/github/)に記載がある。実際の設定方法は自分が利用しているパッケージの限りであれば [dotfiles](https://github.com/b4b4r07/dotfiles/tree/master/.config/afx) にある。
 

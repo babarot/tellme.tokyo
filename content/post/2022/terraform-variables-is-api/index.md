@@ -1,10 +1,7 @@
 ---
 title: "Terraformの変数(variable, local, output)を理解する"
 date: "2022-06-15T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 ## それぞれの役割
@@ -29,11 +26,13 @@ Terraform では "変数" 以外に "返り値" (Return value) に相当する�
 
 それぞれの役割をプログラミング言語に例えるとイメージしやすいかもしれない。
 
-{{< figure
-src="signature-default.svg"
-src-dark="signature-tellme-tokyo.svg"
-src-light="signature-default.svg"
-class="text-center fit-content" >}}
+:::img{scheme=light}
+![](signature-default.svg)
+:::
+
+:::img{scheme=dark}
+![](signature-tellme-tokyo.svg)
+:::
 
 そうすると、関数の中身を Module と捉えることができ、Locals はローカル変数であるといえる。
 
@@ -134,11 +133,13 @@ You can apply this plan to save these new output values to the Terraform state, 
 
 Variables と Outputs はユーザに公開されたインターフェイスであり、API と同様の性質を持つ。一度公開すると簡単には変更できず削除できない。どのような Input として Variables を定義し、どのような Output をすべきかを考えて Outputs を定義する必要がある。
 
-{{< figure
-src="api-default.svg"
-src-dark="api-tellme-tokyo.svg"
-src-light="api-default.svg"
-class="text-center fit-content" >}}
+:::img{scheme=light}
+![](api-default.svg)
+:::
+
+:::img{scheme=dark}
+![](api-tellme-tokyo.svg)
+:::
 
 ## どのような API を定義するべきか
 

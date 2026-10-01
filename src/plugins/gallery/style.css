@@ -1,0 +1,48 @@
+/* Justified gallery. client.ts decides the rows and sets each photo's size
+   (.gallery-justified). Without it, this CSS-only layout is used: each item
+   carries its image size as --w / --h, and flexing items in proportion to
+   their aspect ratio gives every row one height and a full width. */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gallery-gap, 5px);
+  margin: 2rem 0;
+}
+
+.gallery:not(.gallery-justified)::after {
+  /* soaks up the free space of the last row, so its photos are not blown up */
+  content: '';
+  flex-grow: 999999;
+}
+
+.gallery:not(.gallery-justified) .gallery-item {
+  flex-grow: calc(var(--w) / var(--h) * 100);
+  flex-basis: calc(var(--w) / var(--h) * var(--gallery-row-height, 150px));
+  aspect-ratio: var(--w) / var(--h);
+}
+
+.gallery-justified .gallery-item {
+  flex: none;
+}
+
+.gallery-item {
+  overflow: hidden;
+  background: var(--gallery-placeholder, rgb(128 128 128 / 0.1));
+}
+
+.gallery-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  /* square corners by default, whatever the page does to images */
+  border-radius: var(--gallery-radius, 0);
+  object-fit: cover;
+  cursor: zoom-in;
+  transition: transform 0.25s ease-in-out;
+}
+
+/* "enlarge" hover effect from hugo-shortcode-gallery */
+.gallery-item img:hover {
+  transform: scale(1.1);
+}

@@ -1,10 +1,8 @@
 ---
 title: "ログのタイムスタンプで UNIX 時間なのはツライって話"
 date: "2016-12-06T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
+hidden: true
 ---
 
 ## tl;dr
@@ -21,7 +19,7 @@ JSON とか LTSV とか combine とか、それらの複合で記録されてる
 
 そもそもログファイルが JSON じゃない形式の場合は、以下のリンクにあるようなやり方を組み合わせて調べたり、もはや UNIX 時間になっている該当部分をコピペして date コマンドに投げたりして JST (や UTC) に変換することが多いです。
 
-{{< hatena "https://ponkotuy.hatenadiary.org/entry/20140827/1409127514" >}}
+https://ponkotuy.hatenadiary.org/entry/20140827/1409127514
 
 ```bash
 $ date -d @1478745332.2113 +"%Y/%m/%d %T" # GNU date

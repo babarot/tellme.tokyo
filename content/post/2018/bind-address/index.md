@@ -1,10 +1,8 @@
 ---
 title: "Bind Address で少しハマった話"
 date: "2018-08-16T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
+hidden: true
 ---
 
 以下の要件を満たして `hugo server` を立ち上げたいという要求がありテンポラリで対応することになった。
@@ -21,8 +19,12 @@ toc: false
 
 [How to open a specific port such as 9090 in Google Compute Engine - Stack Overflow](https://stackoverflow.com/questions/21065922/how-to-open-a-specific-port-such-as-9090-in-google-compute-engine)
 
-{{< img src="1.png" width="400" >}}
-{{< img src="2.png" width="400" >}}
+:::img{width=400}
+![](1.png)
+:::
+:::img{width=400}
+![](2.png)
+:::
 
 動作確認として適当に Serve するスクリプトで :1313 を LISTEN して nmap してみた。
 
@@ -97,6 +99,6 @@ Press Ctrl+C to stop
 
 これの理解にはこの記事が役立った。
 
-{{<hatena "https://keens.github.io/blog/2016/02/24/bind_addressnoimigayouyakuwakatta/" >}}
+https://keens.github.io/blog/2016/02/24/bind_addressnoimigayouyakuwakatta/
 
 127.0.0.1 を指定したらローカルホストからで、0.0.0.0 だと外部からも参照できるくらいにしか考えたことがなかったので、この機会を得たことでいい勉強になった。

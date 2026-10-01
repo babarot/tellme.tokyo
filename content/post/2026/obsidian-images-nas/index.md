@@ -1,10 +1,7 @@
 ---
 title: "自宅 NAS を S3 っぽい画像ホスティングにして Obsidian から使う"
 date: "2026-02-08T00:00:00+09:00"
-description: ""
-categories: []
-draft: true
-toc: false
+draft: false
 ---
 
 Obsidian でノートを書いているとき、画像の管理が地味に面倒だった。スクリーンショットを貼り付けるとローカルの vault に画像ファイルが溜まっていく。Obsidian Sync は高速だが何年も vault を運用していくとメディアファイルが増大して同期が重くなるし、そもそも vault の中にバイナリファイルが散らばるのが気持ち悪い。Imgur のような外部サービスに上げる手もあるが、個人のノートの画像を他所に預けるのは心理的に抵抗がある。GCS や S3 を使えば確実に解決するが、個人の画像置き場のために月額料金を払い続けるのも微妙かなと。
@@ -95,13 +92,11 @@ curl からも普通に使える。そのため既存のメディアファイル
 $ curl -X POST -H "X-API-Key: $KEY" -F "file=@screenshot.jpg" \
   https://assets.babarot.dev/api/upload
 
-
 {"filename":"2df20bfac0b76347.jpg",
  "path":"2026/02/2df20bfac0b76347.jpg",
  "size":33404,
  "url":"https://assets.babarot.dev/files/2026/02/2df20bfac0b76347.jpg"}
 ```
-
 
 ## おわりに
 

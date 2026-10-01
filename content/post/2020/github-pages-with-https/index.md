@@ -1,10 +1,8 @@
 ---
 title: "GitHub Pages で HTTPS を有効にする"
 date: "2020-01-20T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
+hidden: true
 ---
 
 GitHub Pages で静的ページを公開するのが簡単なのでよく使う。
@@ -22,7 +20,9 @@ GitHub Pages で静的ページを公開するのが簡単なのでよく使う�
 185.199.111.153
 ```
 
-{{< img src="ip.png" width="400" >}}
+:::img{width=400}
+![](ip.png)
+:::
 
 待っていると数分でつながるようになる。
 
@@ -40,7 +40,9 @@ babarot.me.             3185    IN      A       185.199.109.153
 
 ## 2. 該当リポジトリで設定
 
-{{< img src="settings.png" width="600" >}}
+:::img{width=600}
+![](settings.png)
+:::
 
 1. Custom domain に使用する独自ドメインを書く (CNAME ファイルがコミットされる)
 2. 少し待ってると Enforce HTTPS のチェックボックスが押せるようになる

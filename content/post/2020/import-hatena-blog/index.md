@@ -1,10 +1,7 @@
 ---
 title: "はてなブログの記事をインポートした"
 date: "2020-01-28T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 動機はこれ。
@@ -35,7 +32,7 @@ Qiita の記事も移行するかどうかは未定[^1]だけど、はてなブ�
 
 移行に使ったのはこれ。
 
-{{< hatena "https://github.com/x-motemen/blogsync" >}}
+https://github.com/x-motemen/blogsync
 
 これはもともとローカルに引っ張ってきて更新してブログに Sync するようなツールっぽいけど、これのおかげで自分で生 API 叩かずに手元に全エントリを引っ張ってこれたので使い勝手が良かった。
 

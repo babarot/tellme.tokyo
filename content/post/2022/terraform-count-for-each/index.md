@@ -1,10 +1,7 @@
 ---
 title: "Terraform の count と for_each の使い分け"
 date: "2022-06-12T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 ## count と for_each
@@ -54,7 +51,6 @@ count の場合は [count.index](https://www.terraform.io/language/meta-argument
 **基本的に count を使用しない**。count だとリソースのアドレス (state) が配列となり、途中のリソースを削除するとその index が飛ぶので Terraform が配列の詰め直しをしてしまう。それにより、リソースの削除と作成が行われてしまい予期せぬアクシデントを引き起こす可能性がある。
 
 例えば、次のようなリソースの定義があるとする。[google_project_service](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project_service) は指定した GCP プロジェクトで使用するサービスの API を有効化するリソースである。
-
 
 ```hcl
 variable "gcp_enabled_services" {
@@ -120,7 +116,6 @@ module.myservice.google_project_service.api["iam.googleapis.com"]
 > Before `for_each` was available, it was common to derive count from the length of a list and use `count.index` to look up the original list value:
 
 for_each が追加される前は count によるリソース作成が常套句として用いられていた。ドキュメントにもある通り、for_each が導入された Terraform 0.12.6 以降はこちらを使用したほうが安全なケースが多い。また、count と for_each は同じリソース内に同居できない。
-
 
 ## count を使うとき
 

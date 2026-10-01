@@ -1,0 +1,85 @@
+# Post URLs that were public on the Hugo site; the Astro site must keep each
+# one working, as a post or as a redirect (public/_redirects). Checked by
+# `pnpm check:urls`.
+#
+# Gathered from two builds of the Hugo site:
+# - commit 44081ee (2026-03, the last before every post became a draft),
+#   built with its theme submodules: 27 posts
+# - the gh-pages branch (2023-12-31, the GitHub Pages era): 60 posts
+# 75 in all (12 in both). 16 of the 2023 URLs were renamed later; they are
+# redirected to the current ones.
+/post/2014/11/20/134901/
+/post/2014/11/20/enhancd/
+/post/2015/05/22/103912/
+/post/2015/08/14/120049/
+/post/2015/11/07/165928/
+/post/2015/11/24/142143/
+/post/2015/12/13/174209/
+/post/2015/12/21/122701/
+/post/2016/09/12/232337/
+/post/2016/09/22/003448/
+/post/2016/09/25/213810/
+/post/2016/10/01/191546/
+/post/2016/10/01/mercari/
+/post/2016/11/06/230902/
+/post/2016/12/04/154846/
+/post/2016/12/05/021806/
+/post/2016/12/06/211226/
+/post/2016/12/12/002116/
+/post/2017/04/04/023351/
+/post/2017/08/05/sd1707/
+/post/2017/10/30/cloud-iap/
+/post/2017/11/02/sre/
+/post/2017/12/01/kubeabc/
+/post/2017/12/05/cashless/
+/post/2018/01/04/subscribing-services-2017/
+/post/2018/01/05/looking-back-on-2017/
+/post/2018/01/05/recap/
+/post/2018/01/16/renga_no_ie/
+/post/2018/04/02/golang-shell-exit-code/
+/post/2018/04/25/go-finder/
+/post/2018/05/29/repo_kawasaki/
+/post/2018/07/23/microservices-platform-meetup/
+/post/2018/08/01/tokyo-life/
+/post/2018/08/02/vault-intro/
+/post/2018/08/07/kubernetes-configmaps-secrets/
+/post/2018/08/13/hugo-mermaid/
+/post/2018/08/16/bind-address/
+/post/2018/09/27/windows-era/
+/post/2018/09/27/windows-softwares/
+/post/2018/10/16/write-blog-smoothly/
+/post/2018/11/08/the-inoue-brothers/
+/post/2018/11/19/github-label-management/
+/post/2019/02/15/release-go/
+/post/2019/02/19/hashicorp-hcl2/
+/post/2019/02/19/test-kubernetes-yaml/
+/post/2019/04/10/json-unmarshal-with-interface-element/
+/post/2019/08/27/sd1909/
+/post/2019/10/03/hashiconf2019/
+/post/2019/12/28/2019-books-movies/
+/post/2019/12/31/2019-review/
+/post/2019/12/31/recap/
+/post/2020/01/20/github-pages-with-https/
+/post/2020/01/28/gist-in-local/
+/post/2020/01/28/import-hatena-blog/
+/post/2020/01/29/migrate-https-gh-pages-from-cloudflare/
+/post/2020/02/04/release-go-cli-tool/
+/post/2020/02/07/tee-command/
+/post/2022/02/28/mercari-to-10x/
+/post/2022/03/02/package-manager-for-cli/
+/post/2022/06/12/terraform-count-for-each/
+/post/2022/06/15/terraform-variables-is-api/
+/post/2022/07/03/terraform-object-type/
+/post/2022/07/03/terraform-optional-attributes-for-object-type-constraints/
+/post/2022/12/28/10x-1st-y-aniv/
+/post/2022/12/28/recap/
+/post/2023/03/21/manage-gh-extensions/
+/post/2023/12/31/2023-review/
+/post/2023/12/31/recap/
+/post/2024/12/31/recap/
+/post/2025/01/05/nas/
+/post/2025/01/29/gomi/
+/post/2025/02/16/gomi-xdg-trash-spec/
+/post/2026/02/08/obsidian-images-nas/
+/post/2026/02/09/blogging-from-obsidian/
+/post/2026/03/12/ai-coding-agent-rules/

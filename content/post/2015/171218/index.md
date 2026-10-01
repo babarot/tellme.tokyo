@@ -1,10 +1,8 @@
 ---
 title: "書くのが面倒な zsh 補完関数を簡単に生成するツール「zgencomp」つくった"
 date: "2015-03-24T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
+hidden: true
 ---
 
 [b4b4r07/zgencomp・GitHub](https://github.com/b4b4r07/zgencomp)

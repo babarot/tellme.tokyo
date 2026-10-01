@@ -1,0 +1,53 @@
+{
+  "name": "tellme.tokyo",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro",
+    "check:figures": "node tools/check-figures.ts",
+    "check:urls": "node tools/check-urls.ts",
+    "prune:link-previews": "node tools/prune-link-previews.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "allowScripts": {
+    "esbuild": true
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.1",
+    "@astrojs/mdx": "^8.0.2",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "@resvg/resvg-js": "^2.6.2",
+    "@tailwindcss/typography": "^0.5.20",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.5",
+    "budoux": "^0.9.3",
+    "mermaid": "^12.0.0",
+    "remark-directive": "^4.0.0",
+    "satori": "^0.33.5",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^4.3.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^26.6.3",
+    "happy-dom": "^20.14.5",
+    "rehype-stringify": "^10.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "typescript": "^6.0.3",
+    "unified": "^11.0.5",
+    "vfile": "^6.0.3",
+    "vitest": "^5.0.2",
+    "wrangler": "^4.144.0"
+  }
+}

@@ -1,10 +1,7 @@
 ---
 title: "ローカルから Gist を編集する方法"
 date: "2020-01-28T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 コードスニペットなどの管理によく Gist を使う。
@@ -26,7 +23,7 @@ Gist はあくまでも git リポジトリなので git clone して手元で�
 
 [gist](https://github.com/b4b4r07/gist) という Gist に対して簡単な CRUD 操作ができるツールを Go で書いた。
 
-{{< hatena "https://github.com/b4b4r07/gist" >}}
+https://github.com/b4b4r07/gist
 
 gistコマンドは次のサブコマンドを持つ。
 

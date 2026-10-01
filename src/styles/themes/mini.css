@@ -1,0 +1,52 @@
+/* Theme "mini": the colors of the Hugo-era theme (babarot/mini,
+   static/css/mini.css): purple links, navy headings, a navy-tinted dark mode.
+   The roles are listed in default.css. */
+
+[data-theme='mini'] {
+  --c-page: rgb(255 255 255);
+  --c-ink: rgb(69 65 81);
+  --c-brand: rgb(112 111 142);
+  --c-heading: rgb(43 36 96);
+  --c-body: rgb(69 65 81);
+  --c-subtle: rgb(173 169 186);
+  --c-muted: rgb(131 129 137);
+  --c-faint: rgb(131 129 137);
+  --c-faint-hover: rgb(113 97 239);
+  --c-list-title: rgb(166 67 253);
+  --c-link: rgb(166 67 253);
+  --c-link-line: transparent;
+  --c-line: rgb(229 229 229);
+  --c-line-strong: rgb(153 153 153);
+  --c-quote: rgb(153 153 153);
+  --c-surface: rgb(248 248 251);
+  --c-code-bg: rgb(248 248 251);
+  --c-code: rgb(34 30 46);
+  --c-accent: rgb(113 97 239);
+  --c-draft: var(--color-amber-600);
+  --c-shade: rgb(43 36 96 / 0.12);
+}
+
+[data-theme='mini'].dark,
+[data-theme='mini'] .dark {
+  --c-page: rgb(34 34 46);
+  --c-ink: rgb(220 220 220);
+  --c-brand: rgb(173 169 186);
+  --c-heading: rgb(255 255 255);
+  --c-body: rgb(220 220 220);
+  --c-subtle: rgb(173 169 186);
+  --c-muted: rgb(173 169 186);
+  --c-faint: rgb(131 129 137);
+  --c-faint-hover: rgb(166 67 253);
+  --c-list-title: rgb(166 67 253);
+  --c-link: rgb(166 67 253);
+  --c-link-line: transparent;
+  --c-line: rgb(77 77 77);
+  --c-line-strong: rgb(128 128 128);
+  --c-quote: rgb(240 240 240);
+  --c-surface: rgb(13 13 28);
+  --c-code-bg: rgb(13 13 28);
+  --c-code: rgb(233 233 233);
+  --c-accent: rgb(166 67 253);
+  --c-draft: var(--color-amber-500);
+  --c-shade: rgb(255 255 255 / 0.12);
+}

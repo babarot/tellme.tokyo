@@ -1,13 +1,13 @@
 ---
 title: "『ルポ川崎』を読んだ"
 date: "2018-05-29T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
+hidden: true
 ---
 
-{{< img src="book.jpg" width="300" >}}
+:::img{width=300}
+![](book.jpg)
+:::
 
 本作は帯にある「ここは、地獄か？」という謳い文句のとおりに現代のディストピアと言われる神奈川県・川崎市 (とくに川崎区) を舞台に書かれたルポルタージュ (現地報告) である。
 

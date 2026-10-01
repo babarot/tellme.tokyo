@@ -1,6 +1,21 @@
 .DS_Store
-public
 .hugo_build.lock
 resources/
 docs
 blog
+node_modules
+dist
+.astro
+
+# Fonts fetched from Google Fonts for OG images (src/og/fonts.ts)
+.cache/fonts/
+
+# Local work notes (written in Japanese; kept out of the repository)
+PLAN.md
+
+# Hand-picked posts of the design phase; no longer read (the posts are in
+# content/post since the migration). Kept ignored until the folder is deleted.
+sample/
+
+# wrangler dev state
+.wrangler/

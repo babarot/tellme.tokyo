@@ -1,10 +1,8 @@
 ---
 title: "Go で zsh history を SQL 的に活用する"
 date: "2017-02-14T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
+hidden: true
 ---
 
 僕は開発中、zsh のヒストリー補完の機能をよく使います。具体的には次のような場面が多いです。
@@ -51,7 +49,7 @@ zsh のオプション (`setopt`) や Third-party 系のプラグインなどを
 
 ## zsh-history
 
-{{< hatena "https://github.com/b4b4r07/zsh-history" >}}
+https://github.com/b4b4r07/zsh-history
 
 ### 特徴
 

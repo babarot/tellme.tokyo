@@ -1,0 +1,22 @@
+/* Mermaid diagrams: centered, scrolling sideways when wider than the column.
+   Before drawing (or if drawing fails) the source shows as plain text. */
+pre.mermaid {
+  margin: 2rem 0;
+  padding: 0;
+  overflow-x: auto;
+  background: transparent !important;
+  border: 0 !important;
+  text-align: center;
+}
+
+pre.mermaid:not([data-rendered='true']) {
+  color: var(--mermaid-muted, gray);
+  font-size: 0.75rem;
+  text-align: left;
+  white-space: pre;
+}
+
+pre.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}

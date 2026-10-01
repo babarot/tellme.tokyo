@@ -1,0 +1,154 @@
+/* Shared figure components. Every past figure depends on these.
+   - Add new components or modifier classes freely.
+   - Do not change how an existing class looks. If it must change, update every
+     figure that uses it in the same change (grep the class under the figures
+     directories).
+   - Promote a pattern here once it shows up in a figure's own <style> two or
+     three times; do not design components up front. */
+
+/* The frame every <Partial> is wrapped in */
+.fig {
+  margin: 2rem 0;
+  border: 1px solid var(--fig-border);
+  border-radius: var(--fig-radius);
+  background: var(--fig-bg);
+  padding: var(--fig-space-4) var(--fig-space-6);
+  color: var(--fig-fg);
+  font-size: var(--fig-text);
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+.fig code {
+  font-family: var(--font-mono);
+  font-size: var(--fig-text);
+}
+
+/* The article styles inline code as a chip; inside a figure the figure is
+   already the surface, so drop it. */
+.article .fig code {
+  background: none;
+  padding: 0;
+  font-weight: 400;
+}
+
+.fig small {
+  color: var(--fig-muted);
+  font-size: var(--fig-text-sm);
+}
+
+/* Hue modifiers: set --c, which .tag and .note read */
+.fig .gray { --c: var(--fig-gray); }
+.fig .blue { --c: var(--fig-blue); }
+.fig .orange { --c: var(--fig-orange); }
+.fig .green { --c: var(--fig-green); }
+.fig .red { --c: var(--fig-red); }
+
+/* .tag: a colored dot and bold label, e.g. <span class="tag blue">my.ai</span> */
+.fig .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  color: var(--c, var(--fig-gray));
+  font-family: var(--font-mono);
+  font-size: var(--fig-text-sm);
+  font-weight: 700;
+}
+
+.fig .tag::before {
+  content: '';
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 9999px;
+  background: currentColor;
+}
+
+/* .note: a short remark beside an item, muted unless given a hue */
+.fig .note {
+  color: var(--c, var(--fig-muted));
+  font-size: var(--fig-text-sm);
+}
+
+/* .chip: a small bordered label, e.g. yes / no on a branch */
+.fig .chip {
+  border: 1px solid var(--fig-border);
+  border-radius: var(--fig-radius-sm);
+  padding: 0 0.35em;
+  color: var(--fig-muted);
+  font-family: var(--font-mono);
+  font-size: var(--fig-text-xs);
+}
+
+/* .caption: a footer below a rule, for legends or a one-line takeaway */
+.fig .caption {
+  margin-top: var(--fig-space-4);
+  border-top: 1px solid var(--fig-border);
+  padding-top: var(--fig-space-3);
+  color: var(--fig-muted);
+  font-size: var(--fig-text-sm);
+}
+
+/* .legend: a row of .tag items explaining the colors */
+.fig .legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fig-space-2) var(--fig-space-4);
+}
+
+/* .tree: nested <ul> drawn as a file tree. Each item holds a .row. */
+.fig .tree,
+.fig .tree ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fig .tree ul {
+  margin-left: 0.6rem;
+}
+
+.fig .tree li {
+  position: relative;
+  padding-left: 1.4rem;
+}
+
+.fig .tree > li {
+  padding-left: 0;
+}
+
+/* vertical line down to the next sibling */
+.fig .tree ul > li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-left: 1px solid var(--fig-line);
+}
+
+.fig .tree ul > li:last-child::before {
+  bottom: auto;
+  height: 0.95rem;
+}
+
+/* horizontal branch into the row */
+.fig .tree ul > li::after {
+  content: '';
+  position: absolute;
+  top: 0.95rem;
+  left: 0;
+  width: 1rem;
+  border-top: 1px solid var(--fig-line);
+}
+
+.fig .tree .row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--fig-space-1) 0.6rem;
+  padding: 0.3rem 0;
+}
+
+.fig .tree .row > b {
+  font-weight: 600;
+}

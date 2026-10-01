@@ -1,10 +1,7 @@
 ---
 title: "退職と転職。人生の振り返り"
 date: "2022-02-28T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 お久しぶりです。
@@ -49,8 +46,6 @@ JP でもいよいよマイクロサービス化を推し進めようとの経�
 [Mercari Meetup for Microservices Platform を開催しました | メルカリエンジニアリング](https://engineering.mercari.com/blog/entry/2018-07-24-161759/)
 
 この仕組のおかげでそれから数年、ほぼすべてのマイクロサービスはここから生まれて数千もの Terraform states を生むまでに貢献します。
-
-
 
 ## 2019年〜
 
@@ -104,10 +99,9 @@ Microservices Platform チーム (のちに Platform チーム) として動き�
 
 10X では SRE エンジニアとしての入社です。SRE ロールを持つのは自分ひとりなので人手が足りません。10X のインフラ課題を一緒に解決してくれる人を探しています。10X に入社してやりたいこと、その他詳しいことは入社時に語った Podcast があるので気になる方は試聴してみてください。
 
-{{< spotify "368dieIZeYabeHAw2fH0Y7" "black" "big" >}}
+::spotify{type=episode id=368dieIZeYabeHAw2fH0Y7 theme=dark}
 
 Twitter [@babarot](https://twitter.com/b4b4r07)
-
 
 ## 最後に
 

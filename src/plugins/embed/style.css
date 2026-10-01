@@ -1,0 +1,58 @@
+/* Embeds: iframes fill the column; their box keeps the ratio or height set in
+   providers.ts. Colors: --embed-line, --embed-muted. */
+.embed {
+  width: 100%;
+  margin: 2rem 0;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.embed-spotify {
+  border-radius: 12px;
+}
+
+.embed-figure {
+  margin: 2rem 0;
+}
+
+.embed-figure .embed {
+  margin: 0;
+  border: 1px solid var(--embed-line, rgb(128 128 128 / 0.25));
+}
+
+.embed-figure figcaption {
+  margin-top: 0.5rem;
+  color: var(--embed-muted, gray);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+/* A tweet before X's script replaces it, or without JavaScript */
+.embed-tweet {
+  margin: 2rem 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--embed-line, rgb(128 128 128 / 0.25));
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+/* X's embed, once rendered */
+.twitter-tweet-rendered {
+  margin: 2rem auto !important;
+}
+
+/* X's document declares no color scheme (so light). When the page is dark,
+   the mismatch makes the browser paint the iframe an opaque white, which shows
+   at the card's rounded corners. Matching schemes keep it transparent; the
+   tweet's own colors come from data-theme, not from this. */
+.twitter-tweet-rendered iframe {
+  color-scheme: light;
+}

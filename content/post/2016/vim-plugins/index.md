@@ -1,10 +1,7 @@
 ---
 title: "最近の Vim のプラグイン管理について考える"
 date: "2016-12-05T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 この記事は [Vim Advent Calendar 2016](http://qiita.com/advent-calendar/2016/vim) の 5 日目の記事です。
@@ -81,7 +78,7 @@ GitHub 登場以降は [vim.org](http://www.vim.org) にアップロードされ
 
 ※ 赤:NeoBundle、黄:vim-plug、青:dein.vim
 
-{{< img src="1.png" width="800" >}}
+![](1.png)
 
 <https://www.google.co.jp/trends/explore?geo=JP&q=dein.vim,NeoBundle,vim-plug>
 

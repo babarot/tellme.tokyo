@@ -1,15 +1,12 @@
 ---
 title: "Vim からシェルコマンドを実行するプラグインを作った"
 date: "2014-10-05T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
-{{< hatena "https://github.com/b4b4r07/vim-shellutils" >}}
+https://github.com/b4b4r07/vim-shellutils
 
-{{< img src="demo.gif" width="700" >}}
+![](demo.gif)
 
 Vim の魅力の1つにシェルとの親和性が挙げられます。
 GUIじゃない Vim を使っている時にどうしてもさっと `ls` したかったり、さっとファイルの中身を `cat` してみたかったりしたときに、Vim を終了したくない、なんてことはありませんか。

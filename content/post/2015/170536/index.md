@@ -1,17 +1,17 @@
 ---
 title: "やったー！GitHub にスターが 200★ 付いた"
 date: "2015-11-12T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
+hidden: true
 ---
 
 [repo]: https://github.com/b4b4r07/enhancd
 
 ありがとうございます。素直に嬉しい。GitHub アカウント開設して初めての 3 桁以上（100 超えたときは観測していなかった）のスターを頂いた。
 
-{{< img src="20151112165436.png" width="400" >}}
+:::img{width=400}
+![](20151112165436.png)
+:::
 
 ## つくったもの
 
@@ -46,7 +46,9 @@ toc: false
 
 コントリビューターの方、ありがとうございました。
 
-{{< img src="20151112165927.png" width="400" >}}
+:::img{width=400}
+![](20151112165927.png)
+:::
 
 今後とも宜しくお願いします。
 

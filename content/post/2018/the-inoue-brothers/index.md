@@ -1,18 +1,16 @@
 ---
 title: "『僕たちはファッションの力で世界を変える』を読んだ"
 date: "2018-11-08T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
+hidden: true
 ---
 
-<img src="book.jpg" width="400">
+:::img{width=400}
+![](book.jpg)
+:::
 
-{{< rawhtml >}}
 <iframe src="https://player.vimeo.com/video/147622312" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 <p><a href="https://vimeo.com/147622312">The Inoue Brothers - In The Land of The Alpaca</a> from <a href="https://vimeo.com/presentplus">Present Plus</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
-{{</ rawhtml >}}
 
 >デンマークで生まれ育った日系二世兄弟、井上聡(1978年生まれ)と清史(1980年生まれ)によるファッションブランド。2004年のブランド設立以来、生産の過程で地球環境に大きな負荷をかけない、生産者に不当な労働を強いない"エシカル(倫理的な)ファッション"を信条とし、春夏は東日本大震災で被災した縫製工場で生産するTシャツ、秋冬は南米アンデス地方の貧しい先住民たちと一緒につくったニットウェアを中心に展開する。さまざまなプロジェクトを通して、世の中に責任ある生産方法に対する関心を生み出すことを目標にしている。聡はコペンハーゲンを拠点にグラフィックデザイナーとして、清史はロンドンでヘアデザイナーとしても活動。そこで得た収入のほとんどを「ザ・イノウエ・ブラザーズ」の運営に費やす。
 
@@ -60,7 +58,9 @@ toc: false
 
 最近では、次の写真のように、長く愛用してほしいという想いから天然の防虫剤としても知られる楠にメッセージを刻印したものを付属してくれている。こういった自分たちのプロダクトへの愛情とそれを購入者へ伝えたいという気持ちを見ることができて、なんとも言えない嬉しいような感動のような気持ちが湧いた。
 
-<img src="muffler.jpg" width="600">
+:::img{width=600}
+![](muffler.jpg)
+:::
 
 ## リファレンス
 

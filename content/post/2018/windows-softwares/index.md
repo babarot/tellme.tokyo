@@ -1,20 +1,13 @@
 ---
 title: "Windows 時代の使用ソフト晒し"
 date: "2018-09-27T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 2013 年ごろまで Windows を使っていた (Windows 7 SP2 が最後)。
 そのころはいろいろなフリーソフトにお世話になった。
 
-{{< img src="./afxw.png" 
-caption="超低機能 ２画面ファイラー「[![](afxwico.png)](http://akt.d.dooo.jp/akt_afxw.html)」"
-class="text-center"
-link="https://afxw.sakura.ne.jp/akt_afxw.html"
->}}
+[![超低機能 ２画面ファイラー「![](http://akt.d.dooo.jp/akt_afxw.html)」](./afxw.png "超低機能 ２画面ファイラー「![](http://akt.d.dooo.jp/akt_afxw.html)」")](https://afxw.sakura.ne.jp/akt_afxw.html)
 
 ## 一覧
 

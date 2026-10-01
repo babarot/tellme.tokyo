@@ -1,13 +1,12 @@
 ---
 title: "ブログをGKEで運用し、Spinnakerでデプロイする"
 date: "2017-07-30T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
-{{< img src="kubernetes.png" width="200" >}}
+:::img{width=200}
+![](kubernetes.png)
+:::
 
 このブログを[はてなブログ](http://b4b4r07.hatenadiary.com/)から [Google Container Engine](https://cloud.google.com/container-engine/) (GKE) に移行しました。
 
@@ -29,7 +28,7 @@ toc: false
 
 今回の移行に際し、移行周りのスクリプトや kubernetes のマニフェストファイル、及び記事自体を管理するために GitHub にリポジトリを作りました。
 
-{{< hatena "https://github.com/b4b4r07/tellme.tokyo" >}}
+https://github.com/b4b4r07/tellme.tokyo
 
 ### 1. ブログ用の Docker コンテナを作成
 
@@ -54,8 +53,6 @@ hugo コンテナ側で生成した記事一式が入った public ディレク�
 
 - [Docker マルチステージビルドで幸せコンテナライフ / Understanding docker's multi-stage builds // Speaker Deck](https://speakerdeck.com/toricls/understanding-dockers-multi-stage-builds)
 - [Docker multi stage buildで変わるDockerfileの常識 - Qiita](http://qiita.com/minamijoyo/items/711704e85b45ff5d6405)
-
-
 
 Docker のレジストラには [Docker Hub](https://hub.docker.com/) を利用しました。料金的に [Google Container Registry](https://cloud.google.com/container-registry/) を使っても安そうなのでいいかもしれません。
 
@@ -165,7 +162,9 @@ lego      1               Fri Jul 28 15:28:06 2017        DEPLOYED        kube-l
 
 Docker Hub に上がった新しいイメージで Pod を作り直す部分については、[Spinnaker](https://www.spinnaker.io/) でデプロイさせるようにしました。
 
-{{< img src="cicd.png" width="600" >}}
+:::img{width=600}
+![](cicd.png)
+:::
 
 ### Circle CI による継続的インテグレーション
 
@@ -174,8 +173,6 @@ Docker Hub に上がった新しいイメージで Pod を作り直す部分に�
 ちょっと面倒なことに、Circle CI で使われる Docker イメージでは docker のバージョンが古く、multi-stage builds (v17.05~) が利用できませんでした。Docker コンテナの中で docker のバージョンを上げることも考えたのですが、config.yml が長くなることなどを考えると Dockerfile を分けたほうが安上がりだと思い、Circle CI 用に分割した Dockerfile も push してあります。
 
 参考: [CircleCI2.0でRailsアプリをdocker multi stage buildをする - あすたぴのブログ](http://astap.hatenablog.jp/entry/2017/06/11/184611)
-
-
 
 [*.circleci/config.yml*](https://github.com/b4b4r07/tellme.tokyo/blob/master/.circleci/config.yml)
 
@@ -267,4 +264,4 @@ blog-3067350122-tkzlh   1/1       Running   0          15d
 
 しかし、このブログの移行と他の Web サービスの GKE 移行なども重ねてきて、とても勉強になりました。ただの静的ファイルの配信は他のアプリ運用のためのいい練習となり、応用にもなる話でもあるので、結果的にはよかったです。また、ハマリポイントなども見えてきたように思います。それはまた別の機会に記事にします。
 
-{{< twitter user="b4b4r07" id="888184800963510273" >}}
+::tweet{id=888184800963510273 user=b4b4r07}

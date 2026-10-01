@@ -1,0 +1,517 @@
+{
+  "http://b4b4r07.hatenadiary.com/entry/2016/10/17/205021": {
+    "url": "http://b4b4r07.hatenadiary.com/entry/2016/10/17/205021",
+    "failed": true,
+    "fetchedAt": "2026-10-01T10:05:49.845Z"
+  },
+  "http://gihyo.jp/magazine/SD/archive/2017/201707": {
+    "url": "http://gihyo.jp/magazine/SD/archive/2017/201707",
+    "title": "Software Design 2017年7月号 | 技術評論社",
+    "description": "第1特集 理論＆応用で シェル力の幅を広げる 開発でもインフラ管理でも運用でも、シェル上で行う作業はたくさんあります。だからこそ、シェルの操作が少し上達しただけで、いろいろな作業が速く、楽にできるようになります。本特集は、初心者もベテランも、ご自身のレベルに合わせて実力アップを図れるように、2つのパートで構成しています。 理論編（第1～3章）では、設計思想やしくみをふまえながらシェルの使い方や機能を解説します。今までシェルをなんとなく使ってきたという人は、まずはここでおさらいを。 応用編（第4～5章）では、熟練者がさらにシェルの活用範囲を広げられる知見を紹介します。 第2特集 データの抽出・加工に強くなる！ MySQL［SELECT文］集中講座 システムやアプリを開発する以上はデータベース、とくにリレーショナルデータベースの扱いを避けては通れず、その中身のデータを操作するためのSQLは、エンジニアの必修科目と言えます。今回はそんなSQLの中で、最も高い頻度で使われるであろう「SELECT文」にスポットを当て、基本構文からORDER BY、GROUP BYを使ったデータの抽出、各種JOINとサブクエリを使ったデータの加工までと、基本から応用までを一気に解説します。本特集では、RDBMSとしてはオープンソースのMySQLを、操作するデータとしては都道府県・市町村の人口・面積データを使います。実務を意識しながら、お手もとの環境でぜひ実践してください。 一般記事 ハッシュ関数を使いこなしていますか？【後編】 ソフトウェア開発での実装ポイント ハッシュ関数は近年のソフトウェア開発において、とても重要な役割を担っています。この特集では前編に引き続き、ハッシュ関数を実際に利用する際に注意すべき点や、OSSではどのように実装されているかなど、もう少し掘り下げてハッシュ関数について解説します。 一般記事 Windows Server 2016で構築する最新ファイルサーバ【後編】 進化した機能で効率化を推進 本誌2017年6月号では、ファイルサーバとしての機能の解説と構築する際に使えるWindows Server 2016の最新機能にも触れました。さて、実際に試してみたいと思った方が次に考えるのは、その環境をどうやって用意するかではないでしょうか。今回は手軽にWindows Server 2016のファイルサーバ環境を作るべく、クラウド（Microsoft Azure）上に検証用のファイルサーバを構築する方法を解説します。また、クラウドならではのコツなど、知っておくべき、もしくは気をつけるべきポイントにも触れていきます。 一般記事 Jamesのセキュリティレッスン【10】 Jamesの挑戦状！ Wireshark実践問題 Wiresharkを使ったパケットキャプチャへの理解を深める本連載。連載第10回を迎えた今回は、Jamesの挑戦状としてWiresharkについての問題を出題。過去の連載も参考にしながら、全問正解に挑戦してみてください！",
+    "image": "https://gihyo.jp/assets/images/ogp/2017/641707.jpg",
+    "icon": "https://gihyo.jp/GHfavicon.svg",
+    "siteName": "技術評論社",
+    "fetchedAt": "2026-10-01T10:05:51.551Z"
+  },
+  "http://mercan.mercari.com/entry/2016/10/18/120000": {
+    "url": "http://mercan.mercari.com/entry/2016/10/18/120000",
+    "failed": true,
+    "fetchedAt": "2026-10-01T10:05:50.475Z"
+  },
+  "http://qiita.com/b4b4r07/items/2cf90da00a4c2c7b7e60": {
+    "url": "http://qiita.com/b4b4r07/items/2cf90da00a4c2c7b7e60",
+    "failed": true,
+    "fetchedAt": "2026-10-01T10:05:48.770Z"
+  },
+  "http://site.crowi.wiki/": {
+    "url": "http://site.crowi.wiki/",
+    "failed": true,
+    "fetchedAt": "2026-10-01T10:05:51.908Z"
+  },
+  "http://vimconf.vim-jp.org/2016/": {
+    "url": "http://vimconf.vim-jp.org/2016/",
+    "title": "Redirecting…",
+    "description": "",
+    "image": "",
+    "icon": "",
+    "siteName": "vimconf.vim-jp.org",
+    "fetchedAt": "2026-10-01T10:05:50.370Z"
+  },
+  "http://www.breakingbad.jp/": {
+    "url": "http://www.breakingbad.jp/",
+    "title": "ブレイキング・バッド ファイナル・シーズン | ソニー・ピクチャーズ公式",
+    "description": "ハンクと同僚のゴメスが再びハイゼンベルグ逮捕に動き出した。きっかけは、ウォルターの家で偶然に見つけた本に記された走り書き。遂にウォルターの闇の顔が暴かれる時がきてしまった。そして、ストーリーはあまりにも残酷で悲しすぎる２つの家族の崩壊へと一気に加速する。ブルーメス精製者ハイゼンベルグはもういない。ウォルターは姿をくらませるのだった。しかし、家族への想いは永久のもの。どこに居ようと、誰に何を思われようがウォルターは家族を陰ながら支え続けようとするが・・・",
+    "image": "",
+    "icon": "https://www.sonypictures.jp/sites/default/files/favicon.ico",
+    "siteName": "ブレイキング・バッド ファイナル・シーズン | ソニー・ピクチャーズ公式",
+    "fetchedAt": "2026-10-01T10:05:51.858Z"
+  },
+  "https://b4b4r07.hatenadiary.com": {
+    "url": "https://b4b4r07.hatenadiary.com",
+    "failed": true,
+    "fetchedAt": "2026-10-01T10:05:48.700Z"
+  },
+  "https://babarot.me/gomi": {
+    "url": "https://babarot.me/gomi",
+    "title": "gomi - A Safer Alternative to the UNIX rm Command",
+    "description": "Never worry about accidentally deleting important files again. gomi moves them to trash instead of permanent deletion, giving you peace of mind in the command line.",
+    "image": "https://storage.googleapis.com/zenn-user-upload/b3b2ba4ffc5b-20250208.png",
+    "icon": "https://gomi.dev/favicon.ico",
+    "siteName": "gomi.dev",
+    "fetchedAt": "2026-10-01T08:24:46.349Z"
+  },
+  "https://builderscon.io/builderscon/tokyo/2016": {
+    "url": "https://builderscon.io/builderscon/tokyo/2016",
+    "failed": true,
+    "fetchedAt": "2026-10-01T10:05:50.178Z"
+  },
+  "https://filmarks.com/users/b4b4r07": {
+    "url": "https://filmarks.com/users/b4b4r07",
+    "title": "babarotの映画レビュー | Filmarks",
+    "description": "Followers:6人 ／ Following：8人 ／ レビュー数：391件",
+    "image": "https://d2ueuvlup6lbue.cloudfront.net/variants/production/store/fill/200/200/ik2xn0d7l0oyyi5ock19mkfkinhh/_.png",
+    "icon": "https://d2ueuvlup6lbue.cloudfront.net/favicon.ico",
+    "siteName": "filmarks.com",
+    "fetchedAt": "2026-10-01T10:05:52.084Z"
+  },
+  "https://gihyo.jp/magazine/SD/archive/2019/201909": {
+    "url": "https://gihyo.jp/magazine/SD/archive/2019/201909",
+    "title": "Software Design 2019年9月号 | 技術評論社",
+    "description": "第1特集 気になるとこだけまとめて知りたいGoogle Cloud Platform 開発・分析・人工知能のサービスを一挙解説 Googleが提供するクラウドサービス「Google Cloud Platform（GCP）」は、サーバーレス・No-Ops指向を実現することを意識して開発されていると言います。GCPを使うと、アプリケーションのデプロイも、ビッグデータに対するクエリの実行も、AIの利用も、簡単かつ高速で、背後にあるインフラの存在を感じさせません。 本特集で用意しているサンプルコードは無料クレジットの範囲内で実行できるため、自ら手を動かしてGCPを体験してみてください。インフラ管理から解放される快適さを感じられるのはもちろんのこと、GCPの豊富なサービスラインナップから自分たちのサービスをより良くするアイデアが閃くかもしれません。 第2特集 ひとりで始めるPythonプログラミング入門 コーディングと機械学習環境の作り方 いま一番注目をされているプログラミング言語は、何と言ってもPythonです。AI・機械学習を扱うためにベストな存在として、みなさん勉強をされています。本特集では、そんなPythonの状況を踏まえ、学習意欲を継続し一人で勉強していくためのポイントをまとめました。社会人教育のプロから「独習の心構え」をいただきつつ、Python環境の作り方、ライブラリやコーディングのてほどきをまとめました。本特集で手がかりがつかんでください！",
+    "image": "https://gihyo.jp/assets/images/ogp/2019/641909.jpg",
+    "icon": "https://gihyo.jp/GHfavicon.svg",
+    "siteName": "技術評論社",
+    "fetchedAt": "2026-10-01T10:05:51.719Z"
+  },
+  "https://github.com/b4b4r07": {
+    "url": "https://github.com/b4b4r07",
+    "title": "b4b4r07 - Overview",
+    "description": "@babarot . GitHub is where b4b4r07 builds software.",
+    "image": "https://avatars.githubusercontent.com/u/9744402?v=4?s=400",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:49.273Z"
+  },
+  "https://github.com/b4b4r07/afx/": {
+    "url": "https://github.com/b4b4r07/afx/",
+    "title": "GitHub - babarot/afx: An alternative, fast package manager for plugins and executable commands",
+    "description": "An alternative, fast package manager for plugins and executable commands - babarot/afx",
+    "image": "https://opengraph.githubassets.com/d1b6f6a1d82031a15bee196650ddfe891a45b46f35e417c8af6b2553be3190ca/babarot/afx",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:51.410Z"
+  },
+  "https://github.com/b4b4r07/epoch-cat": {
+    "url": "https://github.com/b4b4r07/epoch-cat",
+    "title": "GitHub - babarot/epoch-cat: Epoch time converter and filter like less",
+    "description": "Epoch time converter and filter like less. Contribute to babarot/epoch-cat development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/1b7e03a6b6cb3f6126eb18f5d4ba4a3f5a6e39acfedf1f549e016350e8d6e121/babarot/epoch-cat",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:50.463Z"
+  },
+  "https://github.com/b4b4r07/gist": {
+    "url": "https://github.com/b4b4r07/gist",
+    "title": "GitHub - babarot/gist: :octocat: A simple gist editor for CLI",
+    "description": ":octocat: A simple gist editor for CLI. Contribute to babarot/gist development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/8d265c34bcae9b7160f2ef6af08aa76f5447e4c0132ddb200eb454491666f610/babarot/gist",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:51.860Z"
+  },
+  "https://github.com/b4b4r07/git-br": {
+    "url": "https://github.com/b4b4r07/git-br",
+    "title": "GitHub - babarot/git-br",
+    "description": "Contribute to babarot/git-br development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/85b168fceb565f11ba54779115faa4cd34942d6e272715634e57a057a22506ea/babarot/git-br",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:50.420Z"
+  },
+  "https://github.com/b4b4r07/git-bump": {
+    "url": "https://github.com/b4b4r07/git-bump",
+    "title": "GitHub - babarot/git-bump: Bump version (git tag) to next one with semver.",
+    "description": "Bump version (git tag) to next one with semver. Contribute to babarot/git-bump development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/2a915705111675b0e94f64acd23225dbab36999d2561b763d048a26e2890378e/babarot/git-bump",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:51.383Z"
+  },
+  "https://github.com/b4b4r07/git-conflict": {
+    "url": "https://github.com/b4b4r07/git-conflict",
+    "title": "GitHub - babarot/git-conflict",
+    "description": "Contribute to babarot/git-conflict development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/7c4a35f846a4c32fcef553f935c0d626f026cfafdec06c7b6d707a21d270e7a9/babarot/git-conflict",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:50.278Z"
+  },
+  "https://github.com/b4b4r07/git-open": {
+    "url": "https://github.com/b4b4r07/git-open",
+    "title": "GitHub - babarot/git-open: Type `git open` to open the GitHub page or website for a repository in your browser.",
+    "description": "Type `git open` to open the GitHub page or website for a repository in your browser. - babarot/git-open",
+    "image": "https://opengraph.githubassets.com/206110885739f1cdc245d802934a903b5832f4b91335c27633bc77b03a1bcc53/babarot/git-open",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:50.831Z"
+  },
+  "https://github.com/b4b4r07/github-labeler": {
+    "url": "https://github.com/b4b4r07/github-labeler",
+    "title": "GitHub - babarot/github-labeler: Declarative way to configure GitHub labels",
+    "description": "Declarative way to configure GitHub labels. Contribute to babarot/github-labeler development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/c6bb5779060fd4ab41b86c568f5d7a8675e3d30b590d42e91b6e7b63e0c036fc/babarot/github-labeler",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:50.901Z"
+  },
+  "https://github.com/b4b4r07/go-finder": {
+    "url": "https://github.com/b4b4r07/go-finder",
+    "title": "GitHub - babarot/go-finder: CLI finder wrapper (fzf, peco, etc) for golang",
+    "description": "CLI finder wrapper (fzf, peco, etc) for golang. Contribute to babarot/go-finder development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/d985a8cb2d8527d38d61f82c6eb4812e0e8878d2cd0b473f52a73897008b02e9/babarot/go-finder",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:49.599Z"
+  },
+  "https://github.com/b4b4r07/history": {
+    "url": "https://github.com/b4b4r07/history",
+    "title": "GitHub - babarot/history: A CLI to provide enhanced history for your shell",
+    "description": "A CLI to provide enhanced history for your shell. Contribute to babarot/history development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/843fc4938b315951d403c7cabf769b55a7f18d0552884fa7141358a54838018a/babarot/history",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:51.897Z"
+  },
+  "https://github.com/b4b4r07/httpstat": {
+    "url": "https://github.com/b4b4r07/httpstat",
+    "title": "GitHub - babarot/httpstat: It's like curl -v, with graphs and colors",
+    "description": "It's like curl -v, with graphs and colors. Contribute to babarot/httpstat development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/7a273e3491b86ef281f2e9044bc98650e21872cea07a59433f43a8091a24de97/babarot/httpstat",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:50.735Z"
+  },
+  "https://github.com/b4b4r07/iap_curl": {
+    "url": "https://github.com/b4b4r07/iap_curl",
+    "title": "GitHub - babarot/iap_curl: A CLI that is curl wrapper for making HTTP request to IAP-protected app, more easier than curl",
+    "description": "A CLI that is curl wrapper for making HTTP request to IAP-protected app, more easier than curl - babarot/iap_curl",
+    "image": "https://opengraph.githubassets.com/b06fb8746aa37135ab96d8c63bf2ff57b8d40031e86a934ab71e645887fbb93c/babarot/iap_curl",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:51.941Z"
+  },
+  "https://github.com/b4b4r07/kubeabc": {
+    "url": "https://github.com/b4b4r07/kubeabc",
+    "title": "GitHub - babarot/kubeabc: A toolkit for k8s developers",
+    "description": "A toolkit for k8s developers. Contribute to babarot/kubeabc development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/1460020e4c30649154a6e6d165e08041d625e1b1950636b18ddcdcb1fe3d3d8d/babarot/kubeabc",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:52.717Z"
+  },
+  "https://github.com/b4b4r07/kubeabc/blob/master/cli/kube": {
+    "url": "https://github.com/b4b4r07/kubeabc/blob/master/cli/kube",
+    "title": "kubeabc/cli/kube at master · babarot/kubeabc",
+    "description": "A toolkit for k8s developers. Contribute to babarot/kubeabc development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/1460020e4c30649154a6e6d165e08041d625e1b1950636b18ddcdcb1fe3d3d8d/babarot/kubeabc",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:52.458Z"
+  },
+  "https://github.com/b4b4r07/kubeabc/blob/master/scripts/alias.zsh": {
+    "url": "https://github.com/b4b4r07/kubeabc/blob/master/scripts/alias.zsh",
+    "title": "kubeabc/scripts/alias.zsh at master · babarot/kubeabc",
+    "description": "A toolkit for k8s developers. Contribute to babarot/kubeabc development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/1460020e4c30649154a6e6d165e08041d625e1b1950636b18ddcdcb1fe3d3d8d/babarot/kubeabc",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:52.276Z"
+  },
+  "https://github.com/b4b4r07/make_iap_request": {
+    "url": "https://github.com/b4b4r07/make_iap_request",
+    "title": "GitHub - babarot/make_iap_request: Sample scripts which make the HTTP request to IAP-protected app",
+    "description": "Sample scripts which make the HTTP request to IAP-protected app - babarot/make_iap_request",
+    "image": "https://opengraph.githubassets.com/184a44840538bc27e22381fae85dcbde12be75d6e6bad4fd131c8880588ece26/babarot/make_iap_request",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:51.865Z"
+  },
+  "https://github.com/b4b4r07/qiita2crowi": {
+    "url": "https://github.com/b4b4r07/qiita2crowi",
+    "title": "GitHub - babarot/qiita2crowi: [WIP] Migration tool from Qiita:Team to Crowi",
+    "description": "[WIP] Migration tool from Qiita:Team to Crowi. Contribute to babarot/qiita2crowi development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/301817900465061a3b46833aabb55807c5c9b3459097de52e8f43dab7fce0257/babarot/qiita2crowi",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:52.965Z"
+  },
+  "https://github.com/b4b4r07/req": {
+    "url": "https://github.com/b4b4r07/req",
+    "title": "GitHub - babarot/req",
+    "description": "Contribute to babarot/req development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/38db2c1c6d014fcab83e4eb4f82928cceebb9a6766f43d2da3f5257c94604152/babarot/req",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:49.723Z"
+  },
+  "https://github.com/b4b4r07/tellme.tokyo": {
+    "url": "https://github.com/b4b4r07/tellme.tokyo",
+    "title": "GitHub - babarot/tellme.tokyo: :tokyo_tower: @babarot's blog",
+    "description": ":tokyo_tower: @babarot's blog. Contribute to babarot/tellme.tokyo development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/a7194a25c438f102bbf444ef98a47d979c7eb40fa6d697a20581401b87a5fe3b/babarot/tellme.tokyo",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:51.931Z"
+  },
+  "https://github.com/b4b4r07/twistd": {
+    "url": "https://github.com/b4b4r07/twistd",
+    "title": "GitHub - babarot/twistd: :bird: Twitter Streaming Daemon",
+    "description": ":bird: Twitter Streaming Daemon. Contribute to babarot/twistd development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/5d9cf79b3622e55950bee7bf853277663de28b5d6c0b69ae7e7bcaf463a2eb5a/babarot/twistd",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:50.497Z"
+  },
+  "https://github.com/b4b4r07/vim-ansible-vault": {
+    "url": "https://github.com/b4b4r07/vim-ansible-vault",
+    "title": "GitHub - babarot/vim-ansible-vault: Encrypt/Decrypt the file contents on the buffer from Vim command line with ansible-vault",
+    "description": "Encrypt/Decrypt the file contents on the buffer from Vim command line with ansible-vault - babarot/vim-ansible-vault",
+    "image": "https://opengraph.githubassets.com/c6bdc0a0517c8c28b1b1585ed54459b931adfc46d7d592d792846f3e66b3ad1a/babarot/vim-ansible-vault",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:49.780Z"
+  },
+  "https://github.com/b4b4r07/vim-crowi": {
+    "url": "https://github.com/b4b4r07/vim-crowi",
+    "title": "GitHub - babarot/vim-crowi: A simple vim plugin for Crowi",
+    "description": "A simple vim plugin for Crowi. Contribute to babarot/vim-crowi development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/17ed6a9a350718f4e3b2df635a6dcf07ef8e72b19110e04b37ea0bdf21b89198/babarot/vim-crowi",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:53.883Z"
+  },
+  "https://github.com/b4b4r07/vim-shellutils": {
+    "url": "https://github.com/b4b4r07/vim-shellutils",
+    "title": "GitHub - babarot/vim-shellutils: :shell: A simple UNIX Shell commands emulator that works within Vim",
+    "description": ":shell: A simple UNIX Shell commands emulator that works within Vim - babarot/vim-shellutils",
+    "image": "https://opengraph.githubassets.com/0dc69d274ebf601b22f7bae089a5cc8c61bbc9a4ba7d2f6f8f77e4b63f9a8422/babarot/vim-shellutils",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:49.410Z"
+  },
+  "https://github.com/b4b4r07/yamato-bot": {
+    "url": "https://github.com/b4b4r07/yamato-bot",
+    "title": "GitHub - babarot/yamato-bot",
+    "description": "Contribute to babarot/yamato-bot development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/e23e9102a45602718e7f370301626a3854f6ffcc8dd02e201fb701b1f0872d77/babarot/yamato-bot",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:52.069Z"
+  },
+  "https://github.com/b4b4r07/zplug": {
+    "url": "https://github.com/b4b4r07/zplug",
+    "title": "GitHub - zplug/zplug: A next-generation plugin manager for zsh — manage plugins, commands, and themes from GitHub, Bitbucket, oh-my-zsh, prezto, and more with parallel installation and lazy loading.",
+    "description": "A next-generation plugin manager for zsh — manage plugins, commands, and themes from GitHub, Bitbucket, oh-my-zsh, prezto, and more with parallel installation and lazy loading. - zplug/zplug",
+    "image": "https://opengraph.githubassets.com/f727181112b2fa3616773a2eb62ba100afda0f2dd6cc542f8753da75d958b241/zplug/zplug",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:49.564Z"
+  },
+  "https://github.com/b4b4r07/zsh-history": {
+    "url": "https://github.com/b4b4r07/zsh-history",
+    "title": "GitHub - babarot/zsh-history: A plugin for zsh history extended by golang, dealing it like SQL",
+    "description": "A plugin for zsh history extended by golang, dealing it like SQL - babarot/zsh-history",
+    "image": "https://opengraph.githubassets.com/0b72c2d6d7b0ae45617ef5ffeaa9812fb5b128e737f596eac3c6670737469e4f/babarot/zsh-history",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:51.755Z"
+  },
+  "https://github.com/babarot": {
+    "url": "https://github.com/babarot",
+    "title": "babarot - Overview",
+    "description": "SRE and programmer working with Kubernetes and Terraform. Based in Tokyo. Into hiking, driving, and photography. - babarot",
+    "image": "https://avatars.githubusercontent.com/u/4442708?v=4?s=400",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:50.125Z"
+  },
+  "https://github.com/crowi/go-crowi": {
+    "url": "https://github.com/crowi/go-crowi",
+    "title": "GitHub - crowi/go-crowi: A Go client for Crowi APIs",
+    "description": "A Go client for Crowi APIs. Contribute to crowi/go-crowi development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/6fdb1ab10a88dd6c882a83443e8dfde298d90537b155b7e93467d5d3b512d6c3/crowi/go-crowi",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:52.466Z"
+  },
+  "https://github.com/davecheney/httpstat": {
+    "url": "https://github.com/davecheney/httpstat",
+    "title": "GitHub - davecheney/httpstat: It's like curl -v, with colours.",
+    "description": "It's like curl -v, with colours. . Contribute to davecheney/httpstat development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/a215d715a6effe93060a72ed70f8efb9f896e607b378e32b0cd3a8c51786a369/davecheney/httpstat",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:50.631Z"
+  },
+  "https://github.com/itchyny/fillin": {
+    "url": "https://github.com/itchyny/fillin",
+    "title": "GitHub - itchyny/fillin: fill-in your command and execute",
+    "description": "fill-in your command and execute. Contribute to itchyny/fillin development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/59a6aeed2eae6b4a43d7f687584c7bb41b42f39fb7d665bd7d30744f051c3d77/itchyny/fillin",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:52.061Z"
+  },
+  "https://github.com/reorx/httpstat": {
+    "url": "https://github.com/reorx/httpstat",
+    "title": "GitHub - reorx/httpstat: curl statistics made simple",
+    "description": "curl statistics made simple. Contribute to reorx/httpstat development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/3f733fb74cde5bbe20bc68d68656b4e8606df052dfcbe10ab34e6474582a0676/reorx/httpstat",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:50.238Z"
+  },
+  "https://github.com/vim-jp/vimconf/issues/106": {
+    "url": "https://github.com/vim-jp/vimconf/issues/106",
+    "title": "2016 まとめ役募集 · Issue #106 · vim-jp/vimconf",
+    "description": "運営の中心になって全体のとりまとめを行う人を募集します。 必要なタスクを洗い出して各仕事を人に振ったり進捗の確認をしたりします。 もうちょっと具体的な話が知りたければ、質問/議論歓迎です。 参考: 去年の様子 #68 コミュニティ的には過去経験者(ujihisa さん、dictav さん、私(thinca))以外の方にやってもらえるのが健全で良いですが、もし誰もいなければ私がやります。",
+    "image": "https://opengraph.githubassets.com/e1fa29722606f57298513a9c472b3d61ea0dc878e47ebf4bccb9fb9dbcb4caf1/vim-jp/vimconf/issues/106",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:50.627Z"
+  },
+  "https://github.com/x-motemen/blogsync": {
+    "url": "https://github.com/x-motemen/blogsync",
+    "title": "GitHub - x-motemen/blogsync: Push and pull blog entries from/to local filesystem",
+    "description": "Push and pull blog entries from/to local filesystem - x-motemen/blogsync",
+    "image": "https://opengraph.githubassets.com/9b4a8cec97f62ce79f3366c2faa100c7ad21f8f0e8f135d89f51db526b3076fa/x-motemen/blogsync",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:51.009Z"
+  },
+  "https://github.com/zplug": {
+    "url": "https://github.com/zplug",
+    "title": "zplug",
+    "description": "A next-generation plugin manager for zsh. zplug has 8 repositories available. Follow their code on GitHub.",
+    "image": "https://avatars.githubusercontent.com/u/16539964?s=280&v=4",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:49.686Z"
+  },
+  "https://github.com/zplug/bots": {
+    "url": "https://github.com/zplug/bots",
+    "title": "GitHub - zplug/bots: :guardsman: Bots for zplug",
+    "description": ":guardsman: Bots for zplug. Contribute to zplug/bots development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/0904277b03c309efd6732735c86b2b976a68f3af3dde51d8976f87d4946f3c82/zplug/bots",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-01T10:05:50.204Z"
+  },
+  "https://gomi.dev": {
+    "url": "https://gomi.dev",
+    "title": "gomi - A Safer Alternative to the UNIX rm Command",
+    "description": "Never worry about accidentally deleting important files again. gomi moves them to trash instead of permanent deletion, giving you peace of mind in the command line.",
+    "image": "https://storage.googleapis.com/zenn-user-upload/b3b2ba4ffc5b-20250208.png",
+    "icon": "https://gomi.dev/favicon.ico",
+    "siteName": "gomi.dev",
+    "fetchedAt": "2026-10-01T08:24:46.191Z"
+  },
+  "https://keens.github.io/blog/2016/02/24/bind_addressnoimigayouyakuwakatta/": {
+    "url": "https://keens.github.io/blog/2016/02/24/bind_addressnoimigayouyakuwakatta/",
+    "title": "Bind Addressの意味がようやく分かった | κeenのHappy Hacκing Blog",
+    "description": "κeenです。小ネタを。サーバを立ち上げる時に指定するBind Addressについてよく分かっていなかったのがようやく分かるようになったのでそれについて。",
+    "image": "https://keens.github.io/images/ogp/post/Bind_Addressnoimigayouyakuwakatta.png",
+    "icon": "https://keens.github.io/favicon-32x32.png",
+    "siteName": "keens.github.io",
+    "fetchedAt": "2026-10-01T10:05:49.159Z"
+  },
+  "https://medium.com/@catatsuy/2017年にお金を払ったサービス-6ae559c4c883": {
+    "url": "https://medium.com/@catatsuy/2017年にお金を払ったサービス-6ae559c4c883",
+    "failed": true,
+    "fetchedAt": "2026-10-01T10:05:48.909Z"
+  },
+  "https://medium.com/@upamune/2017年に課金した購読型サービス-1a2f76a2c676": {
+    "url": "https://medium.com/@upamune/2017年に課金した購読型サービス-1a2f76a2c676",
+    "failed": true,
+    "fetchedAt": "2026-10-01T10:05:48.899Z"
+  },
+  "https://mercari.connpass.com/event/92168/": {
+    "url": "https://mercari.connpass.com/event/92168/",
+    "title": "Mercari Meetup for Microservices Platform (2018/07/19 19:30〜)",
+    "description": "# イベント概要 Mercariではサービスと組織の拡大に合わせてMonolithアーキテクチャからMicroservicesアーキテクチャへの移行を進めています．Microservices Platform TeamはこのMicroservicesのためのPlatformの構築を行っています．開発者のDeveloper Productivityを最大限に高め各チームがオーナーシップを持ち独立して高速にサービス開発を行えるようなPlatformを目指しています． 本イベントではMicroservices Platform Teamが現在どのようなことに取り組んでいるのかについて紹介を...",
+    "image": "https://media.connpass.com/thumbs/35/02/3502eddec73185215f193389cc0be97e.png",
+    "icon": "https://connpass.com/static/dad7c58/img/favicon.ico",
+    "siteName": "connpass",
+    "fetchedAt": "2026-10-01T10:05:49.452Z"
+  },
+  "https://ponkotuy.hatenadiary.org/entry/20140827/1409127514": {
+    "url": "https://ponkotuy.hatenadiary.org/entry/20140827/1409127514",
+    "title": "JSONログのUNIX Timeを読みやすくする - ponkotuyの日記",
+    "description": "はじめに JSONでログためてると、 {\"time\": 1408715718, ...} {\"time\": 1409718175, ...} ...みたいなデータを人間が見えるようにしたいとかいう要望は結構あると思いますが、そんなときにシェル1行で見えるようにしたメモ コマンド cat orig.txt | jq '.time' | sed -e \"s/^/@/\" | xargs -n1 date \"+%m/%d %H:%M\" --date | paste -d , - orig.txt 解説 jq JSONパーサ。かなり便利で、.がルート要素、.timeでルート直下のtimeを取れます。複数…",
+    "image": "https://ogimage.blog.st-hatena.com/17680117127177627358/17680117127177629363/1559299828",
+    "icon": "https://ponkotuy.hatenadiary.org/icon/link",
+    "siteName": "ponkotuyの日記",
+    "fetchedAt": "2026-10-01T10:05:49.789Z"
+  },
+  "https://qiita.com/b4b4r07": {
+    "url": "https://qiita.com/b4b4r07",
+    "failed": true,
+    "fetchedAt": "2026-10-01T10:05:48.444Z"
+  },
+  "https://specifications.freedesktop.org/trash-spec/latest/": {
+    "url": "https://specifications.freedesktop.org/trash-spec/latest/",
+    "failed": true,
+    "fetchedAt": "2026-10-01T08:24:45.964Z"
+  },
+  "https://tellme.tokyo": {
+    "url": "https://tellme.tokyo",
+    "title": "tellme.tokyo",
+    "description": "Masaki ISHIYAMA",
+    "image": "",
+    "icon": "",
+    "siteName": "https://tellme.tokyo/",
+    "fetchedAt": "2026-10-01T10:05:48.789Z"
+  },
+  "https://tellme.tokyo/post/2015/06/03/macbook": {
+    "url": "https://tellme.tokyo/post/2015/06/03/macbook",
+    "failed": true,
+    "fetchedAt": "2026-10-01T10:05:48.709Z"
+  },
+  "https://theinouebrothers.net/": {
+    "url": "https://theinouebrothers.net/",
+    "title": "The Inoue Brothers",
+    "description": "A social design studio founded by Satoru and Kiyoshi Inoue, based on positive impact endeavours.",
+    "image": "https://www.theinouebrothers.net/cdn/shop/files/landing_page_hero_2025_03_H_3fcd608a-0c82-46ed-976d-aed471c5ba54.jpg?v=1760498076",
+    "icon": "https://www.theinouebrothers.net/cdn/shop/files/favicon-32x32.png?crop=center&height=32&v=1760427835&width=32",
+    "siteName": "The Inoue Brothers",
+    "fetchedAt": "2026-10-01T08:24:46.441Z"
+  },
+  "https://twitter.com/b4b4r07/status/677389940095713280": {
+    "url": "https://twitter.com/b4b4r07/status/677389940095713280",
+    "failed": true,
+    "fetchedAt": "2026-10-01T10:05:49.391Z"
+  },
+  "https://www.google.co.jp/trends/explore?geo=JP&q=dein.vim,NeoBundle,vim-plug": {
+    "url": "https://www.google.co.jp/trends/explore?geo=JP&q=dein.vim,NeoBundle,vim-plug",
+    "failed": true,
+    "fetchedAt": "2026-10-01T10:05:50.799Z"
+  },
+  "https://www.synology.com/ja-jp/products": {
+    "url": "https://www.synology.com/ja-jp/products",
+    "title": "製品一覧 | Synology Inc.",
+    "description": "Synology はあらゆる場面を想定し、お客様のニーズに最も合った NAS を提供いたします。以下で仕様を比較し、正しい型番を選択してください。",
+    "image": "https://fileres.synology.com/images/common/meta-tag-preview-image/img_synology.jpg",
+    "icon": "https://fileres.synology.com/images/common/favicon/syno/icon-144x144.png",
+    "siteName": "www.synology.com",
+    "fetchedAt": "2026-10-01T10:05:53.848Z"
+  },
+  "https://www.youtube.com/playlist?list=PL81sUbsFNc5ZFdA6C9HZlaMKdsxtYo5wi": {
+    "url": "https://www.youtube.com/playlist?list=PL81sUbsFNc5ZFdA6C9HZlaMKdsxtYo5wi",
+    "title": "HashiConf 2019",
+    "description": "作成した動画を友だち、家族、世界中の人たちと共有",
+    "image": "https://i.ytimg.com/vi/bEFILWrRJJ4/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDMX8s-wy0pPP8NSCoBUsEoGN6_YA&days_since_epoch=20727",
+    "icon": "https://www.youtube.com/s/desktop/e6aecce7/img/favicon_144x144.png",
+    "siteName": "YouTube",
+    "fetchedAt": "2026-10-01T08:24:46.328Z"
+  }
+}

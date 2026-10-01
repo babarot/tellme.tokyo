@@ -1,0 +1,55 @@
+<style>
+  /* the root of this tree is the event, not a file: set it apart */
+  .tree > li > .row > b {
+    font-size: var(--fig-text-lg);
+  }
+</style>
+
+<ul class="tree">
+  <li>
+    <div class="row"><b>zsh の起動</b></div>
+    <ul>
+      <li>
+        <div class="row"><code>.zshenv</code><span class="note">どのシェルでも読まれる</span></div>
+        <ul>
+          <li>
+            <div class="row"><code>env.zsh</code><span class="tag gray">my.env</span></div>
+          </li>
+          <li>
+            <div class="row"><code>is_human</code><span class="note">で分岐</span></div>
+            <ul>
+              <li>
+                <div class="row"><span class="chip">yes</span><code>EDITOR=vim</code><span class="note">など</span><span class="tag orange">人間</span></div>
+              </li>
+              <li>
+                <div class="row"><span class="chip">no</span><code>EDITOR=true</code><span class="note">など</span><span class="tag blue">AI</span></div>
+                <ul>
+                  <li>
+                    <div class="row"><code>ai.zsh</code><span class="tag blue">my.ai</span></div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <div class="row"><code>.zshrc</code><span class="note">対話シェルのときに読まれる</span></div>
+        <ul>
+          <li>
+            <div class="row"><code>is_human || return 0</code><span class="note blue">AI はここで抜ける</span></div>
+          </li>
+          <li>
+            <div class="row"><code>human.zsh</code><span class="tag orange">my.human</span></div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<div class="caption legend">
+  <span class="tag gray">人間と AI</span>
+  <span class="tag blue">AI だけ</span>
+  <span class="tag orange">人間だけ</span>
+</div>

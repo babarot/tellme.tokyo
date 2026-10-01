@@ -1,0 +1,77 @@
+/* Theme "default": the neutral grays the Astro rewrite started with.
+   This file also defines the list of color roles; every theme sets all of them,
+   for both color schemes (light, and dark under .dark).
+
+   --c-page          page background
+   --c-ink           UI text (header, base text outside the article)
+   --c-brand         site name in the header
+   --c-heading       post title and headings
+   --c-body          article text
+   --c-subtle        dates
+   --c-muted         captions, footnotes, link card details
+   --c-faint         footer text and icons
+   --c-faint-hover   footer icons on hover
+   --c-list-title    post titles in the list on the top page
+   --c-link          links in the article
+   --c-link-line     link underline (transparent: underline only on hover)
+   --c-line          rules: h2 underline, table rows, footnote rule, borders
+   --c-line-strong   stronger rules: blockquote bar, tree lines in figures
+   --c-quote         blockquote text
+   --c-surface       code blocks, figures, hovered link cards
+   --c-code-bg       inline code background
+   --c-code          inline code text
+   --c-accent        text selection
+   --c-draft         the DRAFT label
+   --c-shade         scroll shade on wide tables
+
+   The dark values apply under .dark: on <html> for the whole page, or on an
+   element for just that part (the figure catalog shows both side by side). */
+
+[data-theme='default'] {
+  --c-page: white;
+  --c-ink: var(--color-neutral-800);
+  --c-brand: var(--color-neutral-600);
+  --c-heading: var(--color-neutral-900);
+  --c-body: var(--color-neutral-800);
+  --c-subtle: var(--color-neutral-400);
+  --c-muted: var(--color-neutral-500);
+  --c-faint: var(--color-neutral-300);
+  --c-faint-hover: var(--color-neutral-700);
+  --c-list-title: var(--color-neutral-900);
+  --c-link: currentColor;
+  --c-link-line: var(--color-neutral-300);
+  --c-line: var(--color-neutral-200);
+  --c-line-strong: var(--color-neutral-300);
+  --c-quote: var(--color-neutral-600);
+  --c-surface: var(--color-neutral-50);
+  --c-code-bg: var(--color-neutral-100);
+  --c-code: currentColor;
+  --c-accent: oklch(0.55 0.15 255);
+  --c-draft: var(--color-amber-600);
+  --c-shade: rgb(0 0 0 / 0.12);
+}
+
+[data-theme='default'].dark,
+[data-theme='default'] .dark {
+  --c-page: var(--color-neutral-950);
+  --c-ink: var(--color-neutral-200);
+  --c-brand: var(--color-neutral-300);
+  --c-heading: var(--color-neutral-100);
+  --c-body: var(--color-neutral-300);
+  --c-subtle: var(--color-neutral-400);
+  --c-muted: var(--color-neutral-500);
+  --c-faint: var(--color-neutral-600);
+  --c-faint-hover: var(--color-neutral-300);
+  --c-list-title: var(--color-neutral-100);
+  --c-link: currentColor;
+  --c-link-line: var(--color-neutral-600);
+  --c-line: var(--color-neutral-800);
+  --c-line-strong: var(--color-neutral-700);
+  --c-quote: var(--color-neutral-400);
+  --c-surface: var(--color-neutral-900);
+  --c-code-bg: var(--color-neutral-800);
+  --c-code: currentColor;
+  --c-accent: oklch(0.75 0.12 255);
+  --c-draft: var(--color-amber-600);
+  --c-shade: rgb(255 255 255 / 0.12);
+}

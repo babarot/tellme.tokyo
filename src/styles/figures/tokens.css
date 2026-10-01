@@ -1,0 +1,45 @@
+/* Figure tokens: the only values a figure may use.
+   Text, surface and line colors come from the site theme; the hues, type
+   scale, spacing and radii are the figures' own. Change this file rarely, and
+   check the figure catalog in both themes when you do. */
+
+.fig {
+  /* text, surfaces and lines follow the site theme (src/styles/themes/) */
+  --fig-fg: var(--c-body);
+  --fig-muted: var(--c-muted);
+  --fig-bg: var(--c-surface);
+  --fig-surface: var(--c-page);
+  --fig-border: var(--c-line);
+  --fig-line: var(--c-line-strong);
+
+  /* hues, applied through the .gray/.blue/... modifiers in components.css */
+  --fig-gray: var(--color-neutral-600);
+  --fig-blue: oklch(0.55 0.15 255);
+  --fig-orange: oklch(0.6 0.14 55);
+  --fig-green: oklch(0.55 0.13 150);
+  --fig-red: oklch(0.55 0.18 25);
+
+  /* type scale */
+  --fig-text-xs: 0.6875rem;
+  --fig-text-sm: 0.75rem;
+  --fig-text: 0.875rem;
+  --fig-text-lg: 1rem;
+
+  /* spacing scale */
+  --fig-space-1: 0.25rem;
+  --fig-space-2: 0.5rem;
+  --fig-space-3: 0.75rem;
+  --fig-space-4: 1rem;
+  --fig-space-6: 1.5rem;
+
+  --fig-radius-sm: 0.25rem;
+  --fig-radius: 0.5rem;
+}
+
+.dark .fig {
+  --fig-gray: var(--color-neutral-300);
+  --fig-blue: oklch(0.75 0.12 255);
+  --fig-orange: oklch(0.8 0.12 65);
+  --fig-green: oklch(0.78 0.12 150);
+  --fig-red: oklch(0.72 0.15 25);
+}
