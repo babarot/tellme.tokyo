@@ -33,6 +33,15 @@ Every page has an Open Graph image (the picture of its card on X, Slack, ...), d
 - Every post URL the Hugo site had is listed in `tools/old-urls.txt` and must keep working, as a page or a redirect in `public/_redirects`: `SHOW_DRAFTS=1 pnpm build && pnpm check:urls`.
 - Link cards are cached in `.cache/link-previews.json` (committed). After deleting a post or changing its links, `pnpm prune:link-previews` drops the entries no post uses (`--dry-run` to list them only). Builds never prune: they convert only the posts that changed.
 
+## Deploying
+
+The site runs on Cloudflare Workers as static files (`wrangler.jsonc`; no Worker code). Workers Builds, connected to the GitHub repository, builds every push:
+
+- `main` → production (tellme.tokyo). Drafts are left out.
+- any other branch → a preview URL, with drafts and `noindex` (`WORKERS_CI_BRANCH` in `src/lib/posts.ts`). Preview URLs are behind Cloudflare Access.
+
+To check locally what Workers serves (redirects in `public/_redirects`, the 404 page, trailing slashes): `pnpm build && pnpm exec wrangler dev`.
+
 ## Plugins
 
 Whatever in the Markdown pipeline or the article UI can stand on its own lives in `src/plugins/<name>/`, one folder each (gallery, carousel, lightbox, link card, table of contents, ...). The rules are in `src/plugins/README.md`; in short:

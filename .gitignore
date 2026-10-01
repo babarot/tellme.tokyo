@@ -16,3 +16,6 @@ PLAN.md
 # Hand-picked posts of the design phase; no longer read (the posts are in
 # content/post since the migration). Kept ignored until the folder is deleted.
 sample/
+
+# wrangler dev state
+.wrangler/
