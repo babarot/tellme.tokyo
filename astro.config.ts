@@ -8,6 +8,7 @@ import remarkCarousel from './src/plugins/carousel/remark';
 import remarkImg from './src/plugins/img/remark';
 import remarkEmbed from './src/plugins/embed/remark';
 import remarkMermaid from './src/plugins/mermaid/remark';
+import remarkCodeBlock from './src/plugins/code-block/remark';
 import remarkDirectiveFallback from './src/plugins/directive-fallback/remark';
 import remarkHeadingLevels from './src/plugins/heading-levels/remark';
 import remarkLinkPreview from './src/plugins/link-preview/remark';
@@ -31,6 +32,7 @@ export default defineConfig({
         remarkDirectiveFallback,
         remarkHeadingLevels,
         remarkMermaid,
+        remarkCodeBlock,
         [remarkLinkPreview, { cacheFile: '.cache/link-previews.json' }],
       ],
       rehypePlugins: [rehypeFigureCaption],

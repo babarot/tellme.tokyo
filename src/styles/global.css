@@ -8,6 +8,7 @@
 @import './figures/tokens.css';
 @import './figures/components.css';
 @import '../plugins/link-preview/style.css';
+@import '../plugins/code-block/style.css';
 @import '../plugins/gallery/style.css';
 @import '../plugins/carousel/style.css';
 @import '../plugins/lightbox/style.css';
@@ -107,6 +108,11 @@ html.dark {
   --link-preview-title: var(--c-heading);
   --link-preview-muted: var(--c-muted);
   --link-preview-image-bg: var(--c-surface);
+  --code-block-line: var(--c-line);
+  --code-block-title-bg: var(--c-surface);
+  --code-block-muted: var(--c-muted);
+  --code-block-hover: var(--c-heading);
+  --code-block-font: var(--font-mono);
   --gallery-placeholder: var(--c-surface);
   --carousel-placeholder: var(--c-surface);
 }

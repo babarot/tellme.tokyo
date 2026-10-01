@@ -112,7 +112,7 @@ gomi は AI から見て rm と違いがわからないので、誤解された�
 
 やらせたくないものは、Claude Code の `permissions.deny` で禁止している。`~/.ssh` や `.env` のような秘密の入ったファイルは読ませないし、`sudo` も使わせない。Python のパッケージも同じで、AI は Python と聞くとまず `pip install` を打つが、手元では uv で管理しているので、pip や poetry は禁止している。AI は断られたことに気づいて、uv を使うようになる。
 
-```json
+```json:~/.claude/settings.json
   "permissions": {
     "deny": [
       "Bash(poetry:*)",

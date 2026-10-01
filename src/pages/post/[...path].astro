@@ -70,10 +70,12 @@ Astro.locals.postDir = post.filePath!.replace(/\/[^/]+$/, '');
   import { initToc } from '../../plugins/toc/client';
   import { initTweets } from '../../plugins/embed/client';
   import { initMermaid } from '../../plugins/mermaid/client';
+  import { initCodeBlocks } from '../../plugins/code-block/client';
   initGalleries();
   initCarousels();
   initLightbox();
   initToc();
   initTweets();
   initMermaid();
+  initCodeBlocks(document, { label: 'コピー', copiedLabel: 'コピーしました' });
 </script>

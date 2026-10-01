@@ -14,6 +14,7 @@ another Astro (or any unified) project as is.
 | `embed` | `::tweet`, `::youtube`, `::spotify`, `::slideshare` | remark, style, client, providers |
 | `mermaid` | ```` ```mermaid ```` code blocks drawn as diagrams; follows the color scheme | remark, style, client |
 | `img` | `:::img` for one image with options: `width` (most px), `scheme` (light or dark only) | remark, style |
+| `code-block` | a copy button on every code block; ```` ```json:package.json ```` shows the file name above the code | remark, style, client |
 | `link-preview` | a paragraph that is only a URL becomes a card with the page's title, description, image and icon (cached; failed fetches are retried after 30 days) | remark, parse, fetch, cache, html, style |
 | `heading-levels` | keeps the post title the only h1 without rewriting the source | remark |
 | `figure-caption` | `![alt](src "caption")` alone in a paragraph becomes a figure with a caption | rehype |
@@ -56,7 +57,7 @@ a real post are split into rows, so a change to the layout algorithm shows up.
 - client scripts: `src/pages/post/[...path].astro`
 
 Directive plugins need `remark-directive` before them and `directive-fallback`
-after them.
+after them. `code-block` goes after `mermaid`, which takes its code blocks first.
 
 ## Options
 
