@@ -14,5 +14,8 @@
     "html_handling": "auto-trailing-slash"
   },
   // a URL per uploaded version and per branch, for previews
-  "preview_urls": true
+  "preview_urls": true,
+  // required by `wrangler preview`, the preview command of Workers Builds
+  // (Worker Previews); empty: previews use the settings above
+  "previews": {}
 }
