@@ -88,7 +88,7 @@ Obsidian 側では画像を貼り付けたときに自動でアップロード�
 
 curl からも普通に使える。そのため既存のメディアファイルたちをまとめて NAS に移行するのもスクリプトを書けば簡単に出来そうなのも良い。
 
-```bash
+```console
 $ curl -X POST -H "X-API-Key: $KEY" -F "file=@screenshot.jpg" \
   https://assets.babarot.dev/api/upload
 
