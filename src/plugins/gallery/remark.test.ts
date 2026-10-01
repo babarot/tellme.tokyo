@@ -63,6 +63,12 @@ describe('remarkGallery', () => {
     expect(html).toContain('--gallery-row-height:200px;--gallery-gap:5px');
   });
 
+  it('passes minRows on to the client, only when more than one row is asked for', async () => {
+    const html = await render(':::gallery{minRows=2}\n![](wide.jpg)\n:::', { remark: [remarkGallery], path: post });
+    expect(html).toContain('data-min-rows="2"');
+    expect(await gallery('![](wide.jpg)')).not.toContain('data-min-rows');
+  });
+
   it('keeps the alt text and the order of the images', async () => {
     const html = await gallery('![first](tall.jpg)\n![second](wide.jpg)');
     expect(html.indexOf('alt="first"')).toBeLessThan(html.indexOf('alt="second"'));

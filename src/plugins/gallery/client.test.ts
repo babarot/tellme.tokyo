@@ -47,6 +47,16 @@ describe('layoutGallery', () => {
     expect(sizes(gallery)).toEqual([['100px', '100px']]);
   });
 
+  it('reads minRows from data-min-rows', () => {
+    // four squares fit one 158px row at 648px; asked for two rows, they split
+    const gallery = setup([[1, 1], [1, 1], [1, 1], [1, 1]]);
+    layoutGallery(gallery);
+    expect(new Set(sizes(gallery).map(([, h]) => h)).size).toBe(1);
+    gallery.dataset.minRows = '2';
+    layoutGallery(gallery);
+    expect(new Set(sizes(gallery).map(([, h]) => h)).size).toBe(2);
+  });
+
   it('does nothing while the gallery has no width (not rendered yet)', () => {
     const gallery = setup([[3, 2]], 0);
     layoutGallery(gallery);

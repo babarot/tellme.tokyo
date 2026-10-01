@@ -10,17 +10,20 @@ export type GalleryOptions = {
   rowHeight?: number;
   /** gap between photos in px. Default 5 */
   gap?: number;
+  /** the fewest rows to use, whatever the width (client.ts only). Default 1 */
+  minRows?: number;
   /** widths of the smaller copies to make of each photo; see thumbnails.ts */
   thumbnailWidths?: number[];
 };
 
 export default function remarkGallery(options: GalleryOptions = {}) {
-  const { name = 'gallery', rowHeight = 150, gap = 5, thumbnailWidths: candidates } = options;
+  const { name = 'gallery', rowHeight = 150, gap = 5, minRows = 1, thumbnailWidths: candidates } = options;
 
   return async (tree: any, file: any) => {
     await eachContainer(tree, name, async (node) => {
       const attrs = node.attributes ?? {};
       const height = Number(attrs.rowHeight ?? rowHeight);
+      const rows = Number(attrs.minRows ?? minRows);
       const items = await Promise.all(
         imagesIn(node).map(async (img) => {
           const known = await imageSize(img.url, file.path);
@@ -44,7 +47,12 @@ export default function remarkGallery(options: GalleryOptions = {}) {
       );
       return element(
         'div',
-        { className: ['gallery'], dataLightbox: '', style: `--gallery-row-height:${height}px;--gallery-gap:${Number(attrs.gap ?? gap)}px` },
+        {
+          className: ['gallery'],
+          dataLightbox: '',
+          ...(rows > 1 && { dataMinRows: String(rows) }),
+          style: `--gallery-row-height:${height}px;--gallery-gap:${Number(attrs.gap ?? gap)}px`,
+        },
         items,
       );
     });

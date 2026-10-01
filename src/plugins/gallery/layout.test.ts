@@ -76,6 +76,24 @@ describe('layoutRows', () => {
     expect(rows(ratios, { target: 150, maxStretch: 1.5 }).at(-1)!.filled).toBe(true);
   });
 
+  // The HashiConf '19 gallery: two portraits, a 4:3 and two wide shots. At
+  // desktop width one squat row (~101px) is closest to the target.
+  const hashiconf = [0.75, 4 / 3, 0.75, 1032 / 605, 1032 / 604];
+
+  it('uses at least minRows rows', () => {
+    expect(counts(rows(hashiconf))).toEqual([5]);
+    expect(counts(rows(hashiconf, { minRows: 2 }))).toEqual([3, 2]);
+    expect(rows(hashiconf, { minRows: 3 })).toHaveLength(3);
+  });
+
+  it('may use more rows than minRows when they fit better', () => {
+    expect(rows(bestBuy, { width: 358, minRows: 2 }).length).toBeGreaterThan(2);
+  });
+
+  it('caps minRows at one row per photo', () => {
+    expect(counts(rows([1.5, 1.5], { minRows: 5 }))).toEqual([1, 1]);
+  });
+
   it('can place a very wide panorama on a row of its own', () => {
     const result = rows([8, 1.5, 1.5]);
     expect(result[0]).toMatchObject({ start: 0, end: 1 });

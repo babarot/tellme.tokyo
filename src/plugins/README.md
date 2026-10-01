@@ -70,6 +70,6 @@ after them. `code-block` goes after `mermaid`, which takes its code blocks first
 Per use, as directive attributes:
 
 ```md
-:::gallery{rowHeight=200}
+:::gallery{rowHeight=200 minRows=2}
 :::carousel{interval=5000 indicator=bar ratio=4/3 autoplay=false fit=contain backdrop=edge}
 ```

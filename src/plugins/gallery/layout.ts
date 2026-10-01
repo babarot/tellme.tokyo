@@ -8,6 +8,8 @@
 //   two photos stranded in the last row.
 //   A last row that would have to be stretched past `maxStretch` times the
 //   target (say, one tall photo) keeps the target height, aligned left.
+//   `minRows` makes the split use at least that many rows: a few photos that
+//   would all fit in one squat row are spread over two, whatever the width.
 
 export type LayoutInput = {
   /** width / height of each photo, in order */
@@ -20,6 +22,8 @@ export type LayoutInput = {
   gap: number;
   /** how much the last row may be stretched to fill the width. Default 2 */
   maxStretch?: number;
+  /** the fewest rows to use (capped at the number of photos). Default 1 */
+  minRows?: number;
 };
 
 export type Row = {
@@ -34,9 +38,10 @@ export type Row = {
   widths: number[];
 };
 
-export function layoutRows({ ratios, width, target, gap, maxStretch = 2 }: LayoutInput): Row[] {
+export function layoutRows({ ratios, width, target, gap, maxStretch = 2, minRows = 1 }: LayoutInput): Row[] {
   const n = ratios.length;
   if (n === 0 || width <= 0) return [];
+  const m = Math.min(Math.max(Math.floor(minRows), 1), n);
 
   // Height a row of photos [start, end) must have to fill the width exactly.
   const fit = (start: number, end: number) => {
@@ -50,9 +55,12 @@ export function layoutRows({ ratios, width, target, gap, maxStretch = 2 }: Layou
   const cost = (height: number) => Math.log(height / target) ** 2;
   const overStretched = (end: number, height: number) => end === n && height > target * maxStretch;
 
-  const best = new Array<number>(n + 1).fill(Infinity);
-  const from = new Array<number>(n + 1).fill(0);
-  best[0] = 0;
+  // best[end][k]: the lowest cost of splitting photos [0, end) into k rows,
+  // where k = m stands for "m rows or more"; from[end][k] is where the last
+  // of those rows starts and the row count before it.
+  const best = Array.from({ length: n + 1 }, () => new Array<number>(m + 1).fill(Infinity));
+  const from = Array.from({ length: n + 1 }, () => new Array<[number, number]>(m + 1).fill([0, 0]));
+  best[0][0] = 0;
   for (let end = 1; end <= n; end++) {
     for (let start = end - 1; start >= 0; start--) {
       const height = fit(start, end);
@@ -60,16 +68,19 @@ export function layoutRows({ ratios, width, target, gap, maxStretch = 2 }: Layou
       // A single photo always stays a candidate (a very wide panorama).
       if (height < target / 3 && end - start > 1) break;
       const c = cost(overStretched(end, height) ? target * maxStretch : height);
-      if (best[start] + c < best[end]) {
-        best[end] = best[start] + c;
-        from[end] = start;
+      for (let k = 0; k <= m; k++) {
+        const next = Math.min(k + 1, m);
+        if (best[start][k] + c < best[end][next]) {
+          best[end][next] = best[start][k] + c;
+          from[end][next] = [start, k];
+        }
       }
     }
   }
 
   const rows: Row[] = [];
-  for (let end = n; end > 0; end = from[end]) {
-    const start = from[end];
+  for (let end = n, k = m; end > 0; ) {
+    const [start, before] = from[end][k];
     const fitted = fit(start, end);
     const filled = !overStretched(end, fitted);
     const height = filled ? fitted : target;
@@ -81,6 +92,8 @@ export function layoutRows({ ratios, width, target, gap, maxStretch = 2 }: Layou
       widths[widths.length - 1] += Math.round(width - used);
     }
     rows.unshift({ start, end, height, filled, widths });
+    end = start;
+    k = before;
   }
   return rows;
 }

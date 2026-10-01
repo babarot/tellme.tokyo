@@ -31,6 +31,7 @@ export function layoutGallery(gallery: HTMLElement, { maxStretch }: GalleryClien
     target: parseFloat(style.getPropertyValue('--gallery-row-height')) || 150,
     gap: parseFloat(style.getPropertyValue('--gallery-gap')) || 0,
     maxStretch,
+    minRows: Number(gallery.dataset.minRows) || 1,
   });
 
   gallery.classList.add('gallery-justified');
