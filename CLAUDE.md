@@ -21,6 +21,7 @@ The body font is 游ゴシック where the reader has it (Windows); elsewhere (M
 - The build cuts Zen Kaku down to the characters in the built pages and scripts, plus kana, ASCII and punctuation, and writes `dist/fonts/zen-kaku-gothic-new-<weight>.<hash>.woff2` (about 120 KB each, 400 and 700). The hash changes with the characters, so `public/_headers` lets browsers cache the files for good.
 - The whole font is fetched from Google Fonts on first use and kept in `.cache/fonts/`, as the OG fonts are. `pnpm dev` serves it whole, without subsetting.
 - The font is preloaded only where 游ゴシック is missing (the inline script in `src/layouts/Base.astro`), so Windows never downloads it.
+- The site name in the header is set in Sixtyfour, as on the OG image, from the same subset (`src/assets/fonts/Sixtyfour-tellme.tokyo.ttf`, `@font-face` in `src/styles/global.css`).
 
 ## OG images
 
