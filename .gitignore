@@ -1,8 +1,4 @@
 .DS_Store
-.hugo_build.lock
-resources/
-docs
-blog
 node_modules
 dist
 .astro

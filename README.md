@@ -1,5 +1,12 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="static/top-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="static/top-light.png">
-  <img alt="demo" src="static/top-dark.png">
-</picture>
+# tellme.tokyo
+
+babarot's blog, at https://tellme.tokyo/. Built with [Astro](https://astro.build/) and served from Cloudflare Workers.
+
+```sh
+pnpm install
+pnpm dev     # http://localhost:4321/
+pnpm test
+pnpm build   # into dist/
+```
+
+Posts are in `content/post/<year>/<slug>/`. How the site is put together, and how to write posts: [CLAUDE.md](CLAUDE.md).

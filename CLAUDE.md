@@ -1,6 +1,6 @@
 # tellme.tokyo
 
-babarot's personal blog, built as a static site with Astro. It is being moved off Hugo, so Hugo-era files are still around.
+babarot's personal blog, built as a static site with Astro and served from Cloudflare Workers. It was a Hugo site until 2026-10; its posts were migrated (see "Writing posts").
 
 Japanese belongs only in content: posts and the UI text readers see (button labels, 脚注, 目次, font names). Code, comments and docs in the repository are written in English.
 
