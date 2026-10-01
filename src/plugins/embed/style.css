@@ -48,3 +48,11 @@
 .twitter-tweet-rendered {
   margin: 2rem auto !important;
 }
+
+/* X's document declares no color scheme (so light). When the page is dark,
+   the mismatch makes the browser paint the iframe an opaque white, which shows
+   at the card's rounded corners. Matching schemes keep it transparent; the
+   tweet's own colors come from data-theme, not from this. */
+.twitter-tweet-rendered iframe {
+  color-scheme: light;
+}
