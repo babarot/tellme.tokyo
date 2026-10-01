@@ -21,26 +21,7 @@ Elm Architecture は、主に以下の3つの要素で構成される。
 
 Elm では View の戻り値として HTML を返すが、Bubble Tea では文字列を返す。見てのとおりシンプルで、実装者は Model（ステート）を介して Update（処理）と View（見た目）を実装するだけでよく、データの流れは Runtime に任せればいい。View の処理が終わると、Runtime によってレンダリングされ、次のサイクルが動く。
 
-```goat
-
-              .--->  Model ---.
-             |                 |
-             |                 |
-             |                 v
-   Msg
-     .-->  Update             View
-    |
-    |        ^                 |
-  Init       | Msg             | String
-    |        |                 v
-    |   +----+-----------------+----+
-     '--+        Elm Runtime        |
-        +---------------------------+
-
-                                                       .
-```
-
-<!-- https://github.com/blampe/goat -->
+<Partial name="elm-architecture" />
 
 Bubble Tea では `Model` という interface で以下のメソッドを定義し、Elm Architecture を表現している。
 
