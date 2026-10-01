@@ -1,7 +1,7 @@
 /* Table of contents: a quiet list of links; the section being read is marked.
    Where it sits (sidebar, top of the post) is up to the page.
    Colors: --toc-label, --toc-link, --toc-active, --toc-line, and for the
-   inline variants --toc-chapter, --toc-surface. */
+   inline variants --toc-chapter. */
 .toc {
   font-size: 0.8125rem;
   line-height: 1.5;
@@ -47,12 +47,12 @@
 
 /* Inline variants for narrow screens, at the top of the post. */
 
-/* The whole tree, folded: a tinted box; chapters numbered and in bold. */
+/* The whole tree, folded: an outlined box; chapters numbered and in bold. */
 .toc-inline {
   margin: 0 0 2rem;
   padding: 0.875rem 1rem;
+  border: 1px solid var(--toc-line, rgb(128 128 128 / 0.25));
   border-radius: 0.625rem;
-  background: var(--toc-surface, rgb(128 128 128 / 0.06));
 }
 
 .toc-inline > summary {

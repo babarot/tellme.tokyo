@@ -110,8 +110,8 @@ html.dark {
   --toc-link: var(--c-muted);
   --toc-active: var(--c-heading);
   --toc-line: var(--c-line);
-  --toc-chapter: var(--c-heading);
-  --toc-surface: var(--c-surface);
+  /* chapters: between headings and the sections (--toc-link), so they do not stand out */
+  --toc-chapter: color-mix(in oklab, var(--c-heading) 50%, var(--c-muted));
 }
 
 .article {
