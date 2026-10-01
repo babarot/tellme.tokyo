@@ -14,6 +14,7 @@ import remarkDirectiveFallback from './src/plugins/directive-fallback/remark';
 import remarkHeadingLevels from './src/plugins/heading-levels/remark';
 import remarkLinkPreview from './src/plugins/link-preview/remark';
 import rehypeFigureCaption from './src/plugins/figure-caption/rehype';
+import bodyFont from './src/fonts/integration';
 
 export default defineConfig({
   site: 'https://tellme.tokyo',
@@ -46,8 +47,9 @@ export default defineConfig({
       themes: { light: 'github-light', dark: 'github-dark', 'tokyo-night': 'tokyo-night' },
     },
   },
-  // sitemap-index.xml (Hugo's /sitemap.xml redirects to it: public/_redirects)
-  integrations: [mdx(), sitemap()],
+  // sitemap-index.xml (Hugo's /sitemap.xml redirects to it: public/_redirects);
+  // bodyFont: the body font, subset to the site's characters (src/fonts/)
+  integrations: [mdx(), sitemap(), bodyFont()],
   vite: {
     plugins: [tailwindcss()],
   },

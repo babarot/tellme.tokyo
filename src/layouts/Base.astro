@@ -4,6 +4,7 @@ import { Image } from 'astro:assets';
 import me from '../assets/me.jpg';
 import { config } from '../config';
 import { showDrafts } from '../lib/posts';
+import { family, fontUrl } from '../fonts/subset';
 import Logo from '../icons/logo.svg';
 import LogoDark from '../icons/logo-dark.svg';
 import GitHub from '../icons/github.svg';
@@ -79,9 +80,34 @@ const links = [
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="16x16" />
     <link rel="alternate" type="application/rss+xml" title={siteName} href="/feed.xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet" />
+    {
+      /* The body font for readers without 游ゴシック (Macs, iPhones), served
+         from the site and cut down to its characters (src/fonts/). The build
+         replaces these URLs with the subset files'. No format(): dev serves
+         the whole TrueType font. */
+    }
+    <style is:inline set:html={`
+      @font-face { font-family: '${family}'; src: url('${fontUrl(400)}'); font-weight: 400; font-display: swap; }
+      @font-face { font-family: '${family}'; src: url('${fontUrl(700)}'); font-weight: 700; font-display: swap; }
+    `} />
+    <script is:inline define:vars={{ fonts: [fontUrl(400), fontUrl(700)] }}>
+      // Preload the body font only where it will be used: a reader with
+      // 游ゴシック (Windows) never downloads it. 游ゴシック is there when text in
+      // it does not measure the same as the fallback alone.
+      (() => {
+        const ctx = document.createElement('canvas').getContext('2d');
+        const width = (font) => {
+          ctx.font = `32px ${font}`;
+          return ctx.measureText('游ゴシック abc').width;
+        };
+        if (width("'游ゴシック', YuGothic, monospace") !== width('monospace')) return;
+        for (const href of fonts) {
+          const link = Object.assign(document.createElement('link'), { rel: 'preload', as: 'font', type: 'font/woff2', href });
+          link.crossOrigin = 'anonymous';
+          document.head.append(link);
+        }
+      })();
+    </script>
   </head>
   <body class="bg-page font-sans text-ink antialiased">
     <div class="mx-auto max-w-[42.5rem] px-4 pt-10 pb-32 md:pt-16">

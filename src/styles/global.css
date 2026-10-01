@@ -54,7 +54,7 @@
 }
 
 @theme {
-  --font-sans: '游ゴシック', YuGothic, 'Zen Kaku Gothic New', 'Noto Sans JP', 'ヒラギノ角ゴ Pro', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, sans-serif;
+  --font-sans: '游ゴシック', YuGothic, 'Zen Kaku Gothic New', 'ヒラギノ角ゴ Pro', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, sans-serif;
   --font-mono: 'Hack', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 }
 

@@ -1,0 +1,4 @@
+# The body font's subset files (src/fonts/): their names change with their
+# contents, so they can be cached for good.
+/fonts/zen-kaku-gothic-new-*
+  Cache-Control: public, max-age=31536000, immutable

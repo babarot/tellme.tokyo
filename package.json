@@ -34,6 +34,7 @@
     "remark-directive": "^4.0.0",
     "satori": "^0.33.5",
     "sharp": "^0.35.5",
+    "subset-font": "^2.9.0",
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {

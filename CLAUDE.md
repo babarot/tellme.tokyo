@@ -14,6 +14,14 @@ Japanese belongs only in content: posts and the UI text readers see (button labe
 - Code highlighting can differ per theme: add a Shiki theme to `shikiConfig.themes` in `astro.config.ts` and say when to use it under "Shiki per theme" in `src/styles/global.css` (tokyo-night's dark scheme is the example).
 - To add a theme: copy default.css, change the values and the `[data-theme]` name, import it in `src/styles/global.css`, and add the name to `themes` in `src/config.ts`.
 
+## Body font
+
+The body font is 游ゴシック where the reader has it (Windows); elsewhere (Macs, iPhones) Zen Kaku Gothic New, served from the site (`src/fonts/`, `--font-sans` in `src/styles/global.css`).
+
+- The build cuts Zen Kaku down to the characters in the built pages and scripts, plus kana, ASCII and punctuation, and writes `dist/fonts/zen-kaku-gothic-new-<weight>.<hash>.woff2` (about 120 KB each, 400 and 700). The hash changes with the characters, so `public/_headers` lets browsers cache the files for good.
+- The whole font is fetched from Google Fonts on first use and kept in `.cache/fonts/`, as the OG fonts are. `pnpm dev` serves it whole, without subsetting.
+- The font is preloaded only where 游ゴシック is missing (the inline script in `src/layouts/Base.astro`), so Windows never downloads it.
+
 ## OG images
 
 Every page has an Open Graph image (the picture of its card on X, Slack, ...), drawn at build time. A design that shows the post (`perPost: true`) gives each post its own at `/post/.../og.png`; one that does not gives the whole site one, `/og.png`.
