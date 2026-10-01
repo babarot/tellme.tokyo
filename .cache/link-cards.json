@@ -13,5 +13,19 @@
     "image": "https://storage.googleapis.com/zenn-user-upload/b3b2ba4ffc5b-20250208.png",
     "siteName": "gomi.dev"
   },
-  "https://specifications.freedesktop.org/trash-spec/latest/": null
+  "https://specifications.freedesktop.org/trash-spec/latest/": null,
+  "https://theinouebrothers.net/": {
+    "url": "https://theinouebrothers.net/",
+    "title": "The Inoue Brothers",
+    "description": "A social design studio founded by Satoru and Kiyoshi Inoue, based on positive impact endeavours.",
+    "image": "http://www.theinouebrothers.net/cdn/shop/files/landing_page_hero_2025_03_H_3fcd608a-0c82-46ed-976d-aed471c5ba54.jpg?v=1760498076",
+    "siteName": "The Inoue Brothers"
+  },
+  "https://www.youtube.com/playlist?list=PL81sUbsFNc5ZFdA6C9HZlaMKdsxtYo5wi": {
+    "url": "https://www.youtube.com/playlist?list=PL81sUbsFNc5ZFdA6C9HZlaMKdsxtYo5wi",
+    "title": "HashiConf 2019",
+    "description": "作成した動画を友だち、家族、世界中の人たちと共有",
+    "image": "https://i.ytimg.com/vi/bEFILWrRJJ4/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDMX8s-wy0pPP8NSCoBUsEoGN6_YA&days_since_epoch=20727",
+    "siteName": "YouTube"
+  }
 }

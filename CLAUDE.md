@@ -54,7 +54,24 @@ Posts live in this repository and nowhere else (the Obsidian sync was dropped: d
 - To change one use only, set attributes: `:::gallery{rowHeight=200}`, `:::carousel{interval=5000 indicator=bar ratio=4/3 autoplay=false}`.
 - The photos inside are ordinary Markdown images, so Astro optimizes them.
 - List the images one by one, not by pattern (`images/*`).
-- No other directives (`:foo`, `::foo`) are in use. Text like `foo:bar` in a post is shown as written (`src/plugins/directive-fallback/`).
+- `:::img` gives one image options (`src/plugins/img/`): `width` (the most it is shown at, in px; it still shrinks on narrow screens) and `scheme` (`light` or `dark`: shown only in that color scheme). For an image with a light and a dark version, write two blocks. Without options, a plain `![](...)` is enough.
+
+```
+:::img{scheme=light width=500}
+![alt](shot-light.png "caption")
+:::
+
+:::img{scheme=dark width=500}
+![alt](shot-dark.png "caption")
+:::
+```
+
+### Embeds and diagrams
+
+- `::tweet{id=... user=...}`, `::youtube{id=...}`, `::spotify{type=episode id=... theme=dark}`, `::slideshare{key=... url="user/slug" title="..." author="..."}` (`src/plugins/embed/`). A missing attribute fails the build.
+- A ```` ```mermaid ```` code block is drawn as a diagram and follows the color scheme (`src/plugins/mermaid/`).
+- Anything else can be raw HTML (an `<iframe>` from a site's embed code); iframes never overflow the column.
+- No other directives are in use. Text like `foo:bar` in a post is shown as written (`src/plugins/directive-fallback/`).
 
 ## Figures
 

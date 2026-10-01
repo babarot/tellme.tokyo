@@ -11,6 +11,9 @@ another Astro (or any unified) project as is.
 | `carousel` | `:::carousel` of images, one at a time with prev/next, indicators, autoplay, swipe | remark, style, client, state |
 | `lightbox` | click a photo inside `[data-lightbox]` to see it large; prev/next, counter, keys, swipe | style, client, viewer |
 | `toc` | table of contents from the headings; marks the section being read | style, client, toc |
+| `embed` | `::tweet`, `::youtube`, `::spotify`, `::slideshare` | remark, style, client, providers |
+| `mermaid` | ```` ```mermaid ```` code blocks drawn as diagrams; follows the color scheme | remark, style, client |
+| `img` | `:::img` for one image with options: `width` (most px), `scheme` (light or dark only) | remark, style |
 | `link-card` | a paragraph that is only a URL becomes a card with the page's OGP data | remark, style |
 | `heading-levels` | keeps the post title the only h1 without rewriting the source | remark |
 | `figure-caption` | `![alt](src "caption")` alone in a paragraph becomes a figure with a caption | rehype |

@@ -5,6 +5,9 @@ import tailwindcss from '@tailwindcss/vite';
 import remarkDirective from 'remark-directive';
 import remarkGallery from './src/plugins/gallery/remark';
 import remarkCarousel from './src/plugins/carousel/remark';
+import remarkImg from './src/plugins/img/remark';
+import remarkEmbed from './src/plugins/embed/remark';
+import remarkMermaid from './src/plugins/mermaid/remark';
 import remarkDirectiveFallback from './src/plugins/directive-fallback/remark';
 import remarkHeadingLevels from './src/plugins/heading-levels/remark';
 import remarkLinkCard from './src/plugins/link-card/remark';
@@ -23,8 +26,11 @@ export default defineConfig({
         remarkDirective,
         [remarkGallery, { rowHeight: 150, gap: 5 }],
         [remarkCarousel, { interval: 7000, ratio: '16/9', indicator: 'dot' }],
+        remarkImg,
+        remarkEmbed,
         remarkDirectiveFallback,
         remarkHeadingLevels,
+        remarkMermaid,
         [remarkLinkCard, { cacheFile: '.cache/link-cards.json' }],
       ],
       rehypePlugins: [rehypeFigureCaption],

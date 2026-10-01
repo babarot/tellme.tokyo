@@ -12,6 +12,9 @@
 @import '../plugins/carousel/style.css';
 @import '../plugins/lightbox/style.css';
 @import '../plugins/toc/style.css';
+@import '../plugins/embed/style.css';
+@import '../plugins/mermaid/style.css';
+@import '../plugins/img/style.css';
 
 /* Dark mode follows the .dark class set by the inline script in Base.astro */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -89,6 +92,9 @@ html.dark {
 
 /* Colors for the plugins in src/plugins/, from the theme */
 :root {
+  --embed-line: var(--c-line);
+  --embed-muted: var(--c-muted);
+  --mermaid-muted: var(--c-muted);
   --toc-label: var(--c-subtle);
   --toc-link: var(--c-muted);
   --toc-active: var(--c-heading);
@@ -177,6 +183,11 @@ html.dark {
 
 .article :where(img) {
   @apply mx-auto rounded-md;
+}
+
+.article :where(iframe) {
+  /* iframes written as raw HTML in a post (maps, Vimeo) never overflow the column */
+  max-width: 100%;
 }
 
 .article :where(figure) {

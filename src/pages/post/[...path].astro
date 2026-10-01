@@ -68,8 +68,12 @@ Astro.locals.postDir = post.filePath!.replace(/\/[^/]+$/, '');
   import { initCarousels } from '../../plugins/carousel/client';
   import { initLightbox } from '../../plugins/lightbox/client';
   import { initToc } from '../../plugins/toc/client';
+  import { initTweets } from '../../plugins/embed/client';
+  import { initMermaid } from '../../plugins/mermaid/client';
   initGalleries();
   initCarousels();
   initLightbox();
   initToc();
+  initTweets();
+  initMermaid();
 </script>
