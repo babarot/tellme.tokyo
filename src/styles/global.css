@@ -110,6 +110,8 @@ html.dark {
   --toc-link: var(--c-muted);
   --toc-active: var(--c-heading);
   --toc-line: var(--c-line);
+  --toc-chapter: var(--c-heading);
+  --toc-surface: var(--c-surface);
 }
 
 .article {
