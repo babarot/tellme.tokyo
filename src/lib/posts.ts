@@ -3,11 +3,14 @@ import { excerpt } from './excerpt';
 
 export type Post = CollectionEntry<'post'>;
 
-// Drafts are visible in `astro dev`, in builds with SHOW_DRAFTS=1, and in
-// Workers Builds of any branch but main (preview URLs; wrangler.jsonc).
+// Drafts are visible in `astro dev` and in Workers Builds of any branch but
+// main (preview URLs; wrangler.jsonc). SHOW_DRAFTS, when set, overrides that:
+// 1 shows them (a local build), 0 hides them (`astro dev` as production).
 // Hidden posts are never visible.
 const previewBuild = process.env.WORKERS_CI === '1' && process.env.WORKERS_CI_BRANCH !== 'main';
-export const showDrafts = import.meta.env.DEV || process.env.SHOW_DRAFTS === '1' || previewBuild;
+export const showDrafts = process.env.SHOW_DRAFTS
+  ? process.env.SHOW_DRAFTS === '1'
+  : import.meta.env.DEV || previewBuild;
 
 export async function getPosts(): Promise<Post[]> {
   const posts = await getCollection('post', ({ data }) => !data.hidden && (showDrafts || !data.draft));
