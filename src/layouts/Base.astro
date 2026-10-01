@@ -59,6 +59,10 @@ const links = [
     </script>
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    {
+      // Builds that show drafts (dev, previews of branches) stay out of search engines
+      showDrafts && <meta name="robots" content="noindex" />
+    }
     <link rel="canonical" href={canonical} />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:type" content={published ? 'article' : 'website'} />
