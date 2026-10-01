@@ -1,5 +1,6 @@
 /* Code blocks: an optional title bar joined to the top of the code, and a copy
-   button (shown on hover where there is a mouse). The <pre> keeps the site's
+   button (shown on hover where there is a mouse; none on touch screens, where
+   nobody copies code from a blog). The <pre> keeps the site's
    own look. Colors: --code-block-line, --code-block-title-bg,
    --code-block-muted, --code-block-hover; font: --code-block-font. */
 .code-block {
@@ -84,6 +85,13 @@
 
 .code-block-copy[data-copied] .code-block-icon-copied {
   display: block;
+}
+
+/* Touch screens: no copy button, so it never covers the code */
+@media (hover: none) {
+  .code-block-copy {
+    display: none;
+  }
 }
 
 @media (hover: hover) {

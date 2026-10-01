@@ -93,7 +93,7 @@ Posts live in this repository and nowhere else (the Obsidian sync was dropped: d
 
 - `::tweet{id=... user=...}`, `::youtube{id=...}`, `::spotify{type=episode id=... theme=dark}`, `::slideshare{key=... url="user/slug" title="..." author="..."}` (`src/plugins/embed/`). A missing attribute fails the build.
 - A ```` ```mermaid ```` code block is drawn as a diagram and follows the color scheme (`src/plugins/mermaid/`).
-- A file name after a code block's language (```` ```json:package.json ````) is shown above the code. Every code block gets a copy button (`src/plugins/code-block/`).
+- A file name after a code block's language (```` ```json:package.json ````) is shown above the code. Every code block gets a copy button, shown on hover and not at all on touch screens (`src/plugins/code-block/`).
 - Anything else can be raw HTML (an `<iframe>` from a site's embed code); iframes never overflow the column.
 - No other directives are in use. Text like `foo:bar` in a post is shown as written (`src/plugins/directive-fallback/`).
 
