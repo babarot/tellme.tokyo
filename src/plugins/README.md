@@ -7,7 +7,7 @@ another Astro (or any unified) project as is.
 
 | plugin | what it does | parts |
 |---|---|---|
-| `gallery` | `:::gallery` of images as a justified gallery (rows of equal height filling the width) | remark, style, client, layout |
+| `gallery` | `:::gallery` of images as a justified gallery (rows of equal height filling the width); smaller copies via srcset for the grid | remark, style, client, layout, thumbnails |
 | `carousel` | `:::carousel` of images, one at a time with prev/next, indicators, autoplay, swipe | remark, style, client, state |
 | `lightbox` | click a photo inside `[data-lightbox]` to see it large; prev/next, counter, keys, swipe | style, client, viewer |
 | `toc` | table of contents from the headings; marks the section being read | style, client, toc |
@@ -61,7 +61,7 @@ after them.
 ## Options
 
 ```ts
-[remarkGallery, { rowHeight: 150, gap: 5 }]
+[remarkGallery, { rowHeight: 150, gap: 5, thumbnailWidths: [300, 600, 900, 1200] }]
 [remarkCarousel, { interval: 7000, autoplay: true, ratio: '16/9', indicator: 'dot' }]
 [remarkLinkCard, { cacheFile: '.cache/link-cards.json' }]
 ```

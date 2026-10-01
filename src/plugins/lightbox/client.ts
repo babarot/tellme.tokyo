@@ -69,7 +69,8 @@ export function initLightbox(root: ParentNode = document) {
     imgs.forEach((img, i) =>
       img.addEventListener('click', () => {
         if (!dialog) build();
-        const photos: Photo[] = imgs.map((p) => ({ src: p.currentSrc || p.src, alt: p.alt }));
+        // src is the full-size photo; currentSrc may be a smaller copy from srcset
+        const photos: Photo[] = imgs.map((p) => ({ src: p.src, alt: p.alt }));
         viewer!.open(photos, i);
         dialog!.showModal();
       }),

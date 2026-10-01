@@ -106,6 +106,13 @@ describe('initLightbox', () => {
     expect(shown()).toBe('alone');
   });
 
+  it('shows the full-size photo even when the page shows a smaller copy (srcset)', async () => {
+    const img = photo('two') as HTMLImageElement;
+    Object.defineProperty(img, 'currentSrc', { value: 'http://localhost:3000/b-300w.webp' });
+    await click(img);
+    expect(dialog()!.querySelector<HTMLImageElement>('.lightbox-image')!.getAttribute('src')).toBe(img.src);
+  });
+
   it('ignores photos outside a [data-lightbox] element', async () => {
     await click(photo('outside'));
     expect(dialog()).toBeNull();
