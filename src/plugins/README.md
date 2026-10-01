@@ -8,7 +8,7 @@ another Astro (or any unified) project as is.
 | plugin | what it does | parts |
 |---|---|---|
 | `gallery` | `:::gallery` of images as a justified gallery (rows of equal height filling the width); smaller copies via srcset for the grid | remark, style, client, layout, thumbnails |
-| `carousel` | `:::carousel` of images, one at a time with prev/next, indicators, autoplay, swipe | remark, style, client, state |
+| `carousel` | `:::carousel` of images, one at a time with prev/next, indicators, autoplay, swipe; image titles as captions | remark, style, client, state |
 | `lightbox` | click a photo inside `[data-lightbox]` to see it large; prev/next, counter, keys, swipe | style, client, viewer |
 | `toc` | table of contents from the headings; marks the section being read | style, client, toc |
 | `embed` | `::tweet`, `::youtube`, `::spotify`, `::slideshare` | remark, style, client, providers |
@@ -71,5 +71,5 @@ Per use, as directive attributes:
 
 ```md
 :::gallery{rowHeight=200}
-:::carousel{interval=5000 indicator=bar ratio=4/3 autoplay=false}
+:::carousel{interval=5000 indicator=bar ratio=4/3 autoplay=false fit=contain backdrop=edge}
 ```

@@ -63,11 +63,11 @@ Bubble Tea では `Model` という interface で以下のメソッドを定義�
 
 実は UI の書き換えはこれで 2 回目で、初代 UI[^first] と二代目 UI[^second] がこんな感じ。こうして振り返ると、今回は結構いい感じに仕上がったのではないかと思う。
 
+:::carousel{ratio=8/5 fit=contain backdrop=edge autoplay=false}
 ![三代目UI (2025)](./demo-3.gif "三代目UI (2025)")
-
 ![二代目UI (2020)](./demo-2.png "二代目UI (2020)")
-
 ![初代 UI (2015)](./demo-1.gif "初代 UI (2015)")
+:::
 
 (2025/02/08追記): サイトも更新した。
 

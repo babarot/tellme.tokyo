@@ -83,6 +83,14 @@ describe('initCarousels', () => {
     expect(shown()).toBe('photo 1');
   });
 
+  it('shows the caption of the photo on show', () => {
+    const captions = Array.from({ length: 3 }, (_, i) => `<span class="carousel-caption${i === 0 ? ' active' : ''}">caption ${i + 1}</span>`).join('');
+    document.body.innerHTML = `<figure class="carousel-figure">${markup(3)}<figcaption>${captions}</figcaption></figure>`;
+    initCarousels();
+    fire(button('3 枚目'), 'click');
+    expect(document.querySelector('.carousel-caption.active')!.textContent).toBe('caption 3');
+  });
+
   it('leaves a single-photo carousel alone', () => {
     document.body.innerHTML = markup(1);
     initCarousels();

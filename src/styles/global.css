@@ -115,6 +115,7 @@ html.dark {
   --code-block-font: var(--font-mono);
   --gallery-placeholder: var(--c-surface);
   --carousel-placeholder: var(--c-surface);
+  --carousel-caption: var(--c-muted);
 }
 
 /* Article body. Typography's colors all come from the theme, which already

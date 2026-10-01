@@ -2,8 +2,15 @@
 // indicators and autoplay (behavior in ./client.ts).
 //
 // Options can be set per carousel as directive attributes:
-//   :::carousel{interval=5000 indicator=bar ratio=4/3 autoplay=false}
-import { eachContainer, element, imagesIn } from '../shared/directive';
+//   :::carousel{interval=5000 indicator=bar ratio=4/3 autoplay=false fit=contain backdrop=edge}
+//
+// With fit=contain, a photo of another shape than the frame leaves bands;
+// backdrop=edge paints them the color of the photo's edge, so a screenshot's
+// background runs on to the frame's sides.
+//
+// An image's title, ![alt](src "caption"), is shown under the frame while its
+// slide is active.
+import { eachContainer, edgeColor, element, imagesIn } from '../shared/directive';
 
 export type CarouselOptions = {
   /** directive name, default "carousel" */
@@ -16,6 +23,10 @@ export type CarouselOptions = {
   ratio?: string;
   /** "dot" or "bar". Default "dot" */
   indicator?: 'dot' | 'bar';
+  /** how a photo fills the frame: "cover" (cropped) or "contain" (whole). Default "cover" */
+  fit?: 'cover' | 'contain';
+  /** what fills the bands fit=contain leaves: "none" (the placeholder) or "edge" (each photo's edge color). Default "none" */
+  backdrop?: 'none' | 'edge';
 };
 
 const chevron = (points: string) => ({
@@ -33,14 +44,27 @@ const raw = (tagName: string, properties: Record<string, unknown>, hChildren: an
 });
 
 export default function remarkCarousel(options: CarouselOptions = {}) {
-  const { name = 'carousel', interval = 7000, autoplay = true, ratio = '16/9', indicator = 'dot' } = options;
+  const { name = 'carousel', interval = 7000, autoplay = true, ratio = '16/9', indicator = 'dot', fit = 'cover', backdrop = 'none' } = options;
 
-  return async (tree: any) => {
-    await eachContainer(tree, name, (node) => {
+  return async (tree: any, file: any) => {
+    await eachContainer(tree, name, async (node) => {
       const attrs = node.attributes ?? {};
       const images = imagesIn(node);
+      const captions = images.map((img) => img.title ?? '');
+      // the caption replaces the title, which would otherwise show as a tooltip
+      for (const img of images) img.title = null;
+      const backdrops = await Promise.all(
+        images.map((img) => ((attrs.backdrop ?? backdrop) === 'edge' ? edgeColor(img.url, file.path) : undefined)),
+      );
       const slides = images.map((img, i) =>
-        element('div', { className: i === 0 ? ['carousel-slide', 'active'] : ['carousel-slide'] }, [img]),
+        element(
+          'div',
+          {
+            className: i === 0 ? ['carousel-slide', 'active'] : ['carousel-slide'],
+            ...(backdrops[i] && { style: `--carousel-backdrop:${backdrops[i]}` }),
+          },
+          [img],
+        ),
       );
       const controls =
         images.length > 1
@@ -59,17 +83,31 @@ export default function remarkCarousel(options: CarouselOptions = {}) {
               ),
             ]
           : [];
-      return element(
+      const frame = element(
         'div',
         {
           className: ['carousel'],
           dataLightbox: '',
           dataInterval: String(attrs.interval ?? interval),
           dataAutoplay: String(attrs.autoplay ?? autoplay),
-          style: `--carousel-ratio:${attrs.ratio ?? ratio}`,
+          style: `--carousel-ratio:${attrs.ratio ?? ratio};--carousel-fit:${attrs.fit ?? fit}`,
         },
         [element('div', { className: ['carousel-slides'] }, slides), ...controls],
       );
+      if (!captions.some(Boolean)) return frame;
+      return element('figure', { className: ['carousel-figure'] }, [
+        frame,
+        raw(
+          'figcaption',
+          { className: ['carousel-captions'] },
+          captions.map((text, i) => ({
+            type: 'element',
+            tagName: 'span',
+            properties: { className: i === 0 ? ['carousel-caption', 'active'] : ['carousel-caption'] },
+            children: [{ type: 'text', value: text }],
+          })),
+        ),
+      ]);
     });
   };
 }

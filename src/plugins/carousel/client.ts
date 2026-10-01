@@ -1,5 +1,6 @@
 // Connects each .carousel on the page to createCarousel() (./state.ts):
-// buttons, indicators, hover pause and swipe in; the active slide out.
+// buttons, indicators, hover pause and swipe in; the active slide (and its
+// caption) out.
 import { swipeDirection } from '../shared/swipe';
 import { createCarousel } from './state';
 
@@ -10,6 +11,7 @@ export function initCarousels(root: ParentNode = document) {
 function initCarousel(el: HTMLElement) {
   const slides = [...el.querySelectorAll<HTMLElement>('.carousel-slide')];
   const indicators = [...el.querySelectorAll<HTMLElement>('.carousel-indicator')];
+  const captions = [...(el.closest('.carousel-figure')?.querySelectorAll<HTMLElement>('.carousel-caption') ?? [])];
   if (slides.length < 2) return;
 
   const carousel = createCarousel({
@@ -19,6 +21,7 @@ function initCarousel(el: HTMLElement) {
     onChange: (index) => {
       slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
       indicators.forEach((dot, i) => dot.classList.toggle('active', i === index));
+      captions.forEach((caption, i) => caption.classList.toggle('active', i === index));
     },
   });
 
