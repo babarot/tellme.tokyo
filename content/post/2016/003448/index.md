@@ -1,13 +1,10 @@
 ---
 title: "zplug では Collaborators を募集しています"
 date: "2016-09-22T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
-{{< hatena "https://github.com/zplug" >}}
+https://github.com/zplug
 
 zplug は A next-generation plugin manager for zsh と謳い、絶賛開発中の zsh 向けのプラグインマネージャです。設計当初の目標通りフルスタックなツールになってきており、もはや zsh で書かれたというだけの、単なるパッケージマネージャとして使うことができるほどの機能を持ちはじめています。
 

@@ -11,6 +11,16 @@ describe('rehypeFigureCaption', () => {
     );
   });
 
+  it('keeps a link around the image', async () => {
+    expect(await figure('[![alt](a.png "Caption")](https://example.com/)')).toBe(
+      '<figure><a href="https://example.com/"><img src="a.png" alt="alt"></a><figcaption>Caption</figcaption></figure>',
+    );
+  });
+
+  it('leaves a link with more than the image as it is', async () => {
+    expect(await figure('[![alt](a.png "Caption") text](https://example.com/)')).toContain('<p><a');
+  });
+
   it('leaves an image without a title as it is', async () => {
     expect(await figure('![alt](a.png)')).toBe('<p><img src="a.png" alt="alt"></p>');
   });

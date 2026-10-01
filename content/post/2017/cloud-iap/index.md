@@ -1,10 +1,7 @@
 ---
 title: "Cloud Identity-Aware Proxy を使って GCP backend を保護する"
 date: "2017-10-30T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 [^1]: 今日 (2017/10/30) 現在では GCE、GAE、GKE に対応
@@ -39,7 +36,9 @@ GKE で外部に公開したサービス (の [Ingress](https://kubernetes.io/do
 Ingress リソースを作成すると、自動で GLBC (GCE Load-Balancer Controller) が割り当てられます。
 これは、GCP のウェブコンソールからも確認できます (メニュータブから `Network services > Load balancing`)。
 
-{{< img src="iap-gke-lb.png" width="500" >}}
+:::img{width=500}
+![](iap-gke-lb.png)
+:::
 
 あとは、GCP backend [^2] に紐付いた GLB が存在すれば IAP を有効にすることができるので、いつも通り [Service](https://kubernetes.io/docs/concepts/services-networking/service/) や [Deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) のリソースを作るだけで特にやることはありません。
 
@@ -57,7 +56,9 @@ GCP backend [^3] に紐付いた GLB が用意できたら、あとはコンソ�
 次に、さきほど作成したロードバランサに対して IAP を有効にします。
 IAP の Enabling は GCP のウェブコンソールから簡単にできます (メニュータブから `IAM & admin > Identity-Aware Proxy`)。
 
-{{< img src="iap-console.png" width="650" >}}
+:::img{width=650}
+![](iap-console.png)
+:::
 
 画像は GKE の例です。紐付いているロードバランサが GKE で作った Ingress であることがわかります。
 IAP の設定画面にはこれ以外にもたくさんの GLB が並んでいるので、IAP の認証をもたせたいサービスをバックエンドに持つロードバランサに対して、スイッチをオンにするだけで有効化できます。
@@ -65,7 +66,9 @@ IAP の設定画面にはこれ以外にもたくさんの GLB が並んでい�
 有効化したあとは、以下の追加設定が必要です。
 IAP を有効にすると次のような Credentials が作成されています。
 
-{{< img src="iap-cred.png" width="650" >}}
+:::img{width=650}
+![](iap-cred.png)
+:::
 
 これはその IAP に対する Client ID や Secret を表します。
 最後に Authorized redirects URIs を設定する必要があります。
@@ -81,15 +84,21 @@ IAP を有効にすると次のような Credentials が作成されています
 
 設定が完了していると、ロードバランサがつなぐサービスの URL にアクセスすると IAP によって Google の認証・認可が入ります。
 
-{{< img src="iap-browser.png" width="500" >}}
+:::img{width=500}
+![](iap-browser.png)
+:::
 
 ブラウザからだと Google アカウントによる認証になるので、IAP のコンソールから ACL にそのアカウントを追加するとログインすることができます。
 
-{{< img src="iap-acl.png" width="500" >}}
+:::img{width=500}
+![](iap-acl.png)
+:::
 
 ACL にないアカウントや、ID/Pass が異なる場合などはログインできず、バックエンドサービスへリクエストはいきません。
 
-{{< img src="iap-failed.png" width="500" >}}
+:::img{width=500}
+![](iap-failed.png)
+:::
 
 ## プログラムから
 
@@ -115,7 +124,9 @@ open "https://accounts.google.com/o/oauth2/v2/auth?client_id=$OTHER_CLIENT_ID&re
 
 上記 URL を開くと認証コードを取得できます。
 
-{{< img src="iap-auth-code.png" width="500" >}}
+:::img{width=500}
+![](iap-auth-code.png)
+:::
 
 これが `AUTH_CODE` になります。
 
@@ -162,12 +173,12 @@ curl \
 Go や Python、PHP といった各種言語での具体例については以下のリポジトリにサンプルスクリプトをまとめました。
 詳しくはリポジトリにある README を参考にしてください。
 
-{{< hatena "https://github.com/b4b4r07/make_iap_request" >}}
+https://github.com/b4b4r07/make_iap_request
 
 また、上述した `curl` 流れを簡単にするために Client ID とサービスアカウントを使ってリクエストを作ることができる CLI の curl ラッパーを書きました。
 こちらも参考にしてみてください。
 
-{{< hatena "https://github.com/b4b4r07/iap_curl" >}}
+https://github.com/b4b4r07/iap_curl
 
 こんな感じでリクエストすることができます。
 Client ID (`IAP_CLIENT_ID`) は IAP に紐付いている Credentials から、サービスアカウント (`GOOGLE_APPLICATION_CREDENTIALS`) はどの GCP プロジェクトでもいいのでメニュータブから作成した後に IAP のコンソールのアクセスリストにそのメールアドレスを追加してください。

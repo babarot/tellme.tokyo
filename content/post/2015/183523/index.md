@@ -1,10 +1,7 @@
 ---
 title: "ターミナルのディレクトリ移動を高速化するプラグイン「enhancd」のその後"
 date: "2015-08-12T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 事の発端はこのツイート（であろう）。

@@ -17,7 +17,7 @@ another Astro (or any unified) project as is.
 | `code-block` | a copy button on every code block; ```` ```json:package.json ```` shows the file name above the code | remark, style, client |
 | `link-preview` | a paragraph that is only a URL becomes a card with the page's title, description, image and icon (cached; failed fetches are retried after 30 days) | remark, parse, fetch, cache, html, style |
 | `heading-levels` | keeps the post title the only h1 without rewriting the source | remark |
-| `figure-caption` | `![alt](src "caption")` alone in a paragraph becomes a figure with a caption | rehype |
+| `figure-caption` | `![alt](src "caption")` alone in a paragraph (or wrapped in a link) becomes a figure with a caption | rehype |
 | `directive-fallback` | turns directives nothing handled back into their text (`ratio:16` stays as written) | remark |
 | `shared` | helpers shared by the plugins: directives, swipe, tests | |
 

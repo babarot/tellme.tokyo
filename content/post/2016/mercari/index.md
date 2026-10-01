@@ -1,10 +1,7 @@
 ---
 title: "新卒でメルカリに入社した"
 date: "2016-10-01T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 今年の4/1に新卒として[株式会社メルカリ](https://www.mercari.com/jp/about/corporate/)に入社した。
@@ -16,9 +13,9 @@ toc: false
 一方で、メルカリが新卒採用を始めたのは今年からなので一期目の新卒としての採用となった。
 メルカリは国内での勢いはもちろんのことアメリカ市場でも急成長してきており社員としても一ユーザとしても今後の動向にわくわくしている。
 
-<!-- {{< img src="mercari.png" caption="<https://www.mercari.com>" class="text-center" >}} -->
+<!-- ![https://www.mercari.com](mercari.png "https://www.mercari.com") -->
 
-{{< figure src="mercari.png" caption="<https://www.mercari.com>" class="text-center" >}}
+![https://www.mercari.com](mercari.png "https://www.mercari.com")
 
 16新卒の同期は6人 (3 SWE, 1 PdM, 1 Desinger) だった。
 今は17や18の新卒採用に向けて動いてる。
@@ -42,7 +39,7 @@ toc: false
 メルカリのアプリは CM などで知っていたが会社はこのとき初めて知った。
 このときメルカリでは GitHub 採用を行っており、「氏名すらいらない、GitHub の URL とメールアドレスだけで応募する猛者を求めている」と当時の CFO が壇上で宣言していてかなり面白いことをやっているなと興味を持った。幸いに自分がアピールできるのはむしろ GitHub 上に載せていたソフトウェアしかないと思っていたためまさにちょうどいいのではないかと思った。その場ですぐに応募し、後の面談や面接などを経て内定をもらった。
 
-{{< hatena "https://github.com/babarot" >}}
+https://github.com/babarot
 
 ## 入社後
 

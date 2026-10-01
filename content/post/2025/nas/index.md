@@ -1,8 +1,6 @@
 ---
 title: "自宅にNASを導入した"
 date: "2025-01-05T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
 toc: true
 ---
@@ -27,11 +25,9 @@ toc: true
 
 ## Synology DS220+
 
-{{< figure 
-src="https://www.synology.com/img/products/detail/DS220plus/heading.png"
-width="400"
-caption="Synology DS220+"
-class="text-center" >}}
+:::img{width=400}
+![Synology DS220+](https://www.synology.com/img/products/detail/DS220plus/heading.png "Synology DS220+")
+:::
 
 最初のNASには[Synology DS220+](https://global.download.synology.com/download/Document/Hardware/DataSheet/DiskStation/20-year/DS220+/jpn/Synology_DS220_Plus_Data_Sheet_jpn.pdf)を選んだ。[Synology](https://www.synology.com/ja-jp)は台湾の企業で、他にもQNAPなど有名なNASメーカーがあるが、Synologyを選んだのには次のような理由がある。
 
@@ -69,10 +65,7 @@ NAS導入後はiPhone、iPad、MacからWi-Fi経由で同じデータにアク�
 
 写真をファイルとして管理するなら他のファイルと同様にフォルダに入れてFinderで触るという形で良い。が、普通は写真はプレビューしたいし、フォルダという括りだけではない写真が持つメタデータ (撮影日時や撮影機材など) でフィルタしたいものだ。SynologyではSynology製のアプリである[Synology Photos](https://www.synology.com/ja-jp/DSM70/SynologyPhotos)がそれをかなえてくれる。
 
-{{< figure 
-src="https://www.synology.com/img/beta/dsm70/photos/all_in_one_1.png"
-caption="via \"[Synology Photos](https://www.synology.com/ja-jp/DSM70/SynologyPhotos)\""
-class="text-center" >}}
+![via ”Synology Photos](https://www.synology.com/img/beta/dsm70/photos/all_in_one_1.png "via ”Synology Photos")
 
 DSMからPhotosを有効にするだけで使える。複数人でのアルバム管理もでき、NASのユーザ管理機能を使って人を追加したあとPhotosに権限を振れば使えるようになる。今は共有領域に置いてフォルダ/タイムライン形式で見れるようにしている。
 
@@ -101,19 +94,10 @@ Container Managerアプリからもコンテナの起動や停止ができるが
 $ docker compose up --build -d
 ```
 
-{{< gallery
-  match="minitube*"
-  sortOrder="desc"
-  rowHeight="150"
-  margins="5"
-  thumbnailResizeOptions="700x700 q90 Lanczos"
-  thumbnailHoverEffect="enlarge"
-  showExif=false
-  previewType="none"
-  lastRow="justify"
-  embedPreview=true
-  loadJQuery=true
->}}
+:::gallery
+![](minitube.png)
+![](minitube-large.png)
+:::
 
 _※これはデモデータを入れてlocalで立ち上げたアプリのスクショ。_
 
@@ -134,11 +118,9 @@ TailscaleはP2PなのでSynology NASと手持ちのMacにTailscaleを入れる�
 
 ## UPSを使う
 
-{{< figure 
-src="anker.webp"
-width="300"
-caption="Anker Solix C1000"
-class="text-center" >}}
+:::img{width=300}
+![Anker Solix C1000](anker.webp "Anker Solix C1000")
+:::
 
 NASは24時間365日稼働させておくものである。つまり常時電源 (コンセントなど) に挿しっぱなしになる。ブレーカーが落ちたり停電したりすると電源を喪失するので、データ書き込み中であれば破損する恐れがある。また、立ち上げているサーバのプロセスも死ぬのでやっかいなことが想像つく。
 
@@ -181,12 +163,9 @@ Synologyでは[Hyper Backup](https://www.synology.com/ja-jp/dsm/feature/hyper_ba
 
 NASでRAIDを構成していてもあくまでもNASのバックアップは別で取るべきだ。なぜならRAIDはあくまで耐障害性を高める機能であり、実際に問題が起こってしまった後、つまり完全なデータ喪失やNAS自体の故障による起動障害に対しては無力だからだ。Synologyはこの点においてもぬかりなく便利なアプリを提供してくれているのでありがたい。
 
-{{< figure 
-src="https://www.synology.com/img/dsm/hyper_backup/extensive_backup_destinations@2x.png"
-caption="いろいろなエクスポート先を選択できる"
-width="400"
-class="text-center" >}}
-
+:::img{width=400}
+![いろいろなエクスポート先を選択できる](https://www.synology.com/img/dsm/hyper_backup/extensive_backup_destinations@2x.png "いろいろなエクスポート先を選択できる")
+:::
 
 # 今後
 
@@ -194,10 +173,7 @@ NASはめちゃくちゃ良い。もっと早く導入すればよかった[^res
 
 組んで2年弱だが8TBの2台でもSHRだと実効容量は7TBほどしかなくこの2年でいっぱいになってきており今後は容量拡張が必要そうだ。8TBを12TBといった大きいストレージ容量を持つものに換装 (スケールアップ) するか、[DS923+](https://www.synology.com/ja-jp/products/DS923+)といった豊富なベイ数を持ったNASに乗り換えて新規HDDを追加 (スケールアウト) するかが次の課題になっている。
 
-{{< figure 
-src="nas.png"
-caption="Synology管理画面。空き容量がなく警告が出ている"
-class="text-center" >}}
+![Synology管理画面。空き容量がなく警告が出ている](nas.png "Synology管理画面。空き容量がなく警告が出ている")
 
 ちなみにDS220+というモデル名は2020年製の2ベイNAS (Disk Station) ということを示している。型番の命名規則は `製品タイプ`+`最大ベイ数`+`リリース年度`+`シリーズ名` になっている[^syno_model]。
 

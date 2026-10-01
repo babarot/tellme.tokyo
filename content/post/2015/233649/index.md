@@ -1,10 +1,7 @@
 ---
 title: "アドベントカレンダーに登録した"
 date: "2015-11-13T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 - [Shell Script Advent Calendar 2015](http://qiita.com/advent-calendar/2015/shell-script)

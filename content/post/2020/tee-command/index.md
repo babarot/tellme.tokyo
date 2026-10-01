@@ -1,10 +1,7 @@
 ---
 title: "標準出力に出しつつ、パイプ先のコマンドにも繋ぐ"
 date: "2020-02-07T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 コマンドの出力をターミナル (stdout) に出しながらパイプに繋いだ別のコマンドの stdin に流すとき、どう書くか。
@@ -21,7 +18,6 @@ flowchart LR
   command1 -->|in| command2
   command2 -->|out| out
 ```
-
 
 ## 解説
 
@@ -61,7 +57,6 @@ seq 15 | tee >(grep 4) >&2
 seq 15 | tee >&2 >(grep 4)
 ```
 
-
 実際の利用事例として「何かしらのコマンドを実行し CI のコンソールにも出しつつ GitHub にもコメントにする」ときとかに便利。
 
 ```bash
@@ -91,11 +86,12 @@ do_something() { date; }
 do_something | notify
 ```
 
-{{< figure
-src="result-light.png"
-src-dark="result-dark.png"
-src-light="result-light.png"
-caption="実行した様子"
-class="text-center" >}}
+:::img{scheme=light}
+![実行した様子](result-light.png "実行した様子")
+:::
+
+:::img{scheme=dark}
+![実行した様子](result-dark.png "実行した様子")
+:::
 
 [^1]: [コマンド置換](https://www.gnu.org/software/bash/manual/html_node/Command-Substitution.html)ではない

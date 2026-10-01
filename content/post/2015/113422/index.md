@@ -1,10 +1,7 @@
 ---
 title: "プラグインマネージャ zplug リリース前夜"
 date: "2015-12-01T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 [repo]: https://github.com/b4b4r07/zplug

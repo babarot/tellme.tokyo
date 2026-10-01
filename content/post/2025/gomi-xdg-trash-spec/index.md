@@ -1,10 +1,7 @@
 ---
 title: "gomi を XDG Trash 仕様に対応させた"
 date: "2025-02-16T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 前回、[gomi](https://gomi.dev) という CLI ゴミ箱ツールを Bubble Tea ベースの UI に置き換えた[^gomi-tea]という記事を書いたが、あのあとスターが 50 くらい増えて Issue もいくつか Open された。
@@ -51,7 +48,6 @@ DeletionDate=2025-02-16T12:34:56       # 削除日時（ISO 8601 形式）
 USB メモリや外付け HDD などのリムーバブルストレージには、ルートディレクトリに `.Trash-$UID/` というディレクトリが作成され、そこに `files/` や `info/` を配置する。
 
 例: /mnt/usbdrive/ にある XDG Trash
-
 
 ```bash
 /mnt/usbdrive/.Trash-1000/  # ユーザーID 1000 のゴミ箱
@@ -157,6 +153,7 @@ brew install gomi
 
 XDG Trash への対応や Homebrew の追加を経て、gomi も一人前のゴミ箱管理ツールになれたような気がする。
 
-{{< link "https://specifications.freedesktop.org/trash-spec/latest/" >}}
+https://specifications.freedesktop.org/trash-spec/latest/
 
-{{< link "https://gomi.dev" >}}
+https://gomi.dev
+

@@ -1,26 +1,23 @@
 ---
 title: "MacBook 12 inch を買った"
 date: "2015-08-14T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 <blockquote class="twitter-tweet" data-partner="tweetdeck"><p lang="ja" dir="ltr">来ました <a href="http://t.co/nwUUZSogN6">pic.twitter.com/nwUUZSogN6</a></p>&mdash; BABAROT (@b4b4r07) <a href="https://twitter.com/b4b4r07/status/600917894566957058">May 20, 2015</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-{{< img src="1.jpg" >}}
+![](1.jpg)
 
 5/20 に「新しい MacBook」が届いた．Apple のオンラインの [Store](http://store.apple.com/jp/buy-mac/macbook) で，実際にポチったのは4/12なので届くのには1ヶ月以上かかったことになる．
 
 スペックはこの通りだ．
 
-{{< img src="2.jpg" >}}
+![](2.jpg)
 
 CPU を最大の 1.3GHz に引き上げた．処理スピードは速いに越したことはない．それと，ここに載っていない変更点として，キーボードを US 配列にした．これはデザイン的な動機もあるが，主として私の用途がプログラミング関連だからだ．デスクトップ PC にも US 配列のキーボードを使用している．
 
-{{< img src="3.jpg" >}}
+![](3.jpg)
 
 # Why
 
@@ -39,7 +36,7 @@ CPU を最大の 1.3GHz に引き上げた．処理スピードは速いに越�
 
 満足か，後悔か．もちろん大満足である．**とにかく軽くて小さい Mac PC（UNIX 端末）が欲しい人にはピッタリ**なノート PC だと思う．賛否両論あるポイントを中心にレビューしてみる．
 
-{{< img src="4.jpg" >}}
+![](4.jpg)
 
 ## USB-C
 
@@ -84,7 +81,7 @@ Core M の CPU はタブレットにも採用される CPU らしい．冷却の
 
 それくらいにはパワーがあると思っていい．
 
-{{< img src="5.jpg" >}}
+![](5.jpg)
 
 しかし，Photoshop などの Adobe 製品を多数立ち上げて，Xcode や Eclipse などの IDE で開発して，YouTuber のような動画編集をバリバリして…というような人には向かないかもしれない．もしかしたらある程度は耐えられるのかもしれないが，やったことがないので分からないとしか言えない．そもそも，そういう用途向けには MacBook Pro というラインナップが用意されている．あれは 13 inch でも 1kg ちょっとと，パワーがあるくせに軽くて良い．MacBook の圧倒的手軽さには勝てないが．
 
@@ -94,7 +91,7 @@ Core M の CPU はタブレットにも採用される CPU らしい．冷却の
 
 実際のところ，その心配は無用だった．個人差はあれど，慣れるとむしろこっちのほうが打ちやすい．しかも2,3日で慣れた．ただ，矢印キーについては非常に慣れづらい変更になっているため，はやく Emacs ライクなキーバインドに慣れたほうがいい．Mac OS はデフォルトで Ctrl-A/E/F/B/N/P などのキーバインドをサポートしている．
 
-{{< img src="6.jpg" >}}
+![](6.jpg)
 
 また，個々のキーの下に LED が配置されたらしく，発色がとても綺麗だ．
 
@@ -126,6 +123,6 @@ MacBook は使うユーザを選ぶ．冒頭にもあるが，**とにかく軽�
 
 このマシンを買うまで，Mac mini (Mid 2012) と MacBook Air (13 inch, Mid 2012) の環境を持っていた．しかし，MacBook を購入してからは，家では外部ディスプレイにつなぐスタイルに変わり，まさかの MacBook メインマシン状態が続いている（本当は iMac 5K が欲しい）．それでいてもパワー不足を感じさせない MacBook は使い方次第ではパワフルにもこなす器用な野郎といったところだ（ただし，1.3GHz に変更している）．
 
-{{< img src="7.jpg" >}}
+![](7.jpg)
 
 iPhone ユーザなら少なからずあるであろう，旧端末をみると「ダサい」と感じるアレが Mac にも来たと思っていい．iPhone 6 ユーザなら iPhone 5s/5 を，iPhone 5s/5 ユーザなら iPhone 4s/4 を見たときに「ショボ！」とか「ダッサ！」と思っただろう．今回の MacBook がそれだ．MacBook Air/Pro のキーボードなどをみたときにダサさしか感じない．それだけ，MacBook が洗練されているように見え，買ったことを満足させる UX になっていると言える．

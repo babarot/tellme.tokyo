@@ -1,10 +1,7 @@
 ---
 title: "Go で書いた CLI ツールのリリースは GoReleaser と GitHub Actions で個人的には決まり"
 date: "2020-02-04T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 ## tl;dr
@@ -96,7 +93,9 @@ release:
 
 すると、GitHub Actions の release ワークフローが走って、
 
-{{< img src="action.png" width="300" >}}
+:::img{width=300}
+![](action.png)
+:::
 
 こんな感じで各 OS 向けにビルドされた artifacts が [Releases](https://github.com/b4b4r07/git-bump) にアップロードされる。
 
@@ -141,7 +140,7 @@ builds:
 
 とするのが面倒だったのでそれをするためだけの Go ツールを書いた。
 
-{{< hatena "https://github.com/b4b4r07/git-bump" >}}
+https://github.com/b4b4r07/git-bump
 
 ![](git-bump.png)
 

@@ -1,10 +1,7 @@
 ---
 title: "dotfiles を curl -L dot.hoge.com | sh でインストールする方法"
 date: "2015-01-18T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 dotfiles をインストールする際に、
@@ -36,7 +33,7 @@ $ curl -L https://raw.githubusercontent.com/{YOUR_ACCOUNT}/dotfiles/master/insta
 有名どころですとサクッと取得することができます。
 個人情報を入力し、年額を支払い、振込が確認された後、認証まで数時間たつとドメイン取得となります！
 
-{{< img src="1.png" >}}
+![](1.png)
 
 ここらへんは100円／年台からなのでとても安価です。
 
@@ -48,7 +45,7 @@ $ curl -L https://raw.githubusercontent.com/{YOUR_ACCOUNT}/dotfiles/master/insta
 
 さて、ここからが本番です。ここからは筆者の環境（ [ムームードメイン](http://muumuu-domain.com)）で説明していきます。 [ムームードメイン](http://muumuu-domain.com)のサイトにいき、
 
-{{< img src="2.png" >}}
+![](2.png)
 
 「ムームーDNS」＞「変更」と進んでいき、設定2のペインある入力欄に必要事項を書き込みます。
 
@@ -58,17 +55,19 @@ $ curl -L https://raw.githubusercontent.com/{YOUR_ACCOUNT}/dotfiles/master/insta
 
 あとは「セットアップ情報変更」をクリックでOKです。これらの操作は慎重を期して行うべきため、各所で変更の同意を問うようなダイアログが出ると思いますが確認してOKすればいいです。
 
-{{< img src="3.png" >}}
+![](3.png)
 
 次は、[Bitly](https://bitly.com) の設定です。
 
-{{< img src="4.png" width="250" >}}
+:::img{width=250}
+![](4.png)
+:::
 
 「Setting」＞「Advanced」＞「Branded Short Domain」とすすみ、先ほど取得したサブドメイン `dot.hoge.com` を打ち込み Add します。
 そして Verify します。DNS の設定が浸透されるまで、少し待ちます。数秒から数十秒（環境によっては数十分かかる場合も）で反応が帰ってきます。
 （注：先に Profile タブでメール設定を Verify する必要があります）
 
-{{< img src="5.png" width="700" >}}
+![](5.png)
 
 最後の仕上げです。
 

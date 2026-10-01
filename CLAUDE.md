@@ -43,7 +43,7 @@ Whatever in the Markdown pipeline or the article UI can stand on its own lives i
 
 ## Writing posts
 
-Posts live in this repository and nowhere else (the Obsidian sync was dropped: directives and embedded HTML do not render there). New posts are MDX.
+Posts live in this repository and nowhere else (the Obsidian sync was dropped: directives and embedded HTML do not render there), one folder each: `content/post/<year>/<slug>/`. New posts are MDX (`index.mdx`); the posts migrated from Hugo are Markdown (`index.md`, converted by `tools/hugo-to-astro.py`). The slug is the folder name and the URL is `/post/<date>/<slug>/`.
 
 - The build never rewrites a post's source; layout and structure are adjusted at render time. A post's source stays exactly what its author wrote.
 - Body headings may start at `#` or at `##`. The post title is the page's h1, so when the body has a `#`, every heading is rendered one level lower (`#` → h2, `##` → h3); a post written from `##` is left as is. A leading `#` that repeats the title is not rendered (`src/plugins/heading-levels/`).

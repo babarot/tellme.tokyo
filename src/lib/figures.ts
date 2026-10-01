@@ -1,16 +1,16 @@
 // HTML figures (figures/<name>.part.html next to a post). Shared by <Partial>
 // and the figure catalog at /dev/figures/.
-const sources = import.meta.glob(['/sample/post/**/figures/*.part.html', '/content/post/**/figures/*.part.html'], {
+const sources = import.meta.glob(['/content/post/**/figures/*.part.html'], {
   query: '?raw',
   import: 'default',
   eager: true,
 }) as Record<string, string>;
 
 export type Figure = {
-  // "sample/post/2026/foo/figures/zsh-startup": unique across the blog, used
+  // "content/post/2026/foo/figures/zsh-startup": unique across the blog, used
   // as the @scope key so figures with the same name in two posts never mix
   key: string;
-  // "sample/post/2026/foo"
+  // "content/post/2026/foo"
   postDir: string;
   name: string;
   source: string;

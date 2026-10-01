@@ -1,10 +1,7 @@
 ---
 title: "GitHub のラベルを宣言的に管理する"
 date: "2018-11-19T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 ## ソフトウェアの宣言的設定について
@@ -90,7 +87,7 @@ $ github-labeler
 2018/11/19 18:30:42 delete "wontfix" in org/repo1
 ```
 
-{{< img src="demo.png" >}}
+![](demo.png)
 
 定義されたラベル (`.labels`) が各リポジトリに存在しなければ作成し (`.repos[].labels`)、ここに羅列されていないラベルがある場合は削除するようになっている。
 例えば、`org/repo2` にも `area/security` を追加したかったら、

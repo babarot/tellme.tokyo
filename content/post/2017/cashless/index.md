@@ -1,10 +1,7 @@
 ---
 title: "決済をキャッシュレス化している"
 date: "2017-12-05T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 # 現状
@@ -65,8 +62,9 @@ iPhone 7/Apple Watch 2 以降は Apple Pay に対応しているため、iPhone 
 
 長年探し求めたいたのだけれど、上記ような欲しいと思っていた機能をすべて持っていて満足度が高い。
 
-{{< figure src="secrid.jpg" caption="KubeCon + CloudNativeCon North America 2017の参加中に撮った写真" width="500" >}}
-
+:::img{width=500}
+![KubeCon + CloudNativeCon North America 2017の参加中に撮った写真](secrid.jpg "KubeCon + CloudNativeCon North America 2017の参加中に撮った写真")
+:::
 
 # 仮想通貨
 

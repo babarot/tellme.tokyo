@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const ROOTS = ['sample/post', 'content/post'];
+const ROOTS = ['content/post'];
 
 function findFigures(dir: string): string[] {
   if (!fs.existsSync(dir)) return [];

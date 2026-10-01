@@ -1,10 +1,7 @@
 ---
 title: "開いたファイルに対して ansible-vault を Vim から実行する"
 date: "2018-01-31T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 生の何かをそのままリポジトリの置いておくのが微妙ということで特定のファイルを `ansible-vault` で暗号化してプッシュする、ということはよくあると思います。  
@@ -22,11 +19,11 @@ $ ansible-vault encrypt --vault-password-file=~/.vault_password secret.yaml
 
 というわけで開いているファイル (バッファ) に対して `ansible-vault (encrypt|decrypt)` を実行するプラグインをつくりました。
 
-{{< hatena "https://github.com/b4b4r07/vim-ansible-vault" >}}
+https://github.com/b4b4r07/vim-ansible-vault
 
 GIF イメージにある Credentials はサンプルです。
 
-{{< img src="demo.gif" >}}
+![](demo.gif)
 
 filetype が ansible-vault であれば yes/no で復号するかどうか聞いてあげると、もう一手間省けるのでさらに便利な気もしますが、とりあえずの不便さは解消されたので現状使える Vim コマンドと機能はこれだけです。
 

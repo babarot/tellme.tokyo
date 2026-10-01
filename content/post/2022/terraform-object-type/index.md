@@ -1,10 +1,7 @@
 ---
 title: "Terraformのobject variableで柔軟なパラメータ設定を提供する"
 date: "2022-07-03T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 [^1]: [Terraform の variable は "変数" ではなく、Module の挙動を外部から変更するためのインターフェイスである](https://tellme.tokyo/post/2022/06/15/terraform-variables-is-api/)

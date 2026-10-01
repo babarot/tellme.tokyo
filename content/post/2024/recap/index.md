@@ -1,8 +1,6 @@
 ---
 title: "2024年振り返り"
 date: "2024-12-31T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
 toc: true
 ---
@@ -42,19 +40,15 @@ SLOやオーナーシップあたりが主にコミットしたポイントだ�
 
 ## 買ってよかったもの
 
-{{< gallery
-  match="images/bestbuy/no*"
-  sortOrder="asc"
-  rowHeight="150"
-  margins="5"
-  thumbnailResizeOptions="500x500 q90 Lanczos"
-  thumbnailHoverEffect="enlarge"
-  showExif=false
-  previewType="none"
-  lastRow="justify"
-  embedPreview=true
-  loadJQuery=true
->}}
+:::gallery
+![](images/bestbuy/no1_porta-pro-wireless.png)
+![](images/bestbuy/no2_lamdash_palm_in.jpg)
+![](images/bestbuy/no3_13610200106.jpg)
+![](images/bestbuy/no4_A2345.jpg)
+![](images/bestbuy/no5_A1761.jpg)
+![](images/bestbuy/no6_olight_w3s.jpg)
+![](images/bestbuy/no7_678498000101.jpg)
+:::
 
 ### 1. [Porta Pro® Wireless](https://koss.com/products/porta-pro-wireless)
 
@@ -120,14 +114,12 @@ SLOやオーナーシップあたりが主にコミットしたポイントだ�
 
 ## 車
 
-{{< carousel 
-    images="images/car/z3.jpg,images/car/z4.jpg,images/car/_z1.jpg,images/car/_z2.jpg" 
-    height="25rem" 
-    interval="7000" 
-    aspectRatio="16/9" 
-    autoplay="true" 
-    indicator="dot"
->}}
+:::carousel
+![](images/car/z3.jpg)
+![](images/car/z4.jpg)
+![](images/car/_z1.jpg)
+![](images/car/_z2.jpg)
+:::
 
 納車して1年たった。初のFR、初のMT、初のスポーツカーだったが今ではすっかり板についてきた気がする。ODOメーターは18,000kmになった。北は北海道、南(西)は名古屋まで行った。東北道680kmを走破するのは大変だったが逆にもうどこへでも行けるぞという自信にもなった。マニュアル車は面倒ではないかとよく聞かれるが1年乗ってみて全然大変ではなかった。運転そのもの自体が苦でない人間であればATもMTもそんなに変わらないと思う。それよりもFRによる走りの違いを感じることがあるのでそういう意味で気にすることは多々あった。
 
@@ -156,20 +148,14 @@ SLOやオーナーシップあたりが主にコミットしたポイントだ�
 - 仙台
 - 名古屋
 
-{{< gallery
-  match="images/travel/*"
-  sortOrder="desc"
-  rowHeight="150"
-  margins="5"
-  thumbnailResizeOptions="600x600 q90 Lanczos"
-  thumbnailHoverEffect="enlarge"
-  showExif=false
-  previewType="none"
-  lastRow="justify"
-  embedPreview=true
-  loadJQuery=true
->}}
-
+:::gallery
+![](images/travel/2024-08-29_12-16-38.JPG)
+![](images/travel/2024-08-29_11-49-43.JPG)
+![](images/travel/0901890_0048.JPG)
+![](images/travel/0901890_0026.JPG)
+![](images/travel/0901890_0025.JPG)
+![](images/travel/0901890_0014.JPG)
+:::
 
 ## 服
 

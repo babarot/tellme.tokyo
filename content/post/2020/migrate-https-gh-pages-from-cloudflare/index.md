@@ -1,10 +1,7 @@
 ---
 title: "Cloudflare から GitHub Pages の HTTPS 機能に移行する"
 date: "2020-01-29T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 以前は GitHub Pages だけでは HTTPS 配信ができなかったので、Cloudflare をプロキシにして HTTPS 化させていた。
@@ -29,17 +26,23 @@ Domain-provider DNS -> GitHub -> tellme.tokyo
 
 Cloudflare DNS を使っていたのを、
 
-{{< img src="1.png" width="400" >}}
+:::img{width=400}
+![](1.png)
+:::
 
 ムームードメインの DNS サーバを使うようにセットアップした。
 
-{{< img src="2.png" width="400" >}}
+:::img{width=400}
+![](2.png)
+:::
 
 ### 2. GitHub Pages への IP アドレスを A レコードに設定する
 
 GitHub Pages に向ける。
 
-{{< img src="3.png" width="400" >}}
+:::img{width=400}
+![](3.png)
+:::
 
 参考: [GitHub Pages で HTTPS を有効にする | tellme.tokyo](https://tellme.tokyo/post/2020/01/20/github-pages-with-https/)
 
@@ -55,11 +58,15 @@ Cloudflare ではなく GitHub が参照される。
 
 サイトごとに設定を持っている。
 
-{{< img src="4.png" width="600" >}}
+:::img{width=600}
+![](4.png)
+:::
 
 Cloudflare のコンパネから DNS のタブを選択すると、今までここを通過するような設定になっていることがわかる。
 
-{{< img src="5.png" width="600" >}}
+:::img{width=600}
+![](5.png)
+:::
 
 `x` して消して良い。
 
@@ -69,7 +76,9 @@ DNS の切り替えに時間を要して接続が確立するまで Warning が�
 
 すると `Enforce HTTPS` を押せるようになるので押したら完了。
 
-{{< img src="6.png" width="600" >}}
+:::img{width=600}
+![](6.png)
+:::
 
 ## 参考
 

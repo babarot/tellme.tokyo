@@ -1,10 +1,7 @@
 ---
 title: "自作ツールの gomi をアップデートをした"
 date: "2025-01-29T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 昔、[gomi](https://github.com/babarot/gomi) というターミナルにゴミ箱の概念を実装する CLI コマンドを作っていたのだが、久しぶりに土日を使ってガッツリ書き換えた。ファイルをゴミ箱に移動したり戻したりするという根幹の機能は変えず、UI 部分だけを更新した。
@@ -56,7 +53,6 @@ Bubble Tea では `Model` という interface で以下のメソッドを定義�
 
 `Model` interface を満たす構造体 `model` を作成し、`Update()` と `View()`、およびそれらを行き来する `Message` を実装していく流れだ。
 
-
 キー入力やデータの変更など、いわゆるイベントは `Message` と呼ばれており、これを受け取った `Update` はそれに応じた処理を行い `View` を呼ぶ。`Quit`（サイクルの終了）処理などもユーザーが実装する部分なので、Bubble Tea は基本的に **Update ←(Model)→ View** をひたすら繰り返すというわけだ。
 
 今回、初めて Bubble Tea を使ってターミナルアプリを書いてみたが、Elm Architecture のおかげでスッキリと書けた。また、初学の際は [@motemen さんのブログ](https://motemen.hatenablog.com/entry/2022/06/introduction-to-go-bubbletea)が参考になった。
@@ -67,24 +63,15 @@ Bubble Tea では `Model` という interface で以下のメソッドを定義�
 
 実は UI の書き換えはこれで 2 回目で、初代 UI[^first] と二代目 UI[^second] がこんな感じ。こうして振り返ると、今回は結構いい感じに仕上がったのではないかと思う。
 
-{{< figure 
-src="./demo-3.gif"
-caption="三代目UI (2025)"
-class="text-center" >}}
+![三代目UI (2025)](./demo-3.gif "三代目UI (2025)")
 
-{{< figure 
-src="./demo-2.png"
-caption="二代目UI (2020)"
-class="text-center" >}}
+![二代目UI (2020)](./demo-2.png "二代目UI (2020)")
 
-{{< figure 
-src="./demo-1.gif"
-caption="初代 UI (2015)"
-class="text-center" >}}
+![初代 UI (2015)](./demo-1.gif "初代 UI (2015)")
 
 (2025/02/08追記): サイトも更新した。
 
-{{< link "https://babarot.me/gomi" >}}
+https://babarot.me/gomi
 
 [^tea]: Bubble Tea の Tea は **T**he **E**lm **A**rchitecture からきているのかも
 [^first]: コードを見てみたら UI はなんと自前実装で [termbox-go](https://github.com/nsf/termbox-go) を使っていたようだ。まだコードが小さかったときの peco とか fzf を参考に書いたような気がする

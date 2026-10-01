@@ -1,20 +1,33 @@
 // A paragraph holding a single image with a title becomes a figure with the
-// title as its caption: ![alt](src "caption")
+// title as its caption: ![alt](src "caption"). The image may be wrapped in a
+// link, [![alt](src "caption")](href); the link stays around the image.
+const meaningful = (nodes: any[] = []) => nodes.filter((c: any) => !(c.type === 'text' && !c.value.trim()));
+
+// The paragraph's only content: an image, or a link holding only an image
+function soleImage(p: any): { content: any; img: any } | undefined {
+  const [only, ...rest] = meaningful(p.children);
+  if (!only || rest.length) return;
+  if (only.tagName === 'img') return { content: only, img: only };
+  if (only.tagName === 'a') {
+    const [img, ...more] = meaningful(only.children);
+    if (img?.tagName === 'img' && !more.length) return { content: only, img };
+  }
+}
+
 export default function rehypeFigure() {
   return (tree: any) => {
     const visit = (node: any) => {
       if (!node.children) return;
       node.children = node.children.map((child: any) => {
-        const kids = child.children?.filter((c: any) => !(c.type === 'text' && !c.value.trim()));
-        if (child.tagName === 'p' && kids?.length === 1 && kids[0].tagName === 'img' && kids[0].properties?.title) {
-          const img = kids[0];
-          const caption = String(img.properties.title);
-          delete img.properties.title;
+        const found = child.tagName === 'p' ? soleImage(child) : undefined;
+        if (found?.img.properties?.title) {
+          const caption = String(found.img.properties.title);
+          delete found.img.properties.title;
           return {
             type: 'element',
             tagName: 'figure',
             properties: {},
-            children: [img, { type: 'element', tagName: 'figcaption', properties: {}, children: [{ type: 'text', value: caption }] }],
+            children: [found.content, { type: 'element', tagName: 'figcaption', properties: {}, children: [{ type: 'text', value: caption }] }],
           };
         }
         visit(child);

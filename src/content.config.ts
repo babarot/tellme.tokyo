@@ -2,19 +2,16 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-// Posts come from two places:
-// - content/post: the posts of the site. Only new-format posts (index.mdx) are
-//   read for now; the Hugo-era .md posts there join once they are migrated.
-// - sample/post: hand-picked copies for the design work, local only (gitignored),
-//   so it is simply empty anywhere else.
-const SOURCES = ['content/post/**/index.mdx', 'sample/post/**/index.{md,mdx}'];
+// Posts: content/post/<year>/<slug>/index.mdx, or index.md for the posts
+// migrated from Hugo (tools/hugo-to-astro.py)
+const SOURCES = ['content/post/**/index.{md,mdx}'];
 
 const post = defineCollection({
   loader: glob({
     pattern: SOURCES,
     base: '.',
     // "content/post/2026/foo/index.mdx" -> "2026/foo"
-    generateId: ({ entry }) => entry.replace(/^(content|sample)\/post\//, '').replace(/\/index\.mdx?$/, ''),
+    generateId: ({ entry }) => entry.replace(/^content\/post\//, '').replace(/\/index\.mdx?$/, ''),
   }),
   schema: z.object({
     title: z.string(),

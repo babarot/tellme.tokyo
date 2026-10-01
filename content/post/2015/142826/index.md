@@ -1,10 +1,7 @@
 ---
 title: "拡張版 cd コマンドの enhancd が生まれ変わった"
 date: "2015-07-21T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 
 [![](https://raw.githubusercontent.com/b4b4r07/screenshots/master/enhancd/logo.gif)](https://github.com/b4b4r07/enhancd)

@@ -1,10 +1,7 @@
 ---
 title: "Obsidianからブログを更新できるようにした"
 date: "2026-02-09T00:00:00+09:00"
-description: ""
-categories: []
 draft: true
-toc: false
 ---
 ## GitHub PagesからCloudflare Pagesに移行した
 
@@ -102,9 +99,6 @@ Cloudflare Pages
 - **削除同期**: Obsidian側で記事を削除した場合の同期を試みたが、既存記事と新規記事の区別ができず断念した
 
 -->
-
-
-
 
 <picture> <!-- ダークモード用 --> <source srcset="https://assets.babarot.dev/files/2026/02/13bf1ac346eb9b17.png" media="(prefers-color-scheme: dark)" /> <!-- ライトモード用 --> <source srcset="https://assets.babarot.dev/files/2026/02/c6aa89cec4cf501a.png" /> <img src="preview.jpg" alt="" width="" height="" /> </picture>
 pushすると自動でPRが作成され、Cloudflare PagesのプレビューURLがコメントに投稿される。
