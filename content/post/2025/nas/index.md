@@ -1,7 +1,7 @@
 ---
 title: "自宅にNASを導入した"
 date: "2025-01-05T00:00:00+09:00"
-draft: true
+draft: false
 toc: true
 ---
 
@@ -33,7 +33,7 @@ toc: true
 
 - 基本ソフトである[DSM](https://www.synology.com/ja-jp/dsm)が直感的で使いやすそうであり開発も盛んである
 - [SHR](https://kb.synology.com/ja-jp/DSM/tutorial/What_is_Synology_Hybrid_RAID_SHR)という拡張RAIDの実装がある
-- Synology製のアプリがかなり良さそう (Google PhotosみたいなアプリとしてSynology Photosなどがある) 
+- Synology製のアプリがかなり良さそう (Google PhotosみたいなアプリとしてSynology Photosなどがある)
 
 NASの構築は簡単で本体を買ってHDDを刺すだけ。今回は購入した本体はDS220+といって2ベイのもので、HDDスロットが2つある。これはRAID1 (ミラーリング) などのRAIDタイプに適したベイ数だ。今回はSHRというSynology独自のRAID拡張を選択する[^raid_type]。購入したHDDはWestern DigitalのNAS用ディスク。通常のものでも問題ないようだが、NASは24時間365日稼働しているわけなので専用と謳っているもののほうが信頼性があるかなと思いこちらにした。接続はルーターとNASをLANケーブルで繋ぐ。その後ブラウザから `finds.synology.com` にアクセスすることでLAN内にある同社製品を探すことができる。あとはインストーラーに従って設定していけば良い。
 

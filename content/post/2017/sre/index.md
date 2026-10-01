@@ -1,7 +1,7 @@
 ---
 title: "SREになった"
 date: "2017-11-02T01:33:34+09:00"
-draft: true
+draft: false
 tags: ["SRE"]
 ---
 
