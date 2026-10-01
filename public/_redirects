@@ -29,6 +29,9 @@
 /post/2022/12/28/10x-1st-y-aniv/                                                 /post/2022/12/28/recap/  301
 /post/2023/12/31/2023-review/                                                    /post/2023/12/31/recap/  301
 
+# Posts whose date changed after they were published
+/post/2026/09/27/ai-agent-first-dotfiles/   /post/2026/10/01/ai-agent-first-dotfiles/  301
+
 # Feeds and the sitemap
 /post/feed.xml   /feed.xml            301
 /sitemap.xml     /sitemap-index.xml   301
