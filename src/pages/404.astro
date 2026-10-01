@@ -1,0 +1,14 @@
+---
+// Served for any missing URL (Cloudflare: not_found_handling = "404-page").
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="ページが見つかりません">
+  <h1 class="text-xl font-semibold text-heading">ページが見つかりません</h1>
+  <p class="mt-4 leading-7 text-body">
+    URL が変わったか、記事が非公開になっている可能性があります。
+  </p>
+  <p class="mt-8">
+    <a href="/" class="text-heading underline decoration-line underline-offset-[3px] transition-colors hover:decoration-current">記事の一覧へ</a>
+  </p>
+</Base>

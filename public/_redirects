@@ -1,0 +1,15 @@
+# Hugo-era URLs that have no page here (Cloudflare static assets).
+# Posts keep their URLs (/post/YYYY/MM/DD/slug/), so they need no rule.
+
+# Lists Hugo generated: tags, categories, pages of the post list
+/tags/*        /  301
+/tags          /  301
+/categories/*  /  301
+/categories    /  301
+/page/*        /  301
+/post/         /  301
+/post          /  301
+
+# Feeds and the sitemap
+/post/feed.xml   /feed.xml            301
+/sitemap.xml     /sitemap-index.xml   301

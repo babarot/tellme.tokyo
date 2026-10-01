@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 import { unified } from '@astrojs/markdown-remark';
 import tailwindcss from '@tailwindcss/vite';
 import remarkDirective from 'remark-directive';
@@ -45,7 +46,8 @@ export default defineConfig({
       themes: { light: 'github-light', dark: 'github-dark', 'tokyo-night': 'tokyo-night' },
     },
   },
-  integrations: [mdx()],
+  // sitemap-index.xml (Hugo's /sitemap.xml redirects to it: public/_redirects)
+  integrations: [mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
   },

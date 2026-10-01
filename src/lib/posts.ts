@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { excerpt } from './excerpt';
 
 export type Post = CollectionEntry<'post'>;
 
@@ -24,4 +25,10 @@ export function postPath(post: Post): string {
 // "2025-01-29", as the Hugo-era list showed it
 export function formatDate(date: string): string {
   return date.slice(0, 10);
+}
+
+// The description for meta tags and the feed: the front matter's, else the
+// opening of the post.
+export function postDescription(post: Post): string {
+  return post.data.description || excerpt(post.body ?? '');
 }

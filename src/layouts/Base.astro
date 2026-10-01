@@ -13,11 +13,14 @@ import Rss from '../icons/rss.svg';
 interface Props {
   title?: string;
   description?: string;
+  /** a post's date (YYYY-MM-DD...), which also makes the page an article */
+  published?: string;
 }
 
-const { title, description = 'babarot のブログ' } = Astro.props;
+const { title, description = 'babarot のブログ', published } = Astro.props;
 const siteName = 'tellme.tokyo';
 const pageTitle = title ? `${title} | ${siteName}` : siteName;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 
 // GitHub and X are filled brand marks (Simple Icons) drawn edge to edge; RSS is
 // a stroked icon (Lucide) with padding. X fills its box the most, so it is set
@@ -53,6 +56,16 @@ const links = [
     </script>
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:type" content={published ? 'article' : 'website'} />
+    <meta property="og:title" content={title ?? siteName} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="ja_JP" />
+    {published && <meta property="article:published_time" content={published} />}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@b4b4r07" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="16x16" />
     <link rel="alternate" type="application/rss+xml" title={siteName} href="/feed.xml" />
