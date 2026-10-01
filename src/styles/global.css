@@ -7,7 +7,7 @@
 @import './themes/tokyo-night.css';
 @import './figures/tokens.css';
 @import './figures/components.css';
-@import '../plugins/link-card/style.css';
+@import '../plugins/link-preview/style.css';
 @import '../plugins/gallery/style.css';
 @import '../plugins/carousel/style.css';
 @import '../plugins/lightbox/style.css';
@@ -102,10 +102,11 @@ html.dark {
 }
 
 .article {
-  --link-card-border: var(--c-line);
-  --link-card-hover: var(--c-surface);
-  --link-card-title: var(--c-heading);
-  --link-card-muted: var(--c-muted);
+  --link-preview-line: var(--c-line);
+  --link-preview-hover: var(--c-surface);
+  --link-preview-title: var(--c-heading);
+  --link-preview-muted: var(--c-muted);
+  --link-preview-image-bg: var(--c-surface);
   --gallery-placeholder: var(--c-surface);
   --carousel-placeholder: var(--c-surface);
 }
@@ -144,13 +145,15 @@ html.dark {
   @apply border-b border-line pb-2 text-lg;
 }
 
-.article :where(a):not(.link-card) {
+/* Elements marked not-prose (cards and other plugin UI) style themselves,
+   so the article rules below skip them, as Typography's own rules do. */
+.article :where(a):not(:where(.not-prose, .not-prose *)) {
   @apply font-normal underline underline-offset-[3px] transition-colors;
   color: var(--c-link);
   text-decoration-color: var(--c-link-line);
 }
 
-.article :where(a):not(.link-card):hover {
+.article :where(a):not(:where(.not-prose, .not-prose *)):hover {
   text-decoration-color: currentColor;
 }
 
@@ -166,7 +169,7 @@ html.dark {
   @apply font-semibold;
 }
 
-.article :where(code):not(pre code) {
+.article :where(code):not(pre code):not(:where(.not-prose, .not-prose *)) {
   @apply rounded px-1 py-0.5 font-normal text-[0.875em];
   background-color: var(--c-code-bg);
   color: var(--c-code);
@@ -181,7 +184,7 @@ html.dark {
   @apply rounded-lg border border-line px-4 py-3 text-[0.8125rem] leading-relaxed;
 }
 
-.article :where(img) {
+.article :where(img):not(:where(.not-prose, .not-prose *)) {
   @apply mx-auto rounded-md;
 }
 

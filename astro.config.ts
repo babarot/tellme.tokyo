@@ -10,7 +10,7 @@ import remarkEmbed from './src/plugins/embed/remark';
 import remarkMermaid from './src/plugins/mermaid/remark';
 import remarkDirectiveFallback from './src/plugins/directive-fallback/remark';
 import remarkHeadingLevels from './src/plugins/heading-levels/remark';
-import remarkLinkCard from './src/plugins/link-card/remark';
+import remarkLinkPreview from './src/plugins/link-preview/remark';
 import rehypeFigureCaption from './src/plugins/figure-caption/rehype';
 
 export default defineConfig({
@@ -31,7 +31,7 @@ export default defineConfig({
         remarkDirectiveFallback,
         remarkHeadingLevels,
         remarkMermaid,
-        [remarkLinkCard, { cacheFile: '.cache/link-cards.json' }],
+        [remarkLinkPreview, { cacheFile: '.cache/link-previews.json' }],
       ],
       rehypePlugins: [rehypeFigureCaption],
       remarkRehype: { footnoteLabel: '脚注', footnoteBackLabel: '本文に戻る' },

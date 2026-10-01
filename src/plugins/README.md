@@ -14,7 +14,7 @@ another Astro (or any unified) project as is.
 | `embed` | `::tweet`, `::youtube`, `::spotify`, `::slideshare` | remark, style, client, providers |
 | `mermaid` | ```` ```mermaid ```` code blocks drawn as diagrams; follows the color scheme | remark, style, client |
 | `img` | `:::img` for one image with options: `width` (most px), `scheme` (light or dark only) | remark, style |
-| `link-card` | a paragraph that is only a URL becomes a card with the page's OGP data | remark, style |
+| `link-preview` | a paragraph that is only a URL becomes a card with the page's title, description, image and icon (cached; failed fetches are retried after 30 days) | remark, parse, fetch, cache, html, style |
 | `heading-levels` | keeps the post title the only h1 without rewriting the source | remark |
 | `figure-caption` | `![alt](src "caption")` alone in a paragraph becomes a figure with a caption | rehype |
 | `directive-fallback` | turns directives nothing handled back into their text (`ratio:16` stays as written) | remark |
@@ -63,7 +63,7 @@ after them.
 ```ts
 [remarkGallery, { rowHeight: 150, gap: 5, thumbnailWidths: [300, 600, 900, 1200] }]
 [remarkCarousel, { interval: 7000, autoplay: true, ratio: '16/9', indicator: 'dot' }]
-[remarkLinkCard, { cacheFile: '.cache/link-cards.json' }]
+[remarkLinkPreview, { cacheFile: '.cache/link-previews.json', retryAfterDays: 30 }]
 ```
 
 Per use, as directive attributes:
