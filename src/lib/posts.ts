@@ -4,11 +4,11 @@ import { excerpt } from './excerpt';
 export type Post = CollectionEntry<'post'>;
 
 // Drafts are visible in `astro dev` and in builds with SHOW_DRAFTS=1
-// (preview deployments).
+// (preview deployments). Hidden posts are never visible.
 export const showDrafts = import.meta.env.DEV || process.env.SHOW_DRAFTS === '1';
 
 export async function getPosts(): Promise<Post[]> {
-  const posts = await getCollection('post', ({ data }) => showDrafts || !data.draft);
+  const posts = await getCollection('post', ({ data }) => !data.hidden && (showDrafts || !data.draft));
   return posts.sort((a, b) => b.data.date.localeCompare(a.data.date));
 }
 

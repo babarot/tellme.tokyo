@@ -49,6 +49,7 @@ Posts live in this repository and nowhere else (the Obsidian sync was dropped: d
 - The build never rewrites a post's source; layout and structure are adjusted at render time. A post's source stays exactly what its author wrote.
 - Body headings may start at `#` or at `##`. The post title is the page's h1, so when the body has a `#`, every heading is rendered one level lower (`#` → h2, `##` → h3); a post written from `##` is left as is. A leading `#` that repeats the title is not rendered (`src/plugins/heading-levels/`).
 - A single `#` lowers every heading of that post. When mixing `#` and `##`, use `#` for chapters and `##` for sections.
+- `draft: true`: still being written; built only in dev and previews (with a DRAFT label). `hidden: true`: withdrawn; never built anywhere, as if the post did not exist (its old URL counts as hidden on purpose in `pnpm check:urls`).
 - `toc: true` in the front matter shows a table of contents (h2 and h3): in the space right of the content column on wide screens, at the top of the post otherwise (`src/plugins/toc/`).
 
 ### Photos (directives)

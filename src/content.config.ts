@@ -24,7 +24,10 @@ const post = defineCollection({
       .pipe(z.string().regex(/^\d{4}-\d{2}-\d{2}/)),
     slug: z.string().optional(),
     description: z.string().optional().default(''),
+    // draft: still being written; built only in dev and previews.
+    // hidden: withdrawn; never built, as if the post did not exist.
     draft: z.boolean().optional().default(false),
+    hidden: z.boolean().optional().default(false),
     // show a table of contents (h2 and h3)
     toc: z.boolean().optional().default(false),
     tags: z.array(z.string()).optional().default([]),
