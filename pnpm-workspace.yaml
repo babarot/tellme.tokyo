@@ -2,3 +2,11 @@ allowBuilds:
   esbuild: true
   sharp: true
   workerd: true
+
+# Security fixes for transitive dependencies pinned to vulnerable versions
+# (Dependabot alerts). Drop each once its parent ships a fixed version.
+overrides:
+  # satori@0.33.5 pins fflate@0.7.3
+  fflate@<0.7.5: ~0.7.5
+  # chevrotain@11.1.2 (via mermaid) pins lodash-es@4.17.23
+  lodash-es@<4.18.0: ^4.18.1
