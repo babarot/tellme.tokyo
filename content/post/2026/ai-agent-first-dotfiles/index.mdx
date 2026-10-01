@@ -95,24 +95,9 @@ AI は学習した知識どおりにコマンドを書く。手元の環境が�
 
 最近はここに duckdb、hyperfine、scc を足した。
 
-```nix
-# nix/home-manager/tools/packages.nix（抜粋）
-{ pkgs, ... }:
-{
-  home.packages = with pkgs; [
-    duckdb
-    hyperfine
-    scc
-    shellcheck
-    shfmt
-    # ...
-  ];
-}
-```
-
 ### AI の知っているコマンドのふりをする
 
-挙動を合わせるのとは逆向きで、`rm` だけはわざと AI に誤解させている。AI が使うシェルでも、`rm` だけは `alias rm=gomi` が読み込まれるようにしている。
+揃えるのとは逆向きで、`rm` だけはわざと AI に誤解させている。AI が使うシェルでも、`rm` だけは `alias rm=gomi` が読み込まれるようにしている。
 
 Claude Code にはファイルを消す専用のツールがなく、消すときはいつも rm を打つ。手元の記録では、直近60日で621回打っていた。一時ファイルやビルドの成果物の後始末など。だからこそ、その rm を間違えても戻せるものにしておきたかった。
 
