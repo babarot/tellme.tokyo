@@ -1,5 +1,11 @@
 # tellme.tokyo
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/astro-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="docs/screenshots/astro-light.png">
+  <img alt="tellme.tokyo" src="docs/screenshots/astro-light.png">
+</picture>
+
 babarot's blog, at https://tellme.tokyo/. Built with [Astro](https://astro.build/) and served from Cloudflare Workers.
 
 ```sh
