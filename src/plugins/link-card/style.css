@@ -1,0 +1,85 @@
+/* Link card: title, description and site on the left, the OGP image on the
+   right (hidden on narrow screens). Colors can be set from outside:
+   --link-card-border, --link-card-hover, --link-card-title, --link-card-muted. */
+.link-card {
+  display: flex;
+  height: 7.5rem;
+  margin: 1.5rem 0;
+  overflow: hidden;
+  border: 1px solid var(--link-card-border, rgb(128 128 128 / 0.25));
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.link-card:hover {
+  background: var(--link-card-hover, rgb(128 128 128 / 0.06));
+}
+
+.link-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+  min-width: 0;
+  padding: 0.75rem 1rem;
+}
+
+.link-card-title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: var(--link-card-title, inherit);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.375;
+}
+
+.link-card-description {
+  overflow: hidden;
+  color: var(--link-card-muted, gray);
+  font-size: 0.75rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.link-card-site {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-top: 0.25rem;
+  color: var(--link-card-muted, gray);
+  font-size: 0.75rem;
+}
+
+.link-card-favicon {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  border-radius: 0;
+}
+
+.link-card-thumb {
+  display: none;
+  flex-shrink: 0;
+  height: 100%;
+  aspect-ratio: 1.91 / 1;
+  border-left: 1px solid var(--link-card-border, rgb(128 128 128 / 0.25));
+}
+
+@media (min-width: 640px) {
+  .link-card-thumb {
+    display: block;
+  }
+}
+
+.link-card-thumb img {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 0;
+  object-fit: cover;
+}

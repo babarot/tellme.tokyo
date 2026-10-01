@@ -1,0 +1,13 @@
+---
+import { renderFigure, type Figure } from '../lib/figures';
+
+interface Props {
+  figure: Figure;
+}
+
+const { figure } = Astro.props;
+const { html, css } = renderFigure(figure);
+---
+
+{css && <style is:inline set:html={css} />}
+<div class="fig not-prose" data-fig={figure.key} set:html={html} />

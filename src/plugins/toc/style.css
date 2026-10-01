@@ -1,0 +1,63 @@
+/* Table of contents: a quiet list of links; the section being read is marked.
+   Where it sits (sidebar, top of the post) is up to the page.
+   Colors: --toc-label, --toc-link, --toc-active, --toc-line. */
+.toc {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.toc-label {
+  margin: 0 0 0.5rem;
+  color: var(--toc-label, gray);
+  font-size: 0.75rem;
+}
+
+.toc ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.toc ol ol {
+  padding-left: 0.875rem;
+}
+
+.toc li {
+  margin: 0;
+}
+
+.toc a {
+  display: block;
+  padding: 0.2rem 0 0.2rem 0.625rem;
+  border-left: 1px solid var(--toc-line, rgb(128 128 128 / 0.25));
+  color: var(--toc-link, gray);
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.toc a:hover {
+  color: var(--toc-active, inherit);
+}
+
+.toc a[aria-current='true'] {
+  border-left-color: var(--toc-active, currentColor);
+  color: var(--toc-active, inherit);
+}
+
+/* The inline variant for narrow screens: a collapsible box */
+.toc-inline {
+  margin: 0 0 2rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--toc-line, rgb(128 128 128 / 0.25));
+  border-radius: 0.5rem;
+}
+
+.toc-inline > summary {
+  color: var(--toc-label, gray);
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.toc-inline[open] > summary {
+  margin-bottom: 0.5rem;
+}

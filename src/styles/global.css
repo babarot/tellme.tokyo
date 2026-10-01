@@ -1,0 +1,252 @@
+/* Only src/ uses Tailwind classes; scanning the rest (posts, tools) can pick
+   up stray candidates that Tailwind fails to parse. */
+@import 'tailwindcss' source('../');
+@plugin '@tailwindcss/typography';
+@import './themes/default.css';
+@import './themes/mini.css';
+@import './themes/tokyo-night.css';
+@import './figures/tokens.css';
+@import './figures/components.css';
+@import '../plugins/link-card/style.css';
+@import '../plugins/gallery/style.css';
+@import '../plugins/carousel/style.css';
+@import '../plugins/lightbox/style.css';
+@import '../plugins/toc/style.css';
+
+/* Dark mode follows the .dark class set by the inline script in Base.astro */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Fonts carried over from the Hugo theme (babarot/mini) */
+@font-face {
+  font-family: 'Hack';
+  src: url('/fonts/hack/hack-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hack';
+  src: url('/fonts/hack/hack-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hack';
+  src: url('/fonts/hack/hack-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Hack';
+  src: url('/fonts/hack/hack-bolditalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: '游ゴシック', YuGothic, 'Zen Kaku Gothic New', 'Noto Sans JP', 'ヒラギノ角ゴ Pro', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, sans-serif;
+  --font-mono: 'Hack', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+/* The theme's color roles as Tailwind colors (text-heading, border-line, ...).
+   The values switch with the theme and with the color scheme (light/dark), so markup never needs
+   dark: for colors. */
+@theme inline {
+  --color-page: var(--c-page);
+  --color-ink: var(--c-ink);
+  --color-brand: var(--c-brand);
+  --color-heading: var(--c-heading);
+  --color-body: var(--c-body);
+  --color-subtle: var(--c-subtle);
+  --color-muted: var(--c-muted);
+  --color-faint: var(--c-faint);
+  --color-faint-hover: var(--c-faint-hover);
+  --color-list-title: var(--c-list-title);
+  --color-line: var(--c-line);
+  --color-surface: var(--c-surface);
+  --color-draft: var(--c-draft);
+}
+
+html {
+  min-width: 360px;
+  -webkit-text-size-adjust: 100%;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+::selection {
+  background-color: var(--c-accent);
+  color: white;
+}
+
+/* Colors for the plugins in src/plugins/, from the theme */
+:root {
+  --toc-label: var(--c-subtle);
+  --toc-link: var(--c-muted);
+  --toc-active: var(--c-heading);
+  --toc-line: var(--c-line);
+}
+
+.article {
+  --link-card-border: var(--c-line);
+  --link-card-hover: var(--c-surface);
+  --link-card-title: var(--c-heading);
+  --link-card-muted: var(--c-muted);
+  --gallery-placeholder: var(--c-surface);
+  --carousel-placeholder: var(--c-surface);
+}
+
+/* Article body. Typography's colors all come from the theme, which already
+   switches for dark mode, so prose-invert is not used. */
+.article {
+  @apply prose max-w-none;
+  font-size: 1rem;
+  line-height: 1.9;
+  letter-spacing: 0.01em;
+  --tw-prose-body: var(--c-body);
+  --tw-prose-headings: var(--c-heading);
+  --tw-prose-bold: var(--c-heading);
+  --tw-prose-links: var(--c-link);
+  --tw-prose-counters: var(--c-subtle);
+  --tw-prose-bullets: var(--c-line-strong);
+  --tw-prose-hr: var(--c-line);
+  --tw-prose-quotes: var(--c-quote);
+  --tw-prose-quote-borders: var(--c-line-strong);
+  --tw-prose-captions: var(--c-muted);
+  --tw-prose-code: var(--c-code);
+  --tw-prose-th-borders: var(--c-line-strong);
+  --tw-prose-td-borders: var(--c-line);
+}
+
+.article :where(h2, h3, h4) {
+  @apply text-base font-semibold tracking-normal;
+  margin-top: 2.5em;
+  margin-bottom: 0.75em;
+}
+
+/* Only h2 (a section) gets a rule; h3 and below stay plain, so having the
+   rule or not is what tells the two levels apart. */
+.article :where(h2) {
+  @apply border-b border-line pb-2 text-lg;
+}
+
+.article :where(a):not(.link-card) {
+  @apply font-normal underline underline-offset-[3px] transition-colors;
+  color: var(--c-link);
+  text-decoration-color: var(--c-link-line);
+}
+
+.article :where(a):not(.link-card):hover {
+  text-decoration-color: currentColor;
+}
+
+/* Typography spaces each list item by 0.5em on top of the 1.9 line height,
+   which reads looser than the body text. Keep items close; the bullets and
+   numbers already mark where each one starts. */
+.article :where(li) {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+}
+
+.article :where(strong) {
+  @apply font-semibold;
+}
+
+.article :where(code):not(pre code) {
+  @apply rounded px-1 py-0.5 font-normal text-[0.875em];
+  background-color: var(--c-code-bg);
+  color: var(--c-code);
+}
+
+.article :where(code):not(pre code)::before,
+.article :where(code):not(pre code)::after {
+  content: none;
+}
+
+.article :where(pre) {
+  @apply rounded-lg border border-line px-4 py-3 text-[0.8125rem] leading-relaxed;
+}
+
+.article :where(img) {
+  @apply mx-auto rounded-md;
+}
+
+.article :where(figure) {
+  @apply my-8;
+}
+
+.article :where(figcaption) {
+  @apply mt-2 text-center text-sm text-muted;
+}
+
+/* Tables wrap their cells to fit the column, but no column gets narrower than
+   min-width; when even that does not fit (phones), the table scrolls sideways
+   on its own instead of squeezing a column down to one character per line. */
+.article :where(table) {
+  @apply block w-max max-w-full overflow-x-auto text-sm;
+  /* Scroll shadows: a faint shade on whichever side has more to scroll to.
+     The page-colored covers scroll with the content (local) and hide the
+     shades (scroll) once that edge is reached. */
+  background:
+    linear-gradient(to right, var(--c-page) 30%, transparent) left / 2.5rem 100% no-repeat local,
+    linear-gradient(to left, var(--c-page) 30%, transparent) right / 2.5rem 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, var(--c-shade), transparent) left / 0.75rem 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, var(--c-shade), transparent) right / 0.75rem 100% no-repeat scroll;
+}
+
+.article :where(th, td) {
+  min-width: 8em;
+}
+
+/* Headers are short labels; keep each on one line */
+.article :where(th) {
+  white-space: nowrap;
+}
+
+.article :where(blockquote) {
+  @apply border-l-2 font-normal not-italic;
+  border-color: var(--c-line-strong);
+  color: var(--c-quote);
+}
+
+.article :where(blockquote p)::before,
+.article :where(blockquote p)::after {
+  content: none;
+}
+
+/* Footnotes are set apart by the rule alone. The "脚注" heading remark-rehype
+   adds is kept for screen readers but not shown. (It comes with class sr-only,
+   which Tailwind does not generate here since it scans src/ only.) */
+.article .footnotes {
+  @apply mt-12 border-t border-line pt-4 text-sm;
+}
+
+.article .footnotes #footnote-label {
+  @apply sr-only;
+}
+
+/* Shiki dual theme: light by default, dark under .dark. The theme backgrounds
+   are replaced with the theme's surface. */
+.article .astro-code {
+  background-color: var(--c-surface) !important;
+}
+
+.dark .astro-code,
+.dark .astro-code span {
+  color: var(--shiki-dark) !important;
+}
+
+/* Shiki per theme: a theme can bring its own code colors. Each Shiki theme
+   listed in astro.config.ts writes --shiki-<key> on every token. */
+[data-theme='tokyo-night'].dark .astro-code,
+[data-theme='tokyo-night'].dark .astro-code span {
+  color: var(--shiki-tokyo-night) !important;
+}

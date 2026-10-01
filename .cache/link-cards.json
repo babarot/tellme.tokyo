@@ -1,0 +1,17 @@
+{
+  "https://babarot.me/gomi": {
+    "url": "https://babarot.me/gomi",
+    "title": "gomi - A Safer Alternative to the UNIX rm Command",
+    "description": "Never worry about accidentally deleting important files again. gomi moves them to trash instead of permanent deletion, giving you peace of mind in the command line.",
+    "image": "https://storage.googleapis.com/zenn-user-upload/b3b2ba4ffc5b-20250208.png",
+    "siteName": "babarot.me"
+  },
+  "https://gomi.dev": {
+    "url": "https://gomi.dev",
+    "title": "gomi - A Safer Alternative to the UNIX rm Command",
+    "description": "Never worry about accidentally deleting important files again. gomi moves them to trash instead of permanent deletion, giving you peace of mind in the command line.",
+    "image": "https://storage.googleapis.com/zenn-user-upload/b3b2ba4ffc5b-20250208.png",
+    "siteName": "gomi.dev"
+  },
+  "https://specifications.freedesktop.org/trash-spec/latest/": null
+}

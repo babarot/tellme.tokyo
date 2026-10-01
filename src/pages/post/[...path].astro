@@ -1,0 +1,75 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Partial from '../../components/Partial.astro';
+import { buildToc, tocHtml } from '../../plugins/toc/toc';
+import { getPosts, postPath, formatDate, type Post } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({
+    // "/post/2025/01/29/gomi/" -> "2025/01/29/gomi"
+    params: { path: postPath(post).replace(/^\/post\/|\/$/g, '') },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props as { post: Post };
+const { Content, headings } = await render(post);
+// "footnote-label" is the hidden heading remark-rehype puts before footnotes
+const toc = post.data.toc ? tocHtml(buildToc(headings.filter((h) => h.slug !== 'footnote-label'))) : '';
+// "sample/post/2026/foo/index.mdx" -> "sample/post/2026/foo", for <Partial>
+Astro.locals.postDir = post.filePath!.replace(/\/[^/]+$/, '');
+---
+
+<Base title={post.data.title} description={post.data.description}>
+  <!--
+    The table of contents sits in the empty space right of the content column
+    (absolutely positioned, so the column does not move) and follows the
+    scroll. Below xl there is no room for it; it opens at the top of the post
+    instead.
+  -->
+  <article class="relative">
+    {
+      toc && (
+        <aside class="absolute top-0 left-full ml-12 hidden h-full w-56 xl:block">
+          <nav class="toc sticky top-16" aria-label="目次">
+            <p class="toc-label">目次</p>
+            <Fragment set:html={toc} />
+          </nav>
+        </aside>
+      )
+    }
+    <header class="mb-10">
+      <h1 class="text-xl leading-snug font-semibold text-heading md:text-2xl">
+        {post.data.title}
+      </h1>
+      <p class="mt-2 text-sm text-subtle tabular-nums">
+        <time datetime={post.data.date}>{formatDate(post.data.date)}</time>
+        {post.data.draft && <span class="ml-2 text-[10px] font-semibold tracking-wider text-draft uppercase">draft</span>}
+      </p>
+    </header>
+    {
+      toc && (
+        <details class="toc toc-inline xl:hidden">
+          <summary>目次</summary>
+          <Fragment set:html={toc} />
+        </details>
+      )
+    }
+    <div class="article">
+      <Content components={{ Partial }} />
+    </div>
+  </article>
+</Base>
+
+<script>
+  import { initGalleries } from '../../plugins/gallery/client';
+  import { initCarousels } from '../../plugins/carousel/client';
+  import { initLightbox } from '../../plugins/lightbox/client';
+  import { initToc } from '../../plugins/toc/client';
+  initGalleries();
+  initCarousels();
+  initLightbox();
+  initToc();
+</script>

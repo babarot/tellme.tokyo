@@ -1,0 +1,27 @@
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export type Post = CollectionEntry<'post'>;
+
+// Drafts are visible in `astro dev` and in builds with SHOW_DRAFTS=1
+// (preview deployments).
+export const showDrafts = import.meta.env.DEV || process.env.SHOW_DRAFTS === '1';
+
+export async function getPosts(): Promise<Post[]> {
+  const posts = await getCollection('post', ({ data }) => showDrafts || !data.draft);
+  return posts.sort((a, b) => b.data.date.localeCompare(a.data.date));
+}
+
+export function slugOf(post: Post): string {
+  return post.data.slug ?? post.id.split('/').pop()!;
+}
+
+// "/post/2025/01/29/gomi/", same as Hugo's /post/:year/:month/:day/:filename/
+export function postPath(post: Post): string {
+  const [y, m, d] = post.data.date.slice(0, 10).split('-');
+  return `/post/${y}/${m}/${d}/${slugOf(post)}/`;
+}
+
+// "2025-01-29", as the Hugo-era list showed it
+export function formatDate(date: string): string {
+  return date.slice(0, 10);
+}

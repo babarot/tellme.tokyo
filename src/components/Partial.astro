@@ -1,0 +1,21 @@
+---
+// Embeds an HTML figure: <Partial name="zsh-startup" /> in an .mdx post.
+//
+// Figures live next to the post that uses them, in figures/<name>.part.html,
+// so moving a post's directory moves its figures with it. They are loaded via
+// Vite (?raw), so editing a figure reloads the page in dev.
+//
+// How to write one: see "Figures" in CLAUDE.md. In short, use the shared
+// components (src/styles/figures/components.css), and put anything specific to
+// the figure in its own <style>, which is scoped to the figure.
+import Figure from './Figure.astro';
+import { getFigure } from '../lib/figures';
+
+interface Props {
+  name: string;
+}
+
+const figure = getFigure(Astro.locals.postDir, Astro.props.name);
+---
+
+<Figure figure={figure} />

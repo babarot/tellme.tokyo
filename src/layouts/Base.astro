@@ -1,0 +1,106 @@
+---
+import '../styles/global.css';
+import { Image } from 'astro:assets';
+import me from '../assets/me.jpg';
+import { config } from '../config';
+import { showDrafts } from '../lib/posts';
+import Logo from '../icons/logo.svg';
+import LogoDark from '../icons/logo-dark.svg';
+import GitHub from '../icons/github.svg';
+import X from '../icons/x.svg';
+import Rss from '../icons/rss.svg';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = 'babarot のブログ' } = Astro.props;
+const siteName = 'tellme.tokyo';
+const pageTitle = title ? `${title} | ${siteName}` : siteName;
+
+// GitHub and X are filled brand marks (Simple Icons) drawn edge to edge; RSS is
+// a stroked icon (Lucide) with padding. X fills its box the most, so it is set
+// smaller to look the same size as the others.
+const links = [
+  { href: 'https://github.com/babarot', label: 'GitHub', Icon: GitHub, iconClass: 'size-4 fill-current' },
+  { href: 'https://x.com/b4b4r07', label: 'X', Icon: X, iconClass: 'size-[14px] fill-current' },
+  { href: '/feed.xml', label: 'RSS', Icon: Rss, iconClass: 'size-4' },
+];
+---
+
+<!doctype html>
+<html lang="ja" data-theme={config.theme} data-theme-switch={showDrafts ? '' : undefined}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // Follow the OS setting; ?scheme=dark|light forces one (for checking both).
+      // In dev and previews, ?theme=<name> swaps the theme (color set) as well.
+      (() => {
+        const params = new URLSearchParams(location.search);
+        const root = document.documentElement;
+        if (root.hasAttribute('data-theme-switch') && params.get('theme')) {
+          root.dataset.theme = params.get('theme');
+        }
+        const forced = params.get('scheme');
+        const media = matchMedia('(prefers-color-scheme: dark)');
+        const apply = () =>
+          document.documentElement.classList.toggle('dark', forced ? forced === 'dark' : media.matches);
+        apply();
+        media.addEventListener('change', apply);
+      })();
+    </script>
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="16x16" />
+    <link rel="alternate" type="application/rss+xml" title={siteName} href="/feed.xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-page font-sans text-ink antialiased">
+    <div class="mx-auto max-w-[42.5rem] px-4 pt-10 pb-32 md:pt-16">
+      <header class="mb-16">
+        <a href="/" class="inline-flex items-center gap-2 font-bold text-brand transition-opacity hover:opacity-70">
+          <Logo class="size-6 dark:hidden" aria-hidden="true" />
+          <LogoDark class="hidden size-6 dark:block" aria-hidden="true" />
+          tellme.tokyo
+        </a>
+      </header>
+      <main>
+        <slot />
+      </main>
+      <!-- One faint row: © babarot | GitHub X RSS. Each link darkens on hover. -->
+      <footer class="mt-24 flex items-center gap-3 text-sm text-faint">
+        <span>© babarot</span>
+        <span class="h-3.5 w-px bg-current" aria-hidden="true"></span>
+        <ul class="flex items-center gap-3">
+          <li>
+            <!-- babarot.me: the face, grey and faint like the icons, in color on hover -->
+            <a href="https://babarot.me" aria-label="About" title="About" class="flex items-center">
+              <Image
+                src={me}
+                alt=""
+                width={16}
+                height={16}
+                densities={[1, 2]}
+                class="size-4 rounded-full opacity-50 grayscale transition hover:opacity-100 hover:grayscale-0"
+              />
+            </a>
+          </li>
+          {
+            links.map(({ href, label, Icon, iconClass }) => (
+              <li>
+                <a href={href} aria-label={label} title={label} class="flex items-center transition-colors hover:text-faint-hover">
+                  <Icon class={iconClass} aria-hidden="true" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </footer>
+    </div>
+  </body>
+</html>

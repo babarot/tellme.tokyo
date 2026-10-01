@@ -1,0 +1,154 @@
+---
+// Figure catalog at /dev/figures/: the shared components and every figure in
+// every post, in light and dark side by side. Exists only in `astro dev`.
+import '../../styles/global.css';
+import { config } from '../../config';
+import Figure from '../../components/Figure.astro';
+import { allFigures, type Figure as FigureData } from '../../lib/figures';
+import { getPosts, postPath } from '../../lib/posts';
+
+export function getStaticPaths() {
+  return import.meta.env.DEV ? [{ params: { page: 'figures' } }] : [];
+}
+
+const samples: { title: string; note: string; html: string }[] = [
+  {
+    title: '.tag',
+    note: 'A colored dot and label. Pick the hue with .gray .blue .orange .green .red (gray by default).',
+    html: `<div class="legend">
+  <span class="tag gray">gray</span>
+  <span class="tag blue">blue</span>
+  <span class="tag orange">orange</span>
+  <span class="tag green">green</span>
+  <span class="tag red">red</span>
+</div>`,
+  },
+  {
+    title: '.note',
+    note: 'A short remark beside an item; muted unless given a hue.',
+    html: `<p><code>.zshenv</code> <span class="note">read by every shell</span></p>
+<p><code>is_human || return 0</code> <span class="note blue">the agent stops here</span></p>`,
+  },
+  {
+    title: '.chip',
+    note: 'A small bordered label, e.g. yes / no on a branch.',
+    html: `<p><span class="chip">yes</span> <code>EDITOR=vim</code></p>`,
+  },
+  {
+    title: '.caption / .legend',
+    note: 'A footer below a rule; add .legend for a row of tags.',
+    html: `<p>The figure</p>
+<div class="caption legend">
+  <span class="tag gray">both</span>
+  <span class="tag blue">agent only</span>
+  <span class="tag orange">human only</span>
+</div>`,
+  },
+  {
+    title: '.tree',
+    note: 'Nested ul drawn as a file tree. Each li holds one .row; children go in a nested ul.',
+    html: `<ul class="tree">
+  <li>
+    <div class="row"><b>root</b></div>
+    <ul>
+      <li>
+        <div class="row"><code>dir/</code><span class="note">a note</span></div>
+        <ul>
+          <li><div class="row"><code>a.txt</code><span class="tag blue">tag</span></div></li>
+          <li><div class="row"><code>b.txt</code></div></li>
+        </ul>
+      </li>
+      <li><div class="row"><code>c.txt</code></div></li>
+    </ul>
+  </li>
+</ul>`,
+  },
+];
+
+const sampleFigure = (title: string, html: string): FigureData => ({
+  key: `catalog/${title}`,
+  postDir: 'catalog',
+  name: title,
+  source: html,
+});
+
+const posts = await getPosts();
+const postByDir = new Map(posts.map((p) => [p.filePath!.replace(/\/[^/]+$/, ''), p]));
+const figures = allFigures();
+---
+
+<!doctype html>
+<html lang="ja" data-theme={config.theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Figure catalog | tellme.tokyo</title>
+    <script is:inline>
+      // ?theme=<name> shows the figures in another theme
+      const theme = new URLSearchParams(location.search).get('theme');
+      if (theme) document.documentElement.dataset.theme = theme;
+    </script>
+    <style is:global>
+      /* The figure frame's article margin is unlayered CSS, so a Tailwind
+         utility (layered) cannot override it; do it here instead. */
+      .catalog .fig {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body class="bg-white font-sans text-neutral-800 antialiased">
+    <main class="catalog mx-auto max-w-6xl px-4 py-12">
+      <h1 class="text-xl font-semibold">Figure catalog</h1>
+      <p class="mt-2 text-sm text-neutral-500">
+        Shared components and every figure of every post. Light on the left, dark on the right. How to write figures: "Figures" in CLAUDE.md.
+      </p>
+
+      <h2 class="mt-12 border-b border-neutral-200 pb-2 text-lg font-semibold">Shared components</h2>
+      <p class="mt-2 text-sm text-neutral-500">src/styles/figures/components.css</p>
+      {
+        samples.map((s) => (
+          <section class="mt-10">
+            <h3 class="font-mono text-sm font-bold">{s.title}</h3>
+            <p class="mt-1 text-sm text-neutral-500">{s.note}</p>
+            <div class="mt-3 grid gap-4 md:grid-cols-2">
+              <div class="rounded-lg p-4">
+                <Figure figure={sampleFigure(s.title, s.html)} />
+              </div>
+              <div class="dark rounded-lg bg-page p-4">
+                <Figure figure={sampleFigure(s.title, s.html)} />
+              </div>
+            </div>
+            <details class="mt-2 text-sm">
+              <summary class="cursor-pointer text-neutral-500">HTML</summary>
+              <pre class="mt-2 overflow-x-auto rounded-md bg-neutral-50 p-3 font-mono text-xs">{s.html}</pre>
+            </details>
+          </section>
+        ))
+      }
+
+      <h2 class="mt-16 border-b border-neutral-200 pb-2 text-lg font-semibold">Figures in posts ({figures.length})</h2>
+      {
+        figures.map((f) => {
+          const post = postByDir.get(f.postDir);
+          return (
+            <section class="mt-10">
+              <h3 class="text-sm font-semibold">
+                {post ? <a href={postPath(post)} class="underline underline-offset-2">{post.data.title}</a> : f.postDir}
+              </h3>
+              <p class="mt-1 font-mono text-xs text-neutral-500">{f.key}.part.html</p>
+              <div class="mt-3 grid gap-4 md:grid-cols-2">
+                <div class="rounded-lg p-4">
+                  <Figure figure={f} />
+                </div>
+                <div class="dark rounded-lg bg-page p-4">
+                  <Figure figure={f} />
+                </div>
+              </div>
+            </section>
+          );
+        })
+      }
+    </main>
+  </body>
+</html>

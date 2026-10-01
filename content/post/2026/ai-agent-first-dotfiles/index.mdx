@@ -1,0 +1,255 @@
+---
+title: dotfiles を AI agent のために作り変えた
+date: 2026-09-27
+slug: ai-agent-first-dotfiles
+toc: true
+draft: true
+tags:
+  - ai
+  - claude-code
+  - nix
+  - zsh
+medium:
+  - tellme.tokyo
+---
+
+最近、自分のターミナルでコマンドを打っているのは、ほとんど自分ではなく Claude Code や Codex だった（以下 AI）。試しに数えてみると、直近 `gh` を叩いた回数は自分が80回で、AI が1,339回だった。
+
+一方で、10年以上いじってきた [dotfiles](https://github.com/babarot/dotfiles) は、人間が快適に使うための設定の塊だ。これが AI にとってはけっこう邪魔なものが多かった。
+
+- `cd` を fzf で移動先を選ぶ [enhancd](https://github.com/babarot/enhancd) にしていたので、AI の `cd ..` が入力待ちのまま返ってこない
+- `cp` は `cp -i` のエイリアスなので、上書きのたびに確認を求められる
+- `ls` は exa のエイリアスで、`ls -1t` が `Flag -t needs a value` で落ちる
+- `EDITOR=vim` なので、AI が引数なしで `git commit` するとエディタが開いて止まる
+
+一つ一つは小さいが、ターミナルの主な利用者が AI になったのなら、環境の方を AI に合わせるべきだと思った。そこで dotfiles を AI が使う前提で作り変えた。やったことは3つ:
+
+1. シェルのデフォルトユーザーを AI に想定して、人間向けの設定は opt-in にする
+2. AI が使うコマンドを整える
+3. ツールのインストールと設定を1ファイルにまとめる
+
+## 1. デフォルトは AI、人間は opt-in
+
+考え方としては、シェルを AI のための作業環境として作り直す。今のシェルの主な利用者は AI なので、AI がいちばんいい仕事をできることを最優先にする。コマンドが AI の知っているとおりに動いて、誤解の起きる余地がないこと。いわゆる、harness engineering とかに近い。
+
+なので、シェルが起動したら、まず AI が起動したものと考える。基本は素の zsh で、人間向けの設定は、人間が起動したと判定できたときだけ読み込む。人間の側が「人間だ」と宣言して、はじめて便利な設定が有効になるイメージ。
+
+こうしておくと、設定に問題があっても困るのは人間で済む。人間向けの設定を足し忘れても、自分ですぐ気づいて直せる。逆に、人間向けをデフォルトにして AI のときだけ外すやり方だと、外し忘れたときに困るのは AI だ。AI は自分のシェルに見慣れないエイリアスがあると毎回回避策を探すことになるし最悪なときは auto mode が止まったりユーザに尋ねてきてしまう。
+
+人間かどうかは `.zshenv` の `is_human` で判定している。
+
+```zsh
+is_human() {
+    [[ -t 0 && -t 1 ]] || return 1
+    [[ -z $CLAUDECODE$CODEX_SANDBOX$GEMINI_CLI$CURSOR_AGENT$AI_AGENT ]]
+}
+```
+
+stdin と stdout が TTY で、AI が立てる環境変数がないときだけ人間とみなす。最初は `[[ -o interactive ]]` や `$TERM` で判定しようとしたが、どちらも使えなかった。Claude Code はシェルの設定を `zsh -i` 相当で読むので AI のシェルも対話シェルになるし、`TERM` はターミナルからそのまま引き継がれる。「キーボードの前に人がいるか」を一番素直に表しているのが TTY だった。
+
+`.zshenv` はどのシェルでも読まれるので、ここで AI 側の値を決めておく。
+
+```zsh
+if is_human; then
+    export EDITOR=vim PAGER=less
+else
+    # Nobody can answer an editor, pager or password prompt: fail fast
+    export EDITOR=true VISUAL=true GIT_EDITOR=true GIT_SEQUENCE_EDITOR=true
+    export PAGER=cat GIT_PAGER=cat MANPAGER=cat
+    export GIT_TERMINAL_PROMPT=0
+
+    # AI 用のシェルにだけ読ませる設定（my.ai）
+    source ~/.config/zsh/ai.zsh
+fi
+```
+
+AI がうっかりエディタやページャを起動しても、何も待たずにすぐ返ってくる。
+
+そして `.zshrc` の冒頭で、人間でなければ抜ける。
+
+```zsh
+is_human || return 0
+```
+
+エイリアス、プラグイン、プロンプト、キーバインド、setopt は全部これより下にある。AI のシェルでは `cp` は `cp`、`cd` は builtin の `cd` として動く。
+
+副産物として、Claude Code がセッションごとに作るシェルのスナップショットが14,284行から339行に減り、AI 用のシェルの起動は0.5秒から0.01秒になった。人間用のプラグインの関数が1,445個、丸ごと AI のシェルに載っていたらしい。
+
+## 2. AI が使うコマンドを整える
+
+AI は学習した知識どおりにコマンドを書く。手元の環境がその知識と食い違っていると、AI は誤解してミスをする。冒頭のエイリアスがまさにそうだった。この食い違いへの対処は、大きく3つある。
+
+### コマンドの挙動を AI に合わせる
+
+冒頭のエイリアスを AI のシェルから外したのもこれにあたる。ほかにも、GNU coreutils は入れていない。AI は自分が macOS にいることをわかっていて、`sed -i ''` や `stat -f` のような BSD の書き方をしてくる。PATH の先頭が GNU 版になっていると、この「ちゃんと macOS に合わせた書き方」の方が壊れてしまう。macOS にない `timeout` だけは AI がよく使うので、それだけ単体で入れている。
+
+### AI の知っているコマンドのふりをする
+
+挙動を合わせるのとは逆向きで、`rm` だけはわざと AI に誤解させている。AI が使うシェルでも、`rm` だけは `alias rm=gomi` が読み込まれるようにしている。
+
+Claude Code にはファイルを消す専用のツールがなく、消すときはいつも rm を打つ。手元の記録では、直近60日で621回打っていた。一時ファイルやビルドの成果物の後始末など。だからこそ、その rm を間違えても戻せるものにしておきたかった。
+
+[gomi](https://github.com/babarot/gomi) は、消したファイルをゴミ箱に送る自作の rm コマンド（[作ったときの記事](https://zenn.dev/babarot/articles/replacement-for-rm-command)）。rm と置き換えて使うことを前提に作っていて、rm のオプションをそのまま受け付ける。`-i` や `-r`、`-d` のように、ゴミ箱に移すだけの gomi には本来いらないオプションも、何もしないダミーとして生やしてある。`rm -rf` みたいな形をそのまま受け止めるための、rm のふりをするだけのオプションになっている。終了コードも rm と同じように返す。
+
+```console
+$ gomi -h
+...
+
+Compatible (rm) Options:
+  -i                      (dummy) prompt before every removal
+  -r, --recursive         (dummy) remove directories and their contents recursively
+  -R                      (dummy) same as -r
+  -f, --force             ignore nonexistent files, never prompt (effective with --prune)
+  -d, --dir               (dummy) remove empty directories
+  -v, --verbose           (dummy) explain what is being done
+```
+
+この「rm のふりをする」作りが、AI に誤解させるにはうってつけだった。AI は自分が打った `rm -rf` を本物の rm だと思ったまま使うし、それで困ることは何もない。むしろ AI が間違って消してしまっても、`gomi -b` でゴミ箱から戻せるのがうれしい。
+
+gomi は AI から見て rm と違いがわからないので、誤解されたままでいい。コマンドの挙動を AI に合わせることと、わざと誤解させることは矛盾しない。どちらも、AI が知っているとおりにコマンドが動くことを守っている。
+
+### AI にできることを制限する
+
+やらせたくないものは、Claude Code の `permissions.deny` で禁止している。`~/.ssh` や `.env` のような秘密の入ったファイルは読ませないし、`sudo` も使わせない。Python のパッケージも同じで、AI は Python と聞くとまず `pip install` を打つが、手元では uv で管理しているので、pip や poetry は禁止している。AI は断られたことに気づいて、uv を使うようになる。
+
+```json
+  "permissions": {
+    "deny": [
+      "Bash(poetry:*)",
+      "Bash(python -m pip:*)",
+      "Bash(python3 -m pip:*)",
+      "Bash(pip3:*)",
+      "Bash(pipx:*)",
+      "Bash(pip:*)",
+      "Bash(sudo:*)",
+      "Read(~/.ssh/**)",
+      "Read(**/.env)"
+```
+
+## 3. ツールのインストールと設定を1ファイルにまとめる
+
+ここからはパッケージ管理の話になる。今回、パッケージ管理も Nix（nix-darwin と home-manager）に移した。個人と仕事の Mac の2台を1つの flake で管理していて、`flake.lock` でバージョンも揃う。
+
+人間向けと AI 向けに設定を分けるほど、管理する場所が増えて、入れ忘れや消し忘れが起きやすくなる。そこで Nix にするときに大事にしたのが、ツールのインストールとその設定を同じファイルに書くこと（co-location）だ。これは以前、自作のパッケージマネージャの [afx](https://github.com/babarot/afx) でやっていた考え方だ。afx では、YAML の各ツールのエントリに、インストール方法とエイリアスや環境変数を一緒に書いていた。
+
+```yaml
+# ~/.config/afx/github.yaml
+- name: ogham/exa
+  owner: ogham
+  repo: exa
+  release:
+    name: exa
+    tag: v0.10.1
+  command:
+    link:
+    - from: bin/exa*
+      to: exa
+    alias:
+      ls: exa --group-directories-first
+      ll: exa --group-directories-first -l --header --git
+```
+
+これを Nix でも再現した。`nix/home-manager/tools/` に1ツール1ファイルで書き、ディレクトリにあるファイルは自動で読み込まれる。
+
+```nix
+# nix/home-manager/tools/eza.nix
+{ pkgs, ... }:
+{
+  home.packages = [ pkgs.eza ];
+
+  my.human.aliases = {
+    ls = "eza --group-directories-first";
+    ll = "eza --group-directories-first -l --header --git";
+  };
+}
+```
+
+ツールを足すならファイルを置くだけ、やめるならファイルを消すだけでいい。消せばエイリアスも環境変数も一緒に消えるので、ツールはもうないのにエイリアスだけ残っている、ということが起きない。
+
+ただ、1ツール1ファイルに分けると、どうそれらを読み込ませるかを考えないといけない。例えば `eza.nix` に書いた `ls` のエイリアスは人間のシェルでだけ効いてほしいので、`.zshrc` の `is_human || return 0` より下で読み込まないといけない。でも設定はツールごとのファイルにばらばらに書いてある。これをその1箇所にどう集めるか、という問題だ。
+
+afx では、YAML に書いた設定（エイリアス、環境変数、プラグインの読み込みなど）を、`afx init` が1枚のシェルスクリプトにして出力していた。なので `.zshrc` ではそれを source するだけでよかった。
+
+```zsh
+source <(afx init)
+```
+
+同じことが Nix でもできないかと調べてみると、home-manager のモジュールの仕組みがちょうどそれだった。
+
+そこで、設定を誰に届けるかで、書く場所を `my.human`、`my.ai`、`my.env` の3つに分けた。zsh が起動したときに、どのファイルがどの順番で読まれるかはこうなっている。
+
+<Partial name="zsh-startup" />
+
+この3ファイルは各ツールの宣言ファイルに書いた設定から Nix が生成するもので、dotfiles のリポジトリには入っていない（どう生成しているかは次で書く）。3つとも中身の集め方は同じで、違うのは読み込まれる場所だけだ。表にするとこうなる。
+
+| 設定 | 書く場所 | 読み込まれる場所 | 届く相手 |
+|---|---|---|---|
+| エイリアス、プラグイン、関数、人間向けの環境変数 | 各ツールの `my.human` | `.zshrc` のガードより後 | 人間だけ |
+| AI 向けの環境変数、AI にもあえて使わせるエイリアス | 各ツールの `my.ai` | `.zshenv` の分岐の AI 側 | AI だけ |
+| ツールの環境変数（`GOPATH` など） | 各ツールの `my.env` | `.zshenv` の分岐より前 | 人間と AI |
+| PATH、locale | `.zshenv` に手書き | `.zshenv` | 人間と AI |
+
+隠しているのは UX であって、ツールそのものではない。eza は AI の PATH にも入っているので、AI も `eza` とはっきり打てば使える。ただ `ls` が eza に化けることはない。
+
+### my.human: 人間用のシェルに読ませる設定
+
+`my.human` は、自分で定義した home-manager のオプションだ。各ツールのファイルが `my.human.aliases` や `my.human.env` に書いたものは、Nix のモジュールの仕組みで1つにまとめられて、`~/.config/zsh/human.zsh` という1枚のファイルに書き出される。`.zshrc` はガードの下でこれを source するだけだ。
+
+```nix
+# nix/home-manager/human.nix（抜粋）
+config.xdg.configFile."zsh/human.zsh".text = lib.concatLines (
+  lib.mapAttrsToList (k: v: "export ${k}=${sh v}") cfg.env
+  ++ ...  # zsh プラグインを順番に source
+  ++ lib.mapAttrsToList (k: v: "alias ${k}=${sh v}") cfg.aliases
+  ++ [ cfg.init ]
+);
+```
+
+書く場所はツールごとに分けたまま、読み込む場所は1箇所にできる。Nix にしてよかったと一番思ったのはここだった。
+
+名前を `my.shell` のようにせず `my.human` にしたのは、ここに書くものが「シェルの設定」ではなく「人間のための設定」だからだ。AI も同じシェルを使う以上、シェルの設定と呼ぶだけでは誰に届くのかがわからない。`my.human` と書いてあれば、そこに書いたものは AI には届かないことが名前だけでわかる。AI がツールを足すときも、エイリアスを `my.human` に書けば、迷わず人間の側に入る。
+
+### my.ai: AI 用のシェルにだけ読ませる設定
+
+`my.human` とは反対に、AI 用のシェルにだけ読ませたい設定もある。こちらは `my.ai` にまとめていて、`~/.config/zsh/ai.zsh` に書き出され、`.zshenv` の `is_human` の分岐の AI 側で読み込まれる。例えば bat のページャは、人間には `less -RF`、AI には `cat` にしたい、みたいなことがしやすい。さっきの `rm` も例もここに入れている。
+
+```nix
+# nix/home-manager/tools/gomi.nix（抜粋）
+{ pkgs, ... }:
+{
+  home.packages = [ pkgs.gomi ];
+
+  my.human.aliases.rm = "gomi";
+  my.ai.aliases.rm = "gomi";
+}
+```
+
+人間と AI に同じ行を2回書いているのはあえてで、こう書いておくことで gomi のエイリアスは AI にも使わせていることがファイルを見ただけでわかる。
+
+### my.env: どちらのシェルにも読ませる設定
+
+`GOPATH` のように、人間にも AI にもないと困る環境変数は `my.env` にまとめている。`~/.config/zsh/env.zsh` に書き出され、`.zshenv` の `is_human` の分岐より前で読み込まれる。
+
+### ツールの使い方も一緒に入れる
+
+最近の CLI ツールには、エージェントにそのツールの使い方を教える Agent Skills（`SKILL.md`）が同梱されているものがある。これもツールのファイルに一緒に書けるように、`my.skills` というオプションを作った。
+
+```nix
+# nix/home-manager/tools/hunk.nix
+{ pkgs, ... }:
+{
+  home.packages = [ pkgs.hunk ];
+
+  my.skills.hunk-review = "${pkgs.hunk}/share/skills/hunk/hunk-review";
+}
+```
+
+書いたスキルは、Claude Code が読む `~/.claude/skills` と Codex などが読む `~/.agents/skills` の両方にリンクされる。スキルはインストールしたパッケージの中身を指しているので、ツールとスキルのバージョンがずれることはないし、ツールを消せばスキルも消える。ツールを入れた時点で、AI もその使い方を知っている状態になる。
+
+人間にとっての co-location は「ツールと設定を一緒に書く」ことだったが、AI が主役になると、そこに「ツールの使い方」まで入ってくるのがおもしろい。
+
+## おわりに
+
+dotfiles 自体も、今は AI がいじることの方が多い。リポジトリには AGENTS.md を置いて、「ツールを足すならこのファイル、人間向けなら `my.human`」といったルールを書いてある。
+
+シェルを AI 前提で見直してみると、人間のための設定がどれだけ AI の邪魔をしていたかがよくわかった。デフォルトを AI に倒して、人間の便利さは opt-in で足す。この形にしてからは、ツールを足すときに「これ AI に悪さしないかな」と考えなくてよくなった。
