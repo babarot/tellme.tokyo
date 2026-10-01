@@ -46,7 +46,7 @@ Astro.locals.postDir = post.filePath!.replace(/\/[^/]+$/, '');
         {post.data.title}
       </h1>
       <p class="mt-2 text-sm text-subtle tabular-nums">
-        <time datetime={post.data.date}>{formatDate(post.data.date)}</time>
+        <time datetime={post.data.date} class="font-mono">{formatDate(post.data.date)}</time>
         {post.data.draft && <span class="ml-2 text-[10px] font-semibold tracking-wider text-draft uppercase">draft</span>}
       </p>
     </header>
