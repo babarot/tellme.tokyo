@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import Partial from '../../components/Partial.astro';
 import { buildToc, tocHtml } from '../../plugins/toc/toc';
 import { getPosts, postPath, postDescription, formatDate, type Post } from '../../lib/posts';
+import { ogImagePath } from '../../og/render';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -22,7 +23,7 @@ const toc = post.data.toc ? tocHtml(buildToc(headings.filter((h) => h.slug !== '
 Astro.locals.postDir = post.filePath!.replace(/\/[^/]+$/, '');
 ---
 
-<Base title={post.data.title} description={postDescription(post)} published={post.data.date}>
+<Base title={post.data.title} description={postDescription(post)} published={post.data.date} image={ogImagePath(postPath(post))}>
   <!--
     The table of contents sits in the empty space right of the content column
     (absolutely positioned, so the column does not move) and follows the

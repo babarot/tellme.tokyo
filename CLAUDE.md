@@ -14,6 +14,17 @@ Japanese belongs only in content: posts and the UI text readers see (button labe
 - Code highlighting can differ per theme: add a Shiki theme to `shikiConfig.themes` in `astro.config.ts` and say when to use it under "Shiki per theme" in `src/styles/global.css` (tokyo-night's dark scheme is the example).
 - To add a theme: copy default.css, change the values and the `[data-theme]` name, import it in `src/styles/global.css`, and add the name to `themes` in `src/config.ts`.
 
+## OG images
+
+Every page has an Open Graph image (the picture of its card on X, Slack, ...), drawn at build time. A design that shows the post (`perPost: true`) gives each post its own at `/post/.../og.png`; one that does not gives the whole site one, `/og.png`.
+
+- A design is a file in `src/og/designs/` (`default`: the title and date; `pixel`: the logo and the site name in a pixel font; `sixtyfour`: the site name alone in Sixtyfour, ".tokyo" in red); `ogDesign` in `src/config.ts` picks the one in use. `src/og/kit.ts` has what designs build with (phrase-aware title wrapping, title sizes, the logo and face).
+- With `pnpm dev` running, http://localhost:4321/dev/og/ shows every design with a few posts. The dark label at the bottom left there mimics what X draws over a large card.
+- To add a design: copy one in `src/og/designs/`, change it, add its name to `ogDesigns` in `src/config.ts` and to `designs` in `src/og/render.ts`.
+- Colors are written in the design itself: satori does not read the site's CSS.
+- A design lists its fonts (`src/og/fonts.ts`): small ones are committed in `src/assets/fonts/`; large ones (Noto Sans JP for `default`) are fetched from Google Fonts when first needed and kept in `.cache/fonts/` (not committed). Only the design in use loads its fonts, so a build with `sixtyfour` never fetches.
+- `PixelifySans-tellme.tokyo.ttf` and `Sixtyfour-tellme.tokyo.ttf` hold only the letters of "tellme.tokyo". For other text in those fonts, fetch a new subset: the `.ttf` URL in `https://fonts.googleapis.com/css2?family=<Family+Name>&text=<the letters>` (fetched without a browser's user agent, Google Fonts answers with TrueType).
+
 ## Development notes
 
 - After changing a remark/rehype plugin or the Markdown settings, delete `.astro` and `node_modules/.astro` and restart the dev server. Astro does not convert a post again while its source is unchanged, so old results (failed ones included) stay.

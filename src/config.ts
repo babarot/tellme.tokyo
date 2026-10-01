@@ -8,8 +8,18 @@
 export const themes = ['default', 'mini', 'tokyo-night'] as const;
 export type Theme = (typeof themes)[number];
 
-export const config: { theme: Theme } = {
+// Designs of the Open Graph image (the picture of a post's card on X, Slack,
+// ...). Each one is a file in src/og/designs/, listed in src/og/render.ts.
+// To add one: copy a design, change it, and add the name here and there.
+// /dev/og/ (in dev) shows every design side by side.
+export const ogDesigns = ['default', 'pixel', 'sixtyfour'] as const;
+export type OgDesignName = (typeof ogDesigns)[number];
+
+export const config: { theme: Theme; ogDesign: OgDesignName } = {
   // The theme the site uses. In dev and previews, ?theme=<name> in the URL
   // overrides it for a quick comparison.
   theme: 'default',
+  // The OG image design. Changing it redraws every post's image on the next
+  // build; cards already shared keep the old one until the service refetches.
+  ogDesign: 'sixtyfour',
 };

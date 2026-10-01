@@ -15,12 +15,15 @@ interface Props {
   description?: string;
   /** a post's date (YYYY-MM-DD...), which also makes the page an article */
   published?: string;
+  /** path of the page's Open Graph image (src/lib/og.ts); the site's by default */
+  image?: string;
 }
 
-const { title, description = 'babarot のブログ', published } = Astro.props;
+const { title, description = 'babarot のブログ', published, image = '/og.png' } = Astro.props;
 const siteName = 'tellme.tokyo';
 const pageTitle = title ? `${title} | ${siteName}` : siteName;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const imageUrl = new URL(image, Astro.site).href;
 
 // GitHub and X are filled brand marks (Simple Icons) drawn edge to edge; RSS is
 // a stroked icon (Lucide) with padding. X fills its box the most, so it is set
@@ -64,7 +67,10 @@ const links = [
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="ja_JP" />
     {published && <meta property="article:published_time" content={published} />}
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@b4b4r07" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.ico" sizes="16x16" />

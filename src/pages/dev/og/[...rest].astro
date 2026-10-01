@@ -1,0 +1,79 @@
+---
+// OG image catalog at /dev/og/: every design (src/og/designs/) with the top
+// page and a few posts of different title lengths. Exists only in `astro dev`.
+import '../../../styles/global.css';
+import { config } from '../../../config';
+import { designs, renderOg } from '../../../og/render';
+import type { OgInput } from '../../../og/kit';
+import { getPosts, formatDate } from '../../../lib/posts';
+
+export function getStaticPaths() {
+  return import.meta.env.DEV ? [{ params: { rest: undefined } }] : [];
+}
+
+// The shortest, the longest and two in between, then the top page
+const posts = (await getPosts()).sort((a, b) => [...a.data.title].length - [...b.data.title].length);
+const picks = [...new Set([0, Math.floor(posts.length / 3), Math.floor((posts.length * 2) / 3), posts.length - 1])]
+  .map((i) => posts[i])
+  .filter(Boolean);
+const inputs: OgInput[] = [...picks.map((p) => ({ title: p.data.title, date: formatDate(p.data.date) })), {}];
+
+const rows = await Promise.all(
+  (Object.keys(designs) as (keyof typeof designs)[]).map(async (name) => ({
+    name,
+    perPost: designs[name].perPost,
+    // a design with one image for the site draws the same for every input
+    images: await Promise.all(
+      (designs[name].perPost ? inputs : inputs.slice(0, 1)).map(async (input) => ({
+        label: input.title ?? 'top page',
+        // what X lays over a large card: the page's <title>
+        overlay: input.title ? `${input.title} | tellme.tokyo` : 'tellme.tokyo',
+        src: `data:image/png;base64,${(await renderOg(input, name)).toString('base64')}`,
+      })),
+    ),
+  })),
+);
+---
+
+<!doctype html>
+<html lang="ja" data-theme={config.theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>OG images | tellme.tokyo</title>
+  </head>
+  <body class="bg-neutral-100 font-sans text-neutral-800 antialiased">
+    <main class="mx-auto max-w-6xl px-4 py-12">
+      <h1 class="text-xl font-semibold">OG images</h1>
+      <p class="mt-2 text-sm text-neutral-500">
+        Every design in src/og/designs/. The site uses <code>{config.ogDesign}</code> (ogDesign in src/config.ts).
+        The dark label at the bottom left mimics what X draws over a large card (the page title); it is not part of the image.
+      </p>
+      {
+        rows.map((row) => (
+          <section class="mt-12">
+            <h2 class="border-b border-neutral-300 pb-2 font-mono text-sm font-bold">
+              {row.name}
+              {row.name === config.ogDesign && <span class="ml-2 font-sans font-normal text-neutral-500">(in use)</span>}
+              {!row.perPost && <span class="ml-2 font-sans font-normal text-neutral-500">one image for the whole site</span>}
+            </h2>
+            <div class="mt-4 grid gap-6 md:grid-cols-2">
+              {row.images.map((image) => (
+                <figure>
+                  <div class="relative">
+                    <img src={image.src} alt="" width="1200" height="630" class="w-full rounded-xl border border-neutral-300" />
+                    <span class="absolute bottom-2 left-2 max-w-[calc(100%-1rem)] truncate rounded bg-black/75 px-1.5 py-0.5 text-[11px] text-white">
+                      {image.overlay}
+                    </span>
+                  </div>
+                  <figcaption class="mt-1 truncate text-xs text-neutral-500">{image.label}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        ))
+      }
+    </main>
+  </body>
+</html>
