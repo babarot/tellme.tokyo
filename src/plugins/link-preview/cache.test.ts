@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { createCache, isFresh } from './cache';
+import { createCache, isFresh, prune, readCache, writeCache } from './cache';
 
 const preview = (url: string) => ({ url, title: 'T', description: '', image: '', icon: '', siteName: 'example.com' });
 
@@ -57,5 +57,30 @@ describe('createCache', () => {
     now = new Date('2026-02-15T00:00:00Z');
     expect(await createCache({ file, now: () => now }).get('https://a/', working)).toMatchObject({ title: 'T' });
     expect(working).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('prune', () => {
+  const entry = (url: string) => ({ ...preview(url), fetchedAt: '2026-10-01T00:00:00Z' });
+
+  it('keeps the entries in use and lists the rest', () => {
+    const entries = { 'https://a/': entry('https://a/'), 'https://b/': { url: 'https://b/', failed: true as const, fetchedAt: 'x' } };
+    expect(prune(entries, new Set(['https://a/']))).toEqual({ kept: { 'https://a/': entries['https://a/'] }, removed: ['https://b/'] });
+  });
+
+  it('removes nothing when every entry is in use', () => {
+    expect(prune({ 'https://a/': entry('https://a/') }, new Set(['https://a/', 'https://c/'])).removed).toEqual([]);
+  });
+});
+
+describe('readCache / writeCache', () => {
+  it('writes sorted by URL and reads it back', () => {
+    writeCache(file, { 'https://b/': preview('https://b/') as any, 'https://a/': preview('https://a/') as any });
+    expect(Object.keys(JSON.parse(fs.readFileSync(file, 'utf8')))).toEqual(['https://a/', 'https://b/']);
+    expect(Object.keys(readCache(file))).toEqual(['https://a/', 'https://b/']);
+  });
+
+  it('reads a missing file as empty', () => {
+    expect(readCache(file)).toEqual({});
   });
 });

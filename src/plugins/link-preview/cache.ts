@@ -21,14 +21,32 @@ export function isFresh(entry: Entry | undefined, now: Date, retryAfterDays: num
   return now.getTime() - new Date(entry.fetchedAt).getTime() < retryAfterDays * 86_400_000;
 }
 
+export type Entries = Record<string, Entry>;
+
+export function readCache(file: string): Entries {
+  return fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : {};
+}
+
+// Sorted by URL, so the committed file changes only where an entry does
+export function writeCache(file: string, entries: Entries) {
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  const sorted = Object.fromEntries(Object.entries(entries).sort(([a], [b]) => a.localeCompare(b)));
+  fs.writeFileSync(file, JSON.stringify(sorted, null, 2) + '\n');
+}
+
+// The entries no post uses any more (pure): `used` is every card URL of every
+// post. Run by tools/prune-link-previews.ts, not by builds: a build converts
+// only the posts that changed, so it does not see every URL.
+export function prune(entries: Entries, used: Set<string>): { kept: Entries; removed: string[] } {
+  const removed = Object.keys(entries).filter((url) => !used.has(url));
+  const kept = Object.fromEntries(Object.entries(entries).filter(([url]) => used.has(url)));
+  return { kept, removed };
+}
+
 export function createCache({ file, retryAfterDays = 30, now = () => new Date() }: CacheOptions) {
-  let entries: Record<string, Entry> | undefined;
-  const load = () => (entries ??= fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : {});
-  const save = () => {
-    fs.mkdirSync(path.dirname(file), { recursive: true });
-    const sorted = Object.fromEntries(Object.entries(load()).sort(([a], [b]) => a.localeCompare(b)));
-    fs.writeFileSync(file, JSON.stringify(sorted, null, 2) + '\n');
-  };
+  let entries: Entries | undefined;
+  const load = () => (entries ??= readCache(file));
+  const save = () => writeCache(file, load());
   // One fetch per URL even when several posts link it at once.
   const pending = new Map<string, Promise<Preview | null>>();
 

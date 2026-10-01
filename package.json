@@ -13,6 +13,7 @@
     "astro": "astro",
     "check:figures": "node tools/check-figures.ts",
     "check:urls": "node tools/check-urls.ts",
+    "prune:link-previews": "node tools/prune-link-previews.ts",
     "test": "vitest run",
     "test:watch": "vitest"
   },

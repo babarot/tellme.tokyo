@@ -31,6 +31,7 @@ Every page has an Open Graph image (the picture of its card on X, Slack, ...), d
 - Right after clearing that cache, the first start can fail to load the posts and serve 404 for them (the log says `The collection "post" does not exist or is empty`). Restart once more.
 - URLs end with a slash (`/post/2025/01/29/gomi/`), as on Hugo. The dev server answers 404 without it; in production Cloudflare redirects to the slashed URL.
 - Every post URL the Hugo site had is listed in `tools/old-urls.txt` and must keep working, as a page or a redirect in `public/_redirects`: `SHOW_DRAFTS=1 pnpm build && pnpm check:urls`.
+- Link cards are cached in `.cache/link-previews.json` (committed). After deleting a post or changing its links, `pnpm prune:link-previews` drops the entries no post uses (`--dry-run` to list them only). Builds never prune: they convert only the posts that changed.
 
 ## Plugins
 

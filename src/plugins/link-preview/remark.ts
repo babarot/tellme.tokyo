@@ -1,11 +1,11 @@
-// A paragraph that holds nothing but a URL (an autolink with GFM, or plain
-// text without) becomes a preview card. Only top-level paragraphs, so URLs in
-// lists and quotes stay links. A URL whose page cannot be read stays a link.
+// A paragraph that holds nothing but a URL becomes a preview card (which ones:
+// urls.ts). A URL whose page cannot be read stays a link.
 import path from 'node:path';
 import { createCache } from './cache';
 import { fetchPreview as fetchFromWeb } from './fetch';
 import { previewHast } from './html';
 import type { Preview } from './parse';
+import { bareUrl } from './urls';
 
 export type LinkPreviewOptions = {
   /** where previews are cached. Default ".cache/link-previews.json" */
@@ -15,19 +15,6 @@ export type LinkPreviewOptions = {
   /** for tests: how to get a preview */
   fetchPreview?: (url: string) => Promise<Preview | null>;
 };
-
-export function bareUrl(node: any): string | undefined {
-  if (node.type !== 'paragraph' || node.children.length !== 1) return;
-  const [child] = node.children;
-  if (child.type === 'text') {
-    const value = child.value.trim();
-    return /^https?:\/\/\S+$/.test(value) ? value : undefined;
-  }
-  if (child.type === 'link' && /^https?:\/\//.test(child.url)) {
-    const label = child.children.length === 1 && child.children[0].type === 'text' ? child.children[0].value : '';
-    return label === child.url ? child.url : undefined;
-  }
-}
 
 export default function remarkLinkPreview(options: LinkPreviewOptions = {}) {
   const cache = createCache({
