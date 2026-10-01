@@ -1,2 +1,9 @@
 [tools]
 node = "24"
+
+[tasks.post]
+description = "List posts by front matter, or open the ones picked with fzf (help: mise run post -- --help)"
+run = "node tools/post.ts"
+# fzf and the editor need the terminal
+raw = true
+quiet = true

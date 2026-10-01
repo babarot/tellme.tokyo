@@ -59,6 +59,7 @@ Posts live in this repository and nowhere else (the Obsidian sync was dropped: d
 - Body headings may start at `#` or at `##`. The post title is the page's h1, so when the body has a `#`, every heading is rendered one level lower (`#` → h2, `##` → h3); a post written from `##` is left as is. A leading `#` that repeats the title is not rendered (`src/plugins/heading-levels/`).
 - A single `#` lowers every heading of that post. When mixing `#` and `##`, use `#` for chapters and `##` for sections.
 - `draft: true`: still being written; built only in dev and previews (with a DRAFT label). `pnpm dev --draft=false` leaves drafts out, as production does. `hidden: true`: withdrawn; never built anywhere, as if the post did not exist (its old URL counts as hidden on purpose in `pnpm check:urls`).
+- `mise run post ls` lists posts by front matter (state, tag, date, a pattern in the source); `mise run post open` takes the same filters and opens the posts picked with fzf in `$EDITOR`. The options are at the top of `tools/post.ts`.
 - `toc: true` in the front matter shows a table of contents (h2 and h3): in the space right of the content column on wide screens, at the top of the post otherwise (`src/plugins/toc/`).
 
 ### Photos (directives)
