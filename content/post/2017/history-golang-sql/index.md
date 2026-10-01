@@ -2,6 +2,7 @@
 title: "golang で zsh history を SQL 的に活用する"
 date: "2017-02-14T00:00:00+09:00"
 draft: true
+hidden: true
 tags: ["go", "zsh", "history", "SQL"]
 ---
 

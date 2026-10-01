@@ -2,6 +2,7 @@
 title: "Go でシェルの Exit code を扱う"
 date: "2018-04-02T23:42:39+09:00"
 draft: true
+hidden: true
 tags: ["go", "cli"]
 ---
 

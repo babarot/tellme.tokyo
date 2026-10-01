@@ -2,6 +2,7 @@
 title: "Bind Address で少しハマった話"
 date: "2018-08-16T00:00:00+09:00"
 draft: true
+hidden: true
 ---
 
 以下の要件を満たして `hugo server` を立ち上げたいという要求がありテンポラリで対応することになった。

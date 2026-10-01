@@ -2,6 +2,7 @@
 title: "Kubernetes 上で Credentials を扱う"
 date: "2018-08-07T01:01:47+09:00"
 draft: true
+hidden: true
 tags:
 - kubernetes
 - kubernetes-configmaps

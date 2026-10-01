@@ -2,6 +2,7 @@
 title: "今年つくったものリスト 2015"
 date: "2015-12-31T00:00:00+09:00"
 draft: true
+hidden: true
 ---
 
 :::img{width=600}

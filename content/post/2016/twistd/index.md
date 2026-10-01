@@ -2,6 +2,7 @@
 title: "特定のワードで Twitter を監視して、検知したら Slack に投げる"
 date: "2016-10-17T00:24:32+09:00"
 draft: true
+hidden: true
 tags: ["go", "twitter"]
 ---
 

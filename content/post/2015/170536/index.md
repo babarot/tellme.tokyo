@@ -2,6 +2,7 @@
 title: "やったー！GitHub にスターが 200★ 付いた"
 date: "2015-11-12T00:00:00+09:00"
 draft: true
+hidden: true
 ---
 
 [repo]: https://github.com/b4b4r07/enhancd
