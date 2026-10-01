@@ -1,5 +1,5 @@
 # Hugo-era URLs that have no page here (Cloudflare static assets).
-# Posts keep their URLs (/post/YYYY/MM/DD/slug/), so they need no rule.
+# Posts keep their URLs (/post/YYYY/MM/DD/slug/), except the renamed ones below.
 
 # Lists Hugo generated: tags, categories, pages of the post list
 /tags/*        /  301
@@ -9,6 +9,25 @@
 /page/*        /  301
 /post/         /  301
 /post          /  301
+
+# Posts whose slug was renamed after 2023 (old date-time or longer slugs);
+# tools/old-urls.txt lists every post URL that was public
+/post/2014/11/20/134901/                                                         /post/2014/11/20/enhancd/  301
+/post/2015/08/14/120049/                                                         /post/2015/08/14/macbook/  301
+/post/2015/11/07/165928/                                                         /post/2015/11/07/http_code/  301
+/post/2016/09/25/213810/                                                         /post/2016/09/25/httpstat/  301
+/post/2016/10/01/191546/                                                         /post/2016/10/01/mercari/  301
+/post/2016/11/06/230902/                                                         /post/2016/11/06/vimconf2016/  301
+/post/2016/12/04/154846/                                                         /post/2016/12/04/builderscon2016/  301
+/post/2016/12/05/021806/                                                         /post/2016/12/05/vim-plugins/  301
+/post/2016/12/12/002116/                                                         /post/2016/12/12/yamato-bot/  301
+/post/2017/04/04/023351/                                                         /post/2017/04/04/go-crowi/  301
+/post/2018/01/05/looking-back-on-2017/                                           /post/2018/01/05/recap/  301
+/post/2018/09/27/windows-era/                                                    /post/2018/09/27/windows-softwares/  301
+/post/2019/12/31/2019-review/                                                    /post/2019/12/31/recap/  301
+/post/2022/07/03/terraform-optional-attributes-for-object-type-constraints/      /post/2022/07/03/terraform-object-type/  301
+/post/2022/12/28/10x-1st-y-aniv/                                                 /post/2022/12/28/recap/  301
+/post/2023/12/31/2023-review/                                                    /post/2023/12/31/recap/  301
 
 # Feeds and the sitemap
 /post/feed.xml   /feed.xml            301

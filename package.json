@@ -12,6 +12,7 @@
     "check": "astro check",
     "astro": "astro",
     "check:figures": "node tools/check-figures.ts",
+    "check:urls": "node tools/check-urls.ts",
     "test": "vitest run",
     "test:watch": "vitest"
   },
