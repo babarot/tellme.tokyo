@@ -344,6 +344,15 @@
     "siteName": "GitHub",
     "fetchedAt": "2026-10-01T10:05:50.125Z"
   },
+  "https://github.com/babarot/dotfiles": {
+    "url": "https://github.com/babarot/dotfiles",
+    "title": "GitHub - babarot/dotfiles: A repository that gathered files starting with dot",
+    "description": "A repository that gathered files starting with dot - babarot/dotfiles",
+    "image": "https://opengraph.githubassets.com/7c5aa70d20f15029c1c06dec56cc643208c60d4cf5939adb88fa7a94a56f005d/babarot/dotfiles",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-02T12:46:05.882Z"
+  },
   "https://github.com/crowi/go-crowi": {
     "url": "https://github.com/crowi/go-crowi",
     "title": "GitHub - crowi/go-crowi: A Go client for Crowi APIs",

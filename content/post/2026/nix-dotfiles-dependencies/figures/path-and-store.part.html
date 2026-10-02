@@ -1,0 +1,127 @@
+<style>
+  .map {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--fig-space-4) var(--fig-space-3);
+  }
+
+  .head {
+    color: var(--fig-muted);
+    font-size: var(--fig-text-sm);
+    font-weight: 700;
+  }
+
+  /* the store, drawn as one area behind its items */
+  .store {
+    align-self: stretch;
+    margin: calc(-1 * var(--fig-space-2));
+    border: 1px dashed var(--fig-line);
+    border-radius: var(--fig-radius);
+  }
+
+  .box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--fig-space-1);
+    border: 1px solid var(--fig-border);
+    border-radius: var(--fig-radius-sm);
+    background: var(--fig-surface);
+    padding: var(--fig-space-2) var(--fig-space-3);
+  }
+
+  .link-box {
+    border-style: dashed;
+  }
+
+  .arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--fig-muted);
+    font-size: var(--fig-text-lg);
+    line-height: 1.2;
+  }
+
+  .arrow small {
+    white-space: nowrap;
+  }
+
+  .arrow.right::before { content: '→'; }
+  .arrow.left::before { content: '←'; }
+
+  /* every item is placed by hand: the store area overlaps them */
+  .h-path { grid-area: 1 / 1; }
+  .h-store { grid-area: 1 / 3 / 2 / 6; }
+  .store { grid-area: 1 / 3 / 4 / 6; }
+  .less { grid-area: 2 / 3; }
+  .a-ref { grid-area: 2 / 4; }
+  .bat { grid-area: 2 / 5; }
+  .link-box { grid-area: 3 / 1; }
+  .a-link { grid-area: 3 / 2; margin-right: var(--fig-space-3); }
+  .fzf { grid-area: 3 / 3; }
+  .a-embed { grid-area: 3 / 4; }
+  .zsh { grid-area: 3 / 5; }
+
+  /* narrow screens: one column, read from top to bottom */
+  @media (max-width: 40rem) {
+    .map {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--fig-space-2);
+    }
+
+    .h-path { grid-area: 1 / 1; }
+    .link-box { grid-area: 2 / 1; }
+    .a-link { grid-area: 3 / 1; margin: 0; }
+    .h-store { grid-area: 4 / 1; margin-top: var(--fig-space-4); }
+    .store { grid-area: 4 / 1 / 11 / 2; margin: var(--fig-space-2) 0 0; }
+    .fzf { grid-area: 5 / 1; }
+    .a-embed { grid-area: 6 / 1; }
+    .zsh { grid-area: 7 / 1; }
+    .less { grid-area: 8 / 1; margin-top: var(--fig-space-4); }
+    .a-ref { grid-area: 9 / 1; }
+    .bat { grid-area: 10 / 1; margin-bottom: var(--fig-space-3); }
+
+    .h-store,
+    .fzf,
+    .zsh,
+    .less,
+    .bat {
+      margin-right: var(--fig-space-3);
+      margin-left: var(--fig-space-3);
+    }
+
+    .h-store {
+      padding-top: var(--fig-space-2);
+    }
+
+    .arrow {
+      flex-direction: row;
+      justify-content: center;
+      gap: var(--fig-space-2);
+    }
+
+    .arrow.right::before { content: '↓'; }
+    .arrow.left::before { content: '↑'; }
+  }
+</style>
+
+<div class="map">
+  <div class="store"></div>
+
+  <div class="head h-path">PATH（名前で探す）</div>
+  <div class="head h-store">store（パスで指す）</div>
+
+  <div class="box less"><code>less-710</code><small>/nix/store/<wbr>3yn3…-less-710</small></div>
+  <div class="arrow left a-ref"><small>参照</small></div>
+  <div class="box bat"><code>bat-0.26.1</code><small>nixpkgs の bat</small></div>
+
+  <div class="box link-box"><span>打った <code>fzf</code> はここに届く</span><small>/etc/profiles/<wbr>per-user/babarot/<wbr>bin/fzf</small><span class="tag orange">fzf.nix</span></div>
+  <div class="arrow right a-link"><small>リンク</small></div>
+  <div class="box fzf"><code>fzf-0.74.4</code><small>/nix/store/<wbr>b5jb…-fzf-0.74.4</small></div>
+  <div class="arrow left a-embed"><small>パスを埋め込み</small></div>
+  <div class="box zsh"><code>human.zsh</code><small>bat-theme が fzf を store のパスで呼ぶ</small><span class="tag blue">bat.nix</span></div>
+</div>
+
+<div class="caption">store の中のものは、互いを store のパスで指し合っている。自分の設定（<code>human.zsh</code>）も、nixpkgs の bat が less を指すのと同じ形で fzf を指す。名前で探すのは PATH だけで、<code>fzf.nix</code> が受け持つのは PATH 上のリンクだけ。</div>
