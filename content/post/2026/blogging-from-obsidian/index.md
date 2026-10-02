@@ -1,7 +1,7 @@
 ---
 title: "Obsidianからブログを更新できるようにした"
 date: "2026-02-09T00:00:00+09:00"
-draft: true
+draft: false
 ---
 ## GitHub PagesからCloudflare Pagesに移行した
 
