@@ -84,11 +84,13 @@ const links = [
       /* The body font for readers without 游ゴシック (Macs, iPhones), served
          from the site and cut down to its characters (src/fonts/). The build
          replaces these URLs with the subset files'. No format(): dev serves
-         the whole TrueType font. */
+         the whole TrueType font. optional, not swap: a font that is not there
+         within ~100ms is not swapped in (the page stays in the fallback, with
+         no flash) and is cached for the next page. */
     }
     <style is:inline set:html={`
-      @font-face { font-family: '${family}'; src: url('${fontUrl(400)}'); font-weight: 400; font-display: swap; }
-      @font-face { font-family: '${family}'; src: url('${fontUrl(700)}'); font-weight: 700; font-display: swap; }
+      @font-face { font-family: '${family}'; src: url('${fontUrl(400)}'); font-weight: 400; font-display: optional; }
+      @font-face { font-family: '${family}'; src: url('${fontUrl(700)}'); font-weight: 700; font-display: optional; }
     `} />
     <script is:inline define:vars={{ fonts: [fontUrl(400), fontUrl(700)] }}>
       // Preload the body font only where it will be used: a reader with
