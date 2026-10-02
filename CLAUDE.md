@@ -103,6 +103,29 @@ Posts live in this repository and nowhere else (the Obsidian sync was dropped: d
 :::
 ```
 
+### Updating an old post
+
+When a post has gone out of date, update it without rewriting what it said: readers who saw it before must still find the old text (`src/plugins/revision/`).
+
+```
+:::addendum{date=2026-10-02}      a dated note; the text around it stays as it was
+...
+:::
+
+::::revisions                     a rewritten part: versions newest first, the first is the current one;
+:::version{date=2026-10-02}       past ones fold away under <details>
+...
+:::
+:::version{date=2026-02-09}
+...
+:::
+::::
+```
+
+- `::::revisions{view=tabs}` shows the versions as tabs instead (at most 5; CSS only).
+- A directive inside another needs more colons around it: `:::::revisions` > `::::version` > `:::gallery`. Otherwise the inner closing fence closes the outer one too; the build fails at the stray `:::`.
+- The header shows the newest date of an addendum or a current version ("2026-10-02 更新"); headings in past versions stay out of the table of contents.
+
 ### Embeds and diagrams
 
 - `::tweet{id=... user=...}`, `::youtube{id=...}`, `::spotify{type=episode id=... theme=dark}`, `::slideshare{key=... url="user/slug" title="..." author="..."}` (`src/plugins/embed/`). A missing attribute fails the build.

@@ -27,6 +27,16 @@ describe('excerpt', () => {
     expect(excerpt(md)).toBe('Body text.');
   });
 
+  it('skips a directive holding others, closed by a fence of as many colons', () => {
+    const md = ':::::carousel\n::::note\nx\n::::\n:::::\n\nBody text.';
+    expect(excerpt(md)).toBe('Body text.');
+  });
+
+  it('takes the current version of a rewritten part, the first one', () => {
+    const md = ':::addendum{date=2026-10-02}\nNote.\n:::\n\n::::revisions{view=tabs}\n:::version{date=2026-10-02}\n## Now\n\nNew text.\n:::\n:::version{date=2026-02-09}\nOld text.\n:::\n::::\n\nAfter.';
+    expect(excerpt(md)).toBe('New text. After.');
+  });
+
   it('keeps the text of inline tags', () => {
     expect(excerpt('Press <kbd>Ctrl</kbd> twice.')).toBe('Press Ctrl twice.');
   });

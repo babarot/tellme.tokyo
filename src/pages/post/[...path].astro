@@ -16,14 +16,20 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props as { post: Post };
-const { Content, headings } = await render(post);
-// "footnote-label" is the hidden heading remark-rehype puts before footnotes
-const toc = post.data.toc ? tocHtml(buildToc(headings.filter((h) => h.slug !== 'footnote-label'))) : '';
+const { Content, headings, remarkPluginFrontmatter } = await render(post);
+// Left out of the table of contents: "footnote-label", the hidden heading
+// remark-rehype puts before footnotes, and the headings of past versions
+// (src/plugins/revision/)
+const hidden = new Set<string>(['footnote-label', ...(remarkPluginFrontmatter.revisionHiddenHeadings ?? [])]);
+const toc = post.data.toc ? tocHtml(buildToc(headings.filter((h) => !hidden.has(h.slug)))) : '';
+// the newest update the post has (src/plugins/revision/), when later than its date
+const updated: string | undefined =
+  remarkPluginFrontmatter.updated > formatDate(post.data.date) ? remarkPluginFrontmatter.updated : undefined;
 // "content/post/2026/foo/index.mdx" -> "content/post/2026/foo", for <Partial>
 Astro.locals.postDir = post.filePath!.replace(/\/[^/]+$/, '');
 ---
 
-<Base title={post.data.title} description={postDescription(post)} published={post.data.date} image={ogImagePath(postPath(post))}>
+<Base title={post.data.title} description={postDescription(post)} published={post.data.date} modified={updated} image={ogImagePath(postPath(post))}>
   <!--
     The table of contents sits in the empty space right of the content column
     (absolutely positioned, so the column does not move) and follows the
@@ -47,6 +53,13 @@ Astro.locals.postDir = post.filePath!.replace(/\/[^/]+$/, '');
       </h1>
       <p class="mt-2 text-sm text-subtle tabular-nums">
         <time datetime={post.data.date} class="font-mono">{formatDate(post.data.date)}</time>
+        {
+          updated && (
+            <span class="ml-2">
+              (<time datetime={updated} class="font-mono">{updated}</time> 更新)
+            </span>
+          )
+        }
         {post.data.draft && <span class="ml-2 text-[10px] font-semibold tracking-wider text-draft uppercase">draft</span>}
       </p>
     </header>

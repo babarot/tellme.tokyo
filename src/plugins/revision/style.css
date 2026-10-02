@@ -1,0 +1,101 @@
+/* :::addendum and ::::revisions, both led by a small dated label. An addendum
+   also sits behind a rule on the left, so the note reads as apart from the
+   post around it; a rewritten part is the post itself and has none. */
+.addendum,
+.revisions {
+  margin: 2rem 0;
+}
+
+.addendum {
+  padding-left: 1rem;
+  border-left: 3px solid var(--revision-line, rgb(128 128 128 / 0.4));
+}
+
+.addendum-label,
+.revision-label {
+  margin: 0 0 0.5rem;
+  font-size: 0.8125em;
+  color: var(--revision-label, inherit);
+}
+
+.addendum-label time,
+.revision-label time,
+.revision-tabs time {
+  font-family: var(--revision-date-font, inherit);
+  font-variant-numeric: tabular-nums;
+}
+
+/* the text starts right below its label, or below the tabs */
+.addendum-label + *,
+.revision-label + *,
+.revisions[data-view='tabs'] > .revision > :first-child {
+  margin-top: 0;
+}
+
+.addendum > :last-child,
+.revision > :last-child {
+  margin-bottom: 0;
+}
+
+/* details: past versions fold away below the current one */
+details.revision {
+  margin-top: 1rem;
+}
+
+details.revision > summary {
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+details.revision[open] > summary {
+  margin-bottom: 0.5rem;
+}
+
+/* tabs: one version at a time, picked by the checked radio. No script: the
+   radios stay focusable (arrow keys move between them) but are not seen; their
+   labels are the tabs. */
+.revision-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--revision-tab-line, rgb(128 128 128 / 0.3));
+}
+
+.revision-tabs input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.revision-tabs label {
+  margin-bottom: -1px;
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+  font-size: 0.8125em;
+  color: var(--revision-label, inherit);
+  cursor: pointer;
+}
+
+.revision-tabs input:checked + label {
+  border-bottom-color: currentColor;
+  color: var(--revision-active, inherit);
+}
+
+.revision-tabs input:focus-visible + label {
+  outline: 2px solid var(--revision-active, currentColor);
+  outline-offset: 2px;
+}
+
+/* one rule per version, up to MAX_TABS in ./remark.ts */
+.revisions[data-view='tabs'] > .revision {
+  display: none;
+}
+
+.revisions:has(> .revision-tabs > input:nth-of-type(1):checked) > .revision:nth-of-type(1),
+.revisions:has(> .revision-tabs > input:nth-of-type(2):checked) > .revision:nth-of-type(2),
+.revisions:has(> .revision-tabs > input:nth-of-type(3):checked) > .revision:nth-of-type(3),
+.revisions:has(> .revision-tabs > input:nth-of-type(4):checked) > .revision:nth-of-type(4),
+.revisions:has(> .revision-tabs > input:nth-of-type(5):checked) > .revision:nth-of-type(5) {
+  display: block;
+}

@@ -16,11 +16,13 @@ interface Props {
   description?: string;
   /** a post's date (YYYY-MM-DD...), which also makes the page an article */
   published?: string;
+  /** the date of a post's latest update (YYYY-MM-DD) */
+  modified?: string;
   /** path of the page's Open Graph image (src/lib/og.ts); the site's by default */
   image?: string;
 }
 
-const { title, description = 'babarot のブログ', published, image = '/og.png' } = Astro.props;
+const { title, description = 'babarot のブログ', published, modified, image = '/og.png' } = Astro.props;
 const siteName = 'tellme.tokyo';
 const pageTitle = title ? `${title} | ${siteName}` : siteName;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -82,6 +84,7 @@ const links = [
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="ja_JP" />
     {published && <meta property="article:published_time" content={published} />}
+    {modified && <meta property="article:modified_time" content={modified} />}
     <meta property="og:image" content={imageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />

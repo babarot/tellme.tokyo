@@ -10,9 +10,10 @@ another Astro (or any unified) project as is.
 | `gallery` | `:::gallery` of images as a justified gallery (rows of equal height filling the width); smaller copies via srcset for the grid | remark, style, client, layout, thumbnails |
 | `carousel` | `:::carousel` of images, one at a time with prev/next, indicators, autoplay, swipe; image titles as captions | remark, style, client, state |
 | `lightbox` | click a photo inside `[data-lightbox]` to see it large; prev/next, counter, keys, swipe | style, client, viewer |
-| `toc` | table of contents from the headings; marks the section being read | style, client, toc |
+| `toc` | table of contents from the headings; marks the section being read; a heading hidden until an input is checked (an ancestor with `data-shown-by="<input id>"`) is shown when its link is clicked | style, client, toc |
 | `embed` | `::tweet`, `::youtube`, `::spotify`, `::slideshare` | remark, style, client, providers |
 | `mermaid` | ```` ```mermaid ```` code blocks drawn as diagrams; follows the color scheme | remark, style, client |
+| `revision` | updates to an old post that keep what it said: `:::addendum` (a dated note) and `::::revisions` of `:::version` blocks, newest first (past ones under `<details>`, or `view=tabs`: tabs switched by CSS radios, no script); passes `updated` and the ids of past versions' headings (`revisionHiddenHeadings`) to the page as front matter | remark, style |
 | `img` | `:::img` for one image with options: `width` (most px), `scheme` (light or dark only) | remark, style |
 | `code-block` | a copy button on every code block (on hover; none on touch screens); ```` ```json:package.json ```` shows the file name above the code | remark, style, client |
 | `link-preview` | a paragraph that is only a URL becomes a card with the page's title, description, image and icon (cached; failed fetches are retried after 30 days; `pnpm prune:link-previews` drops entries no post uses) | remark, urls, parse, fetch, cache, html, style |
@@ -65,6 +66,7 @@ after them. `code-block` goes after `mermaid`, which takes its code blocks first
 [remarkGallery, { rowHeight: 150, gap: 5, thumbnailWidths: [300, 600, 900, 1200] }]
 [remarkCarousel, { interval: 7000, autoplay: true, ratio: '16/9', indicator: 'dot' }]
 [remarkLinkPreview, { cacheFile: '.cache/link-previews.json', retryAfterDays: 30 }]
+[remarkRevision, { labels: { addendum: 'Added {date}', rewritten: 'Rewritten {date}', original: 'Original', tabs: 'Versions' } }]
 ```
 
 Per use, as directive attributes:
@@ -72,4 +74,5 @@ Per use, as directive attributes:
 ```md
 :::gallery{rowHeight=200 minRows=2}
 :::carousel{interval=5000 indicator=bar ratio=4/3 autoplay=false fit=contain backdrop=edge}
+::::revisions{view=tabs}
 ```

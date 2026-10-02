@@ -8,6 +8,7 @@ import remarkGallery from './src/plugins/gallery/remark';
 import remarkCarousel from './src/plugins/carousel/remark';
 import remarkImg from './src/plugins/img/remark';
 import remarkEmbed from './src/plugins/embed/remark';
+import remarkRevision from './src/plugins/revision/remark';
 import remarkMermaid from './src/plugins/mermaid/remark';
 import remarkCodeBlock from './src/plugins/code-block/remark';
 import remarkDirectiveFallback from './src/plugins/directive-fallback/remark';
@@ -31,6 +32,7 @@ export default defineConfig({
         [remarkCarousel, { interval: 7000, ratio: '16/9', indicator: 'dot' }],
         remarkImg,
         remarkEmbed,
+        [remarkRevision, { labels: { addendum: '{date} 追記', rewritten: '{date} に書き換え', original: '元の文章', tabs: '版' } }],
         remarkDirectiveFallback,
         remarkHeadingLevels,
         remarkMermaid,

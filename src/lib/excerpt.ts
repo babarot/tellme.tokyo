@@ -6,9 +6,14 @@ const MAX = 120;
 
 export function excerpt(markdown: string, max = MAX): string {
   const text = markdown
-    // fenced code (``` and ~~~) and :::directive blocks, with their contents
+    // fenced code (``` and ~~~) and :::directive blocks, with their contents;
+    // a directive closes at a fence of as many colons (::::revisions holds :::version).
+    // ::::revisions is the post's text itself: its current version (the first) stays.
     .replace(/^(\s*)(```|~~~)[^\n]*\n[\s\S]*?^\1\2\s*$/gm, '\n')
-    .replace(/^:::[\s\S]*?^:::\s*$/gm, '\n')
+    .replace(/^(:{3,})revisions\b.*\n([\s\S]*?)^\1\s*$/gm, (_, _fence, inner: string) =>
+      `\n${/^(:{3,})version\b.*\n([\s\S]*?)^\1\s*$/m.exec(inner)?.[2] ?? ''}\n`,
+    )
+    .replace(/^(:{3,})\w[\s\S]*?^\1\s*$/gm, '\n')
     // MDX imports and exports, front matter left over, leaf directives (::tweet{...})
     .replace(/^(import|export)\s.*$/gm, '')
     .replace(/^::\w.*$/gm, '')

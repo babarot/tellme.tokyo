@@ -16,6 +16,7 @@
 @import '../plugins/embed/style.css';
 @import '../plugins/mermaid/style.css';
 @import '../plugins/img/style.css';
+@import '../plugins/revision/style.css';
 
 /* Dark mode follows the .dark class set by the inline script in Base.astro */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -128,6 +129,11 @@ html.dark {
   --gallery-placeholder: var(--c-surface);
   --carousel-placeholder: var(--c-surface);
   --carousel-caption: var(--c-muted);
+  --revision-line: var(--c-line-strong);
+  --revision-label: var(--c-muted);
+  --revision-active: var(--c-heading);
+  --revision-tab-line: var(--c-line);
+  --revision-date-font: var(--font-mono);
 }
 
 /* Article body. Typography's colors all come from the theme, which already
