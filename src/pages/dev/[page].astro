@@ -31,8 +31,14 @@ const samples: { title: string; note: string; html: string }[] = [
   },
   {
     title: '.chip',
-    note: 'A small bordered label, e.g. yes / no on a branch.',
+    note: 'A small bordered label, e.g. yes / no on a branch, or the file a thing is written in.',
     html: `<p><span class="chip">yes</span> <code>EDITOR=vim</code></p>`,
+  },
+  {
+    title: '.status',
+    note: 'An outcome with a mark, so it reads without the color: .ok (✓) or .ng (✕).',
+    html: `<p><code>bat-theme</code> <span class="status ok">works</span></p>
+<p><code>pskill</code> <span class="status ng">removed</span></p>`,
   },
   {
     title: '.caption / .legend',
