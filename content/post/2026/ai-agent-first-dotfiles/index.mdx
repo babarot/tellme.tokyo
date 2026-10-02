@@ -258,7 +258,9 @@ config.xdg.configFile."zsh/human.zsh".text = lib.concatLines (
 
 書いたスキルは、Claude Code が読む `~/.claude/skills` と Codex などが読む `~/.agents/skills` の両方にリンクされる。スキルはインストールしたパッケージの中身を指しているので、ツールとスキルのバージョンがずれることはないし、ツールを消せばスキルも消える。ツールを入れた時点で、AI もその使い方を知っている状態になる。
 
-人間にとっての co-location は「ツールと設定を一緒に書く」ことだったが、AI が主役になると、そこに「ツールの使い方」まで入ってくるのがおもしろい。
+人間にとっての co-location は「ツールと設定を一緒に書く」ことだったが、AI が主役になると、そこに「ツールの使い方」まで入ってくるのがおもしろい[^crit]。
+
+[^crit]: 例えば最近使い始めた [crit](https://github.com/tomasz-tomczyk/crit) は、diff やプランにブラウザでインラインコメントを付けて AI に返すレビューツールで、まだ新しいので AI 自身はこのツールのことを知らないはず。それでも [crit.nix](https://github.com/babarot/dotfiles/blob/main/nix/home-manager/tools/crit.nix) で本体と一緒に crit のスキルを入れているので、こちらが何も説明しなくても、最初から使い方を「知っている」状態で動いてくれる。
 
 ## おわりに
 
