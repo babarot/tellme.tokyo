@@ -131,7 +131,7 @@ describe('parse', () => {
   });
 
   it('collects repeated tags and the query after the command', () => {
-    const args = parse(['open', '--tag', 'go', 'nix', '--tag', 'hcl', 'zsh']);
+    const args = parse(['edit', '--tag', 'go', 'nix', '--tag', 'hcl', 'zsh']);
     expect(args.filter.tags).toEqual(['go', 'hcl']);
     expect(args.query).toEqual(['nix', 'zsh']);
   });
@@ -139,7 +139,7 @@ describe('parse', () => {
   it('reads -h, --help and --no-fzf', () => {
     expect(parse(['-h']).help).toBe(true);
     expect(parse(['--help']).help).toBe(true);
-    expect(parse(['open', '--no-fzf']).noFzf).toBe(true);
+    expect(parse(['edit', '--no-fzf']).noFzf).toBe(true);
   });
 
   it('rejects unknown options and values', () => {

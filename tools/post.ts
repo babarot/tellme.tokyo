@@ -7,11 +7,11 @@ import { parseArgs } from 'node:util';
 
 const USAGE = `Usage:
   mise run post ls    [filters] [--format tsv|json|path]
-  mise run post open  [filters] [--no-fzf] [query...]
+  mise run post edit  [filters] [--no-fzf] [query...]
   mise run post tags  [filters]
   mise run post check [filters] [--fix]
 
-ls prints the posts that pass the filters, and tags their tags. open lets you
+ls prints the posts that pass the filters, and tags their tags. edit lets you
 pick them with fzf (Tab for several) and opens them in $EDITOR (nvim when
 unset); the query is fzf's first input, and --no-fzf opens every post that
 passes the filters.
@@ -278,7 +278,7 @@ function main() {
       [...new Set(posts.flatMap((p) => p.tags))].sort().forEach((t) => console.log(t));
       break;
 
-    case 'open': {
+    case 'edit': {
       if (!posts.length) fail('no posts match');
       let files = posts.map((p) => p.path);
       if (!args.noFzf) {
