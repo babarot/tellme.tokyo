@@ -8,7 +8,9 @@ toc: false
 tags: []
 ---
 
-(2026/10/03追記): 今は afx を使っておらず、dotfiles のパッケージ管理は Nix に移した。ただ、ツールのインストールと設定を同じ場所に書くという afx の考え方はそのまま引き継いでいる。その話は [dotfiles を AI agent のために作り変えた](/post/2026/10/01/ai-agent-first-dotfiles/) に書いた。
+:::addendum{date=2026-10-03}
+今は afx を使っておらず、dotfiles のパッケージ管理は Nix に移した。ただ、ツールのインストールと設定を同じ場所に書くという afx の考え方はそのまま引き継いでいる。その話は [dotfiles を AI agent のために作り変えた](/post/2026/10/01/ai-agent-first-dotfiles/) に書いた。
+:::
 
 [afx](https://github.com/babarot/afx) という CLI 向けのパッケージマネージャを公開した。ここでいう CLI のパッケージは、jq のようなコマンドラインツールや、[zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search) のようなシェルのプラグイン（bash/zsh/fish）のこと。afx はこれらを1つのツールで、しかも YAML に書いたコードとして管理するためのもの。
 
