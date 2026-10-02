@@ -8,7 +8,7 @@ run = "node tools/post.ts"
 raw_args = true
 usage = """
 arg "<command>" help="what to do" {
-  choices "ls" "open" "tags"
+  choices "ls" "open" "tags" "check"
 }
 arg "[query]..." help="open: fzf's first input" var=#true
 flag "--draft" help="drafts"
@@ -27,6 +27,7 @@ flag "--format <format>" help="ls: default tsv" {
   choices "tsv" "json" "path"
 }
 flag "--no-fzf" help="open: every post that passes the filters"
+flag "--fix" help="check: add the missing keys and put them in order"
 flag "-h --help" help="show the help"
 complete "name" run="node {{config_root}}/tools/post.ts tags --all"
 """

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { frontMatter, fzfItem, parse, select, toPost, tsv, type Filter, type Post } from './post.ts';
+import { frontMatter, fzfItem, lint, parse, select, toPost, tsv, type Filter, type Post } from './post.ts';
 
 describe('frontMatter', () => {
   it('reads scalars, quoted or not', () => {
@@ -124,6 +124,12 @@ describe('parse', () => {
     expect(parse(['ls', '--all', '--draft']).filter.states).toEqual(new Set(['draft', 'published', 'hidden']));
   });
 
+  it('checks every state unless one is asked for', () => {
+    expect(parse(['check']).filter.states).toEqual(new Set(['draft', 'published', 'hidden']));
+    expect(parse(['check', '--draft']).filter.states).toEqual(new Set(['draft']));
+    expect(parse(['check', '--fix']).fix).toBe(true);
+  });
+
   it('collects repeated tags and the query after the command', () => {
     const args = parse(['open', '--tag', 'go', 'nix', '--tag', 'hcl', 'zsh']);
     expect(args.filter.tags).toEqual(['go', 'hcl']);
@@ -154,5 +160,46 @@ describe('fzfItem', () => {
   it('gives fzf the path to hide and hand back, then the date, and the title on a second line', () => {
     const p: Post = { path: 'a/index.md', date: '2026-01-01', title: 'T', state: 'draft', tags: ['go', 'nix'] };
     expect(fzfItem(p)).toBe('a/index.md\t2026-01-01\nT');
+  });
+});
+
+describe('lint', () => {
+  const full = '---\ntitle: t\ndate: 2026-10-02\ndescription: ""\ndraft: false\nhidden: false\ntoc: false\ntags: []\n---\nbody\n';
+
+  it('finds nothing in a full front matter in order', () => {
+    expect(lint(full)).toEqual({ problems: [], fixed: full });
+    const slug = full.replace('date: 2026-10-02\n', 'date: 2026-10-02\nslug: s\n');
+    expect(lint(slug).problems).toEqual([]);
+  });
+
+  it('adds the missing keys with their defaults, slug aside', () => {
+    const { problems, fixed } = lint('---\ntitle: t\ndate: 2026-10-02\ndraft: true\n---\nbody\n');
+    expect(problems).toEqual(['description: missing', 'hidden: missing', 'toc: missing', 'tags: missing']);
+    expect(fixed).toBe(full.replace('draft: false', 'draft: true'));
+  });
+
+  it('puts the keys in order, each with its lines as written', () => {
+    const { problems, fixed } = lint(
+      '---\ntags:\n  - go\n  - "nix"\ntoc: true\ntitle: "a: b"\ndate: "2018-01-01T00:00:00+09:00"\ndescription: \'d\'\ndraft: false\nhidden: false\n---\nbody\n',
+    );
+    expect(problems).toEqual(['keys out of order (title, date, slug, description, draft, hidden, toc, tags, then the others)']);
+    expect(fixed).toBe(
+      '---\ntitle: "a: b"\ndate: "2018-01-01T00:00:00+09:00"\ndescription: \'d\'\ndraft: false\nhidden: false\ntoc: true\ntags:\n  - go\n  - "nix"\n---\nbody\n',
+    );
+    expect(lint(fixed).problems).toEqual([]);
+  });
+
+  it('keeps unknown keys, last, and goes on reporting them', () => {
+    const { problems, fixed } = lint(full.replace('title: t\n', 'medium:\n  - tellme.tokyo\ntitle: t\n'));
+    expect(problems).toEqual(['medium: not in the schema', 'keys out of order (title, date, slug, description, draft, hidden, toc, tags, then the others)']);
+    expect(fixed).toBe(full.replace('tags: []\n', 'tags: []\nmedium:\n  - tellme.tokyo\n'));
+    expect(lint(fixed).problems).toEqual(['medium: not in the schema']);
+  });
+
+  it('leaves what it cannot fix to a person', () => {
+    expect(lint('body\n')).toEqual({ problems: ['no front matter'], fixed: 'body\n' });
+    expect(lint(full.replace('title: t\n', '')).problems).toEqual(['title: missing (no default)']);
+    const twice = full.replace('toc: false\n', 'toc: false\ntoc: true\n');
+    expect(lint(twice)).toEqual({ problems: ['toc: twice'], fixed: twice });
   });
 });

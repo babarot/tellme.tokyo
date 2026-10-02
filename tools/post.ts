@@ -6,17 +6,23 @@ import { spawnSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 
 const USAGE = `Usage:
-  mise run post ls   [filters] [--format tsv|json|path]
-  mise run post open [filters] [--no-fzf] [query...]
-  mise run post tags [filters]
+  mise run post ls    [filters] [--format tsv|json|path]
+  mise run post open  [filters] [--no-fzf] [query...]
+  mise run post tags  [filters]
+  mise run post check [filters] [--fix]
 
 ls prints the posts that pass the filters, and tags their tags. open lets you
 pick them with fzf (Tab for several) and opens them in $EDITOR (nvim when
 unset); the query is fzf's first input, and --no-fzf opens every post that
 passes the filters.
 
+check reports what is wrong with the posts' front matter (missing keys, keys
+not in the schema, keys out of order) and exits 1 if anything is; it looks at
+every state unless one is asked for. --fix adds the missing keys with their
+defaults and puts the keys in order, keeping each value as written.
+
 Filters:
-  --draft, --published, --hidden   by state (any of them); default: draft and published
+  --draft, --published, --hidden   by state (any of them); default: draft and published (check: all)
   --all                            every state, hidden too
   --tag <name>                     has the tag (repeatable: all of them)
   --since <date>, --until <date>   by date, as a prefix: 2020, 2023-06, 2023-06-01
@@ -85,6 +91,55 @@ export function frontMatter(source: string): Record<string, string | string[]> {
 // A quoted value as written inside its quotes; an unquoted one up to a comment
 function scalar(s: string): string {
   return s.match(/^(["'])(.*)\1\s*(#.*)?$/)?.[2] ?? s.replace(/\s+#.*$/, '');
+}
+
+// The keys a post's front matter has, in this order: those of the schema in
+// src/content.config.ts. slug is optional (the folder name otherwise); title
+// and date have no default; the others get the schema's default when missing.
+export const KEYS = ['title', 'date', 'slug', 'description', 'draft', 'hidden', 'toc', 'tags'] as const;
+const DEFAULTS: Record<string, string> = {
+  description: 'description: ""',
+  draft: 'draft: false',
+  hidden: 'hidden: false',
+  toc: 'toc: false',
+  tags: 'tags: []',
+};
+
+// What is wrong with a post's front matter, and the source with what can be
+// fixed fixed: missing keys added with their defaults, and the keys put in
+// order. Each key keeps its lines as written; unknown keys go last. What is
+// left in lint(fixed).problems needs a person (a key twice is never fixed).
+export function lint(source: string): { problems: string[]; fixed: string } {
+  const m = source.match(/^---\n([\s\S]*?)\n---(\n|$)/);
+  if (!m) return { problems: ['no front matter'], fixed: source };
+  const problems: string[] = [];
+  const blocks = new Map<string, string[]>();
+  const lead: string[] = []; // lines before the first key
+  let last = lead;
+  for (const line of m[1].split('\n')) {
+    const key = line.match(/^([A-Za-z_]\w*):/)?.[1];
+    if (!key) last.push(line); // a list item, or a blank line
+    else if (blocks.has(key)) problems.push(`${key}: twice`);
+    else blocks.set(key, (last = [line]));
+  }
+  // an unknown key ranks after every known one
+  const rank = (k: string) => {
+    const i = (KEYS as readonly string[]).indexOf(k);
+    return i < 0 ? KEYS.length : i;
+  };
+  const written = [...blocks.keys()];
+  written.filter((k) => rank(k) === KEYS.length).forEach((k) => problems.push(`${k}: not in the schema`));
+  if (written.some((k, i) => i > 0 && rank(k) < rank(written[i - 1])))
+    problems.push(`keys out of order (${KEYS.join(', ')}, then the others)`);
+  for (const k of KEYS) {
+    if (blocks.has(k) || k === 'slug') continue;
+    problems.push(DEFAULTS[k] ? `${k}: missing` : `${k}: missing (no default)`);
+    if (DEFAULTS[k]) blocks.set(k, [DEFAULTS[k]]);
+  }
+  if (problems.some((p) => p.endsWith(': twice'))) return { problems, fixed: source };
+  const order = [...KEYS.filter((k) => blocks.has(k)), ...written.filter((k) => rank(k) === KEYS.length)];
+  const lines = [...lead, ...order.flatMap((k) => blocks.get(k)!)];
+  return { problems, fixed: `---\n${lines.join('\n')}\n---${m[2]}${source.slice(m[0].length)}` };
 }
 
 // A post from its source; hidden wins over draft, as it is never built
@@ -156,6 +211,7 @@ const OPTIONS = {
   reverse: { type: 'boolean' },
   format: { type: 'string', default: 'tsv' },
   'no-fzf': { type: 'boolean' },
+  fix: { type: 'boolean' },
   help: { type: 'boolean', short: 'h' },
 } as const;
 
@@ -165,6 +221,7 @@ export type Args = {
   help: boolean;
   format: string;
   noFzf: boolean;
+  fix: boolean;
   grep?: string;
   filter: Filter;
 };
@@ -182,9 +239,10 @@ export function parse(argv: string[]): Args {
     help: o.help ?? false,
     format: o.format,
     noFzf: o['no-fzf'] ?? false,
+    fix: o.fix ?? false,
     grep: o.grep,
     filter: {
-      states: new Set(o.all ? STATES : picked.length ? picked : ['draft', 'published']),
+      states: new Set(o.all || (command === 'check' && !picked.length) ? STATES : picked.length ? picked : ['draft', 'published']),
       tags: o.tag ?? [],
       since: o.since,
       until: o.until,
@@ -248,6 +306,26 @@ function main() {
       }
       const editor = process.env.EDITOR || 'nvim';
       spawnSync(editor, files, { stdio: 'inherit' });
+      break;
+    }
+
+    case 'check': {
+      let bad = 0;
+      for (const p of posts) {
+        const source = fs.readFileSync(p.path, 'utf8');
+        let { problems, fixed } = lint(source);
+        if (args.fix && fixed !== source) {
+          fs.writeFileSync(p.path, fixed);
+          console.log(`${p.path}: fixed`);
+          problems = lint(fixed).problems;
+        }
+        problems.forEach((problem) => console.log(`${p.path}: ${problem}`));
+        if (problems.length) bad++;
+      }
+      if (bad) {
+        console.error(`post: ${bad} of ${posts.length} posts need a fix${args.fix ? ' by hand' : ' (--fix for what it can)'}`);
+        process.exit(1);
+      }
       break;
     }
 
