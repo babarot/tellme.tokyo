@@ -2,8 +2,34 @@
 node = "24"
 
 [tasks.post]
-description = "List posts by front matter, or open the ones picked with fzf (help: mise run post -- --help)"
+description = "List posts by front matter, or open the ones picked with fzf (help: mise run post --help)"
 run = "node tools/post.ts"
+# Hand the arguments to post.ts as typed; usage below only feeds completion
+raw_args = true
+usage = """
+arg "<command>" help="what to do" {
+  choices "ls" "open" "tags"
+}
+arg "[query]..." help="open: fzf's first input" var=#true
+flag "--draft" help="drafts"
+flag "--published" help="published posts"
+flag "--hidden" help="hidden posts"
+flag "--all" help="every state, hidden too"
+flag "--tag <name>" help="has the tag (repeatable: all of them)" var=#true
+flag "--since <date>" help="from this date, as a prefix: 2020, 2023-06"
+flag "--until <date>" help="up to this date, as a prefix"
+flag "--grep <pattern>" help="the source matches (rg)"
+flag "--sort <by>" help="default: date" {
+  choices "date" "title"
+}
+flag "--reverse" help="reverse the order"
+flag "--format <format>" help="ls: default tsv" {
+  choices "tsv" "json" "path"
+}
+flag "--no-fzf" help="open: every post that passes the filters"
+flag "-h --help" help="show the help"
+complete "name" run="node {{config_root}}/tools/post.ts tags --all"
+"""
 # fzf and the editor need the terminal
 raw = true
 quiet = true

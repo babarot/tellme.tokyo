@@ -1,5 +1,5 @@
 // Lists the posts in content/post by their front matter, and opens the ones
-// picked with fzf in $EDITOR. Usage: mise run post -- --help
+// picked with fzf in $EDITOR. Usage: mise run post --help
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -8,10 +8,12 @@ import { parseArgs } from 'node:util';
 const USAGE = `Usage:
   mise run post ls   [filters] [--format tsv|json|path]
   mise run post open [filters] [--no-fzf] [query...]
+  mise run post tags [filters]
 
-ls prints the posts that pass the filters. open lets you pick them with fzf
-(Tab for several) and opens them in $EDITOR (nvim when unset); the query is
-fzf's first input, and --no-fzf opens every post that passes the filters.
+ls prints the posts that pass the filters, and tags their tags. open lets you
+pick them with fzf (Tab for several) and opens them in $EDITOR (nvim when
+unset); the query is fzf's first input, and --no-fzf opens every post that
+passes the filters.
 
 Filters:
   --draft, --published, --hidden   by state (any of them); default: draft and published
@@ -112,6 +114,10 @@ export function select(posts: Post[], f: Filter): Post[] {
 
 export const tsv = (p: Post) => [p.path, p.date, p.state, p.title, p.tags.join(',')].join('\t');
 
+// What fzf gets for a post: the path (hidden, handed back for the editor),
+// then the date and, on a second line, the title
+export const fzfItem = (p: Post) => `${p.path}\t${p.date}\n${p.title}`;
+
 function readPosts(): Post[] {
   return fs
     .readdirSync(POSTS, { recursive: true, encoding: 'utf8' })
@@ -210,6 +216,10 @@ function main() {
       else posts.forEach((p) => console.log(p.path));
       break;
 
+    case 'tags':
+      [...new Set(posts.flatMap((p) => p.tags))].sort().forEach((t) => console.log(t));
+      break;
+
     case 'open': {
       if (!posts.length) fail('no posts match');
       let files = posts.map((p) => p.path);
@@ -218,22 +228,23 @@ function main() {
           'fzf',
           [
             '--multi',
+            '--read0',
             '--delimiter=\t',
             '--with-nth=2..',
-            '--tabstop=2',
+            '--accept-nth=1',
+            '--gap',
+            // a bar down both lines of the current post
+            '--pointer=▌',
             `--query=${query.join(' ')}`,
             '--preview=bat --color=always --style=plain {1} 2>/dev/null || cat {1}',
             '--preview-window=right,60%,wrap',
           ],
-          { input: posts.map(tsv).join('\n'), encoding: 'utf8', stdio: ['pipe', 'pipe', 'inherit'] },
+          { input: posts.map(fzfItem).join('\0'), encoding: 'utf8', stdio: ['pipe', 'pipe', 'inherit'] },
         );
         if (fzf.error) fail(`fzf: ${fzf.error.message}`);
         // 1: nothing matched, 130: cancelled
         if (fzf.status !== 0) process.exit(0);
-        files = fzf.stdout
-          .split('\n')
-          .filter(Boolean)
-          .map((line) => line.split('\t')[0]);
+        files = fzf.stdout.split('\n').filter(Boolean);
       }
       const editor = process.env.EDITOR || 'nvim';
       spawnSync(editor, files, { stdio: 'inherit' });

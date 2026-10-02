@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { frontMatter, parse, select, toPost, tsv, type Filter, type Post } from './post.ts';
+import { frontMatter, fzfItem, parse, select, toPost, tsv, type Filter, type Post } from './post.ts';
 
 describe('frontMatter', () => {
   it('reads scalars, quoted or not', () => {
@@ -144,8 +144,15 @@ describe('parse', () => {
 });
 
 describe('tsv', () => {
-  it('puts the path first, for fzf to hide and hand back', () => {
+  it('lists every field, the path first', () => {
     const p: Post = { path: 'a/index.md', date: '2026-01-01', title: 'T', state: 'draft', tags: ['go', 'nix'] };
     expect(tsv(p)).toBe('a/index.md\t2026-01-01\tdraft\tT\tgo,nix');
+  });
+});
+
+describe('fzfItem', () => {
+  it('gives fzf the path to hide and hand back, then the date, and the title on a second line', () => {
+    const p: Post = { path: 'a/index.md', date: '2026-01-01', title: 'T', state: 'draft', tags: ['go', 'nix'] };
+    expect(fzfItem(p)).toBe('a/index.md\t2026-01-01\nT');
   });
 });
