@@ -1,8 +1,10 @@
 ---
 title: "HTTP のステータスコードを簡単に調べる"
 date: "2015-11-07T00:32:23+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
 tags: ["http", "shell"]
 ---
 

@@ -1,7 +1,11 @@
 ---
 title: "2017年振り返り"
 date: "2018-01-05T00:00:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
+tags: []
 ---
 
 もう年も変わってしまったけれど、去年どのような1年を過ごしたのかを振り返る。

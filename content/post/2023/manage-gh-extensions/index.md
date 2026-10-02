@@ -1,7 +1,11 @@
 ---
 title: "gh extension の管理"
 date: "2023-03-21T00:00:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
+tags: []
 ---
 
 ## gh とは

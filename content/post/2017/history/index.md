@@ -1,8 +1,11 @@
 ---
 title: "最強のヒストリ補完を作りました"
 date: "2017-06-13T00:00:00+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
+tags: []
 ---
 
 ## 最強のヒストリ補完を求めて

@@ -1,7 +1,10 @@
 ---
 title: "Software Design 2019年9月号に寄稿した"
 date: "2019-08-27T22:14:34+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
 tags: ["shell"]
 ---
 

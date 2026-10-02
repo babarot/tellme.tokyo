@@ -1,8 +1,11 @@
 ---
 title: "zplug では Collaborators を募集しています"
 date: "2016-09-22T00:00:00+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
+tags: []
 ---
 
 https://github.com/zplug

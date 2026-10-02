@@ -1,8 +1,11 @@
 ---
 title: "Kubernetes 開発環境構築のいろは"
 date: "2017-12-01T00:00:00+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
+tags: []
 ---
 
 ## はじめに

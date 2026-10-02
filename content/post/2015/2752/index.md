@@ -1,8 +1,11 @@
 ---
 title: "今年つくったものリスト 2015"
 date: "2015-12-31T00:00:00+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
+tags: []
 ---
 
 :::img{width=600}

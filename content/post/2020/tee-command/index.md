@@ -1,7 +1,11 @@
 ---
 title: "標準出力に出しつつ、パイプ先のコマンドにも繋ぐ"
 date: "2020-02-07T00:00:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
+tags: []
 ---
 
 コマンドの出力をターミナル (stdout) に出しながらパイプに繋いだ別のコマンドの stdin に流すとき、どう書くか。

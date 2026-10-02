@@ -1,8 +1,10 @@
 ---
 title: 東京衣食住
 date: "2018-08-01T03:48:04+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
 tags: ["tokyo", "life"]
 ---
 

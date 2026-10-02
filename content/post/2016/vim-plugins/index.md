@@ -1,7 +1,11 @@
 ---
 title: "最近の Vim のプラグイン管理について考える"
 date: "2016-12-05T00:00:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
+tags: []
 ---
 
 この記事は [Vim Advent Calendar 2016](http://qiita.com/advent-calendar/2016/vim) の 5 日目の記事です。

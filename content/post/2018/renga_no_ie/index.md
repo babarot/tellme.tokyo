@@ -1,8 +1,10 @@
 ---
 title: "煉瓦の家"
 date: "2018-01-16T00:45:23+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
 tags: ["music", "takui"]
 ---
 

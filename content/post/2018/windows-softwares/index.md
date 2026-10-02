@@ -1,7 +1,11 @@
 ---
 title: "Windows 時代の使用ソフト晒し"
 date: "2018-09-27T00:00:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
+tags: []
 ---
 
 2013 年ごろまで Windows を使っていた (Windows 7 SP2 が最後)。

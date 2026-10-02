@@ -1,7 +1,11 @@
 ---
 title: "ローカルから Gist を編集する方法"
 date: "2020-01-28T00:00:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
+tags: []
 ---
 
 コードスニペットなどの管理によく Gist を使う。

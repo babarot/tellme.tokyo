@@ -1,7 +1,10 @@
 ---
 title: "SREになった"
 date: "2017-11-02T01:33:34+09:00"
+description: ""
 draft: false
+hidden: false
+toc: false
 tags: ["SRE"]
 ---
 

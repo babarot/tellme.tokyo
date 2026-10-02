@@ -1,7 +1,11 @@
 ---
 title: "新卒でメルカリに入社した"
 date: "2016-10-01T00:00:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
+tags: []
 ---
 
 今年の4/1に新卒として[株式会社メルカリ](https://www.mercari.com/jp/about/corporate/)に入社した。

@@ -3,6 +3,8 @@ title: "hashicorp/hcl2 を使って独自 DSL を定義する"
 date: "2019-02-19T02:44:36+09:00"
 description: "hcl2 の紹介とそれを使った独自 DSL の作り方について解説します"
 draft: true
+hidden: false
+toc: false
 tags:
 - go
 - hashicorp

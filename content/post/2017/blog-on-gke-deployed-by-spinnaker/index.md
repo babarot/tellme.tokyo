@@ -1,7 +1,11 @@
 ---
 title: "ブログをGKEで運用し、Spinnakerでデプロイする"
 date: "2017-07-30T00:00:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
+tags: []
 ---
 
 :::img{width=200}

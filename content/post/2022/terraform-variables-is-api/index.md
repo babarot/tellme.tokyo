@@ -1,7 +1,11 @@
 ---
 title: "Terraformの変数(variable, local, output)を理解する"
 date: "2022-06-15T00:00:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
+tags: []
 ---
 
 ## それぞれの役割

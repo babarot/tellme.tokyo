@@ -1,8 +1,11 @@
 ---
 title: "『僕たちはファッションの力で世界を変える』を読んだ"
 date: "2018-11-08T00:00:00+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
+tags: []
 ---
 
 :::img{width=400}

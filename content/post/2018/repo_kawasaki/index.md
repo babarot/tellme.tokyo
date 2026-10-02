@@ -1,8 +1,11 @@
 ---
 title: "『ルポ川崎』を読んだ"
 date: "2018-05-29T00:00:00+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
+tags: []
 ---
 
 :::img{width=300}

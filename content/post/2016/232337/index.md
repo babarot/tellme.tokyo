@@ -1,8 +1,11 @@
 ---
 title: "Vim 8.0 がリリースされた"
 date: "2016-09-12T00:00:00+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
+tags: []
 ---
 
 本日 (2016-09-12 21:24:19 +09:00)、Vim 8.0 がリリースされました。

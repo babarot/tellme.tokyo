@@ -1,7 +1,11 @@
 ---
 title: "Go で書いた CLI ツールのリリースは GoReleaser と GitHub Actions で個人的には決まり"
 date: "2020-02-04T00:00:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
+tags: []
 ---
 
 ## tl;dr

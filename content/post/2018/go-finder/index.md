@@ -1,8 +1,10 @@
 ---
 title: "Go から peco する"
 date: "2018-04-25T02:11:37+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
 tags: ["go", "fzf", "peco"]
 ---
 

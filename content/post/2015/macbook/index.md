@@ -1,7 +1,11 @@
 ---
 title: "MacBook 12 inch を買った"
 date: "2015-08-14T00:00:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
+tags: []
 ---
 
 <blockquote class="twitter-tweet" data-partner="tweetdeck"><p lang="ja" dir="ltr">来ました <a href="http://t.co/nwUUZSogN6">pic.twitter.com/nwUUZSogN6</a></p>&mdash; BABAROT (@b4b4r07) <a href="https://twitter.com/b4b4r07/status/600917894566957058">May 20, 2015</a></blockquote>

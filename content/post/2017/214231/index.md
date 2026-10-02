@@ -1,8 +1,11 @@
 ---
 title: "Go で zsh history を SQL 的に活用する"
 date: "2017-02-14T00:00:00+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
+tags: []
 ---
 
 僕は開発中、zsh のヒストリー補完の機能をよく使います。具体的には次のような場面が多いです。

@@ -1,7 +1,10 @@
 ---
 title: "Kubernetes などの YAML を独自のルールをもとにテストする"
 date: "2019-02-19T21:40:24+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
 tags:
 - kubernetes
 - go

@@ -1,7 +1,10 @@
 ---
 title: "Microservices Platform Meetupで話した"
 date: "2018-07-23T14:35:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
 tags: ["microservices", "talk", "terraform"]
 ---
 

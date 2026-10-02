@@ -1,8 +1,10 @@
 ---
 title: "実用 Slack bot ヤマト編"
 date: "2016-12-12T00:00:00+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
 tags: ["slack", "bot"]
 ---
 

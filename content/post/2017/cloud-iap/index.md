@@ -1,8 +1,11 @@
 ---
 title: "Cloud Identity-Aware Proxy を使って GCP backend を保護する"
 date: "2017-10-30T00:00:00+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
+tags: []
 ---
 
 [^1]: 今日 (2017/10/30) 現在では GCE、GAE、GKE に対応

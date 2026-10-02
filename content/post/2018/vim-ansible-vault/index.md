@@ -1,8 +1,11 @@
 ---
 title: "開いたファイルに対して ansible-vault を Vim から実行する"
 date: "2018-01-31T00:00:00+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
+tags: []
 ---
 
 生の何かをそのままリポジトリの置いておくのが微妙ということで特定のファイルを `ansible-vault` で暗号化してプッシュする、ということはよくあると思います。  

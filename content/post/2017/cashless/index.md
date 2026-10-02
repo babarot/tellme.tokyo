@@ -1,8 +1,11 @@
 ---
 title: "決済をキャッシュレス化している"
 date: "2017-12-05T00:00:00+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
+tags: []
 ---
 
 # 現状

@@ -1,8 +1,11 @@
 ---
 title: "GitHub のラベルを宣言的に管理する"
 date: "2018-11-19T00:00:00+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
+tags: []
 ---
 
 ## ソフトウェアの宣言的設定について

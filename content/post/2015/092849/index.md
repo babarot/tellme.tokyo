@@ -1,7 +1,11 @@
 ---
 title: "ディレクトリ移動系プラグイン「enhancd」の実装"
 date: "2015-08-16T00:00:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
+tags: []
 ---
 
 # まえがき

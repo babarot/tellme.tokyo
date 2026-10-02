@@ -1,8 +1,10 @@
 ---
 title: "ほんの 1分で GitHub に公開鍵を登録して SSH 接続する"
 date: "2015-11-11T00:36:02+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
 tags: ["shell", "ssh"]
 ---
 

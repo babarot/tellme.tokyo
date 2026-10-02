@@ -1,7 +1,11 @@
 ---
 title: "2019年に読んだ本、観た映画"
 date: "2019-12-28T00:00:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
+tags: []
 ---
 
 本に関しては記録がないので直近で記憶に残ってるやつ。映画は Filmarks ベース。

@@ -7,8 +7,9 @@
 # - Single-file posts (content/post/<year>/<slug>.md) become bundles
 #   (content/post/<year>/<slug>/index.md, moved with git mv), so every post
 #   has its own folder. The URL keeps the slug.
-# - Front matter keeps title, date, draft (as it is), description, toc and tags;
-#   empty values and Hugo-only keys (categories, author, oldlink, image) go.
+# - Front matter keeps title, date, description, draft (as it is), toc and tags,
+#   in that order, and adds hidden; a key that is missing or empty gets the
+#   schema's default. Hugo-only keys (categories, author, oldlink, image) go.
 # - Shortcodes become the new syntax (CLAUDE.md, "Writing posts"). Anything
 #   left over is reported, and the run fails.
 import fnmatch, os, re, subprocess, sys
@@ -127,7 +128,10 @@ def rules(post_dir):
 
 # --- front matter ---------------------------------------------------------------
 
-KEEP = ('title', 'date', 'description', 'draft', 'toc', 'tags')
+# Every key of the schema (src/content.config.ts) but slug, in this order, and
+# the value a missing one gets (title and date must be there)
+KEYS = ('title', 'date', 'description', 'draft', 'hidden', 'toc', 'tags')
+DEFAULTS = {'description': 'description: ""', 'draft': 'draft: false', 'hidden': 'hidden: false', 'toc': 'toc: false', 'tags': 'tags: []'}
 
 def front_matter(text):
     m = re.match(r'---\n(.*?)\n---\n', text, re.S)
@@ -142,13 +146,15 @@ def front_matter(text):
             blocks.append((key.group(1), [line]))
         elif blocks:
             blocks[-1][1].append(line)  # a continuation (a YAML list item)
-    out = []
+    kept = {}
     for key, lines in blocks:
         value = lines[0].split(':', 1)[1].strip()
         empty = value in ('', '""', "''", '[]') and len(lines) == 1
-        if key not in KEEP or empty or (key == 'toc' and value == 'false'):
-            continue
-        out += lines
+        if key in KEYS and not empty:
+            kept[key] = lines
+    out = []
+    for key in KEYS:
+        out += kept.get(key) or [DEFAULTS[key]]
     return '---\n' + '\n'.join(out) + '\n---\n' + text[m.end():]
 
 # --- run ---------------------------------------------------------------------------

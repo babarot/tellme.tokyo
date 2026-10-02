@@ -1,7 +1,11 @@
 ---
 title: "gomi を XDG Trash 仕様に対応させた"
 date: "2025-02-16T00:00:00+09:00"
+description: ""
 draft: false
+hidden: false
+toc: false
+tags: []
 ---
 
 前回、[gomi](https://gomi.dev) という CLI ゴミ箱ツールを Bubble Tea ベースの UI に置き換えた[^gomi-tea]という記事を書いたが、あのあとスターが 50 くらい増えて Issue もいくつか Open された。

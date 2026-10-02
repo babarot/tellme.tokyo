@@ -1,7 +1,11 @@
 ---
 title: "Vim からシェルコマンドを実行するプラグインを作った"
 date: "2014-10-05T00:00:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
+tags: []
 ---
 
 https://github.com/b4b4r07/vim-shellutils

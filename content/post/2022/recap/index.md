@@ -1,7 +1,11 @@
 ---
 title: "2022年振り返り。転職して1年、来年の抱負"
 date: "2022-12-28T00:00:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
+tags: []
 ---
 
 この記事は [10X アドベントカレンダー2022](https://10xall.notion.site/10X-2022-9dafcb8ca4114804a78e4354e062ff64) 28日目のエントリーです。

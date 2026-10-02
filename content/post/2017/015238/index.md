@@ -1,8 +1,11 @@
 ---
 title: "ブログを GKE"
 date: "2017-08-03T00:00:00+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
+tags: []
 ---
 
 このはてなブログで使っていたドメインを続用するため、移行後も [tellme.tokyo](https://tellme.tokyo) です。

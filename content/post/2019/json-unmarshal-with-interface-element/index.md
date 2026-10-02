@@ -1,7 +1,10 @@
 ---
 title: "メソッドを持った interface を要素に持つ struct への JSON Unmarshal"
 date: "2019-04-10T23:42:51+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
 tags:
 - go
 ---

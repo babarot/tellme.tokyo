@@ -1,8 +1,11 @@
 ---
 title: "ログのタイムスタンプで UNIX 時間なのはツライって話"
 date: "2016-12-06T00:00:00+09:00"
+description: ""
 draft: true
 hidden: true
+toc: false
+tags: []
 ---
 
 ## tl;dr

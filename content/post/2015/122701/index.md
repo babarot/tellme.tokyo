@@ -1,7 +1,11 @@
 ---
 title: "最近の zplug の変更について"
 date: "2015-12-21T00:00:00+09:00"
+description: ""
 draft: true
+hidden: false
+toc: false
+tags: []
 ---
 
 zplug 公開から今日で1ヶ月。いくつかの機能を追加した
