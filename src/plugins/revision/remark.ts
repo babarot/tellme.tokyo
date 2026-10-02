@@ -17,8 +17,9 @@
 //                                     by CSS alone (radio inputs, no script)
 //
 // Each version is named once: the current one in the label above it (details)
-// or in its tab, the past ones in their summaries or tabs. A version is
-// "rewritten" on its date, except the oldest, which is the original text.
+// or in its tab, the past ones in their summaries or tabs. The current one is
+// "latest", the others "previous"; with more than one previous version, each
+// is told apart by its date, added as " (<date>)" unless the label has {date}.
 //
 // A directive inside another needs fewer colons than the one around it
 // (:::::revisions > ::::version > :::gallery); otherwise the inner closing
@@ -41,10 +42,10 @@ import { element } from '../shared/directive';
 export type RevisionLabels = {
   /** label of an addendum; {date} is replaced by its date */
   addendum?: string;
-  /** a version that rewrote the one before it, on {date} */
-  rewritten?: string;
-  /** the oldest version: the text as first written ({date} may be used too) */
-  original?: string;
+  /** the current version ({date} may be used, as in every label) */
+  latest?: string;
+  /** a past version */
+  previous?: string;
   /** accessible name of the group of tabs */
   tabs?: string;
 };
@@ -53,8 +54,8 @@ export type RevisionOptions = { labels?: RevisionLabels };
 
 const DEFAULT_LABELS: Required<RevisionLabels> = {
   addendum: 'Added {date}',
-  rewritten: 'Rewritten {date}',
-  original: 'Original',
+  latest: 'Latest',
+  previous: 'Previous',
   tabs: 'Versions',
 };
 
@@ -139,7 +140,11 @@ export default function remarkRevision({ labels: given = {} }: RevisionOptions =
       }
 
       const n = ++blocks;
-      const name = (i: number) => label(i === versions.length - 1 ? labels.original : labels.rewritten, versions[i].date);
+      const name = (i: number) => {
+        const template = i === 0 ? labels.latest : labels.previous;
+        const dated = i > 0 && versions.length > 2 && !template.includes('{date}');
+        return label(dated ? `${template} ({date})` : template, versions[i].date);
+      };
       if (view === 'details') {
         const [current, ...past] = versions;
         return element('div', { className: ['revisions'], dataView: 'details' }, [

@@ -59,7 +59,6 @@ details.revision[open] > summary {
   flex-wrap: wrap;
   gap: 0 1rem;
   margin-bottom: 1rem;
-  border-bottom: 1px solid var(--revision-tab-line, rgb(128 128 128 / 0.3));
 }
 
 .revision-tabs input {
@@ -68,10 +67,11 @@ details.revision[open] > summary {
   pointer-events: none;
 }
 
+/* each tab has its own underline, the checked one stronger; no rule runs on
+   across the column */
 .revision-tabs label {
-  margin-bottom: -1px;
   padding: 0.25rem 0;
-  border-bottom: 2px solid transparent;
+  border-bottom: 2px solid var(--revision-tab-line, rgb(128 128 128 / 0.3));
   font-size: 0.8125em;
   color: var(--revision-label, inherit);
   cursor: pointer;

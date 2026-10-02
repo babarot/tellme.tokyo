@@ -32,7 +32,7 @@ export default defineConfig({
         [remarkCarousel, { interval: 7000, ratio: '16/9', indicator: 'dot' }],
         remarkImg,
         remarkEmbed,
-        [remarkRevision, { labels: { addendum: '{date} 追記', rewritten: '{date} に書き換え', original: '元の文章', tabs: '版' } }],
+        [remarkRevision, { labels: { addendum: '{date} 追記', latest: '最新の文章', previous: '前の文章', tabs: '版' } }],
         remarkDirectiveFallback,
         remarkHeadingLevels,
         remarkMermaid,

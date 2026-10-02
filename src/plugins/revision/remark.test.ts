@@ -30,20 +30,37 @@ describe('addendum', () => {
 });
 
 describe('revisions (details)', () => {
-  it('shows the current version and folds each past one under <details>, the oldest being the original', async () => {
+  it('shows the latest version and folds the previous one under <details>', async () => {
+    expect(await html(twoVersions())).toBe(
+      '<div class="revisions" data-view="details">' +
+        '<section class="revision" data-current><p class="revision-label">Latest</p><p>new</p></section>' +
+        '<details class="revision"><summary class="revision-label">Previous</summary><p>old</p></details>' +
+        '</div>',
+    );
+  });
+
+  it('tells previous versions apart by their dates when there are more than one', async () => {
     expect(await html(versions('', ['2026-10-02', 'new'], ['2026-05-01', 'mid'], ['2026-02-09', 'old']))).toBe(
       '<div class="revisions" data-view="details">' +
-        '<section class="revision" data-current><p class="revision-label">Rewritten <time datetime="2026-10-02">2026-10-02</time></p><p>new</p></section>' +
-        '<details class="revision"><summary class="revision-label">Rewritten <time datetime="2026-05-01">2026-05-01</time></summary><p>mid</p></details>' +
-        '<details class="revision"><summary class="revision-label">Original</summary><p>old</p></details>' +
+        '<section class="revision" data-current><p class="revision-label">Latest</p><p>new</p></section>' +
+        '<details class="revision"><summary class="revision-label">Previous (<time datetime="2026-05-01">2026-05-01</time>)</summary><p>mid</p></details>' +
+        '<details class="revision"><summary class="revision-label">Previous (<time datetime="2026-02-09">2026-02-09</time>)</summary><p>old</p></details>' +
         '</div>',
     );
   });
 
   it('takes its labels from the options', async () => {
-    const out = await html(twoVersions(), { labels: { rewritten: '{date} に書き換え', original: '元の文章 ({date})' } });
-    expect(out).toContain('<p class="revision-label"><time datetime="2026-10-02">2026-10-02</time> に書き換え</p>');
-    expect(out).toContain('<summary class="revision-label">元の文章 (<time datetime="2026-02-09">2026-02-09</time>)</summary>');
+    const out = await html(twoVersions(), { labels: { latest: '最新の文章', previous: '前の文章' } });
+    expect(out).toContain('<p class="revision-label">最新の文章</p>');
+    expect(out).toContain('<summary class="revision-label">前の文章</summary>');
+  });
+
+  it('uses the date where a label places it, adding none of its own', async () => {
+    const out = await html(versions('', ['2026-10-02', 'new'], ['2026-05-01', 'mid'], ['2026-02-09', 'old']), {
+      labels: { latest: '最新 ({date})', previous: '{date} の文章' },
+    });
+    expect(out).toContain('<p class="revision-label">最新 (<time datetime="2026-10-02">2026-10-02</time>)</p>');
+    expect(out).toContain('<summary class="revision-label"><time datetime="2026-05-01">2026-05-01</time> の文章</summary>');
   });
 
   it('is the default view', async () => {
@@ -60,8 +77,8 @@ describe('revisions (tabs)', () => {
     expect(await html(twoVersions('{view=tabs}'), { labels: { tabs: '版' } })).toBe(
       '<div class="revisions" data-view="tabs">' +
         '<div class="revision-tabs" role="radiogroup" aria-label="版">' +
-        '<input type="radio" name="revision-1" id="revision-1-0" checked><label for="revision-1-0">Rewritten <time datetime="2026-10-02">2026-10-02</time></label>' +
-        '<input type="radio" name="revision-1" id="revision-1-1"><label for="revision-1-1">Original</label>' +
+        '<input type="radio" name="revision-1" id="revision-1-0" checked><label for="revision-1-0">Latest</label>' +
+        '<input type="radio" name="revision-1" id="revision-1-1"><label for="revision-1-1">Previous</label>' +
         '</div>' +
         '<section class="revision" data-current data-shown-by="revision-1-0"><p>new</p></section>' +
         '<section class="revision" data-shown-by="revision-1-1"><p>old</p></section>' +
@@ -104,7 +121,7 @@ describe('updated', () => {
 describe('nesting', () => {
   it('converts an addendum inside a version', async () => {
     const source = ':::::revisions\n::::version{date=2026-10-02}\nnew\n::::\n::::version{date=2026-02-09}\n:::addendum{date=2026-03-01}\nnote\n:::\n::::\n:::::';
-    expect(await html(source)).toContain('<details class="revision"><summary class="revision-label">Original</summary><aside class="addendum">');
+    expect(await html(source)).toContain('<details class="revision"><summary class="revision-label">Previous</summary><aside class="addendum">');
   });
 
   it('leaves a gallery inside, with more colons around it, to the gallery plugin', async () => {

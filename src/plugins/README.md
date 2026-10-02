@@ -66,7 +66,7 @@ after them. `code-block` goes after `mermaid`, which takes its code blocks first
 [remarkGallery, { rowHeight: 150, gap: 5, thumbnailWidths: [300, 600, 900, 1200] }]
 [remarkCarousel, { interval: 7000, autoplay: true, ratio: '16/9', indicator: 'dot' }]
 [remarkLinkPreview, { cacheFile: '.cache/link-previews.json', retryAfterDays: 30 }]
-[remarkRevision, { labels: { addendum: 'Added {date}', rewritten: 'Rewritten {date}', original: 'Original', tabs: 'Versions' } }]
+[remarkRevision, { labels: { addendum: 'Added {date}', latest: 'Latest', previous: 'Previous', tabs: 'Versions' } }]
 ```
 
 Per use, as directive attributes:
