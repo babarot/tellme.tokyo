@@ -2,7 +2,7 @@
 title: "zsh のプラグインマネージャ"
 date: "2015-11-24T00:00:00+09:00"
 description: ""
-draft: true
+draft: false
 hidden: false
 toc: false
 tags: []
@@ -19,7 +19,7 @@ tags: []
 - [b4b4r07/zplug](https://github.com/b4b4r07/zplug)
 
 	[![](https://raw.githubusercontent.com/b4b4r07/screenshots/master/zplug/demo.gif)](https://github.com/b4b4r07/zplug)
-	
+
 	- **並列インストール**（擬似マルチスレッド）
 	- **ブランチ/タグ指定**
 	- **コマンド管理**（言語は問わない）
@@ -52,14 +52,14 @@ zplug "junegunn/fzf-bin", \
     as:cmd, \
     from:gh-r, \
     file:fzf
-    
+
 # run command after installed
 zplug "peco/peco", \
     as:cmd, \
     from:gh-r, \
     of:"peco*/peco", \
     do:"echo Peco"
-    
+
 # branch/tag
 zplug "b4b4r07/enhancd", at:v1
 
