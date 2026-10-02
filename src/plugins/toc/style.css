@@ -1,7 +1,7 @@
 /* Table of contents: a quiet list of links; the section being read is marked.
    Where it sits (sidebar, top of the post) is up to the page.
    Colors: --toc-label, --toc-link, --toc-active, --toc-line, and for the
-   inline variants --toc-chapter. */
+   inline variant --toc-chapter. */
 .toc {
   font-size: 0.8125rem;
   line-height: 1.5;
@@ -45,75 +45,8 @@
   color: var(--toc-active, inherit);
 }
 
-/* Inline variants for narrow screens, at the top of the post. */
-
-/* The whole tree, folded: an outlined box; chapters numbered and in bold. */
-.toc-inline {
-  margin: 0 0 2rem;
-  padding: 0.875rem 1rem;
-  border: 1px solid var(--toc-line, rgb(128 128 128 / 0.25));
-  border-radius: 0.625rem;
-}
-
-.toc-inline > summary {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: var(--toc-chapter, inherit);
-  font-weight: 600;
-  list-style: none;
-  cursor: pointer;
-}
-
-.toc-inline > summary::-webkit-details-marker {
-  display: none;
-}
-
-.toc-inline > summary::after {
-  content: '›';
-  color: var(--toc-label, gray);
-  font-weight: 400;
-  transition: transform 0.2s ease;
-}
-
-.toc-inline[open] > summary {
-  margin-bottom: 0.625rem;
-}
-
-.toc-inline[open] > summary::after {
-  transform: rotate(90deg);
-}
-
-.toc-inline > ol {
-  counter-reset: toc-chapter;
-}
-
-.toc-inline > ol > li {
-  counter-increment: toc-chapter;
-  margin-top: 0.375rem;
-}
-
-.toc-inline a {
-  border-left: 0;
-  padding-left: 0;
-}
-
-.toc-inline > ol > li > a {
-  color: var(--toc-chapter, inherit);
-  font-weight: 600;
-}
-
-.toc-inline > ol > li > a::before {
-  content: counter(toc-chapter) '. ';
-  color: var(--toc-label, gray);
-  font-weight: 400;
-}
-
-.toc-inline ol ol {
-  padding-left: 1.125rem;
-}
-
-/* The whole tree, always open: chapters numbered, their sections below. */
+/* The inline variant for narrow screens, at the top of the post: the whole
+   tree, always open; chapters numbered, their sections below. */
 .toc-chapters {
   margin: 0 0 2rem;
 }

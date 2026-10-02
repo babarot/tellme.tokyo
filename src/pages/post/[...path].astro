@@ -28,8 +28,7 @@ Astro.locals.postDir = post.filePath!.replace(/\/[^/]+$/, '');
     The table of contents sits in the empty space right of the content column
     (absolutely positioned, so the column does not move) and follows the
     scroll. Below xl there is no room for it; it sits at the top of the post
-    instead: a numbered list, always open, on mid-sized screens, and a folded
-    box on phones.
+    instead, as a numbered list, always open.
   -->
   <article class="relative">
     {
@@ -53,16 +52,10 @@ Astro.locals.postDir = post.filePath!.replace(/\/[^/]+$/, '');
     </header>
     {
       toc && (
-        <>
-          <nav class="toc toc-chapters hidden md:block xl:hidden" aria-label="目次">
-            <p class="toc-label">目次</p>
-            <Fragment set:html={toc} />
-          </nav>
-          <details class="toc toc-inline md:hidden">
-            <summary>目次</summary>
-            <Fragment set:html={toc} />
-          </details>
-        </>
+        <nav class="toc toc-chapters xl:hidden" aria-label="目次">
+          <p class="toc-label">目次</p>
+          <Fragment set:html={toc} />
+        </nav>
       )
     }
     <div class="article">
