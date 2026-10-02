@@ -15,7 +15,7 @@ tags:
 
 最近、自分のターミナルでコマンドを打っているのは、ほとんど自分ではなく Claude Code や Codex だった（以下 AI）。試しに数えてみると、直近 `gh` を叩いた回数は自分が80回で、AI が1,339回だった。
 
-一方で、10年以上いじってきた [dotfiles](https://github.com/babarot/dotfiles) は、人間が快適に使うための設定の塊だ。しかも Claude Code は、その `.zshrc` を読み込んでからコマンドを実行するので、人間のための設定がそのまま AI にも効いてしまう。その中には、AI にとって邪魔なものがけっこうあった。
+一方で、10年以上いじってきた [dotfiles](https://github.com/babarot/dotfiles) は、人間が快適に使うための設定の塊だ。しかし Claude Code は、その `.zshrc` を読み込んでからコマンドを実行するので、人間のための設定がそのまま AI にも効いてしまう。その中には、AI にとって邪魔なものがけっこうあった。
 
 - `cd` を fzf で移動先を選ぶ [enhancd](https://github.com/babarot/enhancd) にしていたので、AI の `cd ..` が入力待ちのまま返ってこない
 - `cp` は `cp -i` のエイリアスなので、上書きのたびに確認を求められる
