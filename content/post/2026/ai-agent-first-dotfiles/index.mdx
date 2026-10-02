@@ -228,7 +228,7 @@ config.xdg.configFile."zsh/human.zsh".text = lib.concatLines (
 
 ### my.ai: AI 用のシェルにだけ読ませる設定
 
-`my.human` とは反対に、AI 用のシェルにだけ読ませたい設定もある。こちらは `my.ai` にまとめていて、`~/.config/zsh/ai.zsh` に書き出され、`.zshenv` の `is_human` の分岐の AI 側で読み込まれる。例えば bat のページャは、人間には `less -RF`、AI には `cat` にしたい、みたいなことがしやすい。さっきの `rm` も例もここに入れている。
+`my.human` とは反対に、AI 用のシェルにだけ読ませたい設定もある。こちらは `my.ai` にまとめていて、`~/.config/zsh/ai.zsh` に書き出され、`.zshenv` の `is_human` の分岐の AI 側で読み込まれる。例えば bat のページャは、人間には `less -RF`、AI には `cat` にしたい、みたいなことがしやすい。さっきの `rm` の例もここに入れている。
 
 ```nix
 # nix/home-manager/tools/gomi.nix（抜粋）
