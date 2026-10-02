@@ -41,6 +41,11 @@ const links = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {
+      /* Tells the browser the page has a dark scheme before the stylesheet
+         arrives, so a first visit in dark mode is not painted white meanwhile. */
+    }
+    <meta name="color-scheme" content="light dark" />
     <script is:inline>
       // Follow the OS setting; ?scheme=dark|light forces one (for checking both).
       // In dev and previews, ?theme=<name> swaps the theme (color set) as well.
@@ -52,8 +57,13 @@ const links = [
         }
         const forced = params.get('scheme');
         const media = matchMedia('(prefers-color-scheme: dark)');
-        const apply = () =>
-          document.documentElement.classList.toggle('dark', forced ? forced === 'dark' : media.matches);
+        // color-scheme as well, so the browser's own colors (the canvas before
+        // the stylesheet, scrollbars, form controls) follow a forced scheme too
+        const apply = () => {
+          const dark = forced ? forced === 'dark' : media.matches;
+          root.classList.toggle('dark', dark);
+          root.style.colorScheme = dark ? 'dark' : 'light';
+        };
         apply();
         media.addEventListener('change', apply);
       })();
