@@ -7,6 +7,33 @@ hidden: false
 toc: false
 tags: []
 ---
+
+:::addendum{date=2026-10-02}
+この記事に書いた構成は、もうほとんど残っていない。ホスティングはCloudflare PagesからCloudflare Workersに移し、ブログ自体もHugoからAstroに書き直した。記事はtellme.tokyoリポジトリで直接書くようにしたので、Obsidianからの同期もやめている。それでも、ブランチをpushすればプレビューURLで見た目を確認できる流れはWorkers Buildsでも変わらない。
+:::
+
+::::revisions{view=tabs}
+:::version{date=2026-10-02}
+## Cloudflare Workersに移した
+
+このブログは今、Cloudflare Workersで配信している。Workerのコードは持たず、Astroがビルドした静的ファイルをそのまま置いているだけだ。HugoからAstroに書き直したのに合わせて、Cloudflare PagesからWorkersに移した。DNSはPagesのときに移したCloudflareのままになっている。
+
+ブランチをpushすればプレビューURLで見た目を確認できる流れは、Pagesのときと変わらない。Workers BuildsをGitHubのリポジトリにつないでいて、mainへのpushは本番に、それ以外のブランチはプレビューURLにデプロイされる。プレビューではdraftの記事も表示され、URLはCloudflare Accessで保護している。
+
+## Obsidianからの同期はやめた
+
+以前はObsidianで書いた記事をGitHub Actionsでこのリポジトリに同期していたが、今はやめている。記事でギャラリーなどのディレクティブや埋め込みのHTMLを使うようになり、それらはObsidianでは表示されない。Obsidianで書いても見た目を確かめられないなら、リポジトリで直接書くほうが早い。
+
+## 移行前後の比較
+
+|            | GitHub Pages        | Cloudflare Workers                      |
+| ---------- | ------------------- | --------------------------------------- |
+| ビルド        | GitHub Actions      | Workers Builds                          |
+| DNS        | ムームーDNS             | Cloudflare DNS                          |
+| PRプレビュー    | なし                  | 自動 (ブランチごとに固有URL、Cloudflare Accessで保護) |
+| Draftプレビュー | `hugo server`ローカルのみ | プレビューURLでは常に表示                          |
+:::
+:::version{date=2026-02-09}
 ## GitHub PagesからCloudflare Pagesに移行した
 
 このブログのホスティングをGitHub PagesからCloudflare Pagesに移行した。
@@ -120,3 +147,5 @@ pushすると自動でPRが作成され、Cloudflare PagesのプレビューURL�
 PRプレビューのおかげでローカル環境なしに記事の見た目を確認できるようになった。Obsidianで書いてpush[^push]するだけで、あとはブラウザ上で完結する。
 
 [^push]: pushはObsidianからできる
+:::
+::::
