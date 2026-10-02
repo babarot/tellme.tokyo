@@ -6,16 +6,19 @@
     padding: var(--fig-space-2) var(--fig-space-3) var(--fig-space-3);
   }
 
-  .label {
-    margin-bottom: var(--fig-space-2);
-    color: var(--fig-muted);
-    font-size: var(--fig-text-sm);
-    font-weight: 700;
+  /* $PATH, with its directories indented under it in search order */
+  .path-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--fig-space-1) var(--fig-space-2);
+    padding: 0.3rem 0;
   }
 
   .path-list {
-    margin: 0;
-    padding: 0;
+    margin: var(--fig-space-1) 0 0 0.6rem;
+    border-left: 1px solid var(--fig-line);
+    padding: 0 0 0 1rem;
     list-style: none;
   }
 
@@ -40,31 +43,23 @@
     text-align: center;
   }
 
-  .links {
-    display: grid;
-    grid-template-columns: auto auto minmax(0, 1fr);
-    align-items: baseline;
-    gap: var(--fig-space-2) var(--fig-space-3);
-  }
 
-  .name {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--fig-space-1) var(--fig-space-2);
-  }
 
-  .arrow {
+
+
+  /* a link's target, as ls -l prints it */
+  .to {
     color: var(--fig-muted);
   }
 
-  .target code {
+  .to code {
+    color: var(--fig-muted);
     overflow-wrap: anywhere;
   }
 </style>
 
 <div class="box">
-  <div class="label">PATH（上から順に探す）</div>
+  <div class="path-head"><code>$PATH</code><span class="note">上から順に探す</span></div>
   <ul class="path-list">
     <li><code>~/.local/share/mise/shims</code></li>
     <li><code>~/bin</code></li>
@@ -74,27 +69,21 @@
   </ul>
 </div>
 
-<div class="down">↓ <small>中にあるのはリンクだけ</small></div>
+<div class="down">↓ <small>プロファイルの中身。並んでいるのは store へのリンクだけ</small></div>
 
 <div class="box">
-  <div class="label">プロファイル → store の本体</div>
-  <div class="links">
-    <div class="name"><code>fzf</code></div>
-    <div class="arrow">→</div>
-    <div class="target"><code>/nix/store/b5jb…-fzf-0.74.4/bin/fzf</code></div>
-
-    <div class="name"><code>bat</code></div>
-    <div class="arrow">→</div>
-    <div class="target"><code>/nix/store/n65z…-bat-0.26.1/bin/bat</code></div>
-
-    <div class="name"><code>eza</code></div>
-    <div class="arrow">→</div>
-    <div class="target"><code>/nix/store/mdzf…-eza-0.23.5/bin/eza</code></div>
-
-    <div class="name"><code>nvim</code></div>
-    <div class="arrow">→</div>
-    <div class="target"><code>/nix/store/gyzp…-neovim-with-tools/bin/nvim</code></div>
-  </div>
+  <ul class="tree">
+    <li>
+      <div class="row"><code>/etc/profiles/per-user/babarot/bin/</code><span class="note">プロファイル</span></div>
+      <ul>
+        <li><div class="row"><code>fzf</code><span class="to">→ <code>/nix/store/b5jb…-fzf-0.74.4/bin/fzf</code></span></div></li>
+        <li><div class="row"><code>bat</code><span class="to">→ <code>/nix/store/n65z…-bat-0.26.1/bin/bat</code></span></div></li>
+        <li><div class="row"><code>eza</code><span class="to">→ <code>/nix/store/mdzf…-eza-0.23.5/bin/eza</code></span></div></li>
+        <li><div class="row"><code>nvim</code><span class="to">→ <code>/nix/store/gyzp…-neovim-with-tools/bin/nvim</code></span></div></li>
+        <li><div class="row"><span class="note">…</span></div></li>
+      </ul>
+    </li>
+  </ul>
 </div>
 
 <div class="caption">パッケージを入れると、プロファイルにリンクが1本増える。やめると、そのリンクが外れるだけで、store の本体はそのまま残る。</div>
