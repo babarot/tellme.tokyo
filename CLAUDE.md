@@ -88,6 +88,7 @@ Posts live in this repository and nowhere else (the Obsidian sync was dropped: d
 
 - To change one use only, set attributes: `:::gallery{rowHeight=200 minRows=2}`, `:::carousel{interval=5000 indicator=bar ratio=4/3 autoplay=false fit=contain backdrop=edge}`. `fit=contain` shows each photo whole instead of cropping it to the frame (screenshots of different sizes); `backdrop=edge` then paints the bands left around it in the color of the photo's edge, so a screenshot's background runs on to the frame's sides. `minRows=2` keeps a gallery from squeezing a few photos into one low row on wide screens; narrow screens may still use more rows.
 - In a carousel, an image's title (`![alt](a.jpg "caption")`) is shown under the frame while that photo is on show.
+- Without JavaScript a carousel shows its photos side by side in a row that scrolls sideways, each with its caption (`@media (scripting: none)` in `src/plugins/carousel/style.css`).
 - The photos inside are ordinary Markdown images, so Astro optimizes them.
 - List the images one by one, not by pattern (`images/*`).
 - `:::img` gives one image options (`src/plugins/img/`): `width` (the most it is shown at, in px; it still shrinks on narrow screens) and `scheme` (`light` or `dark`: shown only in that color scheme). For an image with a light and a dark version, write two blocks. Without options, a plain `![](...)` is enough.

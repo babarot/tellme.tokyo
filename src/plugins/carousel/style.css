@@ -155,3 +155,59 @@
     height: 24px;
   }
 }
+
+/* Without JavaScript nothing changes the slide, so the photos sit side by
+   side in a row that scrolls sideways, each in its own frame with its caption
+   under it. The buttons and indicators would do nothing and are hidden.
+   Slides go in grid row 1 and captions in row 2; auto-placement puts the nth
+   of each in the nth column. */
+@media (scripting: none) {
+  .carousel-prev,
+  .carousel-next,
+  .carousel-indicators {
+    display: none;
+  }
+
+  .carousel,
+  .carousel-figure {
+    display: grid;
+    grid-auto-columns: 100%;
+    column-gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+  }
+
+  .carousel {
+    aspect-ratio: auto;
+    border-radius: 0;
+    background: none;
+  }
+
+  .carousel-figure > .carousel,
+  .carousel-slides,
+  .carousel-captions {
+    display: contents;
+  }
+
+  .carousel-slide {
+    position: relative;
+    grid-row: 1;
+    aspect-ratio: var(--carousel-ratio, 16/9);
+    overflow: hidden;
+    border-radius: var(--carousel-radius, 0.5rem);
+    background: var(--carousel-backdrop, var(--carousel-placeholder, rgb(128 128 128 / 0.1)));
+    opacity: 1;
+    scroll-snap-align: start;
+  }
+
+  .carousel-slide img {
+    cursor: auto;
+  }
+
+  .carousel-caption {
+    grid-area: 2 / auto;
+    margin-top: 0.5rem;
+    visibility: visible;
+  }
+}
