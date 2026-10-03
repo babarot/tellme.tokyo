@@ -17,7 +17,7 @@ There are no pull requests for ordinary work. Changes are committed to `main` (f
 
 - A post is what its author wrote. The build never rewrites a post's source; anything about layout or structure is done at render time. Do not touch a post's wording unless asked.
 - Old readers are respected. A post that has gone out of date gets an `addendum` or `revisions` (`src/plugins/revision/`) so the old text can still be found. Rewording that does not change what a post says (typos, style, the current voice) is done in place. Text in a past `version` is never edited.
-- Links out there keep working. Every URL the Hugo site had (`tools/old-urls.txt`) must still answer, as a page or a redirect in `public/_redirects`: `SHOW_DRAFTS=1 pnpm build && pnpm check:urls`.
+- Links out there keep working. Every URL the Hugo site had (`tools/old-urls.txt`) must still answer, as a page or a redirect in `public/_redirects`: `POST_STATES=published,draft pnpm build && pnpm check:urls`.
 - Reading comes first. A page never shifts while it is read (the body font is `font-display: optional`), works without JavaScript (the carousel's no-script view is the model), and looks right in both color schemes.
 - Colors are roles, not values (`--c-*`, Tailwind role names), so a theme can be swapped or compared with `?theme=` and `?scheme=`. Never write a color literal or split with `dark:`.
 - Pieces stay portable. A plugin in `src/plugins/<name>/` imports nothing from the site, so the folder can move to another project as is (rules: `src/plugins/README.md`).
@@ -28,7 +28,7 @@ There are no pull requests for ordinary work. Changes are committed to `main` (f
 Posts are written in Japanese. The author may ask for a post to be reworded in the voice of the recent published posts; read a few of them first and follow them.
 
 - Posts live only in this repository, one folder each: `content/post/<year>/<slug>/`. New posts are `index.mdx`; the ones migrated from Hugo are `index.md`.
-- `draft: true` is still being written: shown in dev and previews, not in production (`mise run dev --no-draft` hides it locally). `hidden: true` is withdrawn: built nowhere, as if it never existed.
+- `draft: true` is still being written: shown in dev and previews, not in production (`mise run dev` takes the states to build, as `mise run post` does: `--published` is production, `--all` adds hidden). `hidden: true` is withdrawn: built neither in production nor in previews, as if it never existed; only a local build asked for it shows it.
 - Front matter has the schema's keys in its order; `mise run post check --fix` puts them right. `mise run post ls` / `edit` / `open` find posts by state, tag, date or text, and list them, open them in the editor or in the browser on the dev server.
 - Headings: the title is the h1. A post may start its headings at `#` (then `#` is a chapter and `##` a section, all rendered one level lower) or at `##`.
 - Directives in use: `gallery`, `carousel`, `img`, `addendum`, `revisions`/`version`, `tweet`, `youtube`, `spotify`, `slideshare`; their options are in `src/plugins/<name>/`. Do not invent others: unknown `foo:bar` text is shown as written. Anything else can be raw HTML.

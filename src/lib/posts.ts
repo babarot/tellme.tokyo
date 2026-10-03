@@ -3,17 +3,41 @@ import { excerpt } from './excerpt';
 
 export type Post = CollectionEntry<'post'>;
 
-// Drafts are visible in `astro dev` and in Workers Builds of any branch but
-// main (preview URLs; wrangler.jsonc). SHOW_DRAFTS, when set, overrides that:
-// 1 shows them (a local build), 0 hides them (`astro dev` as production).
-// Hidden posts are never visible.
-const previewBuild = process.env.WORKERS_CI === '1' && process.env.WORKERS_CI_BRANCH !== 'main';
-export const showDrafts = process.env.SHOW_DRAFTS
-  ? process.env.SHOW_DRAFTS === '1'
-  : import.meta.env.DEV || previewBuild;
+export const STATES = ['published', 'draft', 'hidden'] as const;
+export type State = (typeof STATES)[number];
+
+// Which posts are built, by state. `astro dev` and Workers Builds of any
+// branch but main (preview URLs; wrangler.jsonc) build published posts and
+// drafts; any other build only published ones. POST_STATES, a comma-separated
+// list of states, overrides that (`mise run dev --all`, a local build with
+// drafts), except in the production build: hidden posts never go out.
+const productionBuild = process.env.WORKERS_CI === '1' && process.env.WORKERS_CI_BRANCH === 'main';
+const previewBuild = process.env.WORKERS_CI === '1' && !productionBuild;
+
+function shownStates(): Set<State> {
+  if (productionBuild) return new Set(['published']);
+  const listed = process.env.POST_STATES?.split(',').map((s) => s.trim()).filter(Boolean);
+  if (listed?.length) {
+    const unknown = listed.filter((s) => !(STATES as readonly string[]).includes(s));
+    if (unknown.length) throw new Error(`POST_STATES: unknown state ${unknown.join(', ')} (${STATES.join(', ')})`);
+    return new Set(listed as State[]);
+  }
+  return new Set(import.meta.env.DEV || previewBuild ? ['published', 'draft'] : ['published']);
+}
+
+export const shown = shownStates();
+
+// Anything but what production shows: the site marks itself as not for
+// search engines and offers the theme switch
+export const unpublishedShown = [...shown].some((s) => s !== 'published');
+
+// hidden wins over draft, as it is never built
+export function stateOf(post: Post): State {
+  return post.data.hidden ? 'hidden' : post.data.draft ? 'draft' : 'published';
+}
 
 export async function getPosts(): Promise<Post[]> {
-  const posts = await getCollection('post', ({ data }) => !data.hidden && (showDrafts || !data.draft));
+  const posts = await getCollection('post', (post) => shown.has(stateOf(post)));
   return posts.sort((a, b) => b.data.date.localeCompare(a.data.date));
 }
 

@@ -3,7 +3,7 @@
 // public/_redirects to a page in dist/. A URL of a hidden post (`hidden: true`,
 // never built) is gone on purpose and counted apart. Build with drafts first,
 // since old posts come back one by one as drafts:
-//   SHOW_DRAFTS=1 pnpm build && pnpm check:urls
+//   POST_STATES=published,draft pnpm build && pnpm check:urls
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -42,7 +42,7 @@ for (const file of fs.readdirSync('content/post', { recursive: true, encoding: '
 }
 
 if (!fs.existsSync(DIST)) {
-  console.error(`${DIST}/ not found: build first (SHOW_DRAFTS=1 pnpm build)`);
+  console.error(`${DIST}/ not found: build first (POST_STATES=published,draft pnpm build)`);
   process.exit(1);
 }
 

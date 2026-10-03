@@ -25,7 +25,8 @@ const post = defineCollection({
     slug: z.string().optional(),
     description: z.string().optional().default(''),
     // draft: still being written; built only in dev and previews.
-    // hidden: withdrawn; never built, as if the post did not exist.
+    // hidden: withdrawn; never built for production or previews, as if the
+    // post did not exist (only a local build asked for it: src/lib/posts.ts).
     draft: z.boolean().optional().default(false),
     hidden: z.boolean().optional().default(false),
     // show a table of contents (h2 and h3)

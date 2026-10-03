@@ -3,7 +3,7 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Partial from '../../components/Partial.astro';
 import { buildToc, tocHtml } from '../../plugins/toc/toc';
-import { getPosts, postPath, postDescription, formatDate, type Post } from '../../lib/posts';
+import { getPosts, postPath, postDescription, formatDate, stateOf, type Post } from '../../lib/posts';
 import { ogImagePath } from '../../og/render';
 
 export async function getStaticPaths() {
@@ -60,7 +60,7 @@ Astro.locals.postDir = post.filePath!.replace(/\/[^/]+$/, '');
             </span>
           )
         }
-        {post.data.draft && <span class="ml-2 text-[10px] font-semibold tracking-wider text-draft uppercase">draft</span>}
+        {stateOf(post) !== 'published' && <span class="ml-2 text-[10px] font-semibold tracking-wider text-draft uppercase">{stateOf(post)}</span>}
       </p>
     </header>
     {

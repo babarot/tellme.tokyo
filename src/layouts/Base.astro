@@ -3,7 +3,7 @@ import '../styles/global.css';
 import { Image } from 'astro:assets';
 import me from '../assets/me.jpg';
 import { config } from '../config';
-import { showDrafts } from '../lib/posts';
+import { unpublishedShown } from '../lib/posts';
 import { family, fontUrl } from '../fonts/subset';
 import Logo from '../icons/logo.svg';
 import LogoDark from '../icons/logo-dark.svg';
@@ -39,7 +39,7 @@ const links = [
 ---
 
 <!doctype html>
-<html lang="ja" data-theme={config.theme} data-theme-switch={showDrafts ? '' : undefined}>
+<html lang="ja" data-theme={config.theme} data-theme-switch={unpublishedShown ? '' : undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -74,7 +74,7 @@ const links = [
     <meta name="description" content={description} />
     {
       // Builds that show drafts (dev, previews of branches) stay out of search engines
-      showDrafts && <meta name="robots" content="noindex" />
+      unpublishedShown && <meta name="robots" content="noindex" />
     }
     <link rel="canonical" href={canonical} />
     <meta property="og:site_name" content={siteName} />

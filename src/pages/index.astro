@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getPosts, postPath, formatDate } from '../lib/posts';
+import { getPosts, postPath, formatDate, stateOf } from '../lib/posts';
 
 const posts = await getPosts();
 ---
@@ -16,7 +16,7 @@ const posts = await getPosts();
             </time>
             <span class="leading-7 text-list-title transition-opacity group-hover:opacity-60">
               {post.data.title}
-              {post.data.draft && <span class="ml-2 align-middle text-[10px] font-semibold tracking-wider text-draft uppercase">draft</span>}
+              {stateOf(post) !== 'published' && <span class="ml-2 align-middle text-[10px] font-semibold tracking-wider text-draft uppercase">{stateOf(post)}</span>}
             </span>
           </a>
         </li>

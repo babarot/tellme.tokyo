@@ -10,7 +10,10 @@ usage = """
 arg "[command]" help="astro dev's own: a running server" {
   choices "stop" "status" "logs"
 }
-flag "--no-draft" help="leave drafts out, as production does"
+flag "--published" help="published posts (alone: as production)"
+flag "--draft" help="drafts"
+flag "--hidden" help="hidden posts"
+flag "--all" help="every state, hidden too"
 flag "--background" help="run as a background process"
 flag "--port <port>" help="default: 4321"
 flag "--host" help="listen on all addresses"
