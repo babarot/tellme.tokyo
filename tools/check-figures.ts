@@ -1,4 +1,5 @@
-// Checks every figures/*.part.html against the rules in CLAUDE.md ("Figures").
+// Checks every figures/*.part.html against the figure rules below (why they
+// exist: AGENTS.md).
 // Run with `pnpm check:figures`.
 import fs from 'node:fs';
 import path from 'node:path';

@@ -10,7 +10,7 @@
 # - Front matter keeps title, date, description, draft (as it is), toc and tags,
 #   in that order, and adds hidden; a key that is missing or empty gets the
 #   schema's default. Hugo-only keys (categories, author, oldlink, image) go.
-# - Shortcodes become the new syntax (CLAUDE.md, "Writing posts"). Anything
+# - Shortcodes become the new syntax (directives, src/plugins/). Anything
 #   left over is reported, and the run fails.
 import fnmatch, os, re, subprocess, sys
 

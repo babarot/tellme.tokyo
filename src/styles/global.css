@@ -22,7 +22,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* The site name in the header, in Sixtyfour. The file holds only the letters
-   of "tellme.tokyo" (see "OG images" in CLAUDE.md). */
+   of "tellme.tokyo" (how to fetch other letters: AGENTS.md). */
 @font-face {
   font-family: 'Sixtyfour';
   src: url('../assets/fonts/Sixtyfour-tellme.tokyo.ttf') format('truetype');

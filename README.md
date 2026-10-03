@@ -13,4 +13,4 @@ pnpm test
 pnpm build   # into dist/
 ```
 
-Posts are in `content/post/<year>/<slug>/`. How the site is put together, and how to write posts: [CLAUDE.md](CLAUDE.md).
+Posts are in `content/post/<year>/<slug>/`. How the site is put together, and how to write posts: [AGENTS.md](AGENTS.md).
