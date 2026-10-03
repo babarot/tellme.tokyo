@@ -1,7 +1,16 @@
 [tools]
 node = "24"
 
+[tasks.install]
+description = "Install the dependencies when package.json or the lockfile has changed"
+# pnpm leaves .modules.yaml alone when nothing changed, so touch it to mark the run
+run = "pnpm install --frozen-lockfile && touch node_modules/.modules.yaml"
+# Skipped while .modules.yaml is newer than both
+sources = ["package.json", "pnpm-lock.yaml"]
+outputs = ["node_modules/.modules.yaml"]
+
 [tasks.dev]
+depends = ["install"]
 description = "Run the dev server; stop, status and logs go to astro dev (help: mise run dev --help)"
 run = "node tools/dev.ts"
 # Hand the arguments to dev.ts as typed; usage below only feeds completion
@@ -27,6 +36,7 @@ raw = true
 quiet = true
 
 [tasks.post]
+depends = ["install"]
 description = "List posts by front matter, or edit or open the ones picked with fzf (help: mise run post --help)"
 run = "node tools/post.ts"
 # Hand the arguments to post.ts as typed; usage below only feeds completion
