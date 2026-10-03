@@ -1,6 +1,28 @@
 [tools]
 node = "24"
 
+[tasks.dev]
+description = "Run the dev server; stop, status and logs go to astro dev (help: mise run dev --help)"
+run = "node tools/dev.ts"
+# Hand the arguments to dev.ts as typed; usage below only feeds completion
+raw_args = true
+usage = """
+arg "[command]" help="astro dev's own: a running server" {
+  choices "stop" "status" "logs"
+}
+flag "--no-draft" help="leave drafts out, as production does"
+flag "--background" help="run as a background process"
+flag "--port <port>" help="default: 4321"
+flag "--host" help="listen on all addresses"
+flag "--open" help="open the browser on start"
+flag "--force" help="clear the content layer cache"
+flag "--follow" help="logs: keep following"
+flag "-h --help" help="show the help"
+"""
+# Ctrl-C has to reach astro dev
+raw = true
+quiet = true
+
 [tasks.post]
 description = "List posts by front matter, or edit the ones picked with fzf (help: mise run post --help)"
 run = "node tools/post.ts"

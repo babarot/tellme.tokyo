@@ -8,7 +8,7 @@ babarot's blog, at https://tellme.tokyo/. Built with [Astro](https://astro.build
 
 ```sh
 pnpm install
-pnpm dev     # http://localhost:4321/
+mise run dev # http://localhost:4321/
 pnpm test
 pnpm build   # into dist/
 ```

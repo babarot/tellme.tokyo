@@ -6,7 +6,6 @@
     "node": ">=24"
   },
   "scripts": {
-    "dev": "node tools/dev.ts",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",

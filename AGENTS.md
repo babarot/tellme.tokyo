@@ -28,7 +28,7 @@ There are no pull requests for ordinary work. Changes are committed to `main` (f
 Posts are written in Japanese. The author may ask for a post to be reworded in the voice of the recent published posts; read a few of them first and follow them.
 
 - Posts live only in this repository, one folder each: `content/post/<year>/<slug>/`. New posts are `index.mdx`; the ones migrated from Hugo are `index.md`.
-- `draft: true` is still being written: shown in dev and previews, not in production (`pnpm dev --no-draft` hides it locally). `hidden: true` is withdrawn: built nowhere, as if it never existed.
+- `draft: true` is still being written: shown in dev and previews, not in production (`mise run dev --no-draft` hides it locally). `hidden: true` is withdrawn: built nowhere, as if it never existed.
 - Front matter has the schema's keys in its order; `mise run post check --fix` puts them right. `mise run post ls` / `edit` find posts by state, tag, date or text.
 - Headings: the title is the h1. A post may start its headings at `#` (then `#` is a chapter and `##` a section, all rendered one level lower) or at `##`.
 - Directives in use: `gallery`, `carousel`, `img`, `addendum`, `revisions`/`version`, `tweet`, `youtube`, `spotify`, `slideshare`; their options are in `src/plugins/<name>/`. Do not invent others: unknown `foo:bar` text is shown as written. Anything else can be raw HTML.
@@ -41,4 +41,4 @@ Posts are written in Japanese. The author may ask for a post to be reworded in t
 - A directive inside another needs more colons than its parent (`:::::revisions` > `::::version` > `:::gallery`), or the inner fence closes the outer one.
 - A bare URL becomes a link card only as a top-level paragraph, not inside a directive. Cards are cached in `.cache/link-previews.json`, which is committed: the dev server or a build adds entries, so commit them with the post that added the link. After removing links, `pnpm prune:link-previews`.
 - The OG and header fonts `PixelifySans-tellme.tokyo.ttf` and `Sixtyfour-tellme.tokyo.ttf` hold only the letters of "tellme.tokyo". For other text, fetch a subset from `https://fonts.googleapis.com/css2?family=<Family+Name>&text=<letters>` without a browser user agent (Google Fonts then answers with TrueType).
-- With `pnpm dev` running, `/dev/og/` shows every OG design and `/dev/figures/` every figure, light and dark side by side. Use them to check a change by eye. `pnpm build && pnpm exec wrangler dev` serves what Workers serves (redirects, the 404 page, trailing slashes).
+- With `mise run dev` running, `/dev/og/` shows every OG design and `/dev/figures/` every figure, light and dark side by side. Use them to check a change by eye. `pnpm build && pnpm exec wrangler dev` serves what Workers serves (redirects, the 404 page, trailing slashes).
