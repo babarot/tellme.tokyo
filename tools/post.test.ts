@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { frontMatter, fzfItem, lint, parse, select, toPost, tsv, type Filter, type Post } from './post.ts';
+import { frontMatter, fzfItem, lint, parse, select, toPost, tsv, urlPath, type Filter, type Post } from './post.ts';
 
 describe('frontMatter', () => {
   it('reads scalars, quoted or not', () => {
@@ -57,6 +57,18 @@ describe('toPost', () => {
   it('has no tags when tags is missing or not a list', () => {
     expect(post('').tags).toEqual([]);
     expect(post('tags: go\n').tags).toEqual([]);
+  });
+});
+
+describe('urlPath', () => {
+  it("is the date's day and the folder's name, as the site makes it", () => {
+    expect(urlPath('content/post/2016/2179/index.md', '---\ndate: "2016-09-20T00:00:00+09:00"\n---\n')).toBe('/post/2016/09/20/2179/');
+  });
+
+  it("takes the slug over the folder's name", () => {
+    expect(urlPath('content/post/2026/x/index.mdx', '---\ndate: 2026-10-01\nslug: ai-agent-first-dotfiles\n---\n')).toBe(
+      '/post/2026/10/01/ai-agent-first-dotfiles/',
+    );
   });
 });
 

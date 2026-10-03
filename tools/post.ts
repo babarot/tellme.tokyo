@@ -1,5 +1,5 @@
 // Lists the posts in content/post by their front matter, and opens the ones
-// picked with fzf in $EDITOR. Usage: mise run post --help
+// picked with fzf in $EDITOR or the browser. Usage: mise run post --help
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -8,13 +8,15 @@ import { parseArgs } from 'node:util';
 const USAGE = `Usage:
   mise run post ls    [filters] [--format tsv|json|path]
   mise run post edit  [filters] [--no-fzf] [query...]
+  mise run post open  [filters] [--no-fzf] [query...]
   mise run post tags  [filters]
   mise run post check [filters] [--fix]
 
 ls prints the posts that pass the filters, and tags their tags. edit lets you
 pick them with fzf (Tab for several) and opens them in $EDITOR (nvim when
 unset); the query is fzf's first input, and --no-fzf opens every post that
-passes the filters.
+passes the filters. open picks them the same way and opens them in the browser
+on the running dev server (mise run dev).
 
 check reports what is wrong with the posts' front matter (missing keys, keys
 not in the schema, keys out of order) and exits 1 if anything is; it looks at
@@ -169,6 +171,15 @@ export function select(posts: Post[], f: Filter): Post[] {
 
 export const tsv = (p: Post) => [p.path, p.date, p.state, p.title, p.tags.join(',')].join('\t');
 
+// The post's URL path, as src/lib/posts.ts makes it: the date's day, then the
+// slug or else the folder's name
+export function urlPath(file: string, source: string): string {
+  const fm = frontMatter(source);
+  const [y, m, d] = String(fm.date ?? '').slice(0, 10).split('-');
+  const slug = fm.slug ? String(fm.slug) : path.basename(path.dirname(file));
+  return `/post/${y}/${m}/${d}/${slug}/`;
+}
+
 // What fzf gets for a post: the path (hidden, handed back for the editor),
 // then the date and, on a second line, the title
 export const fzfItem = (p: Post) => `${p.path}\t${p.date}\n${p.title}`;
@@ -191,6 +202,41 @@ function grep(pattern: string): Set<string> {
   if (rg.error) fail(`rg: ${rg.error.message}`);
   if (rg.status === 2) fail(rg.stderr.trim());
   return new Set(rg.stdout.split('\n').filter(Boolean).map((f) => path.relative(process.cwd(), f)));
+}
+
+// The posts picked with fzf (none when cancelled), or all of them with --no-fzf
+function pick(posts: Post[], query: string[], noFzf: boolean): string[] {
+  if (!posts.length) fail('no posts match');
+  if (noFzf) return posts.map((p) => p.path);
+  const fzf = spawnSync(
+    'fzf',
+    [
+      '--multi',
+      '--read0',
+      '--delimiter=\t',
+      '--with-nth=2..',
+      '--accept-nth=1',
+      '--gap',
+      // a bar down both lines of the current post
+      '--pointer=▌',
+      `--query=${query.join(' ')}`,
+      '--preview=bat --color=always --style=plain {1} 2>/dev/null || cat {1}',
+      '--preview-window=right,60%,wrap',
+    ],
+    { input: posts.map(fzfItem).join('\0'), encoding: 'utf8', stdio: ['pipe', 'pipe', 'inherit'] },
+  );
+  if (fzf.error) fail(`fzf: ${fzf.error.message}`);
+  // 1: nothing matched, 130: cancelled
+  if (fzf.status !== 0) return [];
+  return fzf.stdout.split('\n').filter(Boolean);
+}
+
+// The URL of the running dev server, from `astro dev status`
+function devServer(): string {
+  const status = spawnSync(path.join(ROOT, 'node_modules/.bin/astro'), ['dev', 'status'], { cwd: ROOT, encoding: 'utf8' });
+  const url = `${status.stdout}${status.stderr}`.match(/running at (https?:\/\/\S+)/)?.[1];
+  if (!url) fail('no dev server is running (mise run dev)');
+  return url.replace(/\/$/, '');
 }
 
 function fail(message: string): never {
@@ -279,33 +325,19 @@ function main() {
       break;
 
     case 'edit': {
-      if (!posts.length) fail('no posts match');
-      let files = posts.map((p) => p.path);
-      if (!args.noFzf) {
-        const fzf = spawnSync(
-          'fzf',
-          [
-            '--multi',
-            '--read0',
-            '--delimiter=\t',
-            '--with-nth=2..',
-            '--accept-nth=1',
-            '--gap',
-            // a bar down both lines of the current post
-            '--pointer=▌',
-            `--query=${query.join(' ')}`,
-            '--preview=bat --color=always --style=plain {1} 2>/dev/null || cat {1}',
-            '--preview-window=right,60%,wrap',
-          ],
-          { input: posts.map(fzfItem).join('\0'), encoding: 'utf8', stdio: ['pipe', 'pipe', 'inherit'] },
-        );
-        if (fzf.error) fail(`fzf: ${fzf.error.message}`);
-        // 1: nothing matched, 130: cancelled
-        if (fzf.status !== 0) process.exit(0);
-        files = fzf.stdout.split('\n').filter(Boolean);
-      }
+      const files = pick(posts, query, args.noFzf);
+      if (!files.length) break;
       const editor = process.env.EDITOR || 'nvim';
       spawnSync(editor, files, { stdio: 'inherit' });
+      break;
+    }
+
+    case 'open': {
+      const files = pick(posts, query, args.noFzf);
+      if (!files.length) break;
+      const server = devServer();
+      const opener = process.platform === 'darwin' ? 'open' : 'xdg-open';
+      for (const file of files) spawnSync(opener, [server + urlPath(file, fs.readFileSync(file, 'utf8'))], { stdio: 'inherit' });
       break;
     }
 

@@ -29,7 +29,7 @@ Posts are written in Japanese. The author may ask for a post to be reworded in t
 
 - Posts live only in this repository, one folder each: `content/post/<year>/<slug>/`. New posts are `index.mdx`; the ones migrated from Hugo are `index.md`.
 - `draft: true` is still being written: shown in dev and previews, not in production (`mise run dev --no-draft` hides it locally). `hidden: true` is withdrawn: built nowhere, as if it never existed.
-- Front matter has the schema's keys in its order; `mise run post check --fix` puts them right. `mise run post ls` / `edit` find posts by state, tag, date or text.
+- Front matter has the schema's keys in its order; `mise run post check --fix` puts them right. `mise run post ls` / `edit` / `open` find posts by state, tag, date or text, and list them, open them in the editor or in the browser on the dev server.
 - Headings: the title is the h1. A post may start its headings at `#` (then `#` is a chapter and `##` a section, all rendered one level lower) or at `##`.
 - Directives in use: `gallery`, `carousel`, `img`, `addendum`, `revisions`/`version`, `tweet`, `youtube`, `spotify`, `slideshare`; their options are in `src/plugins/<name>/`. Do not invent others: unknown `foo:bar` text is shown as written. Anything else can be raw HTML.
 - Figures are `<post>/figures/<name>.part.html`, embedded in an `.mdx` post with `<Partial name="<name>" />`.

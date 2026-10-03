@@ -24,15 +24,15 @@ raw = true
 quiet = true
 
 [tasks.post]
-description = "List posts by front matter, or edit the ones picked with fzf (help: mise run post --help)"
+description = "List posts by front matter, or edit or open the ones picked with fzf (help: mise run post --help)"
 run = "node tools/post.ts"
 # Hand the arguments to post.ts as typed; usage below only feeds completion
 raw_args = true
 usage = """
 arg "<command>" help="what to do" {
-  choices "ls" "edit" "tags" "check"
+  choices "ls" "edit" "open" "tags" "check"
 }
-arg "[query]..." help="edit: fzf's first input" var=#true
+arg "[query]..." help="edit, open: fzf's first input" var=#true
 flag "--draft" help="drafts"
 flag "--published" help="published posts"
 flag "--hidden" help="hidden posts"
@@ -48,7 +48,7 @@ flag "--reverse" help="reverse the order"
 flag "--format <format>" help="ls: default tsv" {
   choices "tsv" "json" "path"
 }
-flag "--no-fzf" help="edit: every post that passes the filters"
+flag "--no-fzf" help="edit, open: every post that passes the filters"
 flag "--fix" help="check: add the missing keys and put them in order"
 flag "-h --help" help="show the help"
 complete "name" run="node {{config_root}}/tools/post.ts tags --all"
