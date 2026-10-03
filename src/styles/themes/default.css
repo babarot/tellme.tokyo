@@ -22,6 +22,7 @@
    --c-code          inline code text
    --c-accent        text selection
    --c-draft         the DRAFT label
+   --c-hidden        the HIDDEN label (hidden posts are built only when asked for)
    --c-shade         scroll shade on wide tables
 
    The dark values apply under .dark: on <html> for the whole page, or on an
@@ -47,7 +48,8 @@
   --c-code-bg: var(--color-neutral-100);
   --c-code: currentColor;
   --c-accent: oklch(0.55 0.15 255);
-  --c-draft: var(--color-amber-600);
+  --c-draft: var(--color-amber-700);
+  --c-hidden: var(--color-rose-700);
   --c-shade: rgb(0 0 0 / 0.12);
 }
 
@@ -72,6 +74,7 @@
   --c-code-bg: var(--color-neutral-800);
   --c-code: currentColor;
   --c-accent: oklch(0.75 0.12 255);
-  --c-draft: var(--color-amber-600);
+  --c-draft: var(--color-amber-400);
+  --c-hidden: var(--color-rose-400);
   --c-shade: rgb(255 255 255 / 0.12);
 }

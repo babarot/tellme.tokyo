@@ -16,7 +16,7 @@ const posts = await getPosts();
             </time>
             <span class="leading-7 text-list-title transition-opacity group-hover:opacity-60">
               {post.data.title}
-              {stateOf(post) !== 'published' && <span class="ml-2 align-middle text-[10px] font-semibold tracking-wider text-draft uppercase">{stateOf(post)}</span>}
+              {stateOf(post) !== 'published' && <span class:list={['ml-2 align-middle text-[10px] font-semibold tracking-wider uppercase', stateOf(post) === 'hidden' ? 'text-hidden' : 'text-draft']}>{stateOf(post)}</span>}
             </span>
           </a>
         </li>

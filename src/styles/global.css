@@ -86,6 +86,7 @@
   --color-line: var(--c-line);
   --color-surface: var(--c-surface);
   --color-draft: var(--c-draft);
+  --color-hidden: var(--c-hidden);
 }
 
 html {
