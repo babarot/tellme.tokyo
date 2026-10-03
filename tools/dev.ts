@@ -1,6 +1,5 @@
-// `pnpm dev`: astro dev, plus --draft=false to leave drafts out as production
-// does (--draft=true shows them, the default in dev). Any other argument goes
-// to astro dev as is.
+// `pnpm dev`: astro dev, plus --no-draft to leave drafts out as production
+// does (dev shows them by default). Any other argument goes to astro dev as is.
 //
 // astro dev relaunches itself in the background and drops arguments it does
 // not know, so the flag is handed on as SHOW_DRAFTS (src/lib/posts.ts).
@@ -10,8 +9,7 @@ const args: string[] = [];
 const env = { ...process.env };
 
 for (const arg of process.argv.slice(2)) {
-  const draft = /^--draft(?:=(true|false))?$/.exec(arg);
-  if (draft) env.SHOW_DRAFTS = draft[1] === 'false' ? '0' : '1';
+  if (arg === '--no-draft') env.SHOW_DRAFTS = '0';
   else args.push(arg);
 }
 

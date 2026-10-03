@@ -28,6 +28,15 @@
     "failed": true,
     "fetchedAt": "2026-10-01T10:05:51.908Z"
   },
+  "http://tech.mercari.com/entry/2015/11/18/153421": {
+    "url": "http://tech.mercari.com/entry/2015/11/18/153421",
+    "title": "インフラチーム改め Site Reliability Engineering (SRE) チームになりました | メルカリエンジニアリング",
+    "description": "インフラチーム改めSite Reliability Engineering チームの @kazeburo です。この記事ではまだ馴染みの薄い Site Reliability Engineer とは何かについて紹介したいと思います。SRE",
+    "image": "https://storage.googleapis.com/prd-engineering-asset/2015/11/b5fc5777-20151117164812.png",
+    "icon": "https://engineering.mercari.com/favicons/android-chrome-512x512.png",
+    "siteName": "engineering.mercari.com",
+    "fetchedAt": "2026-10-03T05:15:58.250Z"
+  },
   "http://vimconf.vim-jp.org/2016/": {
     "url": "http://vimconf.vim-jp.org/2016/",
     "title": "Redirecting…",

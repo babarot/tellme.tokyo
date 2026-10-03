@@ -1,5 +1,5 @@
 ---
-title: "自作ツールの gomi をアップデートをした"
+title: "自作ツールの gomi をアップデートした"
 date: "2025-01-29T00:00:00+09:00"
 description: ""
 draft: false
@@ -8,13 +8,14 @@ toc: false
 tags: []
 ---
 
-昔、[gomi](https://github.com/babarot/gomi) というターミナルにゴミ箱の概念を実装する CLI コマンドを作っていたのだが、久しぶりに土日を使ってガッツリ書き換えた。ファイルをゴミ箱に移動したり戻したりするという根幹の機能は変えず、UI 部分だけを更新した。
+昔、ターミナルにゴミ箱の考え方を持ち込む [gomi](https://github.com/babarot/gomi) という CLI コマンドを作った。久しぶりに土日を使って、その UI を書き換えた。ファイルをゴミ箱に移したり戻したりするという根幹の機能は変えていない。
 
-これまでは UI の実装に [promptui](https://github.com/manifoldco/promptui) を使っていた。しかし、Ctrl+W（単語の削除）ができなかったり、Ctrl+C で interrupt した際に UI が崩れたり、そもそも開発がしばらく止まっていたりと、ずっと気になっていた。そんな中、最近 [bubbletea](https://github.com/charmbracelet/bubbletea) (Bubble Tea)[^tea] というイケてる UI ライブラリを見つけてしまい、めんどくさい半分、興味半分で[置き換えてみた](https://github.com/babarot/gomi/pull/44)。
+これまでは UI の実装に [promptui](https://github.com/manifoldco/promptui) を使っていた。ただ、Ctrl+W（単語の削除）が効かない、Ctrl+C で interrupt すると UI が崩れる、そもそも開発がしばらく止まっている、と気になるところがいくつかあった。そんなときに [bubbletea](https://github.com/charmbracelet/bubbletea)（Bubble Tea）[^tea] という UI ライブラリを知って、手間はかかりそうだったが、使ってみたい気持ちの方が大きかったので[置き換えることにした](https://github.com/babarot/gomi/pull/44)。
 
-Bubble Tea は **Elm Architecture（TEA: The Elm Architecture）** が採用されたフレームワークだ。Elm Architecture とは、関数型プログラミングの概念を取り入れたフロントエンドの設計パターンで、シンプルで管理しやすい UI の構築を目的としている。もともとは Elm という言語で使われているが、React や Redux の設計にも影響を与えているらしい。
+Bubble Tea は、設計に Elm Architecture（TEA: The Elm Architecture）を採用している。シンプルで管理しやすい UI を組むために、関数型プログラミングの考え方を取り入れたフロントエンドの設計パターンで、もともとは Elm という言語で使われていたもの。React や Redux の設計にも影響を与えているらしい。
 
-### Elm Architecture とは
+## Elm Architecture とは
+
 Elm Architecture は、主に以下の3つの要素で構成される。
 
 | 要素   | 役割                                         |
@@ -23,30 +24,27 @@ Elm Architecture は、主に以下の3つの要素で構成される。
 | Update | UI 操作や Message を受け取り、Model を更新する |
 | View   | Model から UI を描画する                     |
 
-Elm では View の戻り値として HTML を返すが、Bubble Tea では文字列を返す。見てのとおりシンプルで、実装者は Model（ステート）を介して Update（処理）と View（見た目）を実装するだけでよく、データの流れは Runtime に任せればいい。View の処理が終わると、Runtime によってレンダリングされ、次のサイクルが動く。
+Elm では View の戻り値として HTML を返すが、Bubble Tea では文字列を返す。実装する側は Model（ステート）を介して Update（処理）と View（見た目）を書くだけでよく、データの流れは Runtime に任せられる。View の処理が終わると、Runtime によってレンダリングされ、次のサイクルが動く。
 
 <Partial name="elm-architecture" />
 
 Bubble Tea では `Model` という interface で以下のメソッドを定義し、Elm Architecture を表現している。
 
-- **Init()**
-  - 初回の Message を送信し、サイクルをスタートさせる。
-- **Update()**
-  - Message（キー入力などのイベント）を受け取り、適切な処理を行い、新しい Model を返す。
-- **View()**
-  - 出力する文字列を組み立てて String を返す。
+- `Init()`: 初回の Message を送信し、サイクルをスタートさせる
+- `Update()`: Message（キー入力などのイベント）を受け取り、適切な処理を行い、新しい Model を返す
+- `View()`: 出力する文字列を組み立てて String を返す
 
-`Model` interface を満たす構造体 `model` を作成し、`Update()` と `View()`、およびそれらを行き来する `Message` を実装していく流れだ。
+`Model` interface を満たす構造体 `model` を作成し、`Update()` と `View()`、およびそれらを行き来する `Message` を実装していく流れになる。
 
-キー入力やデータの変更など、いわゆるイベントは `Message` と呼ばれており、これを受け取った `Update` はそれに応じた処理を行い `View` を呼ぶ。`Quit`（サイクルの終了）処理などもユーザーが実装する部分なので、Bubble Tea は基本的に **Update ←(Model)→ View** をひたすら繰り返すというわけだ。
+キー入力やデータの変更など、いわゆるイベントは `Message` と呼ばれており、これを受け取った `Update` はそれに応じた処理を行い `View` を呼ぶ。`Quit`（サイクルの終了）処理などもユーザーが実装する部分なので、Bubble Tea は基本的に `Update ←(Model)→ View` をひたすら繰り返すというわけ。
 
-今回、初めて Bubble Tea を使ってターミナルアプリを書いてみたが、Elm Architecture のおかげでスッキリと書けた。また、初学の際は [@motemen さんのブログ](https://motemen.hatenablog.com/entry/2022/06/introduction-to-go-bubbletea)が参考になった。
+Bubble Tea でターミナルアプリを書くのは今回が初めてだったが、状態と処理と見た目の置き場所が決まっているので、迷わずに書けた。最初に読んだ [@motemen さんのブログ](https://motemen.hatenablog.com/entry/2022/06/introduction-to-go-bubbletea)がとても参考になった。
 
-### 振り返り
+## 振り返り
 
-久しぶりの実装はめんどくさかったが、結果的に満足のいく仕上がりになってよかった。ちなみに、gomi の[初のリリース](https://github.com/babarot/gomi/releases/tag/v0.1.2)は 2015 年らしい。あの頃はまだ大学生だったが、10 年経ってもまだいじっているとは、我ながら物好きだなと思う。
+久しぶりの実装で手間はかかったが、満足のいく形になった。gomi の[最初のリリース](https://github.com/babarot/gomi/releases/tag/v0.1.2)は2015年で、そのころはまだ大学生だった。10年経ってもまだ手を入れているのだから、我ながらよく続いているなと思う。
 
-実は UI の書き換えはこれで 2 回目で、初代 UI[^first] と二代目 UI[^second] がこんな感じ。こうして振り返ると、今回は結構いい感じに仕上がったのではないかと思う。
+UI を書き換えたのは、実はこれで2回目になる。初代[^first]、二代目[^second]と並べてみると、今回がいちばんよくできたと思う。
 
 :::carousel{ratio=8/5 fit=contain backdrop=edge autoplay=false}
 ![三代目UI (2025)](./demo-3.gif "三代目UI (2025)")
@@ -54,10 +52,12 @@ Bubble Tea では `Model` という interface で以下のメソッドを定義�
 ![初代 UI (2015)](./demo-1.gif "初代 UI (2015)")
 :::
 
-(2025/02/08追記): サイトも更新した。
+:::addendum{date=2025-02-08}
+サイトも更新した。
+:::
 
 https://babarot.me/gomi
 
-[^tea]: Bubble Tea の Tea は **T**he **E**lm **A**rchitecture からきているのかも
-[^first]: コードを見てみたら UI はなんと自前実装で [termbox-go](https://github.com/nsf/termbox-go) を使っていたようだ。まだコードが小さかったときの peco とか fzf を参考に書いたような気がする
-[^second]: termbox-go の実装もパクった部分が多くて自分でよくわかってない部分があったのでメンテできなくなっていた。UI は外部に任せたほうがいいなーと思っていて [promptui](https://github.com/manifoldco/promptui) を見つけてからはこっちに乗り換えた
+[^tea]: Bubble Tea の Tea は、**T**he **E**lm **A**rchitecture からきているのかもしれない。
+[^first]: コードを見返したら、UI は [termbox-go](https://github.com/nsf/termbox-go) を使った自前の実装だった。まだコードが小さかったころの peco や fzf を参考に書いた気がする。
+[^second]: termbox-go の実装はほかのツールを参考にした部分が多く、自分でも把握しきれていないところがあったので、メンテを続けられなくなっていた。UI はライブラリに任せた方がいいと思っていたところで [promptui](https://github.com/manifoldco/promptui) を見つけて、乗り換えた。

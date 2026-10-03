@@ -10,10 +10,10 @@ tags: ["SRE"]
 
 今年の7月からSREチームに異動した。
 
-SREとは[Site Reliability Enginnering](https://sre.google/books/)を指しGoogle が提唱した概念である。
+SREとは[Site Reliability Engineering](https://sre.google/books/)を指しGoogle が提唱した概念である。
 国内ではメルカリがいち早くチーム名として取り入れたことでも知られている。
 
-[インフラチーム改め Site Reliability Engineering (SRE) チームになりました - Mercari Engineering Blog](http://tech.mercari.com/entry/2015/11/18/153421)
+http://tech.mercari.com/entry/2015/11/18/153421
 
 メルカリには[昨年4月に入社した](https://tellme.tokyo/post/2016/10/01/mercari/)ばかりなのになぜ異動なのかというと昨年9月ころから新卒研修の一端として1ヶ月間のSRE研修でSREの業務に携わったことがきっかけだった。それまでSREというものをほぼ知らなかったのだが、インフラ領域でサービスの安定稼働に貢献する様子やSREというRoleが持つ使命に強く惹かれSREとしてキャリアを積んでいきたいと思った。上長や当時の所属チームと何度か交渉させてもらい、新卒でありながら希望通り異動させてもらえることになった。
 
