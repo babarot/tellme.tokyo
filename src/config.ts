@@ -17,7 +17,8 @@ export type OgDesignName = (typeof ogDesigns)[number];
 
 export const config: { theme: Theme; ogDesign: OgDesignName } = {
   // The theme the site uses. In dev and previews, ?theme=<name> in the URL
-  // overrides it for a quick comparison.
+  // overrides it for a quick comparison, for the rest of the tab's visit
+  // (?theme=auto goes back; src/layouts/Base.astro).
   theme: 'default',
   // The OG image design. Changing it redraws every post's image on the next
   // build; cards already shared keep the old one until the service refetches.

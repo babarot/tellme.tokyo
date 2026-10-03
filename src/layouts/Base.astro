@@ -50,14 +50,31 @@ const links = [
     <meta name="color-scheme" content="light dark" />
     <script is:inline>
       // Follow the OS setting; ?scheme=dark|light forces one (for checking both).
-      // In dev and previews, ?theme=<name> swaps the theme (color set) as well.
+      // In dev and previews, ?theme=<name> swaps the theme (color set) as well,
+      // and both are kept for the rest of the tab's visit (sessionStorage), so
+      // they hold while following links; ?theme=auto and ?scheme=auto let go.
+      // In production ?scheme= holds for that page only.
       (() => {
         const params = new URLSearchParams(location.search);
         const root = document.documentElement;
-        if (root.hasAttribute('data-theme-switch') && params.get('theme')) {
-          root.dataset.theme = params.get('theme');
-        }
-        const forced = params.get('scheme');
+        const switchable = root.hasAttribute('data-theme-switch');
+        // the query's value, else the one kept from earlier in the tab
+        const pick = (name) => {
+          const asked = params.get(name);
+          const value = asked && asked !== 'auto' ? asked : null;
+          if (!switchable) return value;
+          const key = `forced-${name}`;
+          try {
+            if (value) sessionStorage.setItem(key, value);
+            else if (asked !== null) sessionStorage.removeItem(key);
+            return sessionStorage.getItem(key);
+          } catch {
+            return value;
+          }
+        };
+        const theme = switchable && pick('theme');
+        if (theme) root.dataset.theme = theme;
+        const forced = pick('scheme');
         const media = matchMedia('(prefers-color-scheme: dark)');
         // color-scheme as well, so the browser's own colors (the canvas before
         // the stylesheet, scrollbars, form controls) follow a forced scheme too
