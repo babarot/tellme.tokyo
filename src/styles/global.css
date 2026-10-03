@@ -129,6 +129,7 @@ html.dark {
   --gallery-placeholder: var(--c-surface);
   --carousel-placeholder: var(--c-surface);
   --carousel-caption: var(--c-muted);
+  --img-line: var(--c-line);
   --revision-line: var(--c-line-strong);
   --revision-label: var(--c-muted);
   --revision-active: var(--c-heading);

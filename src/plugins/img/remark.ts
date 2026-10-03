@@ -7,6 +7,8 @@
 //   width   most it is shown at, in px; it still shrinks on narrow screens
 //   scheme  light or dark: shown only in that color scheme (pair two blocks
 //           for an image with a light and a dark version)
+//   frame   a thin line around the image, for one whose edges are the page's
+//           own background color (a white screenshot on a white page)
 //
 // The image's title becomes the caption. The image stays a Markdown image, so
 // it is optimized like any other. Needs remark-directive before it.
@@ -26,9 +28,10 @@ export default function remarkImg({ name = 'img' }: ImgOptions = {}) {
       const images = imagesIn(node);
       if (images.length !== 1) throw new Error(`${where}: :::${name} holds one image, found ${images.length}`);
 
-      const { width, scheme } = node.attributes ?? {};
+      const { width, scheme, frame } = node.attributes ?? {};
       if (width !== undefined && !/^\d+$/.test(width)) throw new Error(`${where}: :::${name} width must be a number of px, got "${width}"`);
       if (scheme !== undefined && !SCHEMES.has(scheme)) throw new Error(`${where}: :::${name} scheme must be light or dark, got "${scheme}"`);
+      if (frame !== undefined && frame !== '') throw new Error(`${where}: :::${name} frame takes no value, got "${frame}"`);
 
       const [image] = images;
       const caption = image.title;
@@ -40,6 +43,7 @@ export default function remarkImg({ name = 'img' }: ImgOptions = {}) {
         {
           className: ['img'],
           dataScheme: scheme,
+          dataFrame: frame === undefined ? undefined : '',
           style: width ? `max-width:${width}px` : undefined,
         },
         children,

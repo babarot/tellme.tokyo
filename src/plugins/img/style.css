@@ -11,6 +11,11 @@
   margin-inline: auto;
 }
 
+.img[data-frame] img {
+  border: 1px solid var(--img-line, rgb(128 128 128 / 0.25));
+  border-radius: 0.375rem;
+}
+
 .img[data-scheme='dark'] {
   display: none;
 }

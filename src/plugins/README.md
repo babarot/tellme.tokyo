@@ -14,7 +14,7 @@ another Astro (or any unified) project as is.
 | `embed` | `::tweet`, `::youtube`, `::spotify`, `::slideshare` | remark, style, client, providers |
 | `mermaid` | ```` ```mermaid ```` code blocks drawn as diagrams; follows the color scheme | remark, style, client |
 | `revision` | updates to an old post that keep what it said: `:::addendum` (a dated note) and `::::revisions` of `:::version` blocks, newest first (past ones under `<details>`, or `view=tabs`: tabs switched by CSS radios, no script); passes `updated` and the ids of past versions' headings (`revisionHiddenHeadings`) to the page as front matter | remark, style |
-| `img` | `:::img` for one image with options: `width` (most px), `scheme` (light or dark only) | remark, style |
+| `img` | `:::img` for one image with options: `width` (most px), `scheme` (light or dark only), `frame` (a thin line around it) | remark, style |
 | `code-block` | a copy button on every code block (on hover; none on touch screens); ```` ```json:package.json ```` shows the file name above the code | remark, style, client |
 | `link-preview` | a paragraph that is only a URL becomes a card with the page's title, description, image and icon (cached; failed fetches are retried after 30 days; `pnpm prune:link-previews` drops entries no post uses) | remark, urls, parse, fetch, cache, html, style |
 | `heading-levels` | keeps the post title the only h1 without rewriting the source | remark |
