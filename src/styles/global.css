@@ -186,8 +186,10 @@ html.dark {
 
 /* Typography spaces each list item by 0.5em on top of the 1.9 line height,
    which reads looser than the body text. Keep items close; the bullets and
-   numbers already mark where each one starts. */
-.article :where(li) {
+   numbers already mark where each one starts. A nested list sits as close
+   to its parent item as the items do to each other (Typography gives it
+   0.75em). */
+.article :where(li, li > ul, li > ol) {
   margin-top: 0.2em;
   margin-bottom: 0.2em;
 }
