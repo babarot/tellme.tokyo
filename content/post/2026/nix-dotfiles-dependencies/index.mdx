@@ -130,20 +130,6 @@ $ nix-store -q --references /nix/store/svz1…-fzf-0.74.4
 
 Homebrew なら、`brew upgrade` で `/opt/homebrew/bin/fzf` の向き先が新しいものに変わり、それを使っていたものは全部、黙って新しい fzf を使い始める。Nix では、`b5jb…-fzf-0.74.4` のパスを指しているものは、指し直すまでずっとそれを使う。store のパスを1つ書けば、どのビルドの何を使うかまで決まる、ということ。
 
-{/* 削除候補（fzf の例に置き換えた）:
-手元の store で Go を探してみると、それがよくわかる。
-
-```console
-$ ls -d /nix/store/*-go-1.*[0-9]
-/nix/store/9w6fm5c9v3lx0vxd4pqy7i8qmdfsmq7g-go-1.27.1
-/nix/store/isqxa82c7f65sbhi51npr0547yz87bh5-go-1.26.8
-/nix/store/v0l8ihkyjdqqx97g0b8lkllicmalj0lq-go-1.27.1
-/nix/store/ynhaddwnkhvlr6qn7scbrj1515k52gnw-go-1.26.7
-```
-
-nixpkgs を更新するたびに入った Go が、消されずに全部残っている。1.27.1 が2つあるのは、同じバージョンでも、ビルドに使った何かが nixpkgs の更新で変わったからだと思う。Homebrew なら `brew upgrade` で `/opt/homebrew/bin/go` の向き先が新しいものに変わり、それを使っていたものは全部、黙って新しい Go を使い始める。Nix では、`go-1.26.7` のパスを指しているものは、指し直すまでずっと 1.26.7 を使う。store のパスを1つ書けば、どのビルドの何を使うかまで決まる、ということ。
-*/}
-
 ### 依存も store のパスで持つ
 
 この store の上で、パッケージは依存するものを、名前ではなく store のパスで指す。例えば nixpkgs の bat は、ページャに使う less をそうやって指している。bat のコマンドの実体（`bin/bat`）を開くと、中身はこういうスクリプトになっている。
@@ -288,19 +274,6 @@ imports = [
 3. ツールのセット
 4. ばら（単体のツール、設定なし）
 
-{/* 削除候補（図に一本化した）:
-| 種類 | ファイル名 | 中身 | 例 |
-|---|---|---|---|
-| ツール | `<tool>.nix` | 1つのツールとその設定 | `eza.nix`、`gomi.nix` |
-| メインとヘルパー | `<メインのツール>.nix` | メインのツールと、それを助けるためだけにあるヘルパー | `gh.nix`（gh-dash が使う delta と lazygit）、`neovim.nix`（LSP サーバーとフォーマッタ） |
-| グループ | `<対象>.group.nix` | メインのいない、1つの対象のためのツール | `kubernetes.group.nix` |
-| カタログ | 決まった名前 | 設定のないツールやアプリの一覧 | `packages.nix`、`apps.nix` |
-*/}
-
-{/* 削除候補（1枚ずつの図に置き換えた）:
-<Partial name="file-kinds" />
-*/}
-
 <Partial name="kind-single" />
 
 ほとんどのファイルはこれ。1つのツールと、そのツールのためのエイリアスや環境変数を、1つのファイルに書く。設定が何もないツールは、ファイルを作るまでもないので、ばらに回す。
@@ -364,25 +337,6 @@ config.xdg.configFile."zsh/env.zsh".text = lib.concatLines (
 - OrbStack: OrbStack は自分で `~/.zprofile` を作って PATH を足す（ログインシェルにしか効かない）。cask を宣言しているホストのファイルの隣に `my.path` を置いて、`.zprofile` は消した
 - krew: kubectl のプラグインは `~/.krew/bin` に入る。Kubernetes のセットに、krew と並べて `my.path` を書いているので、セットを消せば PATH の行も消える（下のコード）
 
-{/* 削除候補:
-```nix:nix/home-manager/tools/go.nix
-{ config, pkgs, ... }:
-let
-  gobin = "${config.home.homeDirectory}/go/bin";
-in
-{
-  home.packages = [
-    pkgs.go
-    # ...
-  ];
-
-  my.env.GOPATH = config.home.homeDirectory;
-  my.env.GOBIN = gobin;
-  my.path = [ gobin ];
-}
-```
-*/}
-
 ```nix:nix/hosts/<host>/kubernetes.set.nix
 # Set: tools for working with Kubernetes clusters, on the work Mac only.
 # A new Kubernetes tool goes in this file, not in a file of its own; see
@@ -427,17 +381,6 @@ in
   };
 }
 ```
-
-{/* 削除候補:
-```nix:nix/home-manager/tools/difftastic.nix
-{ lib, pkgs, ... }:
-{
-  home.packages = [ pkgs.difftastic ];
-
-  my.gitConfig.alias.dft = "-c diff.external='${lib.getExe pkgs.difftastic} --syntax-highlight=off' diff";
-}
-```
-*/}
 
 書いたものは `~/.config/git/tools.gitconfig` にまとめて出力され、手書きの `.gitconfig` は最後にそれを include するだけにしている。
 
@@ -605,7 +548,7 @@ name=$(gcloud config configurations list | fzf --reverse --header-lines=1 | awk 
 gcloud config configurations activate "$name"
 ```
 
-依存を1か所ずつ埋め込むのではなく、リストで宣言できるのがいいところ。ビルドのときに shellcheck もかかる。ただし別のプロセスで動くので、`cd` したり環境変数を変えたりする関数には使えない。enhancd や fzf-tab のようにシェルに読み込ませるものは埋め込み、独立したコマンドにできるものは `writeShellApplication`、という使い分けにしている。{/* 削除候補: 切れた認証だけログインし直す `ohayo` も、gum を `runtimeInputs` に入れた同じ形のコマンドになっている。 */}
+依存を1か所ずつ埋め込むのではなく、リストで宣言できるのがいいところ。ビルドのときに shellcheck もかかる。ただし別のプロセスで動くので、`cd` したり環境変数を変えたりする関数には使えない。enhancd や fzf-tab のようにシェルに読み込ませるものは埋め込み、独立したコマンドにできるものは `writeShellApplication`、という使い分けにしている。
 
 ### プログラムごと包む
 
@@ -685,37 +628,7 @@ PATH に載せるのは、そのファイルが受け持つツールだけ、と
 
 どれも、欲しいコマンドだけを `bin` にリンクした小さなパッケージを作って、それを入れるように直した。
 
-{/* 削除候補:
-```nix:nix/home-manager/tools/bash.nix
-# A current bash for scripts that run `#!/usr/bin/env bash`. Only bash is
-# linked: bashInteractive also ships bin/sh, which would come before
-# macOS's /bin/sh on PATH.
-{ pkgs, ... }:
-{
-  home.packages = [
-    (pkgs.runCommand "bash" { } ''
-      mkdir -p $out/bin
-      ln -s ${pkgs.bashInteractive}/bin/bash $out/bin/bash
-    '')
-  ];
-}
-```
-*/}
-
 確かめ方は `which -a awk` で先頭が何かを見るだけなのだが、困ったことに、何かがおかしくなるまで見ようと思わない。[前回の記事](/post/2026/10/01/ai-agent-first-dotfiles/)で書いたとおり、AI は macOS にいることをわかっていて BSD の書き方をしてくるので、こういう名前の衝突は人間より AI の方が先に踏みやすいと思う。
-
-{/* 削除候補（要点は「消しても、使っている側は壊れない」の章に移した）:
-## ほかのやり方
-
-依存の持ち方には、ほかにも2つのやり方がある。
-
-1. fzf を入れるのは `fzf.nix` だけにして、ほかは PATH の fzf を使う
-2. 使う側のファイルが全部 `pkgs.fzf` を `home.packages` に入れる
-
-1はいちばんシンプル。fzf を消すときは使っている側も一緒に見直す、と割り切れるならこれで十分だと思う。ただ、消したファイル以外がビルドを通ったまま壊れるし、どこで fzf を使っているかを覚えておく必要がある。
-
-2なら `fzf.nix` を消しても動く。ただ、使う側が fzf を PATH に載せてしまうので、`fzf.nix` を消しても `fzf` が打てるままになる。「fzf を PATH に載せるのは `fzf.nix`」があいまいになり、ファイルを消したのにツールが消えない、という、ライフサイクルでファイルを組んだ意味がなくなる。とはいえ、手書きの設定ファイルから呼ばれるもの（gh-dash の delta など）はこの形しかとれないので、付属ツールとして本体のツールのファイルに入れている。
-*/}
 
 ## おわりに
 
