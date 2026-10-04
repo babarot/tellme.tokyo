@@ -319,9 +319,13 @@ imports = [
 
 どれも「一緒に入れて、一緒に消すもの」が1つのファイル（ばらなら1行）に入っている。ただ、一緒に消すかどうかは、依存しているかどうかとは別の話。fzf は bat の関数の中で使われているが、bat を消しても fzf は残したい。なので fzf は bat の付属ツールではなく、自分のファイル（`fzf.nix`）を持つ単体ツールになる。この区別が、次の章の依存の持ち方にそのまま効いてくる。
 
-### ほかのプログラムの設定にも書く
+### 共有の設定ファイルは、持ち寄りで作る
 
-どの種類のファイルにも、パッケージと一緒にそのツールのための設定を書く。書き先として、home-manager の上にいくつか自前の option を作っている。
+シェルや git の設定ファイルは、どれか1つのツールのものではない。かといって、手で1つのファイルに書くと、ツールを消したときに、そのツールのための行だけが取り残される。そこで、共有の設定ファイルは、ツールのファイルからの持ち寄りで作っている。eza の例の `my.human.aliases` もその1つで、各ツールのファイルが書いたエイリアスを、Nix が `human.zsh` 1つにまとめて書き出す。
+
+<Partial name="gather-settings" />
+
+ツールのファイルを消せば、そのツールが持ち寄った行だけが、共有の設定から消える。持ち寄る先ごとに、home-manager の上に自前の option を作っている。
 
 | option | 書くもの | 出力先 |
 |---|---|---|
@@ -332,11 +336,9 @@ imports = [
 | `my.gitConfig` | そのツールを使う git の設定 | `~/.config/git/tools.gitconfig` |
 | `my.skills` | ツールに同梱の Agent Skill | `~/.claude/skills` など |
 
-どれもツールのファイルから書けて、Nix のモジュールの仕組みで1つのファイルにまとめて出力される。`my.human` と `my.ai` の使い分けは[前回の記事](/post/2026/10/01/ai-agent-first-dotfiles/)で書いたので、ここでは残りの `my.path` と `my.gitConfig` を書く。
+`my.human` と `my.ai` の使い分けは[前回の記事](/post/2026/10/01/ai-agent-first-dotfiles/)で書いたので、ここでは残りの `my.path` と `my.gitConfig` を書く。
 
-`my.path` と `my.gitConfig` は、ツールのファイルから、PATH や git のような別のプログラムの設定に書き足すためのもの。これも、設定をツールのファイルに書いておけば、ツールと一緒に消える。
-
-### my.path
+### PATH に足す（my.path）
 
 PATH の順番は、どれか1つのツールのものではないので、`.zshenv` に手で書いている。mise の shims、`~/bin`、Nix のプロファイル、Homebrew の順に並べている。順番が大事なので、ツールのファイルからは触らせない。
 
@@ -358,7 +360,7 @@ config.xdg.configFile."zsh/env.zsh".text = lib.concatLines (
 
 - Go: `go install` の出力先を `GOBIN=~/go/bin` にして、`go.nix` の `my.path` で末尾に足している。`GOPATH=$HOME` のままだと出力先が `~/bin` になり、PATH の先頭なので、エディタのプラグインが更新のたびに入れ直す golangci-lint などが Nix 版を隠してしまう。末尾にあれば Nix 版が必ず勝つ
 - OrbStack: OrbStack は自分で `~/.zprofile` を作って PATH を足す（ログインシェルにしか効かない）。cask を宣言しているホストのファイルの隣に `my.path` を置いて、`.zprofile` は消した
-- krew: kubectl のプラグインは `~/.krew/bin` に入る。Kubernetes のセットに、krew と並べて `my.path` を書いている
+- krew: kubectl のプラグインは `~/.krew/bin` に入る。Kubernetes のセットに、krew と並べて `my.path` を書いているので、セットを消せば PATH の行も消える（下のコード）
 
 {/* 削除候補:
 ```nix:nix/home-manager/tools/go.nix
@@ -378,8 +380,6 @@ in
 }
 ```
 */}
-
-セットのファイルでも同じことができる。Kubernetes のセットは、パッケージと一緒に krew の `my.path` を持っているので、セットを消せば PATH の行も消える。
 
 ```nix:nix/hosts/<host>/kubernetes.set.nix
 # Set: tools for working with Kubernetes clusters, on the work Mac only.
@@ -404,7 +404,7 @@ in
 }
 ```
 
-### my.gitConfig
+### git の設定に足す（my.gitConfig）
 
 git の設定にも、ツールに属するものがある。git の log と show のページャを [ov](https://github.com/noborus/ov) にする設定や、[difftastic](https://github.com/Wilfred/difftastic) で diff を見る `git dft` のエイリアスなど。これらを手書きの `.gitconfig` に書くと、ツールを消したときに設定だけが残り、git がないコマンドを呼んで失敗する。
 
@@ -447,7 +447,7 @@ in
   path = ~/.config/git/tools.gitconfig
 ```
 
-`ov.nix` を消せば `tools.gitconfig` から ov の行が消え、ページャは `core.pager` の less に戻る。git は include したファイルが空でも、なくてもエラーにしないので、全部のツールを消しても困らない。`my.path` と同じく、ツールのファイルから別のプログラムの設定に参加して、消すときは一緒に消える形になっている。
+`ov.nix` を消せば `tools.gitconfig` から ov の行が消え、ページャは `core.pager` の less に戻る。git は include したファイルが空でも、なくてもエラーにしないので、全部のツールを消しても困らない。`my.path` と同じく、ツールのファイルから共有の設定に持ち寄り、消すときは一緒に消える形になっている。
 
 ## 消しても、使っている側は壊れない
 
