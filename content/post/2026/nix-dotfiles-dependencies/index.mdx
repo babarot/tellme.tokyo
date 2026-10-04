@@ -575,7 +575,7 @@ in
 
 ### コマンドにする
 
-シェルの状態を変えない関数なら、コマンドにするやり方もある。`.nix` に関数の中身を書いておくと、switch のときに Nix がそれを1本のスクリプトとして store に作り、プロファイルにリンクして、ふつうのコマンドとして使えるようにしてくれる。使うのは `writeShellApplication`。gcloud の configuration を fzf で切り替える `gchange` は、こう書いている。
+シェルの状態を変えない関数（`cd` したり、環境変数を変えたりしない関数）なら、コマンドにするやり方もある。`.nix` に関数の中身を書いておくと、switch のときに Nix がそれを1本のスクリプトとして store に作り、プロファイルにリンクして、ふつうのコマンドとして使えるようにしてくれる。使うのは `writeShellApplication`。gcloud の configuration を fzf で切り替える `gchange` は、こう書いている。
 
 ```nix:nix/home-manager/tools/gcloud.nix
 (pkgs.writeShellApplication {
@@ -591,7 +591,7 @@ in
 })
 ```
 
-`runtimeInputs` に、使うコマンドのパッケージを並べる。中ではコマンド名だけで `fzf` と書けるが、ビルドされたスクリプトの先頭で、これらの store のパスが PATH に足される。
+`gcloud` は、同じファイルで定義している gcloud 本体。`runtimeInputs` に、使うコマンドのパッケージを並べる。中ではコマンド名だけで `fzf` と書けるが、生成されたスクリプトの先頭で、これらの store のパスが PATH に足される。nixpkgs の bat が less を持つのと同じ形。
 
 ```bash
 #!/nix/store/…-bash-5.3p15/bin/bash
