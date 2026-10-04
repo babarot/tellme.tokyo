@@ -11,9 +11,9 @@ tags:
   - zsh
 ---
 
-dotfiles を長く育てていると、増えていくのはツールの数だけではない。あるツールのために書いた関数が、中で別のツールを呼んでいる。そういうツールどうしのつながりも、少しずつ増えていく。自分の dotfiles では fzf がその代表で、Git のブランチを選んで切り替える関数、gcloud の設定（アカウントやプロジェクト）を選んで切り替えるコマンド、[enhancd](https://github.com/babarot/enhancd) のディレクトリ移動、zsh の補完を fzf で絞り込む fzf-tab と、あちこちから使われている。ファイルを探す fd も、fzf が最初に並べるファイルの一覧、enhancd の候補、Neovim のファイル検索に使っていて、fzf 自身も中で fd を呼んでいる。
+dotfiles を長く育てていると、増えていくのはツールの数だけではない。あるツールのために書いた関数が、中で別のツールを呼んでいる。そういうツールどうしのつながりも、少しずつ増えていく。自分の dotfiles では [fzf](https://github.com/junegunn/fzf) がその代表で、Git のブランチを選んで切り替える関数、[gcloud](https://cloud.google.com/sdk/gcloud) の設定（アカウントやプロジェクト）を選んで切り替えるコマンド、[enhancd](https://github.com/babarot/enhancd) のディレクトリ移動、zsh の補完を fzf で絞り込む [fzf-tab](https://github.com/Aloxaf/fzf-tab) と、あちこちから使われている。ファイルを探す [fd](https://github.com/sharkdp/fd) も、fzf が最初に並べるファイルの一覧、enhancd の候補、[Neovim](https://neovim.io/) のファイル検索に使っていて、fzf 自身も中で fd を呼んでいる。
 
-このつながりがあると、ツールを消すのが怖くなる。fzf を消せば、それを使っている関数やプラグインが壊れる。しかも、壊れたことに気づくのは使おうとしたとき。逆に、kubectl を消したのに、`k` のエイリアスだけが設定ファイルに残っていることもある。新しい Mac では、何かを入れ忘れて同じことが起きる。
+このつながりがあると、ツールを消すのが怖くなる。fzf を消せば、それを使っている関数やプラグインが壊れる。しかも、壊れたことに気づくのは使おうとしたとき。逆に、[kubectl](https://kubernetes.io/docs/reference/kubectl/) を消したのに、`k` のエイリアスだけが設定ファイルに残っていることもある。新しい Mac では、何かを入れ忘れて同じことが起きる。
 
 10年以上 dotfiles をいじってきて、この問題には何度もやり方を変えて向き合ってきた。そして前回の記事「[dotfiles を AI agent のために作り変えた](/post/2026/10/01/ai-agent-first-dotfiles/)」で書いたとおり、今は [Nix](https://nixos.org/)（[nix-darwin](https://github.com/nix-darwin/nix-darwin) と [home-manager](https://github.com/nix-community/home-manager)）で管理している。Nix にしてからは、ツールを1つやめると、そのツールのためのものは全部消え、それを使っている別のものは壊れずに動き続ける。新しい Mac でも、同じものが同じ形で揃う。使ってみて、自分がパッケージ管理に求めていたのはこれだったと思った。
 
@@ -41,7 +41,7 @@ fi
 
 次に、zsh のプラグインマネージャの [zplug](https://github.com/zplug/zplug) を作った[^zplug]。zplug では、パッケージごとに `on:` で依存するパッケージを、`if:` で読み込む条件を書ける。
 
-例として、補完の候補を fzf で選べるようにする [fzf-tab](https://github.com/Aloxaf/fzf-tab) を考える。fzf-tab には依存が2種類ある。1つは fzf コマンドで、PATH にあればいい。もう1つは読み込む順番で、fzf-tab は compinit のあと、かつ [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) のようにウィジェットを包むプラグインより前に読み込む必要がある（fzf-tab の README にそう書いてある）。2016年ごろの設定はこうなっていた。
+例として、補完の候補を fzf で選べるようにする fzf-tab を考える。fzf-tab には依存が2種類ある。1つは fzf コマンドで、PATH にあればいい。もう1つは読み込む順番で、fzf-tab は compinit のあと、かつ [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) のようにウィジェットを包むプラグインより前に読み込む必要がある（fzf-tab の README にそう書いてある）。2016年ごろの設定はこうなっていた。
 
 ```zsh:.zsh/zplug.zsh
 # fzf が PATH にあるときだけ読み込む
@@ -132,11 +132,11 @@ $ nix-store -q --references /nix/store/svz1…-fzf-0.74.4
 
 違うのはタイムゾーンのデータ（tzdata）で、片方は 2026c、もう片方は 2026d を使っている。fzf のソースは1文字も変わっていないのに、依存の1つが上がっただけで、別のハッシュの別物として置かれる。よく見ると bash や bc も、バージョンは同じなのにハッシュが違う。これも、さらにその先の依存のどこかが変わったからで、変化は依存をたどって上まで伝わる。古いほうの fzf も、ガベージコレクションするまでは消されずに残っている。
 
-Homebrew なら、`brew upgrade` で `/opt/homebrew/bin/fzf` の向き先が新しいものに変わり、それを使っていたものは全部、黙って新しい fzf を使い始める。Nix では、`b5jb…-fzf-0.74.4` のパスを指しているものは、指し直すまでずっとそれを使う。store のパスを1つ書けば、どのビルドの何を使うかまで決まる、ということ。
+[Homebrew](https://brew.sh/) なら、`brew upgrade` で `/opt/homebrew/bin/fzf` の向き先が新しいものに変わり、それを使っていたものは全部、黙って新しい fzf を使い始める。Nix では、`b5jb…-fzf-0.74.4` のパスを指しているものは、指し直すまでずっとそれを使う。store のパスを1つ書けば、どのビルドの何を使うかまで決まる、ということ。
 
 ### 依存も store のパスで持つ
 
-この store の上で、パッケージは依存するものを、名前ではなく store のパスで指す。例えば nixpkgs の bat は、ページャに使う less をそうやって指している。bat のコマンドの実体（`bin/bat`）を開くと、中身はこういうスクリプトになっている。
+この store の上で、パッケージは依存するものを、名前ではなく store のパスで指す。例えば [nixpkgs](https://github.com/NixOS/nixpkgs) の [bat](https://github.com/sharkdp/bat) は、ページャに使う less をそうやって指している。bat のコマンドの実体（`bin/bat`）を開くと、中身はこういうスクリプトになっている。
 
 ```bash
 #! /nix/store/f0b9…-bash-5.3p15/bin/bash -e
@@ -197,7 +197,7 @@ $ readlink -f $(which fzf)
 
 後者で書けば、プラグインの依存の1つ目（コマンドが入っているか）は、`$+commands` で確かめる必要がなくなる。
 
-2つ目の読み込み順は、Nix でも自動では決まらない。今の dotfiles では、プラグインごとに、どのプラグインのあと（`after`）、どのプラグインの前（`before`）に読み込むかを名前で書き、home-manager がその前後関係から並べている。例えば zsh-abbr は、手書きの `~/.zsh`（`zsh-local` という名前で読み込んでいる）で `bindkey -v` したあとに読み込む必要があるので、`after` に `zsh-local` と書いている。
+2つ目の読み込み順は、Nix でも自動では決まらない。今の dotfiles では、プラグインごとに、どのプラグインのあと（`after`）、どのプラグインの前（`before`）に読み込むかを名前で書き、home-manager がその前後関係から並べている。例えば [zsh-abbr](https://github.com/olets/zsh-abbr) は、手書きの `~/.zsh`（`zsh-local` という名前で読み込んでいる）で `bindkey -v` したあとに読み込む必要があるので、`after` に `zsh-local` と書いている。
 
 ```nix:nix/home-manager/tools/zsh-abbr.nix
 my.human.plugins.zsh-abbr = {
@@ -235,7 +235,7 @@ my.human.plugins.zsh-abbr = {
 
 自分の dotfiles（[babarot/dotfiles](https://github.com/babarot/dotfiles)）は、nix-darwin と home-manager の設定として書いている。home-manager がホームディレクトリ（入れるパッケージと設定ファイル）を、nix-darwin が macOS そのものの設定を受け持つ。私用と仕事用の Mac 2台を、1つの flake（Nix の設定をまとめる単位。さっきの `flake.lock` もこれに付く）で管理している。
 
-書くのは `.nix` ファイルで、中身は「何を入れて、どんな設定を生成するか」を宣言している。例えば eza のファイルはこうなっている。
+書くのは `.nix` ファイルで、中身は「何を入れて、どんな設定を生成するか」を宣言している。例えば [eza](https://github.com/eza-community/eza) のファイルはこうなっている。
 
 ```nix:nix/home-manager/tools/eza.nix
 { pkgs, ... }:
@@ -287,7 +287,7 @@ imports = [
 
 <Partial name="kind-companions" />
 
-あるツールのためだけにあるツールは、付属ツールとして、本体のツールのファイルに入れる。delta と lazygit は、gh の拡張の gh-dash から呼ぶためだけに入れているので、gh を消すなら一緒に消していい。逆に、付属ツールだけを消しても gh は残る。
+あるツールのためだけにあるツールは、付属ツールとして、本体のツールのファイルに入れる。[delta](https://github.com/dandavison/delta) と [lazygit](https://github.com/jesseduffield/lazygit) は、[gh](https://cli.github.com/) の拡張の [gh-dash](https://github.com/dlvhdr/gh-dash) から呼ぶためだけに入れているので、gh を消すなら一緒に消していい。逆に、付属ツールだけを消しても gh は残る。
 
 <Partial name="kind-set" />
 
@@ -340,9 +340,9 @@ config.xdg.configFile."zsh/env.zsh".text = lib.concatLines (
 
 使っている例はこのあたり。
 
-- Go: `go install` の出力先を `GOBIN=~/go/bin` にして、`go.nix` の `my.path` で末尾に足している。`GOPATH=$HOME` のままだと出力先が `~/bin` になり、PATH の先頭なので、エディタのプラグインが更新のたびに入れ直す golangci-lint などが Nix 版を隠してしまう。末尾にあれば Nix 版が必ず勝つ
-- OrbStack: OrbStack は自分で `~/.zprofile` を作って PATH を足す（ログインシェルにしか効かない）。cask を宣言しているホストのファイルの隣に `my.path` を置いて、`.zprofile` は消した
-- krew: kubectl のプラグインは `~/.krew/bin` に入る。Kubernetes のセットに、krew と並べて `my.path` を書いているので、セットを消せば PATH の行も消える（下のコード）
+- [Go](https://go.dev/): `go install` の出力先を `GOBIN=~/go/bin` にして、`go.nix` の `my.path` で末尾に足している。`GOPATH=$HOME` のままだと出力先が `~/bin` になり、PATH の先頭なので、エディタのプラグインが更新のたびに入れ直す golangci-lint などが Nix 版を隠してしまう。末尾にあれば Nix 版が必ず勝つ
+- [OrbStack](https://orbstack.dev/): OrbStack は自分で `~/.zprofile` を作って PATH を足す（ログインシェルにしか効かない）。cask を宣言しているホストのファイルの隣に `my.path` を置いて、`.zprofile` は消した
+- [krew](https://krew.sigs.k8s.io/): kubectl のプラグインは `~/.krew/bin` に入る。Kubernetes のセットに、krew と並べて `my.path` を書いているので、セットを消せば PATH の行も消える（下のコード）
 
 ```nix:nix/hosts/<host>/kubernetes.set.nix
 # Set: tools for working with Kubernetes clusters, on the work Mac only.
@@ -559,7 +559,7 @@ gcloud config configurations activate "$name"
 
 ### プログラムごと包む
 
-シェル関数なら1か所ずつ store のパスを埋め込めばいいが、エディタは中でたくさんのコマンドを、コマンド名だけで呼ぶ。例えば snacks.nvim のピッカーは、ファイル検索に fd を、grep に rg を PATH から呼ぶ。rg を入れているのは `packages.nix` の1行なので、その行を消すと、nvim の grep が黙って動かなくなる。ファイル検索のほうはもっと気づきにくく、fd がなければ `.gitignore` を無視する find に切り替わって、それらしく動き続ける。LSP の設定（`vim.lsp.enable`）が探す gopls や lua-language-server、保存時に整形する conform が呼ぶ goimports や jq も同じ。
+シェル関数なら1か所ずつ store のパスを埋め込めばいいが、エディタは中でたくさんのコマンドを、コマンド名だけで呼ぶ。例えば [snacks.nvim](https://github.com/folke/snacks.nvim) のピッカーは、ファイル検索に fd を、grep に [rg](https://github.com/BurntSushi/ripgrep) を PATH から呼ぶ。rg を入れているのは `packages.nix` の1行なので、その行を消すと、nvim の grep が黙って動かなくなる。ファイル検索のほうはもっと気づきにくく、fd がなければ `.gitignore` を無視する find に切り替わって、それらしく動き続ける。LSP の設定（`vim.lsp.enable`）が探す gopls や lua-language-server、保存時に整形する conform が呼ぶ goimports や jq も同じ。
 
 nvim の設定は手書きの Lua で、LSP やプラグインの設定は、コマンドを名前で探す前提になっている。Lua に store のパスを書くこともできるが、手書きの Lua に Nix の値を埋め込むのはめんどくさい。そこで、nvim 自体を包んで、nvim だけの PATH に、nvim が呼ぶコマンドを足している。
 
