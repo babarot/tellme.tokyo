@@ -611,7 +611,9 @@ gcloud config configurations activate "$name"
 
 シェル関数なら1か所ずつ store のパスを埋め込めばいいが、エディタは中でたくさんのコマンドを、コマンド名だけで呼ぶ。例えば snacks.nvim のピッカーは、ファイル検索に fd を、grep に rg を PATH から呼ぶ。rg を入れているのは `packages.nix` の1行なので、その行を消すと、nvim の grep が黙って動かなくなる。ファイル検索のほうはもっと気づきにくく、fd がなければ `.gitignore` を無視する find に切り替わって、それらしく動き続ける。LSP の設定（`vim.lsp.enable`）が探す gopls や lua-language-server、保存時に整形する conform が呼ぶ goimports や jq も同じ。
 
-LSP サーバーとフォーマッタは nvim のためだけにあるので、nvim の付属ツールとして `neovim.nix` に書いている。ただ、そのまま `home.packages` に入れると、nvim しか使わないものがユーザーの PATH に並ぶ。一方、fd や rg、jq は nvim の付属ツールではなく、自分のファイルを持つ単体ツールや、`packages.nix` のばらとして入れている。bat が fzf を持つのと同じように、nvim の依存として store のパスで持たせたい。Lua の設定に store のパスを書くこともできるが、手書きの Lua に Nix の値を埋め込むのはめんどくさい。そこで nvim 自体を包んで、nvim だけの PATH にこれらを足している。
+nvim の設定は手書きの Lua で、LSP やプラグインの設定は、コマンドを名前で探す前提になっている。Lua に store のパスを書くこともできるが、手書きの Lua に Nix の値を埋め込むのはめんどくさい。そこで、nvim 自体を包んで、nvim だけの PATH に、nvim が呼ぶコマンドを足している。
+
+足しているものは2種類ある。1つは、LSP サーバーとフォーマッタ。nvim のためだけにあるので、nvim の付属ツールとして `neovim.nix` に書いている。もう1つは、fd や rg、jq。こちらは nvim の付属ツールではなく、自分のファイルを持つ単体ツールや、`packages.nix` のばらとして入れているもので、nvim から見れば依存になる。bat が fzf を持つのと同じく、store のパスで持たせる。
 
 ```nix:nix/home-manager/tools/neovim.nix
   # Tools Neovim runs by name: LSP servers, conform's formatters and what
@@ -651,7 +653,7 @@ in
 - `--suffix` で PATH の末尾に足すので、プロジェクトが mise で別のバージョンの gopls などを指定していれば、そちらが先に見つかる
 - `home.packages` に入るのは包んだ nvim だけで、gopls などの LSP サーバーはユーザーの PATH に出てこない。nvim しか使わないものが、ユーザーの PATH に並ばなくなる
 
-試しに PATH を `/usr/bin:/bin` だけにして nvim を起動してみると、LSP サーバーとフォーマッタに加えて fd、rg、gh も見つかり、崩した JSON を conform が jq で整形した。シェル関数は1か所ずつ埋め込み、中でたくさんのコマンドをコマンド名だけで呼ぶものは、プログラムごと包む。形は違うが、どちらも依存を store のパスで持っていることに変わりはない。
+試しに PATH を `/usr/bin:/bin` だけにして nvim を起動してみると、LSP サーバーとフォーマッタに加えて fd、rg、gh も見つかり、崩した JSON を conform が jq で整形した。埋め込む、コマンドにする、プログラムごと包む。形は違うが、どれも依存を store のパスで持っていることに変わりはない。
 
 ### store のパスにしないもの
 
