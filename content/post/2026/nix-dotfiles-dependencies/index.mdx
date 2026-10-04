@@ -238,6 +238,8 @@ my.human.plugins.zsh-abbr = {
 
 ## ツールごとにファイルを分ける
 
+目指しているのは、ツールのファイルを1つ消したときに、何が起きるかがそのファイルを見るだけでわかること。そのためには2つ要る。消すべきものが全部消えることと、消してはいけないものが壊れないこと。この章は1つ目の、ファイルを消したら、そのツールのものが残らず消えるようにする話。
+
 自分の dotfiles（[babarot/dotfiles](https://github.com/babarot/dotfiles)）は、nix-darwin と home-manager の設定として書いている。home-manager がホームディレクトリ（入れるパッケージと設定ファイル）を、nix-darwin が macOS そのものの設定を受け持つ。私用と仕事用の Mac 2台を、1つの flake（Nix の設定をまとめる単位。さっきの `flake.lock` もこれに付く）で管理している。
 
 書くのは `.nix` ファイルで、中身は「何を入れて、どんな設定を生成するか」を宣言している。例えば eza のファイルはこうなっている。
@@ -451,11 +453,11 @@ in
 
 ## 消しても、使っている側は壊れない
 
-ファイルを消せば、中のツールもエイリアスも環境変数も一緒に消える。ただ、ツールは自分のファイルの中だけで使われているとは限らない。例えば bat には、テーマを fzf で選びながらプレビューする `bat-theme` という関数を生やしている。前の章で書いたとおり fzf は bat の付属ツールではなく、`fzf.nix` を持つ単体ツールになっている。この関数の中に、コマンド名だけで `fzf` と書いていたら、`fzf.nix` を消した時点で `command not found` で落ちる。しかもビルドは普通に通る。`$+commands` の時代と同じ問題が起きる。
+前の章は、ファイルを消したときに、消えるべきものが全部消える話だった。この章はその逆で、消えてはいけないものが壊れないようにする話。ツールは、自分のファイルの中だけで使われているとは限らない。例えば bat には、テーマを fzf で選びながらプレビューする `bat-theme` という関数を生やしている。前の章で書いたとおり fzf は bat の付属ツールではなく、`fzf.nix` を持つ単体ツールになっている。この関数の中に、コマンド名だけで `fzf` と書いていたら、`fzf.nix` を消した時点で `command not found` で落ちる。しかもビルドは普通に通る。`$+commands` の時代と同じ問題が起きる。
 
 ### bat は fzf を store のパスで持つ
 
-なので bat は、実際にはこう書いている。
+そこで bat は、fzf を store のパスで持たせている。`bat.nix` はこう書いている。
 
 ```nix:nix/home-manager/tools/bat.nix
 { lib, pkgs, ... }:
@@ -487,11 +489,28 @@ in
 }
 ```
 
-この1ファイルに、bat を入れること、人間と AI で違うページャ、`bat-theme` 関数が全部入っている。肝となるのは `bat-theme` の中の fzf で、コマンド名だけで `fzf` と書かずに `${fzf}`、つまり `lib.getExe pkgs.fzf` で取った store のパスを埋め込んでいる。生成される `human.zsh` には `/nix/store/b5jb…-fzf-0.74.4/bin/fzf` のようなパスがそのまま書かれる。
+肝となるのは `bat-theme` の中の fzf で、コマンド名だけで `fzf` と書かずに `${fzf}` と書いている。`${fzf}` は、`let` の中で `lib.getExe pkgs.fzf` で取った fzf の store のパス。switch したあとの `human.zsh` を見ると、そこがフルパスに置き換わっている。
 
-決まりとしてはこう。`home.packages` で PATH に載せるのは、そのファイルのツール（とその付属ツール）だけ。ほかのツールの設定の中で使うコマンドは、PATH を通さずに store のパスで呼ぶ。fzf を PATH に載せるのは `fzf.nix` の仕事で、bat は fzf が PATH にあるかどうかを気にしない。
+```zsh:~/.config/zsh/human.zsh
+bat-theme() {
+  local file=$1
+  if [[ -z $file ]]; then
+    file=$(/nix/store/b5jb…-fzf-0.74.4/bin/fzf)
+  fi
+  bat --list-themes | /nix/store/b5jb…-fzf-0.74.4/bin/fzf --preview="bat --theme={} --color=always ${file}"
+}
+```
 
-Nix で書くなら、ほかの決め方もできる。1つは、bat も fzf をコマンド名だけで呼び、fzf を入れるのは `fzf.nix` に任せるやり方。いちばん素直だが、`fzf.nix` を消すと bat の関数がビルドを通ったまま壊れる。これは `$+commands` の時代と同じで、Nix にした意味が薄い。もう1つは、fzf を使う側のファイルも全部 `home.packages` に fzf を入れるやり方。これなら壊れないが、`fzf.nix` を消しても bat が fzf を PATH に載せ続けるので、ファイルを消したのに fzf が打てるまま残る。依存は store のパスで持ち、PATH に載せるのは自分のツールだけ、という今の決まりは、この2つの困るところをどちらも避けるためのもの。
+この関数は、PATH を探さずに、store の fzf を直接起動する。
+
+決まりとしてはこう。`home.packages` で PATH に載せるのは、そのファイルが受け持つツールだけ。ほかのツールの設定の中で使うコマンドは、PATH を通さずに store のパスで呼ぶ。fzf を PATH に載せるのは `fzf.nix` の仕事で、bat は fzf が PATH にあるかどうかを気にしない。
+
+fzf の持ち方は、ほかに2通り考えられる。
+
+1. bat-theme の中では fzf をコマンド名だけで呼び、fzf を入れるのは `fzf.nix` に任せる。いちばん素直だが、`fzf.nix` を消すと bat-theme が壊れる。消してはいけないものが壊れるので、この章の目的に合わない。
+2. `bat.nix` の `home.packages` にも fzf を入れる。これなら bat-theme は壊れないが、`fzf.nix` を消しても `bat.nix` が fzf を入れ続けるので、fzf が打てるまま残る。消すべきものが消えないので、前の章の目的に合わない。
+
+今の決まり（PATH に載せるのは自分が受け持つツールだけ、ほかのツールは store のパスで使う）は、この2つの両方を満たすためのもの。
 
 ### fzf.nix を消してみる
 
