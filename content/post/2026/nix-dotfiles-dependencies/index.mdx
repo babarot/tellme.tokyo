@@ -184,7 +184,7 @@ $ readlink -f $(which fzf)
 
 ### 設定も store のパスを持てる
 
-ここまでは、Nix がパッケージをどう扱うかの話だった。Nix そのものは、パッケージをビルドして store に置くための道具で、自分のホームディレクトリに何があるかまでは面倒を見ない。そこを受け持つのが home-manager。Nix の上で動く道具で、「どのパッケージをプロファイルに入れるか」と「`~/.config` などの設定ファイルの中身」を、`.nix` ファイルに書いて宣言できる。
+ここまでは、Nix がパッケージをどう扱うかの話だった。Nix そのものは、パッケージをビルドして store に置くための道具で、自分のホームディレクトリに何があるかまでは面倒を見ない。そこを受け持つのが home-manager。Nix の上で動く道具で、「どのパッケージをプロファイルに入れるか」と「`~/.config` などの設定ファイルの中身」を、`.nix` ファイルに書いて宣言できる。`.nix` ファイルは、Nix 言語で書く。設定を書くための小さな言語で、`pkgs.fzf` のようにパッケージを名前で取り出したり、文字列の中に `${...}` で値を埋め込んだりできる（[Nix language basics](https://nix.dev/tutorials/nix-language.html)）。
 
 設定ファイルの中身を宣言する、というのは、ファイルを手で書く代わりに、中身を `.nix` の中に文字列で書いておくということ。switch すると、Nix はその文字列を1つのファイルとして store に置き、ホームディレクトリにはそのファイルへのリンクを置く。パッケージと同じ扱いになる。手元の `human.zsh`（人間用のシェルが読む設定）も、こうなっている。
 
@@ -524,14 +524,20 @@ fzf の持ち方は、ほかに2通り考えられる。
 
 ### 設定に埋め込む
 
-シェルの関数や環境変数の中で使うなら、`let` で store のパスを取っておいて埋め込むだけでいい。zsh のプラグインなら、プラグインが呼ぶコマンドを設定で指定できることが多い。fzf-tab は `zstyle` で fzf のコマンドを渡せる。
+fzf の持たせ方は、使う場所によって3通りある。
+
+1. 設定に埋め込む: シェルに読み込ませる関数や環境変数、プラグインの設定。bat-theme がこれ
+2. コマンドにする: 関数を、Nix に1本のスクリプトとして作らせ、ふつうのコマンドとして PATH に置く。シェルの状態を変えない関数なら、これでいい
+3. プログラムごと包む: 中でたくさんのコマンドを名前で呼ぶプログラム
+
+1つ目は、bat-theme でやったとおり、`let` で store のパスを取っておいて埋め込むだけ。埋め込む先は関数に限らない。zsh のプラグインなら、プラグインが呼ぶコマンドを設定で指定できることが多く、fzf-tab は `zstyle` で fzf のコマンドを渡せる。
 
 ```nix:nix/home-manager/tools/fzf-tab.nix
 # fzf from the store, so it does not depend on fzf.nix putting fzf on PATH
 zstyle ':fzf-tab:*' fzf-command ${lib.getExe pkgs.fzf}
 ```
 
-[enhancd](https://github.com/babarot/enhancd) は、今はこうなっている。
+enhancd は、環境変数（`ENHANCD_FILTER`）と、Nix で生成する設定ファイル（`config.ltsv`）の両方に埋め込んでいる。
 
 ```nix:nix/home-manager/tools/enhancd.nix
 let
@@ -565,11 +571,11 @@ in
 
 フィルタとプレビュー（fzf、eza）に加えて、enhancd のオプションが呼ぶ ghq と fd も、設定ファイル（`config.ltsv`）ごと Nix で生成して store のパスで持っている。enhancd が使う4つのツールは、どれも PATH に誰がいるかとは関係なく動く。
 
-ちなみに、別のファイルが同じ `pkgs.fzf` を参照していても、store のパスは同じなので fzf が2つ入ることはない。`home.packages` も同じで、各ファイルのリストはモジュールの仕組みで1本につながれ、同じパッケージが何回出てきても入るのは1つになる。重複を気にして入れる場所を1か所に寄せる必要はなく、気にするべきなのは「PATH に載せる責任を誰が持つか」のほうだと思う。
+ちなみに、いくつのファイルが `pkgs.fzf` を指していても、store のパスは同じなので、入る fzf は1つだけ。重複を気にして入れる場所を1か所に寄せる必要はなく、気にするべきなのは「PATH に載せる責任を誰が持つか」のほうだと思う。
 
 ### コマンドにする
 
-シェルの状態を変えない関数なら、`writeShellApplication` でコマンドにするやり方もある。gcloud の configuration を fzf で切り替える `gchange` は、こう書いている。
+シェルの状態を変えない関数なら、コマンドにするやり方もある。`.nix` に関数の中身を書いておくと、switch のときに Nix がそれを1本のスクリプトとして store に作り、プロファイルにリンクして、ふつうのコマンドとして使えるようにしてくれる。使うのは `writeShellApplication`。gcloud の configuration を fzf で切り替える `gchange` は、こう書いている。
 
 ```nix:nix/home-manager/tools/gcloud.nix
 (pkgs.writeShellApplication {
