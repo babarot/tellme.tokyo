@@ -193,20 +193,23 @@ $ readlink -f $(which fzf)
 
 後者で書けば、プラグインの依存の1つ目（コマンドが入っているか）は、`$+commands` で確かめる必要がなくなる。
 
-2つ目の読み込み順は、Nix でも自動では決まらない。今の dotfiles では、プラグインごとに `order` という数字を書いて、その順に source している。例えば zsh-abbr は、手書きの `~/.zsh`（order 5000）で `bindkey -v` したあとに読み込む必要があるので、いちばん後ろにしている。
+2つ目の読み込み順は、Nix でも自動では決まらない。今の dotfiles では、プラグインごとに、どのプラグインのあと（`after`）、どのプラグインの前（`before`）に読み込むかを名前で書き、home-manager がその前後関係から並べている。例えば zsh-abbr は、手書きの `~/.zsh`（`zsh-local` という名前で読み込んでいる）で `bindkey -v` したあとに読み込む必要があるので、`after` に `zsh-local` と書いている。
 
 ```nix:nix/home-manager/tools/zsh-abbr.nix
 my.human.plugins.zsh-abbr = {
   src = pkgs.zsh-abbr;
   file = "share/zsh/zsh-abbr/zsh-abbr.zsh";
   # After ~/.zsh/20_bindkeys.zsh: abbr binds space in the keymap
-  # `bindkey -v` selects
-  order = 6000;
+  # `bindkey -v` selects. Before fast-syntax-highlighting, which wraps
+  # only the widgets that exist when it loads: abbr redefines space and
+  # accept-line, which would otherwise not update the highlighting
+  after = [ "zsh-local" ];
+  before = [ "fast-syntax-highlighting" ];
   # ...
 };
 ```
 
-順番を書くこと自体は、zplug や afx と変わらない。違うのは、生成される `human.zsh` の source の行に store のパスが入ること。Nix が入れた特定のビルドを読み込むので、依存先のプラグインが消えて壊れることはない。
+順番を自分で書くこと自体は、zplug の `on:` や afx の `depends-on` と変わらない。違うのは、生成される `human.zsh` の source の行に store のパスが入ること。Nix が入れた特定のビルドを読み込むので、依存先のプラグインが消えて壊れることはない。`fast-syntax-highlighting.nix` を消しても、`before` に書いた名前が無視されるだけで、zsh-abbr はそのまま読み込まれる。
 
 ここまでをまとめると、こうなる。
 
@@ -216,7 +219,7 @@ my.human.plugins.zsh-abbr = {
 | どれを使うか | PATH で最初に見つかったもの | パスで1つに決まる |
 | 依存先を消したとき | 使っている側が黙って壊れる | 参照があれば残る |
 | 新しい Mac | 入れ忘れが起きる | `flake.lock` で同じものが揃う |
-| 読み込み順 | `on:` や `depends-on` で書く | `order` で書く（ここは変わらない） |
+| 読み込み順 | `on:` や `depends-on` で書く | `after` や `before` で書く（ここは変わらない） |
 
 `flake.lock` は、使う nixpkgs などのバージョンを固定しておくファイル。これがあるので、2台の Mac でも、同じ store のパスの同じものが入る。
 
