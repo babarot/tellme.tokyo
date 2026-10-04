@@ -281,6 +281,11 @@ imports = [
 
 上で書いたとおり、ファイルを置けばそのツールが入り、消せば消える。なので、ファイルは「一緒に入れて、一緒に消すもの」の単位で分けている。基本は1ツールごとに1つ（[前回の記事](/post/2026/10/01/ai-agent-first-dotfiles/)で「1ツール1ファイル」と呼んだもの）。ただ、それだけでは収まらないものもあるので、ファイルを4種類に分けている。
 
+1. 単体ツール（設定あり）
+2. 付属ツールを持つツール
+3. ツールのセット
+4. ばら（単体のツール、設定なし）
+
 {/* 削除候補（図に一本化した）:
 | 種類 | ファイル名 | 中身 | 例 |
 |---|---|---|---|
@@ -290,29 +295,29 @@ imports = [
 | カタログ | 決まった名前 | 設定のないツールやアプリの一覧 | `packages.nix`、`apps.nix` |
 */}
 
-4つを並べると、こうなる。
-
+{/* 削除候補（1枚ずつの図に置き換えた）:
 <Partial name="file-kinds" />
-
-（試し: 4つを1枚ずつにした図）
+*/}
 
 <Partial name="kind-single" />
 
+ほとんどのファイルはこれ。1つのツールと、そのツールのためのエイリアスや環境変数を、1つのファイルに書く。設定が何もないツールは、ファイルを作るまでもないので、4のばらに回す。
+
 <Partial name="kind-companions" />
+
+あるツールのためだけにあるツールは、付属ツールとして、本体のツールのファイルに入れる。delta と lazygit は、gh の拡張の gh-dash から呼ぶためだけに入れているので、gh を消すなら一緒に消していい。逆に、付属ツールだけを消しても gh は残る。
 
 <Partial name="kind-set" />
 
+ツールのセットは、主役のいないツールの集まり。Kubernetes まわりのツール（kubectl、kubectx、helmfile、krew など）は、どれか1つが主役というわけではないが、Kubernetes を触らなくなれば全部いらなくなるので、`kubernetes.set.nix` にまとめている。逆に、linter、フォーマッタ、JSON や YAML を扱うツールのように、種類が同じなだけのものはセットにしない。それぞれ別々に足したり消したりするので、1つのファイルにまとめると、ファイルを消したときにまだ使っているツールまで消えてしまう。ファイル名に `.set` を付けているのは、`kubernetes.nix` だと kubernetes というツールのファイルに見えてしまうから。
+
+この Kubernetes のセットは、仕事用の Mac でしか使わない。1台の Mac でしか使わないものは、同じ形のファイルを `nix/hosts/<host>/` に置き、その Mac にだけ読み込ませている。
+
 <Partial name="kind-list" />
 
-ほとんどのファイルは、1つのツールとその設定だけが入った「ツール」のファイル。設定のないツールは、ファイルを作らずに `packages.nix`（カタログ）に1行ずつ並べている。
+設定のないツールは、`packages.nix` に1行ずつ並べる。原理上は、これも1ツール1ファイルに分けられる。ただ、中身が `home.packages = [ pkgs.ripgrep ];` の1行だけの小さなファイルが何十個も並ぶだけなので、1つにまとめている。まとめても、消す単位は変わらない。セットと違ってファイルが消す単位なのではなく、1行ずつが単位で、1行消せばそのツールだけが消える。ファイルを1つ消すのが、1行消すことに置き換わっただけ。設定を足したくなったら、その行を消して、自分のファイルを持つ単体ツールに移す、というルールにしている。
 
-あるツールのためだけにあるツールは、ヘルパーとしてメインのツールのファイルに入れる。delta と lazygit は、gh の拡張の gh-dash から呼ぶためだけに入れているので、gh を消すなら一緒に消していい。逆に、ヘルパーだけを消しても gh は残る。
-
-一方、fzf は bat の関数の中で使われているが、bat を消しても fzf は残したい。なので fzf は bat のヘルパーではなく、自分のファイル（`fzf.nix`）を持つ独立したツールになる。依存されているかどうかと、ヘルパーかどうかは別の話で、この区別が次の章の依存の持ち方にそのまま効いてくる。
-
-グループは、メインのいないツールの集まり。例えば Kubernetes まわりのツール（kubectl、kubectx、helmfile、krew など）は、どれか1つが主役というわけではないが、Kubernetes を触らなくなれば全部いらなくなるので、`kubernetes.group.nix` にまとめている。逆に、linter、フォーマッタ、JSON や YAML を扱うツールのように、種類が同じなだけのものはグループにしない。それぞれ別々に足したり消したりするので、1つのファイルにまとめると、ファイルを消したときにまだ使っているツールまで消えてしまう。グループのファイル名に `.group` を付けているのは、`kubernetes.nix` だと kubernetes というツールのファイルに見えてしまうから。
-
-1台の Mac でしか使わないものは、同じ形のファイルを `nix/hosts/<host>/` に置き、その Mac にだけ読み込ませている。Kubernetes のグループも、仕事用の Mac のディレクトリにある。
+どれも「一緒に入れて、一緒に消すもの」が1つのファイル（ばらなら1行）に入っている。ただ、一緒に消すかどうかは、依存しているかどうかとは別の話。fzf は bat の関数の中で使われているが、bat を消しても fzf は残したい。なので fzf は bat の付属ツールではなく、自分のファイル（`fzf.nix`）を持つ単体ツールになる。この区別が、次の章の依存の持ち方にそのまま効いてくる。
 
 ### ほかのプログラムの設定にも書く
 
@@ -353,7 +358,7 @@ config.xdg.configFile."zsh/env.zsh".text = lib.concatLines (
 
 - Go: `go install` の出力先を `GOBIN=~/go/bin` にして、`go.nix` の `my.path` で末尾に足している。`GOPATH=$HOME` のままだと出力先が `~/bin` になり、PATH の先頭なので、エディタのプラグインが更新のたびに入れ直す golangci-lint などが Nix 版を隠してしまう。末尾にあれば Nix 版が必ず勝つ
 - OrbStack: OrbStack は自分で `~/.zprofile` を作って PATH を足す（ログインシェルにしか効かない）。cask を宣言しているホストのファイルの隣に `my.path` を置いて、`.zprofile` は消した
-- krew: kubectl のプラグインは `~/.krew/bin` に入る。Kubernetes のグループに、krew と並べて `my.path` を書いている
+- krew: kubectl のプラグインは `~/.krew/bin` に入る。Kubernetes のセットに、krew と並べて `my.path` を書いている
 
 {/* 削除候補:
 ```nix:nix/home-manager/tools/go.nix
@@ -374,12 +379,12 @@ in
 ```
 */}
 
-グループのファイルでも同じことができる。Kubernetes のグループは、パッケージと一緒に krew の `my.path` を持っているので、グループを消せば PATH の行も消える。
+セットのファイルでも同じことができる。Kubernetes のセットは、パッケージと一緒に krew の `my.path` を持っているので、セットを消せば PATH の行も消える。
 
-```nix:nix/hosts/<host>/kubernetes.group.nix
-# Group: tools for working with Kubernetes clusters, on the work Mac only.
+```nix:nix/hosts/<host>/kubernetes.set.nix
+# Set: tools for working with Kubernetes clusters, on the work Mac only.
 # A new Kubernetes tool goes in this file, not in a file of its own; see
-# "One file, one unit" in AGENTS.md for what makes a group.
+# "One file, one unit" in AGENTS.md for what makes a set.
 { config, pkgs, ... }:
 {
   home.packages = with pkgs; [
@@ -446,7 +451,7 @@ in
 
 ## 消しても、使っている側は壊れない
 
-ファイルを消せば、中のツールもエイリアスも環境変数も一緒に消える。ただ、ツールは自分のファイルの中だけで使われているとは限らない。例えば bat には、テーマを fzf で選びながらプレビューする `bat-theme` という関数を生やしている。前の章で書いたとおり fzf は bat のヘルパーではなく、`fzf.nix` を持つ独立したツールになっている。この関数の中に、コマンド名だけで `fzf` と書いていたら、`fzf.nix` を消した時点で `command not found` で落ちる。しかもビルドは普通に通る。`$+commands` の時代と同じ問題が起きる。
+ファイルを消せば、中のツールもエイリアスも環境変数も一緒に消える。ただ、ツールは自分のファイルの中だけで使われているとは限らない。例えば bat には、テーマを fzf で選びながらプレビューする `bat-theme` という関数を生やしている。前の章で書いたとおり fzf は bat の付属ツールではなく、`fzf.nix` を持つ単体ツールになっている。この関数の中に、コマンド名だけで `fzf` と書いていたら、`fzf.nix` を消した時点で `command not found` で落ちる。しかもビルドは普通に通る。`$+commands` の時代と同じ問題が起きる。
 
 ### bat は fzf を store のパスで持つ
 
@@ -484,7 +489,7 @@ in
 
 この1ファイルに、bat を入れること、人間と AI で違うページャ、`bat-theme` 関数が全部入っている。肝となるのは `bat-theme` の中の fzf で、コマンド名だけで `fzf` と書かずに `${fzf}`、つまり `lib.getExe pkgs.fzf` で取った store のパスを埋め込んでいる。生成される `human.zsh` には `/nix/store/b5jb…-fzf-0.74.4/bin/fzf` のようなパスがそのまま書かれる。
 
-決まりとしてはこう。`home.packages` で PATH に載せるのは、そのファイルのツール（とそのヘルパー）だけ。ほかのツールの設定の中で使うコマンドは、PATH を通さずに store のパスで呼ぶ。fzf を PATH に載せるのは `fzf.nix` の仕事で、bat は fzf が PATH にあるかどうかを気にしない。
+決まりとしてはこう。`home.packages` で PATH に載せるのは、そのファイルのツール（とその付属ツール）だけ。ほかのツールの設定の中で使うコマンドは、PATH を通さずに store のパスで呼ぶ。fzf を PATH に載せるのは `fzf.nix` の仕事で、bat は fzf が PATH にあるかどうかを気にしない。
 
 Nix で書くなら、ほかの決め方もできる。1つは、bat も fzf をコマンド名だけで呼び、fzf を入れるのは `fzf.nix` に任せるやり方。いちばん素直だが、`fzf.nix` を消すと bat の関数がビルドを通ったまま壊れる。これは `$+commands` の時代と同じで、Nix にした意味が薄い。もう1つは、fzf を使う側のファイルも全部 `home.packages` に fzf を入れるやり方。これなら壊れないが、`fzf.nix` を消しても bat が fzf を PATH に載せ続けるので、ファイルを消したのに fzf が打てるまま残る。依存は store のパスで持ち、PATH に載せるのは自分のツールだけ、という今の決まりは、この2つの困るところをどちらも避けるためのもの。
 
@@ -579,7 +584,7 @@ gcloud config configurations activate "$name"
 
 シェル関数なら1か所ずつ store のパスを埋め込めばいいが、エディタは中でたくさんのコマンドを、コマンド名だけで呼ぶ。例えば snacks.nvim のピッカーは、ファイル検索に fd を、grep に rg を PATH から呼ぶ。rg を入れているのは `packages.nix` の1行なので、その行を消すと、nvim の grep が黙って動かなくなる。ファイル検索のほうはもっと気づきにくく、fd がなければ `.gitignore` を無視する find に切り替わって、それらしく動き続ける。LSP の設定（`vim.lsp.enable`）が探す gopls や lua-language-server、保存時に整形する conform が呼ぶ goimports や jq も同じ。
 
-LSP サーバーとフォーマッタは nvim のためだけにあるので、nvim のヘルパーとして `neovim.nix` に書いている。ただ、そのまま `home.packages` に入れると、nvim しか使わないものがユーザーの PATH に並ぶ。一方、fd や rg、jq は nvim のヘルパーではなく、自分のファイルや `packages.nix` で入れている独立したツール。bat が fzf を持つのと同じように、nvim の依存として store のパスで持たせたい。Lua の設定に store のパスを書くこともできるが、手書きの Lua に Nix の値を埋め込むのはめんどくさい。そこで nvim 自体を包んで、nvim だけの PATH にこれらを足している。
+LSP サーバーとフォーマッタは nvim のためだけにあるので、nvim の付属ツールとして `neovim.nix` に書いている。ただ、そのまま `home.packages` に入れると、nvim しか使わないものがユーザーの PATH に並ぶ。一方、fd や rg、jq は nvim の付属ツールではなく、自分のファイルを持つ単体ツールや、`packages.nix` のばらとして入れている。bat が fzf を持つのと同じように、nvim の依存として store のパスで持たせたい。Lua の設定に store のパスを書くこともできるが、手書きの Lua に Nix の値を埋め込むのはめんどくさい。そこで nvim 自体を包んで、nvim だけの PATH にこれらを足している。
 
 ```nix:nix/home-manager/tools/neovim.nix
   # Tools Neovim runs by name: LSP servers, conform's formatters and what
@@ -626,7 +631,7 @@ in
 全部を store のパスにしているわけではない。次の3つは PATH のままにしている。
 
 - macOS 標準のコマンドと git（awk、sed など）: 消えたら何もかも壊れるので、store のパスにする意味がない
-- 手書きの設定ファイルの中で使うもの: gh-dash の `config.yml` は delta と lazygit を呼ぶが、このファイルには store のパスを書けない。delta と lazygit は gh-dash のためだけにあるので、gh のヘルパーとして `gh.nix` が PATH に載せている
+- 手書きの設定ファイルの中で使うもの: gh-dash の `config.yml` は delta と lazygit を呼ぶが、このファイルには store のパスを書けない。delta と lazygit は gh-dash のためだけにあるので、gh の付属ツールとして `gh.nix` が PATH に載せている
 - あれば使う、という任意の利用: rm.nvim には `vim.fn.executable('gomi') == 1 and 'gomi' or nil` と書いていて、gomi があればゴミ箱に送り、なければふつうに消す。なくても困らないので、依存として持たせない
 
 この決まりは dotfiles の AGENTS.md の「Where things go」にも書いてある。今は dotfiles をいじるのもほとんど AI なので、AI がツールを足すときもこれに従ってくれる。
@@ -670,7 +675,7 @@ in
 
 1はいちばんシンプル。fzf を消すときは使っている側も一緒に見直す、と割り切れるならこれで十分だと思う。ただ、消したファイル以外がビルドを通ったまま壊れるし、どこで fzf を使っているかを覚えておく必要がある。
 
-2なら `fzf.nix` を消しても動く。ただ、使う側が fzf を PATH に載せてしまうので、`fzf.nix` を消しても `fzf` が打てるままになる。「fzf を PATH に載せるのは `fzf.nix`」があいまいになり、ファイルを消したのにツールが消えない、という、一緒に入れて一緒に消すものでファイルを組んだ意味がなくなる。とはいえ、手書きの設定ファイルから呼ばれるもの（gh-dash の delta など）はこの形しかとれないので、ヘルパーとしてメインのツールのファイルに入れている。
+2なら `fzf.nix` を消しても動く。ただ、使う側が fzf を PATH に載せてしまうので、`fzf.nix` を消しても `fzf` が打てるままになる。「fzf を PATH に載せるのは `fzf.nix`」があいまいになり、ファイルを消したのにツールが消えない、という、一緒に入れて一緒に消すものでファイルを組んだ意味がなくなる。とはいえ、手書きの設定ファイルから呼ばれるもの（gh-dash の delta など）はこの形しかとれないので、付属ツールとして本体のツールのファイルに入れている。
 */}
 
 ## おわりに
