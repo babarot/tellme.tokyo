@@ -33,6 +33,10 @@ export default function bodyFont(): AstroIntegration {
           if (!weight) return next();
           try {
             res.setHeader('Content-Type', 'font/ttf');
+            // Without it every page fetches the font again, and font-display:
+            // optional gives up on it whenever it misses the first ~100ms.
+            // The whole font never changes, so it can be kept for good.
+            res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
             res.end(await wholeFont(weight));
           } catch (err) {
             next(err);
