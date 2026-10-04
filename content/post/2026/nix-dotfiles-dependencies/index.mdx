@@ -514,11 +514,13 @@ fzf の持ち方は、ほかに2通り考えられる。
 
 ### fzf.nix を消してみる
 
-ここで、さっきの Nix の仕組みがそのまま効く。`fzf.nix` を消して switch しても、外れるのはプロファイルの `bin/fzf` のリンクだけ。一方、`bat.nix` が書き出す `human.zsh` には fzf の store のパスが入っていて、Nix はその参照を記録しているので、fzf の本体は closure に残る。依存を持っているのは使う側のファイル自身なので、PATH に誰が何を載せているかとは関係なく動く。
+`fzf.nix` を消すと、何が起きるか。Nix の章で書いたとおり、switch で外れるのは、プロファイルの `bin/fzf` のリンクだけ。fzf の本体は store に残る。bat-theme を書き出した `human.zsh` が、fzf の store のパスを参照しているから。
 
-実際に `fzf.nix` を一時的に消してビルドし、生成物を見てみた。プロファイルの `bin/fzf` はなくなり、`fzf.nix` に書いていた `pskill`（fzf でプロセスを選んで kill する関数）も消えた。一方で、`bat-theme`、enhancd のフィルタ、fzf-tab、gcloud の設定を切り替えるコマンド（あとで書く `gchange`）は、store の fzf を指したまま残っていた。fzf を消したら fzf だけが消える、という狙いどおりの結果になった。
+実際に `fzf.nix` を一時的に消してビルドし、生成物を見てみた。
 
 <Partial name="store-and-links" />
+
+`fzf.nix` に書いていたもの（PATH 上の fzf と、fzf でプロセスを選んで kill する `pskill`）は、全部消えた。これは前の章の目的どおり。一方で、ほかのファイルにある bat-theme、enhancd のフィルタ、fzf-tab、gcloud の設定を切り替えるコマンド（あとで書く `gchange`）は、store の fzf を指したまま動く。これがこの章の目的。fzf を消したら、fzf だけが消える。
 
 ### 設定に埋め込む
 
