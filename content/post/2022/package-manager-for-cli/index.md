@@ -2,7 +2,7 @@
 title: "コマンドラインツール向けのパッケージマネージャを作った"
 date: "2022-03-02T00:00:00+09:00"
 description: ""
-draft: true
+draft: false
 hidden: false
 toc: false
 tags: []
