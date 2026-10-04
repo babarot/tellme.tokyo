@@ -91,22 +91,21 @@
   }
 
   .test {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--fig-space-1) var(--fig-space-2);
     font-size: var(--fig-text-sm);
   }
 
-  .test b {
+  .when {
+    color: var(--fig-muted);
+    font-size: var(--fig-text-xs);
     font-weight: 700;
   }
 
-  .lead {
-    color: var(--fig-muted);
-    font-size: var(--fig-text-xs);
-  }
 
-  .not {
-    color: var(--fig-muted);
-    font-size: var(--fig-text-xs);
-  }
+
 </style>
 
 <div class="kinds">
@@ -117,32 +116,27 @@
       <div class="row"><span class="pill main blue">eza</span></div>
       <div class="settings"><span class="chip">alias ls</span><span class="chip">alias ll</span><span class="chip">LS_COLORS</span></div>
     </div>
-    <div class="test">1つのツールと、その設定だけ。ファイルを消せば全部消える。</div>
+    <div class="test"><span class="when">消すと</span>eza と、その設定が消える</div>
   </div>
 
   <div class="card">
     <div class="name"><b>メインとヘルパー</b><span class="chip">&lt;メインのツール&gt;.nix</span></div>
     <div class="file">
       <code>gh.nix</code>
-      <div class="row"><span class="label">メイン</span><span class="pill main blue">gh</span><span class="note">拡張の gh-dash も入れる</span></div>
-      <div class="row"><span class="label">ヘルパー</span><span class="pill gray">delta</span><span class="pill gray">lazygit</span><span class="note">gh-dash から呼ぶためだけにある</span></div>
+      <div class="row"><span class="label">メイン</span><span class="pill main blue">gh</span></div>
+      <div class="row"><span class="label">ヘルパー</span><span class="pill gray">delta</span><span class="pill gray">lazygit</span><span class="note">gh-dash から呼ぶ</span></div>
     </div>
-    <div class="lead">主従の関係があるもの</div>
-    <div class="test"><b>メインを消すなら、ヘルパーも全部消していい。</b>逆は成り立たない（ヘルパーを消してもメインは残る）。</div>
-    <div class="not">fzf は bat の関数で使うが、bat を消しても残すので bat.nix には入れない</div>
+    <div class="test"><span class="when">消すと</span>gh と、ヘルパーも一緒に消える</div>
   </div>
 
   <div class="card">
     <div class="name"><b>グループ</b><span class="chip">&lt;対象&gt;.group.nix</span></div>
     <div class="file">
       <code>kubernetes.group.nix</code>
-      <div class="subject">対象: Kubernetes（メインのツールはいない）</div>
-      <div class="row"><span class="pill green">kubectl</span><span class="pill green">kubectx</span><span class="pill green">helmfile</span><span class="pill green">kustomize</span><span class="pill green">krew</span></div>
-      <div class="settings"><span class="chip">my.path ~/.krew/bin</span><span class="chip">abbr k=kubectl</span></div>
+      <div class="subject">対象: Kubernetes（メインはいない）</div>
+      <div class="row"><span class="pill green">kubectl</span><span class="pill green">kubectx</span><span class="pill green">helmfile</span><span class="pill green">krew</span><span class="note">…</span></div>
     </div>
-    <div class="lead">主従の関係がないもの</div>
-    <div class="test"><b>その対象を使わなくなるときに、全部まとめて消していい。</b></div>
-    <div class="not">linter やフォーマッタのように種類が同じなだけのものは、1つずつ足し消しするのでグループにしない</div>
+    <div class="test"><span class="when">消すと</span>Kubernetes のツールがまとめて消える</div>
   </div>
 
   <div class="card">
@@ -153,11 +147,10 @@
         <li>ripgrep</li>
         <li>hyperfine</li>
         <li>scc</li>
-        <li>tree</li>
         <li>…</li>
       </ul>
     </div>
-    <div class="test">設定のないツールを1行ずつ並べるだけ。1行消せばそのツールが消える。</div>
+    <div class="test"><span class="when">1行消すと</span>そのツールだけ消える</div>
   </div>
 </div>
 
