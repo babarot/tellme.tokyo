@@ -31,13 +31,13 @@ if (( $+commands[nvim] )); then
 fi
 ```
 
-これで、ないコマンドのせいでエラーになることはなくなる。ただ、やっているのは「なければ使わない」だけで、依存を解決しているわけではない。kubectl を入れ忘れれば `k` は黙って使えなくなるし、そもそも kubectl をどこで入れているかは、この行を見てもわからない。
+これで、kubectl がないときは `k` のエイリアスそのものが作られないので、`k` と打って kubectl の command not found に出くわすことはなくなる。ただ、これは kubectl がないときに `k` を作らないようにしているだけで、kubectl を用意してくれるわけではない。kubectl を入れ忘れれば `k` は黙って使えなくなるし、そもそも kubectl をどこで入れているかは、この行を見てもわからない。
 
 ### zplug で依存を宣言する
 
 次に、zsh のプラグインマネージャの [zplug](https://github.com/zplug/zplug) を作った[^zplug]。zplug では、パッケージごとに `on:` で依存するパッケージを、`if:` で読み込む条件を書ける。
 
-例として、補完の候補を fzf で選べるようにする [fzf-tab](https://github.com/Aloxaf/fzf-tab) を考える。fzf-tab には依存が2種類ある。1つは fzf コマンドで、PATH にあればいい。もう1つは読み込む順番で、fzf-tab は compinit のあと、かつ zsh-autosuggestions のようにウィジェットを包むプラグインより前に読み込む必要がある（fzf-tab の README にそう書いてある）。2016年ごろの設定はこうなっていた。
+例として、補完の候補を fzf で選べるようにする [fzf-tab](https://github.com/Aloxaf/fzf-tab) を考える。fzf-tab には依存が2種類ある。1つは fzf コマンドで、PATH にあればいい。もう1つは読み込む順番で、fzf-tab は compinit のあと、かつ [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) のようにウィジェットを包むプラグインより前に読み込む必要がある（fzf-tab の README にそう書いてある）。2016年ごろの設定はこうなっていた。
 
 ```zsh:.zsh/zplug.zsh
 # fzf が PATH にあるときだけ読み込む
@@ -56,7 +56,7 @@ zplug "zsh-users/zsh-autosuggestions", \
 
 ### afx で依存を宣言する
 
-その後、zplug の考え方を引き継いで、プラグインもコマンドも YAML で管理する [afx](https://github.com/babarot/afx) を作った[^afx]。afx には `depends-on` があり、パッケージ同士の依存を書くと、`afx init` がそれに合わせて読み込む順番を並べ替える。ただ、`depends-on` が決めるのは読み込む順番だけで、使うコマンドが本当に入っているかまでは見てくれない。外部のコマンドは、ここでも `if:` に `$+commands` を書いて確かめる。同じ fzf-tab なら、afx ではこうなる。
+その後、zplug の考え方を引き継いで、[afx](https://github.com/babarot/afx) を作った[^afx]。zplug は、どのプラグインやコマンドを入れるかを `.zshrc` の中に zsh のコードとして書く作りだった。afx はそれを YAML に移して、パッケージとその設定（環境変数やエイリアス）を、コードではなく宣言として書けるようにした。afx には `depends-on` があり、パッケージ同士の依存を書くと、`afx init` がそれに合わせて読み込む順番を並べ替える。ただ、`depends-on` が決めるのは読み込む順番だけで、使うコマンドが本当に入っているかまでは見てくれない。外部のコマンドは、ここでも `if:` に `$+commands` を書いて確かめる。同じ fzf-tab なら、afx ではこうなる。
 
 ```yaml:~/.config/afx/github.yaml
 - name: Aloxaf/fzf-tab
@@ -100,6 +100,37 @@ zplug "zsh-users/zsh-autosuggestions", \
 
 `b5jb…` の32文字はハッシュで、そのあとに名前とバージョンが続く。ハッシュは、そのパッケージをビルドするのに使ったもの（ソース、依存するパッケージ、ビルドの手順）から計算されていて、そのどれかが変われば別の値になる。中身が変われば置き場所も変わるので、store にあるものが後から書き換わることはない。
 
+それが実際に起きているのが、手元の store にある2つの fzf。
+
+```console
+$ ls -d /nix/store/*-fzf-0.74.4
+/nix/store/b5jbljds0rvgj4vxdcg903gj03bfk63x-fzf-0.74.4
+/nix/store/svz1m2kls62wd4xqv7sdrp9mkzyka4q8-fzf-0.74.4
+```
+
+バージョンはどちらも 0.74.4 なのに、ハッシュが違う。それぞれが参照しているもの（依存）を `nix-store -q --references` で並べると、違いが見える。
+
+```console
+$ nix-store -q --references /nix/store/b5jb…-fzf-0.74.4
+/nix/store/138q…-iana-etc-20251215
+/nix/store/f0b9…-bash-5.3p15
+/nix/store/rhri…-tzdata-2026d
+/nix/store/xxi0…-bc-1.08.2
+/nix/store/b5jb…-fzf-0.74.4
+
+$ nix-store -q --references /nix/store/svz1…-fzf-0.74.4
+/nix/store/9x7b…-bc-1.08.2
+/nix/store/j95q…-tzdata-2026c
+/nix/store/lb6n…-bash-5.3p15
+/nix/store/p7hv…-iana-etc-20251215
+/nix/store/svz1…-fzf-0.74.4
+```
+
+違うのはタイムゾーンのデータ（tzdata）で、片方は 2026c、もう片方は 2026d を使っている。fzf のソースは1文字も変わっていないのに、依存の1つが上がっただけで、別のハッシュの別物として置かれる。よく見ると bash や bc も、バージョンは同じなのにハッシュが違う。これも、さらにその先の依存のどこかが変わったからで、変化は依存をたどって上まで伝わる。古いほうの fzf も、ガベージコレクションするまでは消されずに残っている。
+
+Homebrew なら、`brew upgrade` で `/opt/homebrew/bin/fzf` の向き先が新しいものに変わり、それを使っていたものは全部、黙って新しい fzf を使い始める。Nix では、`b5jb…-fzf-0.74.4` のパスを指しているものは、指し直すまでずっとそれを使う。store のパスを1つ書けば、どのビルドの何を使うかまで決まる、ということ。
+
+{/* 削除候補（fzf の例に置き換えた）:
 手元の store で Go を探してみると、それがよくわかる。
 
 ```console
@@ -111,24 +142,43 @@ $ ls -d /nix/store/*-go-1.*[0-9]
 ```
 
 nixpkgs を更新するたびに入った Go が、消されずに全部残っている。1.27.1 が2つあるのは、同じバージョンでも、ビルドに使った何かが nixpkgs の更新で変わったからだと思う。Homebrew なら `brew upgrade` で `/opt/homebrew/bin/go` の向き先が新しいものに変わり、それを使っていたものは全部、黙って新しい Go を使い始める。Nix では、`go-1.26.7` のパスを指しているものは、指し直すまでずっと 1.26.7 を使う。store のパスを1つ書けば、どのビルドの何を使うかまで決まる、ということ。
+*/}
 
 ### 依存も store のパスで持つ
 
-この store の上で、パッケージは依存するものを名前ではなく store のパスで指す。例えば nixpkgs の bat は、ページャに使う less を store のパスで参照している。`nix-store -q --references` で bat が参照している store のパスを見ると、こうなる。
+この store の上で、パッケージは依存するものを、名前ではなく store のパスで指す。例えば nixpkgs の bat は、ページャに使う less をそうやって指している。bat のコマンドの実体（`bin/bat`）を開くと、中身はこういうスクリプトになっている。
 
-```console
-$ nix-store -q --references /nix/store/n65zrzg7x0kv5mxr1y4wg0xsjmkiy4z4-bat-0.26.1
-/nix/store/3yn3dx5fwg5i0inqqzwnxq7f6lwhpjqa-less-710
-/nix/store/f0b9dbw2gl596cm03pvdsss72381qhlp-bash-5.3p15
-/nix/store/fgrxz4hr8f71hkhsddbvk8nxadpg67bv-libiconv-115.100.1
-/nix/store/n65zrzg7x0kv5mxr1y4wg0xsjmkiy4z4-bat-0.26.1
+```bash
+#! /nix/store/f0b9…-bash-5.3p15/bin/bash -e
+PATH=${PATH:+':'$PATH':'}
+PATH=${PATH/':''/nix/store/3yn3…-less-710/bin'':'/':'}
+PATH='/nix/store/3yn3…-less-710/bin'$PATH
+PATH=${PATH#':'}
+PATH=${PATH%':'}
+export PATH
+exec -a "$0" "/nix/store/n65z…-bat-0.26.1/bin/.bat-wrapped"  "$@"
 ```
 
-Nix はこの参照を自分で記録している。パッケージと、それが参照するものを全部まとめたものを closure と呼び、bat を入れれば less も含めた closure が丸ごと揃う。逆に、ガベージコレクション（`nix-collect-garbage`）で消されるのは、どこからも参照されなくなった store のパスだけになる。参照されている限り消えないので、入れたはずの依存がない、ということが起きない。
+本物の bat（`.bat-wrapped`）を起動する前に、less の store のパスを PATH の先頭に足している。bat が中で `less` を呼ぶと、ユーザーの PATH に何があっても、まずこの less が見つかる。
+
+Nix は、できあがったファイルの中にほかの store のパス（ハッシュ）が書かれていないかを探して、見つかったものを依存として記録する。このスクリプトには less のパスが書いてあるので、less は bat の依存になる。パッケージと、それが参照するものを全部まとめたものを closure と呼び、bat なら bat、less、bash など6つのパスでできている。bat を入れれば、この closure が丸ごと揃う。逆に、ガベージコレクション（`nix-collect-garbage`）で消されるのは、どこからも参照されなくなった store のパスだけになる。参照されている限り消えないので、入れたはずの依存がない、ということが起きない。
 
 ### PATH はプロファイルが作る
 
-では、ふだん `fzf` と打って動くのはなぜか。PATH には store を直接並べるのではなく、プロファイルというディレクトリ（`/etc/profiles/per-user/babarot/bin` など）を入れていて、そこに store の本体へのリンクが並んでいる。Nix で「パッケージを入れる」というのは、このリンクを作ることを指している。消すときもリンクを外すだけで、本体は store に残る。
+では、ふだん `fzf` と名前だけで打って動くのはなぜか。
+
+コマンドを名前で打つと、シェルは PATH に並んだディレクトリを上から順に見ていき、その名前のファイルが最初に見つかったものを実行する。同じ名前のコマンドがいくつかあっても、使われるのは PATH で前にあるほう（`which -a fzf` で、候補とその順番が見える）。
+
+一方で、store の中身はパッケージごとにハッシュ付きのディレクトリに分かれている。これを1つずつ PATH に並べるわけにはいかない。そこで Nix は、プロファイルというディレクトリを1つ作り、入れたパッケージのコマンドへのリンクをそこに集める。ふだん使うシェルの PATH には、このディレクトリを1つ足しておくだけでいい。自分の環境では `/etc/profiles/per-user/babarot/bin` がそれ。
+
+```console
+$ which fzf
+/etc/profiles/per-user/babarot/bin/fzf
+$ readlink -f $(which fzf)
+/nix/store/b5jbljds0rvgj4vxdcg903gj03bfk63x-fzf-0.74.4/bin/fzf
+```
+
+プロファイルは `darwin-rebuild switch`（以下 switch。nix-darwin の、書いた設定を Mac に反映するコマンド）を実行するたびに作り直される。新しく入れたパッケージのリンクが足され、やめたもののリンクは外れる。どちらの場合も、store の本体には触らない。リンクが並ぶところは Homebrew の `/opt/homebrew/bin` と似ているが、違うのはリンクの先が書き換わらないこと。fzf を更新しても、プロファイルのリンクが新しい store のパスに張り替わるだけで、前の本体はそのまま残る。
 
 <Partial name="profile-links" />
 
@@ -136,7 +186,7 @@ Nix はこの参照を自分で記録している。パッケージと、それ�
 
 ここまでは、Nix がパッケージをどう扱うかの話だった。Nix そのものは、パッケージをビルドして store に置くための道具で、自分のホームディレクトリに何があるかまでは面倒を見ない。そこを受け持つのが home-manager。Nix の上で動く道具で、「どのパッケージをプロファイルに入れるか」と「`~/.config` などの設定ファイルの中身」を、`.nix` ファイルに書いて宣言できる。
 
-設定ファイルの中身を宣言する、というのは、ファイルを手で書く代わりに、中身を `.nix` の中に文字列で書いておくということ。`darwin-rebuild switch`（以下 switch。nix-darwin の、書いた設定を Mac に反映するコマンド）を実行すると、Nix はその文字列を1つのファイルとして store に置き、ホームディレクトリにはそのファイルへのリンクを置く。パッケージと同じ扱いになる。手元の `human.zsh`（人間用のシェルが読む設定）も、こうなっている。
+設定ファイルの中身を宣言する、というのは、ファイルを手で書く代わりに、中身を `.nix` の中に文字列で書いておくということ。switch すると、Nix はその文字列を1つのファイルとして store に置き、ホームディレクトリにはそのファイルへのリンクを置く。パッケージと同じ扱いになる。手元の `human.zsh`（人間用のシェルが読む設定）も、こうなっている。
 
 ```
 ~/.config/zsh/human.zsh
@@ -188,7 +238,7 @@ my.human.plugins.zsh-abbr = {
 
 ## babarot/dotfiles ではどう書いているか
 
-自分の dotfiles（[babarot/dotfiles](https://github.com/babarot/dotfiles)）は nix-darwin と home-manager で書いている。home-manager はさっき書いたとおりホームディレクトリを、nix-darwin は macOS のシステムの設定を、Nix で宣言するためのもの。私用と仕事用の Mac 2台を、1つの flake（Nix の設定をまとめる単位。さっきの `flake.lock` もこれに付く）で管理している。
+自分の dotfiles（[babarot/dotfiles](https://github.com/babarot/dotfiles)）は、nix-darwin と home-manager の設定として書いている。home-manager がホームディレクトリ（入れるパッケージと設定ファイル）を、nix-darwin が macOS そのものの設定を受け持つ。私用と仕事用の Mac 2台を、1つの flake（Nix の設定をまとめる単位。さっきの `flake.lock` もこれに付く）で管理している。
 
 書くのは `.nix` ファイルで、中身は「何を入れて、どんな設定を生成するか」を宣言している。例えば eza のファイルはこうなっている。
 
@@ -205,9 +255,9 @@ my.human.plugins.zsh-abbr = {
 }
 ```
 
-`home.packages` に書いたパッケージは、さっきのプロファイルにリンクされて PATH に載る。`my.human.aliases` は自分で作った option で、ここに書いたエイリアスは人間用のシェルが読む `human.zsh` に書き出される（option はあとでまとめて書く）。switch すると、Nix がパッケージを store に揃え、プロファイルと設定ファイルを作り直す。
+home-manager の設定は、決まった名前の項目（option）に値を書く形をしている。`home.packages` は home-manager が用意している option で、ここに書いたパッケージは、さっきのプロファイルにリンクされて PATH に載る。`my.human.aliases` は自分で作った option で、ここに書いたエイリアスは、人間用のシェルが読む `human.zsh` に書き出される（自分で作った option は、あとでまとめて書く）。switch すれば、この2つがそれぞれ反映される。
 
-こういうファイルが `nix/home-manager/tools/` に並んでいて、全部自動で読み込まれる。一覧をどこかに書く必要はない。
+こういうファイルが `nix/home-manager/tools/` に並んでいて、全部自動で読み込まれる。
 
 ```nix:nix/home-manager/default.nix
 imports = [
@@ -224,6 +274,8 @@ imports = [
   )
 );
 ```
+
+`tools/` の中から `.nix` で終わるファイルを全部探して、読み込む一覧に足している。なので、ファイルを置けばそのツールが入り、消せば消える。どのファイルを読み込むかを、どこかに書いておく必要はない。
 
 ### 1ツールごとに1ファイル
 
@@ -397,7 +449,7 @@ in
   home.packages = [ neovim ];
 ```
 
-`wrapProgram` は、`bin/nvim` を「PATH を足してから本物の nvim を起動する」小さなスクリプトに置き換える。足しているのは store のパスなので、考え方はシェル関数の `${fzf}` と変わらない。ポイントは2つある。
+`wrapProgram` は、`bin/nvim` を「PATH を足してから本物の nvim を起動する」小さなスクリプトに置き換える。nixpkgs の bat が less を持つのと同じ仕組み。足しているのは store のパスなので、考え方はシェル関数の `${fzf}` と変わらない。ポイントは2つある。
 
 - `--suffix` で PATH の末尾に足すので、プロジェクトが mise で別のバージョンの gopls などを指定していれば、そちらが先に見つかる
 - `home.packages` に入るのは包んだ nvim だけで、gopls などの LSP サーバーはユーザーの PATH に出てこない。nvim しか使わないものが、ユーザーの PATH に並ばなくなる
