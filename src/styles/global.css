@@ -100,7 +100,7 @@ html.dark {
 
 ::selection {
   background-color: var(--c-accent);
-  color: white;
+  color: var(--c-on-accent);
 }
 
 /* Colors for the plugins in src/plugins/, from the theme */

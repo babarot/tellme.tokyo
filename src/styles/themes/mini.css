@@ -22,6 +22,7 @@
   --c-code-bg: rgb(248 248 251);
   --c-code: rgb(34 30 46);
   --c-accent: rgb(113 97 239);
+  --c-on-accent: white;
   --c-draft: rgb(180 86 0); /* warm, as dark as the links are */
   --c-hidden: rgb(202 35 82);
   --c-shade: rgb(43 36 96 / 0.12);
@@ -48,6 +49,7 @@
   --c-code-bg: rgb(13 13 28);
   --c-code: rgb(233 233 233);
   --c-accent: rgb(166 67 253);
+  --c-on-accent: white;
   --c-draft: rgb(247 172 77);
   --c-hidden: rgb(249 120 148);
   --c-shade: rgb(255 255 255 / 0.12);

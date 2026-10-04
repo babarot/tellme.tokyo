@@ -26,6 +26,7 @@
   --c-code-bg: #d6d8df; /* sideBar.background */
   --c-code: #33635c; /* textPreformat.foreground */
   --c-accent: #2959aa; /* textLink.foreground */
+  --c-on-accent: white;
   --c-draft: #965027; /* orange in the token colors */
   --c-hidden: #8c4351; /* red in the token colors */
   --c-shade: rgb(52 59 89 / 0.15);
@@ -52,6 +53,7 @@
   --c-code-bg: #292e42; /* bg_highlight */
   --c-code: #7dcfff; /* cyan */
   --c-accent: #7aa2f7; /* blue */
+  --c-on-accent: white;
   --c-draft: #ff9e64; /* orange */
   --c-hidden: #f7768e; /* red */
   --c-shade: rgb(192 202 245 / 0.12);
