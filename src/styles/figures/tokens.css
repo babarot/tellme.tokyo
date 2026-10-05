@@ -19,8 +19,7 @@
   --fig-green: oklch(0.55 0.13 150);
   --fig-red: oklch(0.55 0.18 25);
 
-  /* type scale */
-  --fig-text-xs: 0.6875rem;
+  /* type scale. Nothing below 0.75rem: Japanese gets hard to read there */
   --fig-text-sm: 0.75rem;
   --fig-text: 0.875rem;
   --fig-text-lg: 1rem;

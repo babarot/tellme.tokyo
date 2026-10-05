@@ -76,7 +76,7 @@
   padding: 0 0.35em;
   color: var(--fig-muted);
   font-family: var(--font-mono);
-  font-size: var(--fig-text-xs);
+  font-size: var(--fig-text-sm);
 }
 
 /* .caption: a footer below a rule, for legends or a one-line takeaway */
@@ -212,7 +212,7 @@
 
 .fig .role {
   color: var(--fig-muted);
-  font-size: var(--fig-text-xs);
+  font-size: var(--fig-text-sm);
 }
 
 /* .headline: a figure's own title on its first line */
