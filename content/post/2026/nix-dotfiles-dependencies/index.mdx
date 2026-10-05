@@ -197,7 +197,7 @@ $ readlink -f $(which fzf)
 
 後者で書けば、プラグインの依存の1つ目（コマンドが入っているか）は、`$+commands` で確かめる必要がなくなる。
 
-2つ目の読み込み順は、Nix でも自動では決まらない。今の dotfiles では、プラグインごとに、どのプラグインのあと（`after`）、どのプラグインの前（`before`）に読み込むかを名前で書き、home-manager がその前後関係から並べている。例えば [zsh-abbr](https://github.com/olets/zsh-abbr) は、手書きの `~/.zsh`（`zsh-local` という名前で読み込んでいる）で `bindkey -v` したあとに読み込む必要があるので、`after` に `zsh-local` と書いている。
+2つ目の読み込み順は、Nix でも自動では決まらない。今の dotfiles では、プラグインごとに、どのプラグインのあと（`after`）、どのプラグインの前（`before`）に読み込むかを名前で書き、home-manager がその前後関係を DAG（有向非巡回グラフ）として並べている。例えば [zsh-abbr](https://github.com/olets/zsh-abbr) は、手書きの `~/.zsh`（`zsh-local` という名前で読み込んでいる）で `bindkey -v` したあとに読み込む必要があるので、`after` に `zsh-local` と書いている。
 
 ```nix:nix/home-manager/tools/zsh-abbr.nix
 my.human.plugins.zsh-abbr = {
