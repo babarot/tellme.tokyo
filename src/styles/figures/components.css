@@ -79,13 +79,14 @@
   font-size: var(--fig-text-sm);
 }
 
-/* .caption: a footer below a rule, for legends or a one-line takeaway */
+/* .caption: a footer below a rule, for legends or a one-line takeaway. The
+   size and color of an image's caption (figcaption), so both read as one */
 .fig .caption {
   margin-top: var(--fig-space-4);
   border-top: 1px solid var(--fig-border);
   padding-top: var(--fig-space-3);
   color: var(--fig-muted);
-  font-size: var(--fig-text-sm);
+  font-size: var(--fig-text);
 }
 
 /* .legend: a row of .tag items explaining the colors */
