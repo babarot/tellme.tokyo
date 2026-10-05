@@ -216,9 +216,10 @@
   font-size: var(--fig-text-sm);
 }
 
-/* .headline: a figure's own title on its first line */
+/* .headline: a figure's own title on its first line. The figure's text size,
+   below the article's headings (h3 is 1rem), so it never reads as one */
 .fig .headline {
   margin-bottom: var(--fig-space-3);
-  font-size: var(--fig-text-lg);
+  font-size: var(--fig-text);
   font-weight: 700;
 }
