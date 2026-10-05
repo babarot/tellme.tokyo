@@ -11,13 +11,15 @@ tags:
   - zsh
 ---
 
-dotfiles を長く育てていると、増えていくのはツールの数だけではない。あるツールのために書いた関数が、中で別のツールを呼んでいる。そういうツールどうしのつながりも、少しずつ増えていく。自分の dotfiles では [fzf](https://github.com/junegunn/fzf) がその代表で、Git のブランチを選んで切り替える関数、[gcloud](https://cloud.google.com/sdk/gcloud) の設定（アカウントやプロジェクト）を選んで切り替えるコマンド、[enhancd](https://github.com/babarot/enhancd) のディレクトリ移動、zsh の補完を fzf で絞り込む [fzf-tab](https://github.com/Aloxaf/fzf-tab) と、あちこちから使われている。ファイルを探す [fd](https://github.com/sharkdp/fd) も、fzf が最初に並べるファイルの一覧、enhancd の候補、[Neovim](https://neovim.io/) のファイル検索に使っていて、fzf 自身も中で fd を呼んでいる。
+dotfiles を10年以上いじってきたなかで、ずっと向き合ってきた課題が2つある。
 
-このつながりがあると、ツールを消すのが怖くなる。fzf を消せば、それを使っている関数やプラグインが壊れる。しかも、壊れたことに気づくのは使おうとしたとき。逆に、[kubectl](https://kubernetes.io/docs/reference/kubectl/) を消したのに、`k` のエイリアスだけが設定ファイルに残っていることもある。新しい Mac では、何かを入れ忘れて同じことが起きる。
+1つは依存関係の管理。例えば、git の差分を見やすく表示するツールの [delta](https://github.com/dandavison/delta) を、`git diff` にも、[lazygit](https://github.com/jesseduffield/lazygit) にも、[gh-dash](https://github.com/dlvhdr/gh-dash) にも設定していたとする。delta をやめようと思っても、どこから使っているかを全部覚えているわけではないので、消したあとで使っていたところを開いてエラーになり、そこで初めて依存していたことに気づく。逆に、一緒に入れたものが片方だけ残ることもある。Kubernetes を触らなくなって kubectl は消したのに、[kubectx](https://github.com/ahmetb/kubectx) や [krew](https://krew.sigs.k8s.io/)、`~/.krew/bin` を PATH に足す行はそのまま、みたいな。ツールが増えるほど、どれがどこで使われていて、どれとどれがセットなのかを把握しきれなくなる。
 
-10年以上 dotfiles をいじってきて、この問題には何度もやり方を変えて向き合ってきた。そして前回の記事「[dotfiles を AI agent のために作り変えた](/post/2026/10/01/ai-agent-first-dotfiles/)」で書いたとおり、今は [Nix](https://nixos.org/)（[nix-darwin](https://github.com/nix-darwin/nix-darwin) と [home-manager](https://github.com/nix-community/home-manager)）で管理している。Nix にしてからは、ツールを1つやめると、そのツールのためのものは全部消え、それを使っている別のものは壊れずに動き続ける。新しい Mac でも、同じものが同じ形で揃う。使ってみて、自分がパッケージ管理に求めていたのはこれだったと思った。
+もう1つは再現性。同じ dotfiles を私用と仕事用の2台の Mac で使っているが、同じツールでもバージョンが揃っているとは限らない。片方の Mac で `brew upgrade` した [nvim](https://neovim.io/) に合わせて設定を書くと、しばらく upgrade していないもう片方では、起動したときにエラーが出る。dotfiles は同じなのに、Mac によって動いたり動かなかったりする。
 
-今回は、これまでの依存の解決をふり返ったうえで、Nix がなぜそれをできるのかと、自分の dotfiles でどう使っているかを書く。Nix を使ったことがなくても読めるように、Nix の仕組みから順に説明する。
+この2つをどうにかしたくて、何年もかけてやり方を探してきた。そして前回の記事「[dotfiles を AI agent のために作り変えた](/post/2026/10/01/ai-agent-first-dotfiles/)」で書いたとおり、今は [Nix](https://nixos.org/)（[nix-darwin](https://github.com/nix-darwin/nix-darwin) と [home-manager](https://github.com/nix-community/home-manager)）で管理しはじめた。Nix にしてから、この2つをやっと片付けられそう。ツールを1つやめると、そのツールのためのものは全部消えて、それを使っていたほかのものは壊れずに動き続ける。どの Mac にも、同じバージョンのものが入る。
+
+この記事では、これまでこの課題をどう解決しようとしてきたかと、Nix でそれがどう変わったのかを、自分の dotfiles を例に書いてみる。
 
 ## これまでの依存の解決
 
@@ -41,7 +43,7 @@ fi
 
 次に、zsh のプラグインマネージャの [zplug](https://github.com/zplug/zplug) を作った[^zplug]。zplug では、パッケージごとに `on:` で依存するパッケージを、`if:` で読み込む条件を書ける。
 
-例として、補完の候補を fzf で選べるようにする fzf-tab を考える。fzf-tab には依存が2種類ある。1つは fzf コマンドで、PATH にあればいい。もう1つは読み込む順番で、fzf-tab は compinit のあと、かつ [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) のようにウィジェットを包むプラグインより前に読み込む必要がある（fzf-tab の README にそう書いてある）。2016年ごろの設定はこうなっていた。
+例として、補完の候補を [fzf](https://github.com/junegunn/fzf) で選べるようにする [fzf-tab](https://github.com/Aloxaf/fzf-tab) を考える。fzf-tab には依存が2種類ある。1つは fzf コマンドで、PATH にあればいい。もう1つは読み込む順番で、fzf-tab は compinit のあと、かつ [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) のようにウィジェットを包むプラグインより前に読み込む必要がある（fzf-tab の README にそう書いてある）。2016年ごろの設定はこうなっていた。
 
 ```zsh:.zsh/zplug.zsh
 # fzf が PATH にあるときだけ読み込む
@@ -94,7 +96,7 @@ zplug "zsh-users/zsh-autosuggestions", \
 
 ### Nix とは
 
-[Nix](https://nixos.org/) は、パッケージを「入力から決まる出力」として扱うパッケージマネージャ。パッケージのビルドに使うもの（ソース、コンパイラ、依存するライブラリやコマンド、ビルドの手順）を全部宣言して、それをもとにビルドする。同じ入力からは同じものができる、という関数のような考え方で、マニュアルでも purely functional なパッケージマネージャと名乗っている。
+Nix は、パッケージを「入力から決まる出力」として扱うパッケージマネージャ。パッケージのビルドに使うもの（ソース、コンパイラ、依存するライブラリやコマンド、ビルドの手順）を全部宣言して、それをもとにビルドする。同じ入力からは同じものができる、という関数のような考え方で、マニュアルでも purely functional なパッケージマネージャと名乗っている。
 
 ビルドしたものは `/nix/store/` の下に置かれる。これを store と呼ぶ。手元の fzf はここにある。
 
@@ -222,10 +224,10 @@ my.human.plugins.zsh-abbr = {
 | コマンドが入っているか | `$+commands` で確かめないとわからない | 参照している限り必ずある |
 | どれを使うか | PATH で最初に見つかったもの | パスで1つに決まる |
 | 依存先を消したとき | 使っている側が黙って壊れる | 参照があれば残る |
-| 新しい Mac | 入れ忘れが起きる | `flake.lock` で同じものが揃う |
+| 別の Mac | 入れ忘れや、バージョンのずれが起きる | `flake.lock` で同じものが揃う |
 | 読み込み順 | `on:` や `depends-on` で書く | `after` や `before` で書く（ここは変わらない） |
 
-`flake.lock` は、使う nixpkgs などのバージョンを固定しておくファイル。これがあるので、2台の Mac でも、同じ store のパスの同じものが入る。
+`flake.lock` は、使う nixpkgs などのバージョンを固定しておくファイル。2台の Mac は同じ `flake.lock` から入れるので、同じ store のパスの同じものが入る。nixpkgs が上がるのは `flake.lock` を更新したときだけで、更新すれば2台とも同じように上がる。片方の Mac だけが新しくなって、もう片方で設定が通らない、ということが起きない。
 
 これをどう使っているかを、今の dotfiles で説明する。
 
@@ -287,7 +289,7 @@ imports = [
 
 <Partial name="kind-companions" />
 
-あるツールのためだけにあるツールは、付属ツールとして、本体のツールのファイルに入れる。[delta](https://github.com/dandavison/delta) と [lazygit](https://github.com/jesseduffield/lazygit) は、[gh](https://cli.github.com/) の拡張の [gh-dash](https://github.com/dlvhdr/gh-dash) から呼ぶためだけに入れているので、gh を消すなら一緒に消していい。逆に、付属ツールだけを消しても gh は残る。
+あるツールのためだけにあるツールは、付属ツールとして、本体のツールのファイルに入れる。delta と lazygit は、[gh](https://cli.github.com/) の拡張の gh-dash から呼ぶためだけに入れているので、gh を消すなら一緒に消していい。逆に、付属ツールだけを消しても gh は残る。
 
 <Partial name="kind-set" />
 
@@ -342,7 +344,7 @@ config.xdg.configFile."zsh/env.zsh".text = lib.concatLines (
 
 - [Go](https://go.dev/): `go install` の出力先を `GOBIN=~/go/bin` にして、`go.nix` の `my.path` で末尾に足している。`GOPATH=$HOME` のままだと出力先が `~/bin` になり、PATH の先頭なので、エディタのプラグインが更新のたびに入れ直す golangci-lint などが Nix 版を隠してしまう。末尾にあれば Nix 版が必ず勝つ
 - [OrbStack](https://orbstack.dev/): OrbStack は自分で `~/.zprofile` を作って PATH を足す（ログインシェルにしか効かない）。cask を宣言しているホストのファイルの隣に `my.path` を置いて、`.zprofile` は消した
-- [krew](https://krew.sigs.k8s.io/): kubectl のプラグインは `~/.krew/bin` に入る。Kubernetes のセットに、krew と並べて `my.path` を書いているので、セットを消せば PATH の行も消える（下のコード）
+- krew: kubectl のプラグインは `~/.krew/bin` に入る。Kubernetes のセットに、krew と並べて `my.path` を書いているので、セットを消せば PATH の行も消える（下のコード）
 
 ```nix:nix/hosts/<host>/kubernetes.set.nix
 # Set: tools for working with Kubernetes clusters, on the work Mac only.
@@ -470,7 +472,7 @@ fzf の持ち方は、ほかに2通り考えられる。
 
 <Partial name="store-and-links" />
 
-`fzf.nix` に書いていたもの（PATH 上の fzf と、fzf でプロセスを選んで kill する `pskill`）は、全部消えた。これは前の章の目的どおり。一方で、ほかのファイルにある bat-theme、enhancd のフィルタ、fzf-tab、gcloud の設定を切り替えるコマンド（あとで書く `gchange`）は、store の fzf を指したまま動く。これがこの章の目的。fzf を消したら、fzf だけが消える。
+`fzf.nix` に書いていたもの（PATH 上の fzf と、fzf でプロセスを選んで kill する `pskill`）は、全部消えた。これは前の章の目的どおり。一方で、ほかのファイルにある bat-theme、enhancd のフィルタ、fzf-tab、[gcloud](https://cloud.google.com/sdk/gcloud) の設定を切り替えるコマンド（あとで書く `gchange`）は、store の fzf を指したまま動く。これがこの章の目的。fzf を消したら、fzf だけが消える。
 
 では、どう持たせるか。使う場所によって3通りある。
 
@@ -487,7 +489,7 @@ fzf の持ち方は、ほかに2通り考えられる。
 zstyle ':fzf-tab:*' fzf-command ${lib.getExe pkgs.fzf}
 ```
 
-enhancd は、環境変数（`ENHANCD_FILTER`）と、Nix で生成する設定ファイル（`config.ltsv`）の両方に埋め込んでいる。
+[enhancd](https://github.com/babarot/enhancd) は、環境変数（`ENHANCD_FILTER`）と、Nix で生成する設定ファイル（`config.ltsv`）の両方に埋め込んでいる。
 
 ```nix:nix/home-manager/tools/enhancd.nix
 let
@@ -519,7 +521,7 @@ in
 }
 ```
 
-フィルタとプレビュー（fzf、eza）に加えて、enhancd のオプションが呼ぶ ghq と fd も、設定ファイル（`config.ltsv`）ごと Nix で生成して store のパスで持っている。enhancd が使う4つのツールは、どれも PATH に誰がいるかとは関係なく動く。
+フィルタとプレビュー（fzf、eza）に加えて、enhancd のオプションが呼ぶ ghq と [fd](https://github.com/sharkdp/fd) も、設定ファイル（`config.ltsv`）ごと Nix で生成して store のパスで持っている。enhancd が使う4つのツールは、どれも PATH に誰がいるかとは関係なく動く。
 
 ちなみに、いくつのファイルが `pkgs.fzf` を指していても、store のパスは同じなので、入る fzf は1つだけ。重複を気にして入れる場所を1か所に寄せる必要はなく、気にするべきなのは「PATH に載せる責任を誰が持つか」のほうだと思う。
 
