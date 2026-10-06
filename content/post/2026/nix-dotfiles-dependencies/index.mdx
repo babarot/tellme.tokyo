@@ -1,0 +1,650 @@
+---
+title: dotfiles のパッケージ管理に Nix が最適だった
+date: 2026-10-02
+slug: nix-dotfiles-dependencies
+description: ""
+draft: true
+hidden: false
+toc: true
+tags:
+  - nix
+  - zsh
+---
+
+dotfiles を10年以上いじってきたなかで、ずっと向き合ってきた課題が2つある。
+
+1つは依存関係の管理。例えば、git の差分を見やすく表示するツールの [delta](https://github.com/dandavison/delta) を、`git diff` にも、[lazygit](https://github.com/jesseduffield/lazygit) にも、[gh-dash](https://github.com/dlvhdr/gh-dash) にも設定していたとする。delta をやめようと思っても、どこから使っているかを全部覚えているわけではないので、消したあとで使っていたところを開いてエラーになり、そこで初めて依存していたことに気づく。逆に、一緒に入れたものが片方だけ残ることもある。Kubernetes を触らなくなって kubectl は消したのに、[kubectx](https://github.com/ahmetb/kubectx) や [krew](https://krew.sigs.k8s.io/)、`~/.krew/bin` を PATH に足す行はそのまま、みたいな。ツールが増えるほど、どれがどこで使われていて、どれとどれがセットなのかを把握しきれなくなる。
+
+もう1つは再現性。同じ dotfiles を私用と仕事用の2台の Mac で使っているが、同じツールでもバージョンが揃っているとは限らない。片方の Mac で `brew upgrade` した [nvim](https://neovim.io/) に合わせて設定を書くと、しばらく upgrade していないもう片方では、起動したときにエラーが出る。dotfiles は同じなのに、Mac によって動いたり動かなかったりする。
+
+この2つをどうにかしたくて、何年もかけてやり方を探してきた。そして前回の記事「[dotfiles を AI agent のために作り変えた](/post/2026/10/01/ai-agent-first-dotfiles/)」で書いたとおり、今は [Nix](https://nixos.org/)（[nix-darwin](https://github.com/nix-darwin/nix-darwin) と [home-manager](https://github.com/nix-community/home-manager)）で管理しはじめた。Nix にしてから、この2つをやっと片付けられそう。ツールを1つやめると、そのツールのためのものは全部消えて、それを使っていたほかのものは壊れずに動き続ける。どの Mac にも、同じバージョンのものが入る。
+
+この記事では、これまでこの課題をどう解決しようとしてきたかと、Nix でそれがどう変わったのかを、自分の dotfiles を例に書いてみる。
+
+## これまでの依存の解決
+
+### `$+commands` で存在を確かめる
+
+いちばん素朴なのが、使う前にコマンドがあるかを確かめるやり方。zsh の `$+commands[name]` は、そのコマンドが PATH にあれば1になる（`which` で確かめるのとだいたい同じ）。昔の `.zshrc` には、こういう行がたくさんあった。
+
+```zsh:.zsh/30_aliases.zsh
+if (( $+commands[kubectl] )); then
+  alias k=kubectl
+fi
+
+if (( $+commands[nvim] )); then
+  alias vim=nvim
+fi
+```
+
+これで、kubectl がないときは `k` のエイリアスそのものが作られないので、`k` と打って kubectl の command not found に出くわすことはなくなる。ただ、これは kubectl がないときに `k` を作らないようにしているだけで、kubectl を用意してくれるわけではない。kubectl を入れ忘れれば `k` は黙って使えなくなるし、そもそも kubectl をどこで入れているかは、この行を見てもわからない。
+
+### zplug で依存を宣言する
+
+次に、zsh のプラグインマネージャの [zplug](https://github.com/zplug/zplug) を作った[^zplug]。zplug では、パッケージごとに `on:` で依存するパッケージを、`if:` で読み込む条件を書ける。
+
+例として、補完の候補を [fzf](https://github.com/junegunn/fzf) で選べるようにする [fzf-tab](https://github.com/Aloxaf/fzf-tab) を考える。fzf-tab には依存が2種類ある。1つは fzf コマンドで、PATH にあればいい。もう1つは読み込む順番で、fzf-tab は compinit のあと、かつ [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) のようにウィジェットを包むプラグインより前に読み込む必要がある（fzf-tab の README にそう書いてある）。2016年ごろの設定はこうなっていた。
+
+```zsh:.zsh/zplug.zsh
+# fzf が PATH にあるときだけ読み込む
+zplug "Aloxaf/fzf-tab", \
+    if:'(( $+commands[fzf] ))'
+
+# zsh-autosuggestions は fzf-tab に依存する。
+# fzf-tab を先に source した状態で読み込む
+zplug "zsh-users/zsh-autosuggestions", \
+    on:"Aloxaf/fzf-tab"
+```
+
+依存を設定に書けるようになったのは前進だったが、外部のコマンドは結局 `$+commands` で確かめるしかなかった。
+
+[^zplug]: 作ったころの記事: [zsh のプラグインマネージャ](/post/2015/11/24/142143/)
+
+### afx で依存を宣言する
+
+その後、zplug の考え方を引き継いで、[afx](https://github.com/babarot/afx) を作った[^afx]。zplug は、どのプラグインやコマンドを入れるかを `.zshrc` の中に zsh のコードとして書く作りだった。afx はそれを YAML に移して、パッケージとその設定（環境変数やエイリアス）を、コードではなく宣言として書けるようにした。afx には `depends-on` があり、パッケージ同士の依存を書くと、`afx init` がそれに合わせて読み込む順番を並べ替える。ただ、`depends-on` が決めるのは読み込む順番だけで、使うコマンドが本当に入っているかまでは見てくれない。外部のコマンドは、ここでも `if:` に `$+commands` を書いて確かめる。同じ fzf-tab なら、afx ではこうなる。
+
+```yaml:~/.config/afx/github.yaml
+- name: Aloxaf/fzf-tab
+  owner: Aloxaf
+  repo: fzf-tab
+  plugin:
+    # fzf が PATH にあるときだけ true になり、読み込まれる
+    if: |
+      (( $+commands[fzf] ))
+    sources:
+    - fzf-tab.plugin.zsh
+- name: zsh-users/zsh-autosuggestions
+  owner: zsh-users
+  repo: zsh-autosuggestions
+  # zsh-autosuggestions は fzf-tab に依存する。
+  # afx init は fzf-tab を先に source した状態で読み込む
+  depends-on:
+  - Aloxaf/fzf-tab
+  plugin:
+    sources:
+    - zsh-autosuggestions.zsh
+```
+
+読み込む順番は `depends-on` で、外部のコマンドがあるかは `if:` で書く。書き方が YAML になっただけで、zplug の `on:` と `if:` とやっていることは変わらない。
+
+[^afx]: 作ったときの記事: [コマンドラインツール向けのパッケージマネージャを作った](/post/2022/03/02/package-manager-for-cli/)
+
+上の例のように、シェルのプラグインの依存には2種類ある。1つは「PATH にある、その名前のコマンド」。誰がそれを入れたのか、どのバージョンなのかは知らないし、消されたら壊れるか、黙って使えなくなるだけ。もう1つは「あのプラグインを source したあとで読み込む」という読み込み順。`on:` や `depends-on` はこちらを決めてくれるが、決めるのは順番だけで、依存先が消えるのを止めてはくれない。
+
+## Nix で何が変わったか
+
+### Nix とは
+
+Nix は、パッケージを「入力から決まる出力」として扱うパッケージマネージャ。パッケージのビルドに使うもの（ソース、コンパイラ、依存するライブラリやコマンド、ビルドの手順）を全部宣言して、それをもとにビルドする。同じ入力からは同じものができる、という関数のような考え方で、マニュアルでも purely functional なパッケージマネージャと名乗っている。
+
+ビルドしたものは `/nix/store/` の下に置かれる。これを store と呼ぶ。手元の fzf はここにある。
+
+```
+/nix/store/b5jbljds0rvgj4vxdcg903gj03bfk63x-fzf-0.74.4/bin/fzf
+```
+
+`b5jb…` の32文字はハッシュで、そのあとに名前とバージョンが続く。ハッシュは、そのパッケージをビルドするのに使ったもの（ソース、依存するパッケージ、ビルドの手順）から計算されていて、そのどれかが変われば別の値になる。中身が変われば置き場所も変わるので、store にあるものが後から書き換わることはない。
+
+それが実際に起きているのが、手元の store にある2つの fzf。
+
+```console
+$ ls -d /nix/store/*-fzf-0.74.4
+/nix/store/b5jbljds0rvgj4vxdcg903gj03bfk63x-fzf-0.74.4
+/nix/store/svz1m2kls62wd4xqv7sdrp9mkzyka4q8-fzf-0.74.4
+```
+
+バージョンはどちらも 0.74.4 なのに、ハッシュが違う。それぞれが参照しているもの（依存）を `nix-store -q --references` で並べると、違いが見える。
+
+```console
+$ nix-store -q --references /nix/store/b5jb…-fzf-0.74.4
+/nix/store/138q…-iana-etc-20251215
+/nix/store/f0b9…-bash-5.3p15
+/nix/store/rhri…-tzdata-2026d
+/nix/store/xxi0…-bc-1.08.2
+/nix/store/b5jb…-fzf-0.74.4
+
+$ nix-store -q --references /nix/store/svz1…-fzf-0.74.4
+/nix/store/9x7b…-bc-1.08.2
+/nix/store/j95q…-tzdata-2026c
+/nix/store/lb6n…-bash-5.3p15
+/nix/store/p7hv…-iana-etc-20251215
+/nix/store/svz1…-fzf-0.74.4
+```
+
+違うのはタイムゾーンのデータ（tzdata）で、片方は 2026c、もう片方は 2026d を使っている。fzf のソースは1文字も変わっていないのに、依存の1つが上がっただけで、別のハッシュの別物として置かれる。よく見ると bash や bc も、バージョンは同じなのにハッシュが違う。これも、さらにその先の依存のどこかが変わったからで、変化は依存をたどって上まで伝わる。古いほうの fzf も、ガベージコレクションするまでは消されずに残っている。
+
+[Homebrew](https://brew.sh/) なら、`brew upgrade` で `/opt/homebrew/bin/fzf` の向き先が新しいものに変わり、それを使っていたものは全部、黙って新しい fzf を使い始める。Nix では、`b5jb…-fzf-0.74.4` のパスを指しているものは、指し直すまでずっとそれを使う。store のパスを1つ書けば、どのビルドの何を使うかまで決まる、ということ。
+
+### 依存も store のパスで持つ
+
+この store の上で、パッケージは依存するものを、名前ではなく store のパスで指す。例えば [nixpkgs](https://github.com/NixOS/nixpkgs) の [bat](https://github.com/sharkdp/bat) は、ページャに使う less をそうやって指している。bat のコマンドの実体（`bin/bat`）を開くと、中身はこういうスクリプトになっている。
+
+```bash
+#! /nix/store/f0b9…-bash-5.3p15/bin/bash -e
+PATH=${PATH:+':'$PATH':'}
+PATH=${PATH/':''/nix/store/3yn3…-less-710/bin'':'/':'}
+PATH='/nix/store/3yn3…-less-710/bin'$PATH
+PATH=${PATH#':'}
+PATH=${PATH%':'}
+export PATH
+exec -a "$0" "/nix/store/n65z…-bat-0.26.1/bin/.bat-wrapped"  "$@"
+```
+
+本物の bat（`.bat-wrapped`）を起動する前に、less の store のパスを PATH の先頭に足している。bat が中で `less` を呼ぶと、ユーザーの PATH に何があっても、まずこの less が見つかる。
+
+Nix は、できあがったファイルの中にほかの store のパス（ハッシュ）が書かれていないかを探して、見つかったものを依存として記録する。このスクリプトには less のパスが書いてあるので、less は bat の依存になる。パッケージから依存グラフを末端までたどって、参照するものを全部まとめたものを closure と呼び、bat なら bat、less、bash など6つのパスでできている。bat を入れれば、この closure が丸ごと揃う。逆に、ガベージコレクション（`nix-collect-garbage`）で消されるのは、どこからも参照されなくなった store のパスだけになる。参照されている限り消えないので、入れたはずの依存がない、ということが起きない。
+
+### PATH はプロファイルが作る
+
+では、ふだん `fzf` と名前だけで打って動くのはなぜか。
+
+コマンドを名前で打つと、シェルは PATH に並んだディレクトリを上から順に見ていき、その名前のファイルが最初に見つかったものを実行する。同じ名前のコマンドがいくつかあっても、使われるのは PATH で前にあるほう（`which -a fzf` で、候補とその順番が見える）。
+
+一方で、store の中身はパッケージごとにハッシュ付きのディレクトリに分かれている。これを1つずつ PATH に並べるわけにはいかない。そこで Nix は、プロファイルというディレクトリを1つ作り、入れたパッケージのコマンドへのリンクをそこに集める。ふだん使うシェルの PATH には、このディレクトリを1つ足しておくだけでいい。自分の環境では `/etc/profiles/per-user/babarot/bin` がそれ。
+
+```console
+$ which fzf
+/etc/profiles/per-user/babarot/bin/fzf
+$ readlink -f $(which fzf)
+/nix/store/b5jbljds0rvgj4vxdcg903gj03bfk63x-fzf-0.74.4/bin/fzf
+```
+
+プロファイルは `darwin-rebuild switch`（以下 switch。nix-darwin の、書いた設定を Mac に反映するコマンド）を実行するたびに作り直される。新しく入れたパッケージのリンクが足され、やめたもののリンクは外れる。どちらの場合も、store の本体には触らない。リンクが並ぶところは Homebrew の `/opt/homebrew/bin` と似ているが、違うのはリンクの先が書き換わらないこと。fzf を更新しても、プロファイルのリンクが新しい store のパスに張り替わるだけで、前の本体はそのまま残る。
+
+<Partial name="profile-links" />
+
+### 設定も store のパスを持てる
+
+ここまでは、Nix がパッケージをどう扱うかの話だった。Nix そのものは、パッケージをビルドして store に置くための道具で、自分のホームディレクトリに何があるかまでは面倒を見ない。そこを受け持つのが home-manager。Nix の上で動く道具で、「どのパッケージをプロファイルに入れるか」と「`~/.config` などの設定ファイルの中身」を、`.nix` ファイルに書いて宣言できる。`.nix` ファイルは、Nix 言語で書く。設定を書くための小さな言語で、`pkgs.fzf` のようにパッケージを名前で取り出したり、文字列の中に `${...}` で値を埋め込んだりできる（[Nix language basics](https://nix.dev/tutorials/nix-language.html)）。
+
+設定ファイルの中身を宣言する、というのは、ファイルを手で書く代わりに、中身を `.nix` の中に文字列で書いておくということ。switch すると、Nix はその文字列を1つのファイルとして store に置き、ホームディレクトリにはそのファイルへのリンクを置く。パッケージと同じ扱いになる。手元の `human.zsh`（人間用のシェルが読む設定）も、こうなっている。
+
+```
+~/.config/zsh/human.zsh
+  → /nix/store/d2gc…-home-manager-files/.config/zsh/human.zsh
+  → /nix/store/jdjy…-hm_zshhuman.zsh   （実体）
+```
+
+設定ファイルも store に置かれるものなら、パッケージと同じように、ほかの store のパスを参照できる。`.nix` の中で `lib.getExe pkgs.fzf` と書くと、fzf の store のパス（`/nix/store/…-fzf-0.74.4/bin/fzf`）が文字列として取れる。これを生成する設定ファイルに埋め込むと、Nix はパッケージのときと同じように、「この設定ファイルは fzf を参照している」と記録してくれる。
+
+つまり、これまで `.zshrc` に書いていたような関数やエイリアスも、Nix で生成する設定ファイルに書けば、nixpkgs の bat が less を持つのと同じやり方で依存を持てる。シェルの設定に限らず、git の設定でもエディタの設定でも、Nix で生成するものなら同じ（手で書いたまま置いているファイルは別で、これはあとの「store のパスにしないもの」の節で書く）。nixpkgs の bat と、自分の設定（`human.zsh`）を並べると、同じ形になる。
+
+<Partial name="path-and-store" />
+
+関数の中から fzf を呼ぶ書き方は、2つある。
+
+- コマンド名だけを書く（`fzf --preview ...`）: zsh は PATH を上から探して、最初に見つかったものを起動する。Nix の環境なら、プロファイルのリンクを通って store の fzf に届く。fzf をやめてリンクが外れると、見つからなくなる
+- store のパスを丸ごと書く（`/nix/store/b5jb…-fzf-0.74.4/bin/fzf --preview ...`）: PATH を探さずに、そのファイルを直接起動する。PATH に何があるかとは関係なく動き、そのパスは参照されている限り store から消えない
+
+前の章で、シェルのプラグインの依存には2種類あると書いた。PATH にあるはずのコマンドと、読み込み順。store のパスを丸ごと書けば、このうちコマンドのほうは、`$+commands` で確かめる必要がなくなる。
+
+もう1つの読み込み順は、Nix でも自動では決まらない。今の dotfiles では、プラグインごとに、どのプラグインのあと（`after`）、どのプラグインの前（`before`）に読み込むかを名前で書き、home-manager がその前後関係を DAG（有向非巡回グラフ）として並べている。例えば [zsh-abbr](https://github.com/olets/zsh-abbr) は、手書きの `~/.zsh`（`zsh-local` という名前で読み込んでいる）で `bindkey -v` したあとに読み込む必要があるので、`after` に `zsh-local` と書いている。
+
+```nix:nix/home-manager/tools/zsh-abbr.nix
+my.human.plugins.zsh-abbr = {
+  src = pkgs.zsh-abbr;
+  file = "share/zsh/zsh-abbr/zsh-abbr.zsh";
+  # After ~/.zsh/20_bindkeys.zsh: abbr binds space in the keymap
+  # `bindkey -v` selects. Before fast-syntax-highlighting, which wraps
+  # only the widgets that exist when it loads: abbr redefines space and
+  # accept-line, which would otherwise not update the highlighting
+  after = [ "zsh-local" ];
+  before = [ "fast-syntax-highlighting" ];
+  # ...
+};
+```
+
+順番を自分で書くこと自体は、zplug の `on:` や afx の `depends-on` と変わらない。違うのは、生成される `human.zsh` の source の行に store のパスが入ること。Nix が入れた特定のビルドを読み込むので、依存先のプラグインが消えて壊れることはない。`fast-syntax-highlighting.nix` を消しても、`before` に書いた名前が無視されるだけで、zsh-abbr はそのまま読み込まれる。
+
+ここまでをまとめると、こうなる。
+
+| | これまで（PATH の名前） | Nix（store のパス） |
+|---|---|---|
+| コマンドが入っているか | `$+commands` で確かめないとわからない | 参照している限り必ずある |
+| どれを使うか | PATH で最初に見つかったもの | パスで1つに決まる |
+| 依存先を消したとき | 使っている側が黙って壊れる | 参照があれば残る |
+| 別の Mac | 入れ忘れや、バージョンのずれが起きる | `flake.lock` で同じものが揃う |
+| 読み込み順 | `on:` や `depends-on` で書く | `after` や `before` で書く（ここは変わらない） |
+
+`flake.lock` は、使う nixpkgs などのバージョンを固定しておくファイル。2台の Mac は同じ `flake.lock` から入れるので、同じ store のパスの同じものが入る。nixpkgs が上がるのは `flake.lock` を更新したときだけで、更新すれば2台とも同じように上がる。片方の Mac だけが新しくなって、もう片方で設定が通らない、ということが起きない。
+
+これをどう使っているかを、今の dotfiles で説明する。目指しているのは、ツールのファイルを1つ消したときに、何が起きるかがそのファイルを見るだけでわかること。そのためには2つ要る。
+
+- 消すべきものが、全部消える → [ライフサイクルごとにファイルを分ける](#ライフサイクルごとにファイルを分ける)
+- 消してはいけないものが、壊れない → [ほかのライフサイクルを壊さない](#ほかのライフサイクルを壊さない)
+
+## ライフサイクルごとにファイルを分ける
+
+自分の dotfiles（[babarot/dotfiles](https://github.com/babarot/dotfiles)）では、ツールごとに `.nix` ファイルを書き、`nix/home-manager/tools/` に置いている。例えば [eza](https://github.com/eza-community/eza) のファイルはこうなっている。
+
+```nix:nix/home-manager/tools/eza.nix
+{ pkgs, ... }:
+{
+  home.packages = [ pkgs.eza ];
+
+  my.human.aliases = {
+    ls = "eza --group-directories-first";
+    ll = "eza --group-directories-first -l --header --git";
+    # ...
+  };
+}
+```
+
+このファイルは、home-manager に渡す設定の一部になっている。1行目の `{ pkgs, ... }:` は、nixpkgs のパッケージを `pkgs` という名前で受け取る、という宣言。その下の `{ ... }` の中には、`名前 = 値;` の形で項目を並べる。この名前の決まった項目を、option と呼ぶ。home-manager は、どの option に何が書いてあるかを読んで、option ごとに決まった処理をする。
+
+- `home.packages` は、home-manager が最初から用意している option。ここにパッケージを並べると、switch のときにさっきのプロファイルにリンクされて、コマンドとして使えるようになる。`pkgs.eza` は、nixpkgs の eza のこと
+- `my.human.aliases` は、自分で足した option（`my.` で始まるものは全部そう）。ここに書いたエイリアスは、switch のときに `alias ls='eza --group-directories-first'` のような行になって、人間用のシェルが読む `human.zsh` に書き出される
+
+つまりこのファイルには、「eza を入れる」と「eza のためのエイリアスを足す」の2つが書いてあって、どちらもこのファイルにしか書いていない。自分で作った option は、このあとまとめて書く。
+
+`tools/` に置いたファイルは、どこにも一覧を書かなくても、全部読み込まれる。
+
+```nix:nix/home-manager/default.nix
+imports = [
+  ./dotfiles.nix
+  ./env.nix
+  ./git.nix
+  ./human.nix
+  ./ai.nix
+  # ...
+]
+++ map (f: ./tools + "/${f}") (
+  builtins.filter (f: builtins.match ".*\\.nix" f != null) (
+    builtins.attrNames (builtins.readDir ./tools)
+  )
+);
+```
+
+`tools/` の中から `.nix` で終わるファイルを全部探して、読み込む一覧に足している。なので、ファイルを置けばそのツールが入り、消せば消える。
+
+### 1ファイル1ライフサイクル
+
+ファイルが入れて消す単位になるので、1つのファイルには、一緒に入れて、一緒に消すものを入れる。この一緒に入れて一緒に消すまとまりを、ライフサイクルと呼んでいる。[前回の記事](/post/2026/10/01/ai-agent-first-dotfiles/)では「1ツール1ファイル」と書いたが、単位になっているのは、正確にはツールではなくライフサイクル。たいていは1つのツールとその設定が1つのライフサイクルなので、結果として1ツール1ファイルになる。ただ、それだけでは収まらないものもあるので、ファイルを4種類に分けている。
+
+1. ツールとその設定（で1つのライフサイクル）
+2. ツールとその設定、付属ツール（で1つのライフサイクル）
+3. ツールの集まり（で1つのライフサイクル。決めているのは、使う対象）
+4. ツールだけ（1行ごとに1つのライフサイクル。ファイルは置き場）
+
+<Partial name="kind-single" />
+
+ほとんどのファイルはこれ。1つのツールと、そのツールのためのエイリアスや環境変数を、1つのファイルに書く。設定はツールがあってはじめて意味を持つので、ツールと設定は一緒に入れて、一緒に消すことになる。設定が何もないツールは、ファイルを作るまでもないので、`packages.nix` の一覧に回す。
+
+<Partial name="kind-companions" />
+
+あるツールのためだけにあるツールは、付属ツールとして、本体のツールのファイルに入れる。付属ツールかどうかは、「本体を消したら、これも消すか」で決めている。delta と lazygit は、[gh](https://cli.github.com/) の拡張の gh-dash から呼ぶためだけに入れているので、gh を消すなら一緒に消していい。逆に、付属ツールだけを消しても gh は残る。
+
+<Partial name="kind-set" />
+
+ツールのセットは、主役のいないツールの集まり。ライフサイクルを決めているのはどれかのツールではなく、ツールの外にある、使う対象のほう。Kubernetes まわりのツール（kubectl、kubectx、helmfile、krew など）は、どれか1つが主役というわけではないが、Kubernetes を触らなくなれば全部いらなくなるので、`kubernetes.set.nix` にまとめている。逆に、linter、フォーマッタ、JSON や YAML を扱うツールのように、種類が同じなだけのものはセットにしない。それぞれ別々に足したり消したりするので、1つのファイルにまとめると、ファイルを消したときにまだ使っているツールまで消えてしまう。ファイル名に `.set` を付けているのは、`kubernetes.nix` だと kubernetes というツールのファイルに見えてしまうから。
+
+この Kubernetes のセットは、仕事用の Mac でしか使わない。1台の Mac でしか使わないものは、同じ形のファイルを `nix/hosts/<host>/` に置き、その Mac にだけ読み込ませている。
+
+<Partial name="kind-list" />
+
+設定のないツールは、`packages.nix` に1行ずつ並べる。設定がないので、ツールそのものだけが1つのライフサイクルになる。原理上は、これも1ツール1ファイルに分けられる。ただ、中身が `home.packages = [ pkgs.ripgrep ];` の1行だけの小さなファイルが何十個も並ぶだけなので、1つにまとめている。まとめても、消す単位は変わらない。1行が1つのライフサイクルで、1行消せばそのツールだけが消える。ほかの3つと違って、このファイルはライフサイクルの単位ではなく、ライフサイクルを並べておく置き場にすぎない。ファイルを1つ消すのが、1行消すことに置き換わっただけ。設定を足したくなったら、その行を消して、自分のファイルを持つツールに移す、というルールにしている。
+
+どれも、1つのライフサイクルが1つのファイル（一覧なら1行）に入っている。ただ、ライフサイクルが同じかどうかは、依存しているかどうかとは別の話。fzf は bat の関数（次の章で出てくる bat-theme）の中で使われているが、bat を消しても fzf は残したい。なので fzf は bat の付属ツールではなく、自分のファイル（`fzf.nix`）を持つツールになる。この区別が、次の章の依存の持ち方にそのまま効いてくる。
+
+### 共有の設定ファイルは、持ち寄りで作る
+
+シェルや git の設定ファイルは、どれか1つのツールのものではない。かといって、手で1つのファイルに書くと、ツールを消したときに、そのツールのための行だけが取り残される。そこで、共有の設定ファイルは、ツールのファイルからの持ち寄りで作っている。eza の例の `my.human.aliases` もその1つで、各ツールのファイルが書いたエイリアスを、Nix が `human.zsh` 1つにまとめて書き出す。
+
+<Partial name="gather-settings" />
+
+ツールのファイルを消せば、そのツールが持ち寄った行だけが、共有の設定から消える。持ち寄る先ごとに、home-manager の上に自前の option を作っている。
+
+| option | 書くもの | 出力先 |
+|---|---|---|
+| `my.human` | 人間だけのエイリアス、関数、環境変数、zsh プラグイン | `~/.config/zsh/human.zsh` |
+| `my.ai` | AI だけの環境変数とエイリアス | `~/.config/zsh/ai.zsh` |
+| `my.env` | 人間にも AI にも要る環境変数（`GOPATH` など） | `~/.config/zsh/env.zsh` |
+| `my.path` | そのツールだけが必要とする PATH のディレクトリ | `~/.config/zsh/env.zsh` |
+| `my.gitConfig` | そのツールを使う git の設定 | `~/.config/git/tools.gitconfig` |
+| `my.skills` | ツールに同梱の Agent Skill | `~/.claude/skills` など |
+
+`my.human` と `my.ai` の使い分けは[前回の記事](/post/2026/10/01/ai-agent-first-dotfiles/)で書いたので、ここでは残りの `my.path` と `my.gitConfig` を書く。
+
+### PATH に足す（my.path）
+
+PATH の順番は、どれか1つのツールのものではないので、`.zshenv` に手で書いている。mise の shims、`~/bin`、Nix のプロファイル、Homebrew の順に並べている。順番が大事なので、ツールのファイルからは触らせない。
+
+ただ、「このツールだけが必要とするディレクトリ」まで `.zshenv` に書くと、ツールを消したときに PATH の行だけが取り残される。そこで `my.path` を作った。ツールのファイルに書いたディレクトリは、`env.zsh` でこう出力される。
+
+```nix:nix/home-manager/env.nix
+config.xdg.configFile."zsh/env.zsh".text = lib.concatLines (
+  [ "# Generated by nix/home-manager/env.nix. Do not edit." ]
+  ++ lib.mapAttrsToList (k: v: "export ${k}=${sh v}") config.my.env
+  ++ map (d: "if [[ -d ${sh d} ]]; then path+=(${sh d}); fi") config.my.path
+);
+```
+
+`path+=` なので、手書きの順番は崩さず PATH の末尾に足すだけ。ディレクトリがなければ何もしない。リストなので、いくつのファイルから足してもいい（`my.env.PATH` に書くと値の置き換えになり、2つのファイルで書くと評価エラーになる）。
+
+<Partial name="path-order" />
+
+使っている例はこのあたり。
+
+- [Go](https://go.dev/): `go install` の出力先を `GOBIN=~/go/bin` にして、`go.nix` の `my.path` で末尾に足している。`GOPATH=$HOME` のままだと出力先が `~/bin` になり、PATH の先頭なので、エディタのプラグインが更新のたびに入れ直す golangci-lint などが Nix 版を隠してしまう。末尾にあれば Nix 版が必ず勝つ
+- [OrbStack](https://orbstack.dev/): OrbStack は自分で `~/.zprofile` を作って PATH を足す（ログインシェルにしか効かない）。cask を宣言しているホストのファイルの隣に `my.path` を置いて、`.zprofile` は消した
+- krew: kubectl のプラグインは `~/.krew/bin` に入る。Kubernetes のセットに、krew と並べて `my.path` を書いているので、セットを消せば PATH の行も消える（下のコード）
+
+```nix:nix/hosts/<host>/kubernetes.set.nix
+# Set: tools for working with Kubernetes clusters, on the work Mac only.
+# A new Kubernetes tool goes in this file, not in a file of its own; see
+# "One file, one unit" in AGENTS.md for what makes a set.
+{ config, pkgs, ... }:
+{
+  home.packages = with pkgs; [
+    helmfile
+    kail
+    krew
+    kubectl
+    # ...
+  ];
+
+  # krew installs kubectl plugins here as kubectl-* commands
+  my.path = [ "${config.home.homeDirectory}/.krew/bin" ];
+
+  my.human.plugins.zsh-abbr.init = ''
+    abbr --session --quiet k=kubectl
+  '';
+}
+```
+
+### git の設定に足す（my.gitConfig）
+
+git の設定にも、ツールに属するものがある。git の log と show のページャを [ov](https://github.com/noborus/ov) にする設定や、[difftastic](https://github.com/Wilfred/difftastic) で diff を見る `git dft` のエイリアスなど。これらを手書きの `.gitconfig` に書くと、ツールを消したときに設定だけが残り、git がないコマンドを呼んで失敗する。
+
+そこで `my.gitConfig` を作った。ツールのファイルに、store のパス付きで git の設定を書く。
+
+```nix:nix/home-manager/tools/ov.nix
+# ov: pager for `git log` / `git show`
+{ lib, pkgs, ... }:
+let
+  ov = lib.getExe pkgs.ov;
+in
+{
+  home.packages = [ pkgs.ov ];
+
+  my.gitConfig.pager = {
+    log = "${ov} -F --section-delimiter '^commit' --section-header-num 3";
+    show = "${ov} -F --header 3";
+  };
+}
+```
+
+書いたものは `~/.config/git/tools.gitconfig` にまとめて出力され、手書きの `.gitconfig` は最後にそれを include するだけにしている。
+
+```ini:home/.gitconfig
+# Settings that belong to a tool (ov as the pager, the dft alias), written
+# with store paths in its nix/home-manager/tools/<tool>.nix (my.gitConfig).
+# Last, so they win over anything above
+[include]
+  path = ~/.config/git/tools.gitconfig
+```
+
+`ov.nix` を消せば `tools.gitconfig` から ov の行が消え、ページャは `core.pager` の less に戻る。git は include したファイルが空でも、なくてもエラーにしないので、全部のツールを消しても困らない。`my.path` と同じく、ツールのファイルから共有の設定に持ち寄り、消すときは一緒に消える形になっている。
+
+## ほかのライフサイクルを壊さない
+
+前の章は、ファイルを消したときに、消えるべきものが全部消える話だった。この章はその逆で、1つのライフサイクルを消しても、ほかのライフサイクルが壊れないようにする話。ツールは、自分のファイルの中だけで使われているとは限らない。例えば bat には、テーマを fzf で選びながらプレビューする `bat-theme` という関数を生やしている。前の章で書いたとおり fzf は bat の付属ツールではなく、自分のファイル（`fzf.nix`）を持つ、bat とは別のライフサイクルのツールになっている。この関数の中に、コマンド名だけで `fzf` と書いていたら、`fzf.nix` を消した時点で `command not found` で落ちる。しかもビルドは普通に通る。`$+commands` の時代と同じ問題が起きる。
+
+### bat は fzf を store のパスで持つ
+
+そこで bat は、fzf を store のパスで持たせている。`bat.nix` はこう書いている。
+
+```nix:nix/home-manager/tools/bat.nix
+{ lib, pkgs, ... }:
+let
+  # Used inside bat-theme only; fzf on PATH is fzf.nix's
+  fzf = lib.getExe pkgs.fzf;
+in
+{
+  home.packages = [ pkgs.bat ];
+
+  my.human.env = {
+    BAT_PAGER = "less -RF";
+    BAT_STYLE = "numbers,changes";
+    BAT_THEME = "DarkNeon";
+  };
+
+  # Agents read bat's output, not scroll it
+  my.ai.env.BAT_PAGER = "cat";
+
+  my.human.init = ''
+    bat-theme() {
+      local file=$1
+      if [[ -z $file ]]; then
+        file=$(${fzf})
+      fi
+      bat --list-themes | ${fzf} --preview="bat --theme={} --color=always ''${file}"
+    }
+  '';
+}
+```
+
+肝となるのは `bat-theme` の中の fzf で、コマンド名だけで `fzf` と書かずに `${fzf}` と書いている。`${fzf}` は、`let` の中で `lib.getExe pkgs.fzf` で取った fzf の store のパス。switch したあとの `human.zsh` を見ると、そこがフルパスに置き換わっている。
+
+```zsh:~/.config/zsh/human.zsh
+bat-theme() {
+  local file=$1
+  if [[ -z $file ]]; then
+    file=$(/nix/store/b5jb…-fzf-0.74.4/bin/fzf)
+  fi
+  bat --list-themes | /nix/store/b5jb…-fzf-0.74.4/bin/fzf --preview="bat --theme={} --color=always ${file}"
+}
+```
+
+この関数は、PATH を探さずに、store の fzf を直接起動する。
+
+決まりとしてはこう。`home.packages` で PATH に載せるのは、そのファイルが受け持つツールだけ。ほかのツールの設定の中で使うコマンドは、PATH を通さずに store のパスで呼ぶ。fzf を PATH に載せるのは `fzf.nix` の仕事で、bat は fzf が PATH にあるかどうかを気にしない。
+
+fzf の持ち方は、ほかに2通り考えられる。
+
+1. bat-theme の中では fzf をコマンド名だけで呼び、fzf を入れるのは `fzf.nix` に任せる。いちばん素直だが、`fzf.nix` を消すと bat-theme が壊れる。消してはいけないものが壊れるので、この章の目的に合わない。
+2. `bat.nix` の `home.packages` にも fzf を入れる。これなら bat-theme は壊れないが、`fzf.nix` を消しても `bat.nix` が fzf を入れ続けるので、fzf が打てるまま残る。消すべきものが消えないので、前の章の目的に合わない。
+
+今の決まり（PATH に載せるのは自分が受け持つツールだけ、ほかのツールは store のパスで使う）は、この2つの両方を満たすためのもの。
+
+### fzf.nix を消してみる
+
+`fzf.nix` を消すと、何が起きるか。Nix の章で書いたとおり、switch で外れるのは、プロファイルの `bin/fzf` のリンクだけ。fzf の本体は store に残る。bat-theme を書き出した `human.zsh` が、fzf の store のパスを参照しているから。
+
+実際に `fzf.nix` を一時的に消してビルドし、生成物を見てみた。
+
+<Partial name="store-and-links" />
+
+`fzf.nix` に書いていたもの（PATH 上の fzf と、fzf でプロセスを選んで kill する `pskill`）は、全部消えた。これは前の章の目的どおり。一方で、ほかのファイルにある bat-theme、enhancd のフィルタ、fzf-tab、[gcloud](https://cloud.google.com/sdk/gcloud) の設定を切り替えるコマンド（あとで書く `gchange`）は、store の fzf を指したまま動く。これがこの章の目的。fzf を消したら、fzf だけが消える。
+
+では、どう持たせるか。使う場所によって3通りある。
+
+1. 設定に埋め込む: シェルに読み込ませる関数や環境変数、プラグインの設定。bat-theme がこれ
+2. コマンドにする: 関数を、Nix に1本のスクリプトとして作らせ、ふつうのコマンドとして PATH に置く。シェルの状態を変えない関数なら、これでいい
+3. プログラムごと包む: 中でたくさんのコマンドを名前で呼ぶプログラム
+
+### 設定に埋め込む
+
+1つ目は、bat-theme でやったとおり、`let` で store のパスを取っておいて埋め込むだけ。埋め込む先は関数に限らない。zsh のプラグインなら、プラグインが呼ぶコマンドを設定で指定できることが多く、fzf-tab は `zstyle` で fzf のコマンドを渡せる。
+
+```nix:nix/home-manager/tools/fzf-tab.nix
+# fzf from the store, so it does not depend on fzf.nix putting fzf on PATH
+zstyle ':fzf-tab:*' fzf-command ${lib.getExe pkgs.fzf}
+```
+
+[enhancd](https://github.com/babarot/enhancd) は、環境変数（`ENHANCD_FILTER`）と、Nix で生成する設定ファイル（`config.ltsv`）の両方に埋め込んでいる。
+
+```nix:nix/home-manager/tools/enhancd.nix
+let
+  # The filter and its preview, by store path: enhancd does not depend on
+  # fzf.nix or eza.nix putting them on PATH
+  fzf = lib.getExe pkgs.fzf;
+  eza = lib.getExe pkgs.eza;
+  fd = lib.getExe pkgs.fd;
+  ghq = lib.getExe pkgs.ghq;
+  # ...
+in
+{
+  my.human.env.ENHANCD_FILTER = lib.concatStringsSep " " [
+    "${fzf} --preview '${eza} -al --tree --level 1 --group-directories-first --git-ignore"
+    # ...
+  ];
+
+  # Options that run other tools, by store path
+  home.file.".enhancd/config.ltsv".text = lib.concatLines [
+    (option [
+      (label "short" "-G")
+      (label "long" "--ghq")
+      (label "desc" "Show ghq path")
+      (label "func" "${ghq} list --full-path")
+      (label "condition" "")
+    ])
+    # -g: git のリポジトリの中のディレクトリを fd で一覧する
+  ];
+}
+```
+
+フィルタとプレビュー（fzf、eza）に加えて、enhancd のオプションが呼ぶ ghq と [fd](https://github.com/sharkdp/fd) も、設定ファイル（`config.ltsv`）ごと Nix で生成して store のパスで持っている。enhancd が使う4つのツールは、どれも PATH に誰がいるかとは関係なく動く。
+
+ちなみに、いくつのファイルが `pkgs.fzf` を指していても、store のパスは同じなので、入る fzf は1つだけ。重複を気にして入れる場所を1か所に寄せる必要はなく、気にするべきなのは「PATH に載せる責任を誰が持つか」のほうだと思う。
+
+### コマンドにする
+
+シェルの状態を変えない関数（`cd` したり、環境変数を変えたりしない関数）なら、コマンドにするやり方もある。`.nix` に関数の中身を書いておくと、switch のときに Nix がそれを1本のスクリプトとして store に作り、プロファイルにリンクして、ふつうのコマンドとして使えるようにしてくれる。使うのは `writeShellApplication`。gcloud の configuration を fzf で切り替える `gchange` は、こう書いている。
+
+```nix:nix/home-manager/tools/gcloud.nix
+(pkgs.writeShellApplication {
+  name = "gchange";
+  runtimeInputs = [
+    gcloud
+    pkgs.fzf
+  ];
+  text = ''
+    name=$(gcloud config configurations list | fzf --reverse --header-lines=1 | awk '{print $1}')
+    gcloud config configurations activate "$name"
+  '';
+})
+```
+
+`gcloud` は、同じファイルで定義している gcloud 本体。`runtimeInputs` に、使うコマンドのパッケージを並べる。中ではコマンド名だけで `fzf` と書けるが、生成されたスクリプトの先頭で、これらの store のパスが PATH に足される。nixpkgs の bat が less を持つのと同じ形。
+
+```bash
+#!/nix/store/…-bash-5.3p15/bin/bash
+set -o errexit
+set -o nounset
+set -o pipefail
+
+export PATH="/nix/store/…-google-cloud-sdk-583.0.0/bin:/nix/store/b5jb…-fzf-0.74.4/bin:$PATH"
+
+name=$(gcloud config configurations list | fzf --reverse --header-lines=1 | awk '{print $1}')
+gcloud config configurations activate "$name"
+```
+
+依存を1か所ずつ埋め込むのではなく、リストで宣言できるのがいいところ。ビルドのときに shellcheck もかかる。ただし別のプロセスで動くので、`cd` したり環境変数を変えたりする関数には使えない。enhancd や fzf-tab のようにシェルに読み込ませるものは埋め込み、独立したコマンドにできるものは `writeShellApplication`、という使い分けにしている。
+
+### プログラムごと包む
+
+シェル関数なら1か所ずつ store のパスを埋め込めばいいが、エディタは中でたくさんのコマンドを、コマンド名だけで呼ぶ。例えば [snacks.nvim](https://github.com/folke/snacks.nvim) のピッカーは、ファイル検索に fd を、grep に [rg](https://github.com/BurntSushi/ripgrep) を PATH から呼ぶ。rg を入れているのは `packages.nix` の1行なので、その行を消すと、nvim の grep が黙って動かなくなる。ファイル検索のほうはもっと気づきにくく、fd がなければ `.gitignore` を無視する find に切り替わって、それらしく動き続ける。LSP の設定（`vim.lsp.enable`）が探す gopls や lua-language-server、保存時に整形する conform が呼ぶ goimports や jq も同じ。
+
+nvim の設定は手書きの Lua で、LSP やプラグインの設定は、コマンドを名前で探す前提になっている。Lua に store のパスを書くこともできるが、手書きの Lua に Nix の値を埋め込むのはめんどくさい。そこで、nvim 自体を包んで、nvim だけの PATH に、nvim が呼ぶコマンドを足している。
+
+足しているものは2種類ある。1つは、LSP サーバーとフォーマッタ。nvim のためだけにあるので、nvim の付属ツールとして `neovim.nix` に書いている。もう1つは、fd や rg、jq。こちらは nvim の付属ツールではなく、自分のファイルを持つツールや、`packages.nix` の一覧の1行として入れているもので、nvim から見れば依存になる。bat が fzf を持つのと同じく、store のパスで持たせる。
+
+```nix:nix/home-manager/tools/neovim.nix
+  # Tools Neovim runs by name: LSP servers, conform's formatters and what
+  # snacks.nvim's pickers call. They go on nvim's own PATH, not the user's,
+  # so deleting jq.nix, fd.nix or the ripgrep line in packages.nix does not
+  # break nvim. Appended, so a version a project pins with mise still wins.
+  tools = with pkgs; [
+    gopls
+    lua-language-server
+    terraform-ls
+    go # gofmt
+    gotools # goimports
+    jq
+    shfmt
+    terraform
+    # snacks.nvim: files (fd, else a find that ignores .gitignore), grep (rg)
+    # and its gh integration
+    fd
+    ripgrep
+    gh
+  ];
+  neovim = pkgs.symlinkJoin {
+    name = "neovim-with-tools";
+    paths = [ pkgs.neovim ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/nvim --suffix PATH : ${lib.makeBinPath tools}
+    '';
+  };
+in
+{
+  home.packages = [ neovim ];
+```
+
+`wrapProgram` は、`bin/nvim` を「PATH を足してから本物の nvim を起動する」小さなスクリプトに置き換える。nixpkgs の bat が less を持つのと同じ仕組み。足しているのは store のパスなので、考え方はシェル関数の `${fzf}` と変わらない。ポイントは2つある。
+
+- `--suffix` で PATH の末尾に足すので、プロジェクトが mise で別のバージョンの gopls などを指定していれば、そちらが先に見つかる
+- `home.packages` に入るのは包んだ nvim だけで、gopls などの LSP サーバーはユーザーの PATH に出てこない。nvim しか使わないものが、ユーザーの PATH に並ばなくなる
+
+試しに PATH を `/usr/bin:/bin` だけにして nvim を起動してみると、LSP サーバーとフォーマッタに加えて fd、rg、gh も見つかり、崩した JSON を conform が jq で整形した。埋め込む、コマンドにする、プログラムごと包む。形は違うが、どれも依存を store のパスで持っていることに変わりはない。
+
+### store のパスにしないもの
+
+全部を store のパスにしているわけではない。次の3つは PATH のままにしている。
+
+1. macOS に最初からあるコマンド（awk、sed など）と git: どちらも store のパスで持つ意味がない
+   - awk や sed は macOS が最初から持っているもので、Nix では入れていない。dotfiles とは切り離されたところにあるので、ツールのファイルをどう足し消ししても、なくなることがない
+   - git も、なくなることのない土台
+2. 手書きの設定ファイルの中で使うもの: 中に store のパスを書けないので、PATH に載せる
+   - 何度も直す設定ファイルは、直せばすぐ効くように、Nix で生成せず、repo のファイルを直接リンクしている（詳しくは下で）
+3. あれば使い、なくても動くもの: 依存とはみなさず、store のパスにもしない
+   - rm.nvim には `vim.fn.executable('gomi') == 1 and 'gomi' or nil` と書いていて、gomi があればゴミ箱に送り、なければふつうに消す。gomi がなくても処理は失敗しない
+
+手書きの設定ファイルについては、少し説明が要る。設定ファイルも Nix で生成すれば、中に store のパスを書ける。ただ、Nix で生成したファイルは store に置かれて書き換えられないので、直すたびに `.nix` を書き換えて switch することになる。キーバインドや色のように、試しながら何度も直すファイルでこれをやると、いちいち待たされる。そこで、そういうファイルは Nix で生成せず、repo のファイルを直接リンクして置いている。こうしておけば、ファイルを直せばすぐ効く。
+
+その代わり、中に store のパスは書けない。例えば gh-dash の `config.yml` は、diff の表示に delta を、`ctrl+g` で lazygit を呼ぶが、どちらもコマンド名で書くしかない。なので、この2つは PATH に載せておく必要がある。delta と lazygit は gh-dash のためだけにあるので、gh の付属ツールとして `gh.nix` が PATH に載せている。gh をやめて `gh.nix` を消せば、gh-dash も delta も lazygit も一緒に消えるので、前の章の決まりからは外れない。
+
+この決まりは dotfiles の AGENTS.md の「Where things go」にも書いてある。今は dotfiles をいじるのもほとんど AI なので、AI がツールを足すときもこれに従ってくれる。
+
+### 余計なコマンドを PATH に出さない
+
+ここまでは、消したときにほかが壊れないようにする話だった。逆に、入れたときにほかを壊すこともある。
+
+PATH に載せるのは、そのファイルが受け持つツールだけ、と書いたが、これはパッケージの単位で考えると少しずれる。nixpkgs のパッケージは、思っていない名前のコマンドも一緒に入れることがある。実際に引っかかったのはこの3つ。
+
+- `pkgs.gawk` は gawk だけでなく `bin/awk` も入れる。PATH で macOS の BSD awk より先に来るので、AI が書く BSD 前提のコマンドの挙動が変わってしまう
+- `pkgs.gotools` は50個ほどのコマンドを入れ、その中の `bundle` が Ruby の bundle を隠していた
+- `pkgs.bashInteractive` は `bin/sh` も入れるので、macOS の `/bin/sh` より先に来ていた
+
+どれも、欲しいコマンドだけを `bin` にリンクした小さなパッケージを作って、それを入れるように直した。
+
+確かめ方は `which -a awk` で先頭が何かを見るだけなのだが、困ったことに、何かがおかしくなるまで見ようと思わない。[前回の記事](/post/2026/10/01/ai-agent-first-dotfiles/)で書いたとおり、AI は macOS にいることをわかっていて BSD の書き方をしてくるので、こういう名前の衝突は人間より AI の方が先に踏みやすいと思う。
+
+## おわりに
+
+`$+commands` で存在を確かめていたころから、zplug、afx と、依存はいつも「PATH にあるはずの名前」だった。Nix にして、それが変わった。ツールのファイルは、ライフサイクルが同じものの単位で分け、共有の設定は持ち寄りで作る。そのうえで、ほかのツールは store のパスで使う。この2つで、ファイルを1つ消したときに、消すべきものは全部消え、消してはいけないものは壊れない。何が起きるかが、そのファイルを見るだけでわかる。新しい Mac でも、同じものが同じ形で揃う。10年かけてやっと、求めていたパッケージ管理にたどり着いた気がする。
+
+https://github.com/babarot/dotfiles

@@ -76,16 +76,17 @@
   padding: 0 0.35em;
   color: var(--fig-muted);
   font-family: var(--font-mono);
-  font-size: var(--fig-text-xs);
+  font-size: var(--fig-text-sm);
 }
 
-/* .caption: a footer below a rule, for legends or a one-line takeaway */
+/* .caption: a footer below a rule, for legends or a one-line takeaway. The
+   size and color of an image's caption (figcaption), so both read as one */
 .fig .caption {
   margin-top: var(--fig-space-4);
   border-top: 1px solid var(--fig-border);
   padding-top: var(--fig-space-3);
   color: var(--fig-muted);
-  font-size: var(--fig-text-sm);
+  font-size: var(--fig-text);
 }
 
 /* .legend: a row of .tag items explaining the colors */
@@ -151,4 +152,74 @@
 
 .fig .tree .row > b {
   font-weight: 600;
+}
+
+/* .status: an outcome with a mark, readable without the color:
+   <span class="status ok">動く</span> (✓), <span class="status ng">消える</span> (✕) */
+.fig .status {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3em;
+  color: var(--c, var(--fig-fg));
+  font-size: var(--fig-text-sm);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.fig .status.ok { --c: var(--fig-green); }
+.fig .status.ng { --c: var(--fig-red); }
+.fig .status.ok::before { content: '✓'; }
+.fig .status.ng::before { content: '✕'; }
+
+/* Tool files: what one .nix file holds.
+   .nixfile is the file, with its name in .nixfile-name on top.
+   .tool is a tool; .tool.companion (dashed) one that exists only to serve
+   another; .setting is a setting the file writes for a tool; .role is the
+   small label saying which of these a row is. Pick a tool's hue with
+   .blue .green ... */
+.fig .nixfile {
+  border: 1px solid var(--fig-border);
+  border-radius: var(--fig-radius-sm);
+  background: var(--fig-surface);
+  padding: var(--fig-space-2) var(--fig-space-4) var(--fig-space-3);
+}
+
+.fig .nixfile-name {
+  margin-bottom: var(--fig-space-2);
+  color: var(--fig-muted);
+  font-size: var(--fig-text-sm);
+}
+
+.fig .tool {
+  border: 1px solid var(--c, var(--fig-line));
+  border-radius: var(--fig-radius-sm);
+  padding: 0 0.45em;
+  color: var(--c, var(--fig-fg));
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.fig .tool.companion {
+  border-style: dashed;
+  font-weight: 400;
+}
+
+.fig .setting {
+  color: var(--fig-muted);
+  font-family: var(--font-mono);
+  font-size: var(--fig-text-sm);
+  overflow-wrap: anywhere;
+}
+
+.fig .role {
+  color: var(--fig-muted);
+  font-size: var(--fig-text-sm);
+}
+
+/* .headline: a figure's own title on its first line. The figure's text size,
+   below the article's headings (h3 is 1rem), so it never reads as one */
+.fig .headline {
+  margin-bottom: var(--fig-space-3);
+  font-size: var(--fig-text);
+  font-weight: 700;
 }

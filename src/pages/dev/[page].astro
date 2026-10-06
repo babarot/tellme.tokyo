@@ -31,8 +31,30 @@ const samples: { title: string; note: string; html: string }[] = [
   },
   {
     title: '.chip',
-    note: 'A small bordered label, e.g. yes / no on a branch.',
+    note: 'A small bordered label, e.g. yes / no on a branch, or the file a thing is written in.',
     html: `<p><span class="chip">yes</span> <code>EDITOR=vim</code></p>`,
+  },
+  {
+    title: '.status',
+    note: 'An outcome with a mark, so it reads without the color: .ok (✓) or .ng (✕).',
+    html: `<p><code>bat-theme</code> <span class="status ok">works</span></p>
+<p><code>pskill</code> <span class="status ng">removed</span></p>`,
+  },
+  {
+    title: '.nixfile / .tool / .setting / .role',
+    note: 'What one tool file holds: .nixfile with .nixfile-name on top; .tool (a hue picks its color), .tool.companion (dashed) for a tool that only serves another, .setting for a setting, .role for the small label. Lay them out with .tree.',
+    html: `<div class="nixfile">
+  <div class="nixfile-name"><code>gh.nix</code></div>
+  <ul class="tree">
+    <li>
+      <div class="row"><span class="tool blue">gh</span><span class="role">main</span></div>
+      <ul>
+        <li><div class="row"><span class="role">setting</span><span class="setting">gh-dash</span></div></li>
+        <li><div class="row"><span class="tool companion">delta</span><span class="role">companion</span></div></li>
+      </ul>
+    </li>
+  </ul>
+</div>`,
   },
   {
     title: '.caption / .legend',
