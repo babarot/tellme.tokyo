@@ -1,0 +1,64 @@
+<style>
+  .store {
+    border: 1px dashed var(--fig-line);
+    border-radius: var(--fig-radius);
+    padding: var(--fig-space-3);
+  }
+
+  .head {
+    margin-bottom: var(--fig-space-3);
+    color: var(--fig-muted);
+    font-size: var(--fig-text-sm);
+    font-weight: 700;
+  }
+
+  .refs {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--fig-space-3) var(--fig-space-3);
+  }
+
+  .box {
+    display: flex;
+    flex-direction: column;
+    gap: var(--fig-space-1);
+    border: 1px solid var(--fig-border);
+    border-radius: var(--fig-radius-sm);
+    background: var(--fig-surface);
+    padding: var(--fig-space-2) var(--fig-space-3);
+  }
+
+  .kind {
+    color: var(--fig-muted);
+    font-size: var(--fig-text-sm);
+  }
+
+  .arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--fig-muted);
+    font-size: var(--fig-text-lg);
+    line-height: 1.2;
+  }
+
+  .arrow small {
+    text-align: center;
+  }
+</style>
+
+<div class="store">
+  <div class="head">store の中（パスで指し合う）</div>
+  <div class="refs">
+    <div class="box"><span class="kind">nixpkgs のパッケージ</span><code>bat-0.26.1</code></div>
+    <div class="arrow">→<small>参照</small></div>
+    <div class="box"><code>less-710</code><small>/nix/store/<wbr>3yn3…-less-710</small></div>
+
+    <div class="box"><span class="kind">自分の設定</span><code>human.zsh</code><small>bat-theme の中に fzf の store のパス</small></div>
+    <div class="arrow">→<small>参照</small></div>
+    <div class="box"><code>fzf-0.74.4</code><small>/nix/store/<wbr>b5jb…-fzf-0.74.4</small></div>
+  </div>
+</div>
+
+<div class="caption">nixpkgs のパッケージも、Nix で生成した自分の設定も、同じ形で依存を指す。人間が <code>fzf</code> と打つときは、これとは別に、プロファイルのリンクを通って同じ fzf に届く。そのリンクが外れても、上の参照は残る。</div>
