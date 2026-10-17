@@ -1,0 +1,145 @@
+<style>
+  .gather {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.4fr);
+    align-items: center;
+    gap: var(--fig-space-3) var(--fig-space-4);
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--fig-space-2);
+  }
+
+  .head {
+    color: var(--fig-muted);
+    font-size: var(--fig-text-sm);
+    font-weight: 700;
+  }
+
+  .nixfile {
+    padding: var(--fig-space-2) var(--fig-space-3);
+  }
+
+  .nixfile-name {
+    margin-bottom: var(--fig-space-1);
+  }
+
+  .lines {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lines li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--fig-space-1) var(--fig-space-2);
+    padding: 0.1rem 0;
+  }
+
+  .arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--fig-muted);
+    font-size: var(--fig-text-lg);
+    line-height: 1.2;
+  }
+
+  .arrow small {
+    max-width: 6em;
+    text-align: center;
+  }
+
+  .arrow::before { content: '→'; }
+
+  /* narrow screens: tool files above, the generated files below */
+  @media (max-width: 40rem) {
+    .gather {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .arrow {
+      flex-direction: row;
+      justify-content: center;
+      gap: var(--fig-space-2);
+    }
+
+    .arrow small {
+      max-width: none;
+    }
+
+    .arrow::before { content: '↓'; }
+  }
+</style>
+
+<div class="gather">
+  <div class="col">
+    <div class="head">ツールのファイル</div>
+    <div class="nixfile">
+      <div class="nixfile-name"><code>eza.nix</code></div>
+      <ul class="lines">
+        <li><span class="setting">my.human.aliases.ls</span></li>
+        <li><span class="setting">my.human.aliases.ll</span></li>
+      </ul>
+    </div>
+    <div class="nixfile">
+      <div class="nixfile-name"><code>bat.nix</code></div>
+      <ul class="lines">
+        <li><span class="setting">my.human.env.BAT_THEME</span></li>
+        <li><span class="setting">my.ai.env.BAT_PAGER</span></li>
+      </ul>
+    </div>
+    <div class="nixfile">
+      <div class="nixfile-name"><code>go.nix</code></div>
+      <ul class="lines">
+        <li><span class="setting">my.env.GOBIN</span></li>
+        <li><span class="setting">my.path</span></li>
+      </ul>
+    </div>
+    <div class="nixfile">
+      <div class="nixfile-name"><code>ov.nix</code></div>
+      <ul class="lines">
+        <li><span class="setting">my.gitConfig.pager</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="arrow"><small>Nix が持ち寄って、1つずつ書き出す</small></div>
+
+  <div class="col">
+    <div class="head">共有の設定ファイル（生成）</div>
+    <div class="nixfile">
+      <div class="nixfile-name"><code>~/.config/zsh/human.zsh</code></div>
+      <ul class="lines">
+        <li><code>alias ls='eza …'</code><span class="chip">eza.nix</span></li>
+        <li><code>alias ll='eza … -l'</code><span class="chip">eza.nix</span></li>
+        <li><code>export BAT_THEME=DarkNeon</code><span class="chip">bat.nix</span></li>
+      </ul>
+    </div>
+    <div class="nixfile">
+      <div class="nixfile-name"><code>~/.config/zsh/ai.zsh</code></div>
+      <ul class="lines">
+        <li><code>export BAT_PAGER=cat</code><span class="chip">bat.nix</span></li>
+      </ul>
+    </div>
+    <div class="nixfile">
+      <div class="nixfile-name"><code>~/.config/zsh/env.zsh</code></div>
+      <ul class="lines">
+        <li><code>export GOBIN=~/go/bin</code><span class="chip">go.nix</span></li>
+        <li><code>path+=(~/go/bin)</code><span class="chip">go.nix</span></li>
+      </ul>
+    </div>
+    <div class="nixfile">
+      <div class="nixfile-name"><code>~/.config/git/<wbr>tools.gitconfig</code></div>
+      <ul class="lines">
+        <li><code>[pager] log = ov …</code><span class="chip">ov.nix</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="caption">共有の設定ファイルは、どのツールのものでもない。各ツールのファイルが自分の分を書き、Nix がそれを集めて1つずつ書き出す。<code>bat.nix</code> を消すと、<code>human.zsh</code> と <code>ai.zsh</code> から bat の行だけが消える。</div>

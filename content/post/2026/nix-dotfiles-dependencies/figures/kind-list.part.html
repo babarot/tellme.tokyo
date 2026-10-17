@@ -1,0 +1,35 @@
+<style>
+  .loose {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* each line stands alone: cut apart by a dashed rule */
+  .loose li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--fig-space-2);
+    border-top: 1px dashed var(--fig-border);
+    padding: var(--fig-space-1) 0;
+  }
+
+  .loose li:first-child {
+    border-top: none;
+  }
+</style>
+
+<div class="headline">4. ツールだけ</div>
+
+<div class="nixfile">
+  <div class="nixfile-name"><code>packages.nix</code></div>
+  <ul class="loose">
+    <li><span class="tool">ripgrep</span></li>
+    <li><span class="tool">hyperfine</span></li>
+    <li><span class="tool">scc</span></li>
+    <li><span class="tool">tree</span></li>
+    <li><span class="note">…</span></li>
+  </ul>
+</div>
+
+<div class="caption">1行が1つのライフサイクルで、ファイルは置き場にすぎない。1行消すと、そのツールだけが消える。</div>

@@ -1,0 +1,123 @@
+<style>
+  /* the tool files, side by side */
+  .sources {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--fig-space-3);
+  }
+
+  .nixfile {
+    padding: var(--fig-space-2) var(--fig-space-3);
+  }
+
+  .nixfile-name {
+    margin-bottom: var(--fig-space-1);
+  }
+
+  .lines {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .lines li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--fig-space-1) var(--fig-space-2);
+    padding: 0.1rem 0;
+  }
+
+  /* lines from each tool file joining into one: a bracket from the first
+     column's center to the last's, and a tick from the middle one */
+  .merge {
+    position: relative;
+    height: var(--fig-space-4);
+    margin: 0 calc(100% / 6);
+    border: 1px solid var(--fig-line);
+    border-top: none;
+  }
+
+  .merge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    border-left: 1px solid var(--fig-line);
+  }
+
+  .down {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--fig-muted);
+    line-height: 1.4;
+  }
+
+  .down::before {
+    content: '↓';
+    font-size: var(--fig-text-lg);
+  }
+
+  .target {
+    margin: var(--fig-space-1) auto 0;
+    max-width: 28rem;
+  }
+
+  .target .note {
+    display: block;
+    margin-top: var(--fig-space-2);
+  }
+
+  /* narrow screens: the tool files stack, and the bracket would not line up */
+  @media (max-width: 40rem) {
+    .sources {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .merge {
+      display: none;
+    }
+  }
+</style>
+
+<div class="sources">
+  <div class="nixfile">
+    <div class="nixfile-name"><span class="tag blue">eza.nix</span></div>
+    <ul class="lines">
+      <li><span class="setting">my.human.aliases.ls</span></li>
+      <li><span class="setting">my.human.aliases.ll</span></li>
+    </ul>
+  </div>
+  <div class="nixfile">
+    <div class="nixfile-name"><span class="tag orange">bat.nix</span></div>
+    <ul class="lines">
+      <li><span class="setting">my.human.env.<wbr>BAT_THEME</span></li>
+    </ul>
+  </div>
+  <div class="nixfile">
+    <div class="nixfile-name"><span class="tag green">fzf.nix</span></div>
+    <ul class="lines">
+      <li><span class="setting">my.human.init</span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="merge"></div>
+<div class="down"><small>switch のときに Nix が集めて書き出す</small></div>
+
+<div class="target">
+  <div class="nixfile">
+    <div class="nixfile-name"><code>~/.config/zsh/human.zsh</code></div>
+    <ul class="lines">
+      <li><code>alias ls='eza …'</code><span class="tag blue">eza.nix</span></li>
+      <li><code>alias ll='eza … -l'</code><span class="tag blue">eza.nix</span></li>
+      <li><code>export BAT_THEME=DarkNeon</code><span class="tag orange">bat.nix</span></li>
+      <li><code>pskill() { … }</code><span class="tag green">fzf.nix</span></li>
+    </ul>
+  </div>
+  <span class="note"><code>.zshrc</code> はこのファイルを読み込むだけ</span>
+</div>
+
+<div class="caption">各ツールのファイルが書いた行が、1つの <code>human.zsh</code> に集まる。</div>
