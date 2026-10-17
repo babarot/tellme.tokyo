@@ -30,7 +30,7 @@
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.5",
     "budoux": "^0.9.3",
-    "mermaid": "^12.0.0",
+    "mermaid": "^12.2.0",
     "remark-directive": "^4.0.0",
     "satori": "^0.33.5",
     "sharp": "^0.35.5",
@@ -49,6 +49,6 @@
     "unified": "^11.0.5",
     "vfile": "^6.0.3",
     "vitest": "^5.0.2",
-    "wrangler": "^4.144.0"
+    "wrangler": "^4.151.0"
   }
 }
