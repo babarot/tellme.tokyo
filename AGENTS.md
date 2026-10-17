@@ -10,7 +10,7 @@ There are no pull requests for ordinary work. Changes are committed to `main` (f
 
 - Push only when asked.
 - Before pushing: `pnpm check:posts` and `pnpm build`; `pnpm test` after a plugin change, `pnpm check:figures` after a figure change.
-- A pull request is opened only to see a draft post on a preview. Workers Builds builds every other branch at a preview URL, with drafts and `noindex`. Preview URLs are behind Cloudflare Access, so the author has to open them.
+- A post may go out either way. A small one is landed like any change. A longer one is written on a branch with a pull request, so its draft can be read on a preview (Workers Builds builds every other branch at a preview URL, with drafts and `noindex`; preview URLs are behind Cloudflare Access, so the author has to open them). Before merging, shape the branch into meaningful commits: the post in one commit with its drafting steps squashed in, and changes that stand on their own (figure components, other posts) each in their own. Then merge the pull request with a merge commit; that merge is the deploy, so remove `draft` first.
 - One change per commit, the subject an imperative sentence (see `git log`). The author often asks for several changes to be collected and committed together; leave them staged until asked.
 
 ## What the author cares about
