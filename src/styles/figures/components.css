@@ -214,3 +214,10 @@
   color: var(--fig-muted);
   font-size: var(--fig-text-xs);
 }
+
+/* .headline: a figure's own title on its first line */
+.fig .headline {
+  margin-bottom: var(--fig-space-3);
+  font-size: var(--fig-text-lg);
+  font-weight: 700;
+}
