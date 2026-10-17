@@ -1,0 +1,34 @@
+<style>
+  ol {
+    margin: 0;
+    padding-left: 1.6rem;
+  }
+
+  li {
+    padding: 0.2rem 0;
+  }
+
+  li > .note,
+  li > .chip {
+    margin-left: 0.6rem;
+  }
+
+  .appended {
+    margin-top: var(--fig-space-2);
+    border-top: 1px dashed var(--fig-border);
+    padding-top: var(--fig-space-2);
+  }
+</style>
+
+<ol>
+  <li><code>~/.local/share/mise/shims</code><span class="note">プロジェクトごとのバージョン</span></li>
+  <li><code>~/bin</code>、<code>~/.local/bin</code></li>
+  <li><code>/etc/profiles/per-user/$USER/bin</code><span class="note">Nix（home.packages で入れたもの）</span></li>
+  <li><code>/run/current-system/sw/bin</code> など<span class="note">Nix</span></li>
+  <li><code>/opt/homebrew/bin</code><span class="note">Homebrew</span></li>
+  <li><code>/usr/bin</code>、<code>/bin</code> など<span class="note">macOS</span></li>
+  <li class="appended"><code>~/go/bin</code><span class="chip">go.nix</span><span class="note">my.path</span></li>
+  <li><code>~/.orbstack/bin</code><span class="chip">ホストのファイル</span><span class="note">my.path</span></li>
+</ol>
+
+<div class="caption">破線より上は <code>.zshenv</code> に手で書いた順番。下は、ツールのファイルが <code>my.path</code> で末尾に足したもの。</div>
