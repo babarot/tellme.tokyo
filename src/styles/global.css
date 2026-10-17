@@ -66,7 +66,9 @@
 
 @theme {
   --font-sans: '游ゴシック', YuGothic, 'Zen Kaku Gothic New', 'ヒラギノ角ゴ Pro', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, sans-serif;
-  --font-mono: 'Hack', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  /* Hack has no Japanese: Japanese in code falls to the body's fonts, not to
+     whatever the OS picks for monospace */
+  --font-mono: 'Hack', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', '游ゴシック', YuGothic, 'Zen Kaku Gothic New', 'ヒラギノ角ゴ Pro', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, monospace;
 }
 
 /* The theme's color roles as Tailwind colors (text-heading, border-line, ...).
