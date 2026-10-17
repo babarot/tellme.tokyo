@@ -152,3 +152,20 @@
 .fig .tree .row > b {
   font-weight: 600;
 }
+
+/* .status: an outcome with a mark, readable without the color:
+   <span class="status ok">動く</span> (✓), <span class="status ng">消える</span> (✕) */
+.fig .status {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3em;
+  color: var(--c, var(--fig-fg));
+  font-size: var(--fig-text-sm);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.fig .status.ok { --c: var(--fig-green); }
+.fig .status.ng { --c: var(--fig-red); }
+.fig .status.ok::before { content: '✓'; }
+.fig .status.ng::before { content: '✕'; }
