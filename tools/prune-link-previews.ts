@@ -1,6 +1,7 @@
 // Removes the link preview cache entries (.cache/link-previews.json) that no
-// post uses any more: after a post is deleted or its links change. Reads every
-// post, drafts too, and finds its cards the way the plugin does.
+// post uses any more, and the saved images no entry names: after a post is
+// deleted or its links change. Reads every post, drafts too, and finds its
+// cards the way the plugin does.
 //   pnpm prune:link-previews [--dry-run]
 import fs from 'node:fs';
 import path from 'node:path';
@@ -9,9 +10,10 @@ import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
 import remarkDirective from 'remark-directive';
 import { previewUrls } from '../src/plugins/link-preview/urls.ts';
-import { prune, readCache, writeCache } from '../src/plugins/link-preview/cache.ts';
+import { prune, readCache, unusedImages, writeCache } from '../src/plugins/link-preview/cache.ts';
 
 const CACHE = '.cache/link-previews.json'; // as in astro.config.ts
+const IMAGES = 'public/link-previews'; // as in astro.config.ts
 const POSTS = 'content/post';
 const dryRun = process.argv.includes('--dry-run');
 
@@ -31,3 +33,10 @@ const { kept, removed } = prune(readCache(CACHE), used);
 console.log(`${posts.length} posts, ${used.size} card URLs; ${removed.length} unused in ${CACHE}${dryRun ? ' (dry run)' : ''}`);
 for (const url of removed) console.log(`  - ${url}`);
 if (!dryRun && removed.length) writeCache(CACHE, kept);
+
+const images = unusedImages(kept, fs.existsSync(IMAGES) ? fs.readdirSync(IMAGES) : []);
+console.log(`${images.length} unused in ${IMAGES}`);
+for (const file of images) {
+  console.log(`  - ${file}`);
+  if (!dryRun) fs.rmSync(path.join(IMAGES, file));
+}

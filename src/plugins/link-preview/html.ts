@@ -6,11 +6,14 @@
 //       <span class="link-preview-description">…</span>   (when there is one)
 //       <span class="link-preview-site"><img icon> host</span>
 //     </span>
-//     <span class="link-preview-image"><img></span>       (when there is one)
+//     <span class="link-preview-image"><img></span>       (when one is saved)
 //   </a>
 //
+// The image is the saved copy (image.ts), never the page's own URL, so a card
+// does not depend on the linked site to show it.
 // `not-prose` keeps article typography (margins on images, underlined links)
 // out of the card.
+import type { SavedImage } from './image';
 import type { Preview } from './parse';
 
 const el = (tagName: string, properties: Record<string, unknown>, children: any[] = []) => ({
@@ -21,7 +24,8 @@ const el = (tagName: string, properties: Record<string, unknown>, children: any[
 });
 const text = (value: string) => ({ type: 'text', value });
 
-export function previewHast(p: Preview) {
+/** `imageBase`: the URL the saved images are served under, ending in "/" */
+export function previewHast(p: Preview, image?: SavedImage | null, imageBase = '/') {
   const host = new URL(p.url).hostname.replace(/^www\./, '');
   const site = [
     ...(p.icon ? [el('img', { className: ['link-preview-icon'], src: p.icon, alt: '', width: 16, height: 16, loading: 'lazy', decoding: 'async' })] : []),
@@ -32,8 +36,12 @@ export function previewHast(p: Preview) {
     ...(p.description ? [el('span', { className: ['link-preview-description'] }, [text(p.description)])] : []),
     el('span', { className: ['link-preview-site'] }, site),
   ]);
-  const image = p.image
-    ? [el('span', { className: ['link-preview-image'] }, [el('img', { src: p.image, alt: '', loading: 'lazy', decoding: 'async' })])]
+  const picture = image
+    ? [
+        el('span', { className: ['link-preview-image'] }, [
+          el('img', { src: imageBase + image.file, alt: '', width: image.width, height: image.height, loading: 'lazy', decoding: 'async' }),
+        ]),
+      ]
     : [];
-  return el('a', { className: ['link-preview', 'not-prose'], href: p.url, target: '_blank', rel: 'noopener noreferrer' }, [body, ...image]);
+  return el('a', { className: ['link-preview', 'not-prose'], href: p.url, target: '_blank', rel: 'noopener noreferrer' }, [body, ...picture]);
 }

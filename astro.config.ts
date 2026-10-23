@@ -37,7 +37,7 @@ export default defineConfig({
         remarkHeadingLevels,
         remarkMermaid,
         remarkCodeBlock,
-        [remarkLinkPreview, { cacheFile: '.cache/link-previews.json' }],
+        [remarkLinkPreview, { cacheFile: '.cache/link-previews.json', imageDir: 'public/link-previews', imageBase: '/link-previews/' }],
       ],
       rehypePlugins: [rehypeFigureCaption],
       remarkRehype: { footnoteLabel: '脚注', footnoteBackLabel: '本文に戻る' },

@@ -16,7 +16,7 @@ another Astro (or any unified) project as is.
 | `revision` | updates to an old post that keep what it said: `:::addendum` (a dated note) and `::::revisions` of `:::version` blocks, newest first (past ones under `<details>`, or `view=tabs`: tabs switched by CSS radios, no script); passes `updated` and the ids of past versions' headings (`revisionHiddenHeadings`) to the page as front matter | remark, style |
 | `img` | `:::img` for one image with options: `width` (most px), `scheme` (light or dark only), `frame` (a thin line around it) | remark, style |
 | `code-block` | a copy button on every code block (on hover; none on touch screens); ```` ```json:package.json ```` shows the file name above the code | remark, style, client |
-| `link-preview` | a paragraph that is only a URL becomes a card with the page's title, description, image and icon (cached; failed fetches are retried after 30 days; `pnpm prune:link-previews` drops entries no post uses) | remark, urls, parse, fetch, cache, html, style |
+| `link-preview` | a paragraph that is only a URL becomes a card with the page's title, description, image and icon (cached; the image is saved once as a WebP in `imageDir` and served from the site; failed fetches are retried after 30 days; `pnpm prune:link-previews` drops entries and images no post uses) | remark, urls, parse, fetch, image, cache, html, style |
 | `heading-levels` | keeps the post title the only h1 without rewriting the source | remark |
 | `figure-caption` | `![alt](src "caption")` alone in a paragraph (or wrapped in a link) becomes a figure with a caption | rehype |
 | `directive-fallback` | turns directives nothing handled back into their text (`ratio:16` stays as written) | remark |
@@ -65,7 +65,7 @@ after them. `code-block` goes after `mermaid`, which takes its code blocks first
 ```ts
 [remarkGallery, { rowHeight: 150, gap: 5, thumbnailWidths: [300, 600, 900, 1200] }]
 [remarkCarousel, { interval: 7000, autoplay: true, ratio: '16/9', indicator: 'dot' }]
-[remarkLinkPreview, { cacheFile: '.cache/link-previews.json', retryAfterDays: 30 }]
+[remarkLinkPreview, { cacheFile: '.cache/link-previews.json', imageDir: 'public/link-previews', imageBase: '/link-previews/', retryAfterDays: 30 }]
 [remarkRevision, { labels: { addendum: 'Added {date}', latest: 'Latest', previous: 'Previous', tabs: 'Versions' } }]
 ```
 

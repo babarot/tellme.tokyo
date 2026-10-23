@@ -4,13 +4,16 @@ import path from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { render } from '../shared/test-utils';
 import remarkLinkPreview from './remark';
+import type { SavedImage } from './image';
 import type { Preview } from './parse';
 
 let dir: string;
 let cacheFile: string;
+let imageDir: string;
 beforeEach(() => {
   dir = fs.mkdtempSync(path.join(os.tmpdir(), 'link-preview-'));
   cacheFile = path.join(dir, 'previews.json');
+  imageDir = path.join(dir, 'images');
 });
 afterEach(() => fs.rmSync(dir, { recursive: true, force: true }));
 
@@ -23,8 +26,19 @@ const full = (url: string): Preview => ({
   siteName: 'Example',
 });
 
-const card = (source: string, fetchPreview: (url: string) => Promise<Preview | null> = async (u) => full(u), gfm = false) =>
-  render(source, { remark: [[remarkLinkPreview, { cacheFile, fetchPreview }]], gfm });
+// Saves a stand-in file, as image.ts would
+const saved = async (): Promise<SavedImage> => {
+  fs.mkdirSync(imageDir, { recursive: true });
+  fs.writeFileSync(path.join(imageDir, 'abc.webp'), '');
+  return { file: 'abc.webp', width: 960, height: 480 };
+};
+
+const card = (
+  source: string,
+  fetchPreview: (url: string) => Promise<Preview | null> = async (u) => full(u),
+  gfm = false,
+  saveImage: (url: string) => Promise<SavedImage | null> = saved,
+) => render(source, { remark: [[remarkLinkPreview, { cacheFile, imageDir, imageBase: '/lp/', fetchPreview, saveImage }]], gfm });
 
 describe('remarkLinkPreview', () => {
   it('turns a paragraph that is only a URL into a card', async () => {
@@ -34,7 +48,14 @@ describe('remarkLinkPreview', () => {
     expect(html).toContain('<span class="link-preview-description">Desc</span>');
     expect(html).toContain('<img class="link-preview-icon" src="https://example.com/favicon.ico"');
     expect(html).toContain('<span class="link-preview-host">example.com</span>');
-    expect(html).toContain('<span class="link-preview-image"><img src="https://example.com/og.png"');
+    expect(html).toContain('<span class="link-preview-image"><img src="/lp/abc.webp" alt="" width="960" height="480"');
+  });
+
+  it('shows no image when it could not be saved, rather than the page\'s own', async () => {
+    const html = await card('https://example.com/', undefined, false, async () => null);
+    expect(html).toContain('class="link-preview not-prose"');
+    expect(html).not.toContain('link-preview-image');
+    expect(html).not.toContain('og.png');
   });
 
   it('also takes a GFM autolink', async () => {

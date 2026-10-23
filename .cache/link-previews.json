@@ -11,7 +11,12 @@
     "image": "https://gihyo.jp/assets/images/ogp/2017/641707.jpg",
     "icon": "https://gihyo.jp/GHfavicon.svg",
     "siteName": "技術評論社",
-    "fetchedAt": "2026-10-01T10:05:51.551Z"
+    "fetchedAt": "2026-10-01T10:05:51.551Z",
+    "localImage": {
+      "file": "2b76bce1b86c5288d88a7da337d6f71ed10ddee55e20da37c632a4a52741b3a3.webp",
+      "width": 960,
+      "height": 504
+    }
   },
   "http://mercan.mercari.com/entry/2016/10/18/120000": {
     "url": "http://mercan.mercari.com/entry/2016/10/18/120000",
@@ -35,7 +40,12 @@
     "image": "https://storage.googleapis.com/prd-engineering-asset/2015/11/b5fc5777-20151117164812.png",
     "icon": "https://engineering.mercari.com/favicons/android-chrome-512x512.png",
     "siteName": "engineering.mercari.com",
-    "fetchedAt": "2026-10-03T06:32:22.559Z"
+    "fetchedAt": "2026-10-03T06:32:22.559Z",
+    "localImage": {
+      "file": "525a2cc75480caba16b8f86ba4de01d00e70ce8654c4f94f2bd9d7c9ebeb0465.webp",
+      "width": 960,
+      "height": 284
+    }
   },
   "http://vimconf.vim-jp.org/2016/": {
     "url": "http://vimconf.vim-jp.org/2016/",
@@ -67,7 +77,12 @@
     "image": "https://storage.googleapis.com/zenn-user-upload/b3b2ba4ffc5b-20250208.png",
     "icon": "https://gomi.dev/favicon.ico",
     "siteName": "gomi.dev",
-    "fetchedAt": "2026-10-01T08:24:46.349Z"
+    "fetchedAt": "2026-10-01T08:24:46.349Z",
+    "localImage": {
+      "file": "dcefb609845997f9e27451c3b0562a9e50fed3ed222b775b06567880ccfced6b.webp",
+      "width": 960,
+      "height": 504
+    }
   },
   "https://builderscon.io/builderscon/tokyo/2016": {
     "url": "https://builderscon.io/builderscon/tokyo/2016",
@@ -81,7 +96,12 @@
     "image": "https://d2ueuvlup6lbue.cloudfront.net/variants/production/store/fill/200/200/ik2xn0d7l0oyyi5ock19mkfkinhh/_.png",
     "icon": "https://d2ueuvlup6lbue.cloudfront.net/favicon.ico",
     "siteName": "filmarks.com",
-    "fetchedAt": "2026-10-01T10:05:52.084Z"
+    "fetchedAt": "2026-10-01T10:05:52.084Z",
+    "localImage": {
+      "file": "0d124cafee9cd74e9fdd19c46a4aff86fc75f7540c5630542d5ebe36a8d9e92f.webp",
+      "width": 200,
+      "height": 200
+    }
   },
   "https://gihyo.jp/magazine/SD/archive/2019/201909": {
     "url": "https://gihyo.jp/magazine/SD/archive/2019/201909",
@@ -90,7 +110,12 @@
     "image": "https://gihyo.jp/assets/images/ogp/2019/641909.jpg",
     "icon": "https://gihyo.jp/GHfavicon.svg",
     "siteName": "技術評論社",
-    "fetchedAt": "2026-10-01T10:05:51.719Z"
+    "fetchedAt": "2026-10-01T10:05:51.719Z",
+    "localImage": {
+      "file": "2a3971e7538f3d0c032f3988f759d523f257e9667f5d0c285a58a0f3c8a241e5.webp",
+      "width": 960,
+      "height": 504
+    }
   },
   "https://github.com/b4b4r07": {
     "url": "https://github.com/b4b4r07",
@@ -99,7 +124,12 @@
     "image": "https://avatars.githubusercontent.com/u/9744402?v=4?s=400",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:49.273Z"
+    "fetchedAt": "2026-10-01T10:05:49.273Z",
+    "localImage": {
+      "file": "9ae8ff0313aec59a1f37a30ae7a7a31758017e1b6471ed79df425ed32691a799.webp",
+      "width": 460,
+      "height": 460
+    }
   },
   "https://github.com/b4b4r07/afx/": {
     "url": "https://github.com/b4b4r07/afx/",
@@ -117,7 +147,12 @@
     "image": "https://opengraph.githubassets.com/1b7e03a6b6cb3f6126eb18f5d4ba4a3f5a6e39acfedf1f549e016350e8d6e121/babarot/epoch-cat",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:50.463Z"
+    "fetchedAt": "2026-10-01T10:05:50.463Z",
+    "localImage": {
+      "file": "48fb8edc91956d4079ec4ff9a7505fc6fa721dda29f2ac6e0d44ad2debb058d6.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/gist": {
     "url": "https://github.com/b4b4r07/gist",
@@ -126,7 +161,12 @@
     "image": "https://opengraph.githubassets.com/8d265c34bcae9b7160f2ef6af08aa76f5447e4c0132ddb200eb454491666f610/babarot/gist",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:51.860Z"
+    "fetchedAt": "2026-10-01T10:05:51.860Z",
+    "localImage": {
+      "file": "f47b011f028bd9df37f1ad520be3fbf864220f2b5d2b3eabd269f306b8404d17.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/git-br": {
     "url": "https://github.com/b4b4r07/git-br",
@@ -135,7 +175,12 @@
     "image": "https://opengraph.githubassets.com/85b168fceb565f11ba54779115faa4cd34942d6e272715634e57a057a22506ea/babarot/git-br",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:50.420Z"
+    "fetchedAt": "2026-10-01T10:05:50.420Z",
+    "localImage": {
+      "file": "3f83f460dec26cce8780afc841327224b93f05b0f77a61b9a08c11889498fe1a.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/git-bump": {
     "url": "https://github.com/b4b4r07/git-bump",
@@ -144,7 +189,12 @@
     "image": "https://opengraph.githubassets.com/2a915705111675b0e94f64acd23225dbab36999d2561b763d048a26e2890378e/babarot/git-bump",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:51.383Z"
+    "fetchedAt": "2026-10-01T10:05:51.383Z",
+    "localImage": {
+      "file": "8f37ded8e2c2439ea4c0eda8c6ca72800bf7395cc33b5e4aff8a3dfc139430b2.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/git-conflict": {
     "url": "https://github.com/b4b4r07/git-conflict",
@@ -153,7 +203,12 @@
     "image": "https://opengraph.githubassets.com/7c4a35f846a4c32fcef553f935c0d626f026cfafdec06c7b6d707a21d270e7a9/babarot/git-conflict",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:50.278Z"
+    "fetchedAt": "2026-10-01T10:05:50.278Z",
+    "localImage": {
+      "file": "08affcc3f38757e5a73cbbe36adffdc5b2f3cc42c30202c67a314da9a0a72295.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/git-open": {
     "url": "https://github.com/b4b4r07/git-open",
@@ -162,7 +217,12 @@
     "image": "https://opengraph.githubassets.com/206110885739f1cdc245d802934a903b5832f4b91335c27633bc77b03a1bcc53/babarot/git-open",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:50.831Z"
+    "fetchedAt": "2026-10-01T10:05:50.831Z",
+    "localImage": {
+      "file": "e91838a5ad70a523af0a700f80ead36cb9a23852f0aeb1487e7b076c5807ac06.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/github-labeler": {
     "url": "https://github.com/b4b4r07/github-labeler",
@@ -171,7 +231,12 @@
     "image": "https://opengraph.githubassets.com/c6bb5779060fd4ab41b86c568f5d7a8675e3d30b590d42e91b6e7b63e0c036fc/babarot/github-labeler",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:50.901Z"
+    "fetchedAt": "2026-10-01T10:05:50.901Z",
+    "localImage": {
+      "file": "22687d6c342c9125d842d1a07c694cf67e7f963e71b491ee260169a9d1baa03e.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/go-finder": {
     "url": "https://github.com/b4b4r07/go-finder",
@@ -180,7 +245,12 @@
     "image": "https://opengraph.githubassets.com/d985a8cb2d8527d38d61f82c6eb4812e0e8878d2cd0b473f52a73897008b02e9/babarot/go-finder",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:49.599Z"
+    "fetchedAt": "2026-10-01T10:05:49.599Z",
+    "localImage": {
+      "file": "1eade1aaf5294543096776c606862e100988b909d905318d294d9e3d80b1f87a.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/history": {
     "url": "https://github.com/b4b4r07/history",
@@ -189,7 +259,12 @@
     "image": "https://opengraph.githubassets.com/843fc4938b315951d403c7cabf769b55a7f18d0552884fa7141358a54838018a/babarot/history",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:51.897Z"
+    "fetchedAt": "2026-10-01T10:05:51.897Z",
+    "localImage": {
+      "file": "407a21207501809c2452f4166dd86f3232150eefe5a60f9491b60e25e9ecd56c.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/httpstat": {
     "url": "https://github.com/b4b4r07/httpstat",
@@ -198,7 +273,12 @@
     "image": "https://opengraph.githubassets.com/7a273e3491b86ef281f2e9044bc98650e21872cea07a59433f43a8091a24de97/babarot/httpstat",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:50.735Z"
+    "fetchedAt": "2026-10-01T10:05:50.735Z",
+    "localImage": {
+      "file": "4557ce20abd5098b4afcdb0957ff77031ced7f21342facf0a0e44cdc04a7b627.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/iap_curl": {
     "url": "https://github.com/b4b4r07/iap_curl",
@@ -207,7 +287,12 @@
     "image": "https://opengraph.githubassets.com/b06fb8746aa37135ab96d8c63bf2ff57b8d40031e86a934ab71e645887fbb93c/babarot/iap_curl",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:51.941Z"
+    "fetchedAt": "2026-10-01T10:05:51.941Z",
+    "localImage": {
+      "file": "61e557c8d836c207ca8a3867d3382d68e6399fd770f4cca0decdadb4ff1da716.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/kubeabc": {
     "url": "https://github.com/b4b4r07/kubeabc",
@@ -216,7 +301,12 @@
     "image": "https://opengraph.githubassets.com/1460020e4c30649154a6e6d165e08041d625e1b1950636b18ddcdcb1fe3d3d8d/babarot/kubeabc",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:52.717Z"
+    "fetchedAt": "2026-10-01T10:05:52.717Z",
+    "localImage": {
+      "file": "031c0a24b214a992e0ee1199faa4ebf0548d46c5e17b5c5ca3c42d3e47c1e6be.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/kubeabc/blob/master/cli/kube": {
     "url": "https://github.com/b4b4r07/kubeabc/blob/master/cli/kube",
@@ -225,7 +315,12 @@
     "image": "https://opengraph.githubassets.com/1460020e4c30649154a6e6d165e08041d625e1b1950636b18ddcdcb1fe3d3d8d/babarot/kubeabc",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:52.458Z"
+    "fetchedAt": "2026-10-01T10:05:52.458Z",
+    "localImage": {
+      "file": "031c0a24b214a992e0ee1199faa4ebf0548d46c5e17b5c5ca3c42d3e47c1e6be.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/kubeabc/blob/master/scripts/alias.zsh": {
     "url": "https://github.com/b4b4r07/kubeabc/blob/master/scripts/alias.zsh",
@@ -234,7 +329,12 @@
     "image": "https://opengraph.githubassets.com/1460020e4c30649154a6e6d165e08041d625e1b1950636b18ddcdcb1fe3d3d8d/babarot/kubeabc",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:52.276Z"
+    "fetchedAt": "2026-10-01T10:05:52.276Z",
+    "localImage": {
+      "file": "031c0a24b214a992e0ee1199faa4ebf0548d46c5e17b5c5ca3c42d3e47c1e6be.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/make_iap_request": {
     "url": "https://github.com/b4b4r07/make_iap_request",
@@ -243,7 +343,12 @@
     "image": "https://opengraph.githubassets.com/184a44840538bc27e22381fae85dcbde12be75d6e6bad4fd131c8880588ece26/babarot/make_iap_request",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:51.865Z"
+    "fetchedAt": "2026-10-01T10:05:51.865Z",
+    "localImage": {
+      "file": "6325b83213ca45446d937dbc9d0402c4fef13d44cd4ad1a2897853bbe5994dff.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/qiita2crowi": {
     "url": "https://github.com/b4b4r07/qiita2crowi",
@@ -252,7 +357,12 @@
     "image": "https://opengraph.githubassets.com/301817900465061a3b46833aabb55807c5c9b3459097de52e8f43dab7fce0257/babarot/qiita2crowi",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:52.965Z"
+    "fetchedAt": "2026-10-01T10:05:52.965Z",
+    "localImage": {
+      "file": "1925866a09276e92bae601131e956b0b0fcbba455a7787a1a4a40229ba650e20.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/req": {
     "url": "https://github.com/b4b4r07/req",
@@ -261,7 +371,12 @@
     "image": "https://opengraph.githubassets.com/38db2c1c6d014fcab83e4eb4f82928cceebb9a6766f43d2da3f5257c94604152/babarot/req",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:49.723Z"
+    "fetchedAt": "2026-10-01T10:05:49.723Z",
+    "localImage": {
+      "file": "f9107aa715ee8b6a0f5a49e98c88b3fdb71b86f66906382d6b3faeebd71d19db.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/tellme.tokyo": {
     "url": "https://github.com/b4b4r07/tellme.tokyo",
@@ -270,7 +385,12 @@
     "image": "https://opengraph.githubassets.com/a7194a25c438f102bbf444ef98a47d979c7eb40fa6d697a20581401b87a5fe3b/babarot/tellme.tokyo",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:51.931Z"
+    "fetchedAt": "2026-10-01T10:05:51.931Z",
+    "localImage": {
+      "file": "3ae3ac1cd200d0371d71289a7619ae1af877bd825d2876120a7cdacf3e4212f2.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/twistd": {
     "url": "https://github.com/b4b4r07/twistd",
@@ -279,7 +399,12 @@
     "image": "https://opengraph.githubassets.com/5d9cf79b3622e55950bee7bf853277663de28b5d6c0b69ae7e7bcaf463a2eb5a/babarot/twistd",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:50.497Z"
+    "fetchedAt": "2026-10-01T10:05:50.497Z",
+    "localImage": {
+      "file": "e670f35434da188ac9fff54efac854c4f9d2c5414c2c9be0bfb79362b67ce7b5.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/vim-ansible-vault": {
     "url": "https://github.com/b4b4r07/vim-ansible-vault",
@@ -288,7 +413,12 @@
     "image": "https://opengraph.githubassets.com/c6bdc0a0517c8c28b1b1585ed54459b931adfc46d7d592d792846f3e66b3ad1a/babarot/vim-ansible-vault",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:49.780Z"
+    "fetchedAt": "2026-10-01T10:05:49.780Z",
+    "localImage": {
+      "file": "affc0b8e1d90114edff0613f5853ae961b1fced0f7255d65a800bb79564669da.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/vim-crowi": {
     "url": "https://github.com/b4b4r07/vim-crowi",
@@ -297,7 +427,12 @@
     "image": "https://opengraph.githubassets.com/17ed6a9a350718f4e3b2df635a6dcf07ef8e72b19110e04b37ea0bdf21b89198/babarot/vim-crowi",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:53.883Z"
+    "fetchedAt": "2026-10-01T10:05:53.883Z",
+    "localImage": {
+      "file": "e90055da11db8e1f6f439293166a2788bc996cdd484ba31afa702810b5c9e69e.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/vim-shellutils": {
     "url": "https://github.com/b4b4r07/vim-shellutils",
@@ -306,7 +441,12 @@
     "image": "https://opengraph.githubassets.com/0dc69d274ebf601b22f7bae089a5cc8c61bbc9a4ba7d2f6f8f77e4b63f9a8422/babarot/vim-shellutils",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:49.410Z"
+    "fetchedAt": "2026-10-01T10:05:49.410Z",
+    "localImage": {
+      "file": "6f42586ef1ed0441717534b58360c6e8eb00fd203d0cb46b6aafaf79650273ff.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/yamato-bot": {
     "url": "https://github.com/b4b4r07/yamato-bot",
@@ -315,7 +455,12 @@
     "image": "https://opengraph.githubassets.com/e23e9102a45602718e7f370301626a3854f6ffcc8dd02e201fb701b1f0872d77/babarot/yamato-bot",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:52.069Z"
+    "fetchedAt": "2026-10-01T10:05:52.069Z",
+    "localImage": {
+      "file": "8264c495d296585a57b6be1f63202084daf744354d7370ba985ec296281a24b6.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/zplug": {
     "url": "https://github.com/b4b4r07/zplug",
@@ -324,7 +469,12 @@
     "image": "https://opengraph.githubassets.com/f727181112b2fa3616773a2eb62ba100afda0f2dd6cc542f8753da75d958b241/zplug/zplug",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:49.564Z"
+    "fetchedAt": "2026-10-01T10:05:49.564Z",
+    "localImage": {
+      "file": "14b41f3c4909c15a790311fcfad597762e27ba9aa3aae4f94bb10b3b05f53c0d.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/b4b4r07/zsh-history": {
     "url": "https://github.com/b4b4r07/zsh-history",
@@ -333,7 +483,12 @@
     "image": "https://opengraph.githubassets.com/0b72c2d6d7b0ae45617ef5ffeaa9812fb5b128e737f596eac3c6670737469e4f/babarot/zsh-history",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:51.755Z"
+    "fetchedAt": "2026-10-01T10:05:51.755Z",
+    "localImage": {
+      "file": "398ad70d721f53335f307dea41f4db5e9f342f373e107698d9b9d19240b54ed3.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/babarot": {
     "url": "https://github.com/babarot",
@@ -342,7 +497,12 @@
     "image": "https://avatars.githubusercontent.com/u/4442708?v=4?s=400",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:50.125Z"
+    "fetchedAt": "2026-10-01T10:05:50.125Z",
+    "localImage": {
+      "file": "0cb0f8e4b165feec2e7f31727a6d9b35cfd3d3d2736e3ba4b67816c84bf88640.webp",
+      "width": 460,
+      "height": 460
+    }
   },
   "https://github.com/babarot/dotfiles": {
     "url": "https://github.com/babarot/dotfiles",
@@ -351,7 +511,12 @@
     "image": "https://opengraph.githubassets.com/1f5aa5772677e97b4486a6f8e7f3fb3a82a2ec52f07e46df7ce917982c998670/babarot/dotfiles",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-03T08:36:02.025Z"
+    "fetchedAt": "2026-10-03T08:36:02.025Z",
+    "localImage": {
+      "file": "8715240c1c5b7a61280bc063f597a8452c3b263cc908d59b66a8d3ef8a8040e5.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/crowi/go-crowi": {
     "url": "https://github.com/crowi/go-crowi",
@@ -360,7 +525,12 @@
     "image": "https://opengraph.githubassets.com/6fdb1ab10a88dd6c882a83443e8dfde298d90537b155b7e93467d5d3b512d6c3/crowi/go-crowi",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:52.466Z"
+    "fetchedAt": "2026-10-01T10:05:52.466Z",
+    "localImage": {
+      "file": "3ca0c7c9d8a0276d71d67f1060fed62548df16aa5b9fa34482fbf105dbc7834a.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/davecheney/httpstat": {
     "url": "https://github.com/davecheney/httpstat",
@@ -369,7 +539,12 @@
     "image": "https://opengraph.githubassets.com/a215d715a6effe93060a72ed70f8efb9f896e607b378e32b0cd3a8c51786a369/davecheney/httpstat",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:50.631Z"
+    "fetchedAt": "2026-10-01T10:05:50.631Z",
+    "localImage": {
+      "file": "d494423e287f25ab13803c8f56ddf8acf53cf70705987898e4ccc4886f07a84d.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/itchyny/fillin": {
     "url": "https://github.com/itchyny/fillin",
@@ -378,7 +553,12 @@
     "image": "https://opengraph.githubassets.com/59a6aeed2eae6b4a43d7f687584c7bb41b42f39fb7d665bd7d30744f051c3d77/itchyny/fillin",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:52.061Z"
+    "fetchedAt": "2026-10-01T10:05:52.061Z",
+    "localImage": {
+      "file": "99c895deafa9d98cc3a72aa38446f8a4670f5a72c0cfc026d2fed77a4bbfb4ab.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/reorx/httpstat": {
     "url": "https://github.com/reorx/httpstat",
@@ -387,7 +567,12 @@
     "image": "https://opengraph.githubassets.com/3f733fb74cde5bbe20bc68d68656b4e8606df052dfcbe10ab34e6474582a0676/reorx/httpstat",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:50.238Z"
+    "fetchedAt": "2026-10-01T10:05:50.238Z",
+    "localImage": {
+      "file": "e8c4cd21bbeaad597d7f2f1d4145b08f3ac8e2a94c837ee84883fbe99894dcd7.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/vim-jp/vimconf/issues/106": {
     "url": "https://github.com/vim-jp/vimconf/issues/106",
@@ -396,7 +581,12 @@
     "image": "https://opengraph.githubassets.com/e1fa29722606f57298513a9c472b3d61ea0dc878e47ebf4bccb9fb9dbcb4caf1/vim-jp/vimconf/issues/106",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:50.627Z"
+    "fetchedAt": "2026-10-01T10:05:50.627Z",
+    "localImage": {
+      "file": "eefc3ab4f18687811ac83b5059981b47e51b069f1c20dedee2a08aae4dca24c7.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/x-motemen/blogsync": {
     "url": "https://github.com/x-motemen/blogsync",
@@ -405,7 +595,12 @@
     "image": "https://opengraph.githubassets.com/9b4a8cec97f62ce79f3366c2faa100c7ad21f8f0e8f135d89f51db526b3076fa/x-motemen/blogsync",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:51.009Z"
+    "fetchedAt": "2026-10-01T10:05:51.009Z",
+    "localImage": {
+      "file": "fd49e2f06266290f2a0ca0db0a49defe01ecd800597ce77eb13c8a8a8c84d167.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://github.com/zplug": {
     "url": "https://github.com/zplug",
@@ -414,7 +609,12 @@
     "image": "https://avatars.githubusercontent.com/u/16539964?s=280&v=4",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:49.686Z"
+    "fetchedAt": "2026-10-01T10:05:49.686Z",
+    "localImage": {
+      "file": "6710755453e7b22a041609c10f2dd87aef5b09d7f7d763f61f3d955692649571.webp",
+      "width": 280,
+      "height": 280
+    }
   },
   "https://github.com/zplug/bots": {
     "url": "https://github.com/zplug/bots",
@@ -423,7 +623,12 @@
     "image": "https://opengraph.githubassets.com/0904277b03c309efd6732735c86b2b976a68f3af3dde51d8976f87d4946f3c82/zplug/bots",
     "icon": "https://github.githubassets.com/favicons/favicon.svg",
     "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:50.204Z"
+    "fetchedAt": "2026-10-01T10:05:50.204Z",
+    "localImage": {
+      "file": "04e83a78b3ef641e3c1bba8d7e4c27dccf0799ef7cdbc74ed27abbc922202350.webp",
+      "width": 960,
+      "height": 480
+    }
   },
   "https://gomi.dev": {
     "url": "https://gomi.dev",
@@ -432,7 +637,12 @@
     "image": "https://storage.googleapis.com/zenn-user-upload/b3b2ba4ffc5b-20250208.png",
     "icon": "https://gomi.dev/favicon.ico",
     "siteName": "gomi.dev",
-    "fetchedAt": "2026-10-01T08:24:46.191Z"
+    "fetchedAt": "2026-10-01T08:24:46.191Z",
+    "localImage": {
+      "file": "dcefb609845997f9e27451c3b0562a9e50fed3ed222b775b06567880ccfced6b.webp",
+      "width": 960,
+      "height": 504
+    }
   },
   "https://keens.github.io/blog/2016/02/24/bind_addressnoimigayouyakuwakatta/": {
     "url": "https://keens.github.io/blog/2016/02/24/bind_addressnoimigayouyakuwakatta/",
@@ -441,7 +651,12 @@
     "image": "https://keens.github.io/images/ogp/post/Bind_Addressnoimigayouyakuwakatta.png",
     "icon": "https://keens.github.io/favicon-32x32.png",
     "siteName": "keens.github.io",
-    "fetchedAt": "2026-10-01T10:05:49.159Z"
+    "fetchedAt": "2026-10-01T10:05:49.159Z",
+    "localImage": {
+      "file": "bb7e1ee7d9765f90a1afbc0f424d541ebac7e8c34862de4289910b2663e6d31c.webp",
+      "width": 960,
+      "height": 504
+    }
   },
   "https://medium.com/@catatsuy/2017年にお金を払ったサービス-6ae559c4c883": {
     "url": "https://medium.com/@catatsuy/2017年にお金を払ったサービス-6ae559c4c883",
@@ -460,7 +675,12 @@
     "image": "https://media.connpass.com/thumbs/35/02/3502eddec73185215f193389cc0be97e.png",
     "icon": "https://connpass.com/static/dad7c58/img/favicon.ico",
     "siteName": "connpass",
-    "fetchedAt": "2026-10-01T10:05:49.452Z"
+    "fetchedAt": "2026-10-01T10:05:49.452Z",
+    "localImage": {
+      "file": "0ede5a2d04bb0f447f203c2830f8f07a922de68319ec396a6a564793ec6ebb2a.webp",
+      "width": 640,
+      "height": 270
+    }
   },
   "https://ponkotuy.hatenadiary.org/entry/20140827/1409127514": {
     "url": "https://ponkotuy.hatenadiary.org/entry/20140827/1409127514",
@@ -469,7 +689,12 @@
     "image": "https://ogimage.blog.st-hatena.com/17680117127177627358/17680117127177629363/1559299828",
     "icon": "https://ponkotuy.hatenadiary.org/icon/link",
     "siteName": "ponkotuyの日記",
-    "fetchedAt": "2026-10-01T10:05:49.789Z"
+    "fetchedAt": "2026-10-01T10:05:49.789Z",
+    "localImage": {
+      "file": "a6fa0ebb3335c0d84492cc0794abd5441762e29d8ff44861e4dada01de1304ae.webp",
+      "width": 960,
+      "height": 504
+    }
   },
   "https://qiita.com/b4b4r07": {
     "url": "https://qiita.com/b4b4r07",
@@ -502,7 +727,12 @@
     "image": "https://www.theinouebrothers.net/cdn/shop/files/landing_page_hero_2025_03_H_3fcd608a-0c82-46ed-976d-aed471c5ba54.jpg?v=1760498076",
     "icon": "https://www.theinouebrothers.net/cdn/shop/files/favicon-32x32.png?crop=center&height=32&v=1760427835&width=32",
     "siteName": "The Inoue Brothers",
-    "fetchedAt": "2026-10-01T08:24:46.441Z"
+    "fetchedAt": "2026-10-01T08:24:46.441Z",
+    "localImage": {
+      "file": "a456c8b7750be479f0e213ca558c309a4ae049eb858b9e737129805c4d0a1ccf.webp",
+      "width": 960,
+      "height": 556
+    }
   },
   "https://twitter.com/b4b4r07/status/677389940095713280": {
     "url": "https://twitter.com/b4b4r07/status/677389940095713280",
@@ -521,7 +751,12 @@
     "image": "https://fileres.synology.com/images/common/meta-tag-preview-image/img_synology.jpg",
     "icon": "https://fileres.synology.com/images/common/favicon/syno/icon-144x144.png",
     "siteName": "www.synology.com",
-    "fetchedAt": "2026-10-01T10:05:53.848Z"
+    "fetchedAt": "2026-10-01T10:05:53.848Z",
+    "localImage": {
+      "file": "563739abdb54e9429df64f6802a417b0e29144bc3266667906f393744f9a36ec.webp",
+      "width": 960,
+      "height": 502
+    }
   },
   "https://www.youtube.com/playlist?list=PL81sUbsFNc5ZFdA6C9HZlaMKdsxtYo5wi": {
     "url": "https://www.youtube.com/playlist?list=PL81sUbsFNc5ZFdA6C9HZlaMKdsxtYo5wi",
@@ -530,6 +765,11 @@
     "image": "https://i.ytimg.com/vi/bEFILWrRJJ4/hqdefault.jpg?sqp=-oaymwEXCOADEI4CSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLDMX8s-wy0pPP8NSCoBUsEoGN6_YA&days_since_epoch=20727",
     "icon": "https://www.youtube.com/s/desktop/e6aecce7/img/favicon_144x144.png",
     "siteName": "YouTube",
-    "fetchedAt": "2026-10-01T08:24:46.328Z"
+    "fetchedAt": "2026-10-01T08:24:46.328Z",
+    "localImage": {
+      "file": "339570ac7ede71e2c013889f4290bde09a2c51b64834b8fb18c71df8261b4502.webp",
+      "width": 480,
+      "height": 270
+    }
   }
 }
