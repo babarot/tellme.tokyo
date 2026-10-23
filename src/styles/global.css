@@ -9,6 +9,7 @@
 @import './figures/components.css';
 @import '../plugins/link-preview/style.css';
 @import '../plugins/code-block/style.css';
+@import '../plugins/github-code/style.css';
 @import '../plugins/gallery/style.css';
 @import '../plugins/carousel/style.css';
 @import '../plugins/lightbox/style.css';
@@ -129,6 +130,11 @@ html.dark {
   --code-block-muted: var(--c-muted);
   --code-block-hover: var(--c-heading);
   --code-block-font: var(--font-mono);
+  --github-code-line: var(--c-line);
+  --github-code-header-bg: var(--c-surface);
+  --github-code-link: var(--c-link);
+  --github-code-muted: var(--c-muted);
+  --github-code-number: var(--c-subtle);
   --gallery-placeholder: var(--c-surface);
   --carousel-placeholder: var(--c-surface);
   --carousel-caption: var(--c-muted);

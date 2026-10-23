@@ -31,7 +31,7 @@ Posts are written in Japanese. The author may ask for a post to be reworded in t
 - `draft: true` is still being written: shown in dev and previews, not in production (`mise run dev` takes the states to build, as `mise run post` does: `--published` is production, `--all` adds hidden). `hidden: true` is withdrawn: built neither in production nor in previews, as if it never existed; only a local build asked for it shows it.
 - Front matter has the schema's keys in its order; `mise run post check --fix` puts them right. `mise run post ls` / `edit` / `open` find posts by state, tag, date or text, and list them, open them in the editor or in the browser on the dev server.
 - Headings: the title is the h1. A post may start its headings at `#` (then `#` is a chapter and `##` a section, all rendered one level lower) or at `##`.
-- Directives in use: `gallery`, `carousel`, `img`, `addendum`, `revisions`/`version`, `tweet`, `youtube`, `spotify`, `slideshare`; their options are in `src/plugins/<name>/`. Do not invent others: unknown `foo:bar` text is shown as written. Anything else can be raw HTML.
+- Directives in use: `gallery`, `carousel`, `img`, `addendum`, `revisions`/`version`, `github`, `tweet`, `youtube`, `spotify`, `slideshare`; their options are in `src/plugins/<name>/`. Do not invent others: unknown `foo:bar` text is shown as written. Anything else can be raw HTML.
 - Figures are `<post>/figures/<name>.part.html`, embedded in an `.mdx` post with `<Partial name="<name>" />`.
 
 ## Not obvious from the code
@@ -39,6 +39,7 @@ Posts are written in Japanese. The author may ask for a post to be reworded in t
 - After changing a remark/rehype plugin, the Markdown settings or the post schema, delete `.astro` and `node_modules/.astro` and restart the dev server: it keeps the old schema and Astro does not convert an unchanged post again. The first start after that may report `The collection "post" does not exist or is empty`; restart once more.
 - URLs end with a slash. The dev server answers 404 without it; production redirects.
 - A directive inside another needs more colons than its parent (`:::::revisions` > `::::version` > `:::gallery`), or the inner fence closes the outer one.
+- `::github` caches the lines it shows in `.cache/github-code.json`, committed like the link previews: commit it with the post that quotes them. Quote the URL (`url="…"`); it holds a `#`.
 - A bare URL becomes a link card only as a top-level paragraph, not inside a directive. Cards are cached in `.cache/link-previews.json` and their images in `public/link-previews/`, both committed: the dev server or a build adds entries and images, so commit them with the post that added the link. After removing links, `pnpm prune:link-previews`.
 - The OG and header fonts `PixelifySans-tellme.tokyo.ttf` and `Sixtyfour-tellme.tokyo.ttf` hold only the letters of "tellme.tokyo". For other text, fetch a subset from `https://fonts.googleapis.com/css2?family=<Family+Name>&text=<letters>` without a browser user agent (Google Fonts then answers with TrueType).
 - Crit renders only `.md` files, so an `.mdx` post is reviewed on a copy in the scratchpad and fixed in the `.mdx`: follow `.claude/skills/crit-mdx/`.

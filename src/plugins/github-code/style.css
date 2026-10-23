@@ -1,0 +1,71 @@
+/* Lines of a file on GitHub: a one-line header (the file's path, and the ref
+   at the right) joined to the top of the code, and the file's line numbers
+   beside the code. The numbers are a
+   CSS counter on Shiki's .line spans, started from the first line by the
+   element's own counter-reset, so copying the code leaves them out. The <pre>
+   keeps the site's own look. Colors: --github-code-line,
+   --github-code-header-bg, --github-code-link, --github-code-muted,
+   --github-code-number. */
+.github-code {
+  margin: 1.75em 0;
+}
+
+.github-code .code-block,
+.github-code pre {
+  margin: 0;
+}
+
+.github-code-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.25rem;
+  padding: 0 1rem;
+  border: 1px solid var(--github-code-line, rgb(128 128 128 / 0.25));
+  border-bottom: 0;
+  border-radius: 0.5rem 0.5rem 0 0;
+  background: var(--github-code-header-bg, rgb(128 128 128 / 0.08));
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.github-code pre {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.github-code-icon {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  fill: var(--github-code-muted, currentColor);
+}
+
+.github-code-path {
+  min-width: 0;
+  color: var(--github-code-link, inherit);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.github-code-path:hover {
+  text-decoration: underline;
+}
+
+.github-code-ref {
+  flex: none;
+  margin-left: auto;
+  color: var(--github-code-muted, gray);
+}
+
+.github-code .line::before {
+  display: inline-block;
+  width: calc(var(--github-code-digits, 2) * 1ch);
+  margin-right: 1.25rem;
+  color: var(--github-code-number, gray);
+  content: counter(github-code-line);
+  counter-increment: github-code-line;
+  text-align: right;
+  user-select: none;
+}

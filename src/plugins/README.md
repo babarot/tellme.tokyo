@@ -15,6 +15,7 @@ another Astro (or any unified) project as is.
 | `mermaid` | ```` ```mermaid ```` code blocks drawn as diagrams; follows the color scheme | remark, style, client |
 | `revision` | updates to an old post that keep what it said: `:::addendum` (a dated note) and `::::revisions` of `:::version` blocks, newest first (past ones under `<details>`, or `view=tabs`: tabs switched by CSS radios, no script); passes `updated` and the ids of past versions' headings (`revisionHiddenHeadings`) to the page as front matter | remark, style |
 | `img` | `:::img` for one image with options: `width` (most px), `scheme` (light or dark only), `frame` (a thin line around it) | remark, style |
+| `github-code` | `::github{url="https://github.com/<owner>/<repo>/blob/<ref>/<path>#L9-L19"}` shows those lines of the file, numbered as in the file, under a one-line header linking to it, with the ref (read at build time and cached; `lang=` overrides the language) | remark, source, fetch, cache, style |
 | `code-block` | a copy button on every code block (on hover; none on touch screens); ```` ```json:package.json ```` shows the file name above the code | remark, style, client |
 | `link-preview` | a paragraph that is only a URL becomes a card with the page's title, description, image and icon (cached; the image is saved once as a WebP in `imageDir` and served from the site; failed fetches are retried after 30 days; `pnpm prune:link-previews` drops entries and images no post uses) | remark, urls, parse, fetch, image, cache, html, style |
 | `heading-levels` | keeps the post title the only h1 without rewriting the source | remark |
@@ -58,13 +59,15 @@ a real post are split into rows, so a change to the layout algorithm shows up.
 - client scripts: `src/pages/post/[...path].astro`
 
 Directive plugins need `remark-directive` before them and `directive-fallback`
-after them. `code-block` goes after `mermaid`, which takes its code blocks first.
+after them. `code-block` goes after `mermaid`, which takes its code blocks first, and
+after `github-code`, whose code blocks get its copy button too.
 
 ## Options
 
 ```ts
 [remarkGallery, { rowHeight: 150, gap: 5, thumbnailWidths: [300, 600, 900, 1200] }]
 [remarkCarousel, { interval: 7000, autoplay: true, ratio: '16/9', indicator: 'dot' }]
+[remarkGitHubCode, { cacheFile: '.cache/github-code.json' }]
 [remarkLinkPreview, { cacheFile: '.cache/link-previews.json', imageDir: 'public/link-previews', imageBase: '/link-previews/', retryAfterDays: 30 }]
 [remarkRevision, { labels: { addendum: 'Added {date}', latest: 'Latest', previous: 'Previous', tabs: 'Versions' } }]
 ```

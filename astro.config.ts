@@ -8,6 +8,7 @@ import remarkGallery from './src/plugins/gallery/remark';
 import remarkCarousel from './src/plugins/carousel/remark';
 import remarkImg from './src/plugins/img/remark';
 import remarkEmbed from './src/plugins/embed/remark';
+import remarkGitHubCode from './src/plugins/github-code/remark';
 import remarkRevision from './src/plugins/revision/remark';
 import remarkMermaid from './src/plugins/mermaid/remark';
 import remarkCodeBlock from './src/plugins/code-block/remark';
@@ -32,6 +33,7 @@ export default defineConfig({
         [remarkCarousel, { interval: 7000, ratio: '16/9', indicator: 'dot' }],
         remarkImg,
         remarkEmbed,
+        [remarkGitHubCode, { cacheFile: '.cache/github-code.json' }],
         [remarkRevision, { labels: { addendum: '{date} 追記', latest: '最新の文章', previous: '前の文章', tabs: '版' } }],
         remarkDirectiveFallback,
         remarkHeadingLevels,
