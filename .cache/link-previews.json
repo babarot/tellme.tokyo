@@ -131,15 +131,6 @@
       "height": 460
     }
   },
-  "https://github.com/b4b4r07/afx/": {
-    "url": "https://github.com/b4b4r07/afx/",
-    "title": "GitHub - babarot/afx: An alternative, fast package manager for plugins and executable commands",
-    "description": "An alternative, fast package manager for plugins and executable commands - babarot/afx",
-    "image": "https://opengraph.githubassets.com/d1b6f6a1d82031a15bee196650ddfe891a45b46f35e417c8af6b2553be3190ca/babarot/afx",
-    "icon": "https://github.githubassets.com/favicons/favicon.svg",
-    "siteName": "GitHub",
-    "fetchedAt": "2026-10-01T10:05:51.410Z"
-  },
   "https://github.com/b4b4r07/epoch-cat": {
     "url": "https://github.com/b4b4r07/epoch-cat",
     "title": "GitHub - babarot/epoch-cat: Epoch time converter and filter like less",
