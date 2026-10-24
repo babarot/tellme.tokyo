@@ -165,7 +165,8 @@ cd::narrow()
 
 `cd::fuzzy` の実装についてはレーベンシュタイン距離（編集距離）を算出し、それをもとに類似度を割り出している。今は 70% 以上の類似度となる文字列を候補としている。その実装のほとんどは awk によって処理している。これ以上の具体的な説明については省略する。
 
-[https://raw.githubusercontent.com/b4b4r07/screenshots/master/enhancd/fuzzy.gif:image=https://raw.githubusercontent.com/b4b4r07/screenshots/master/enhancd/fuzzy.gif]
+![](https://raw.githubusercontent.com/b4b4r07/screenshots/master/enhancd/fuzzy.gif)
+
 
 ## `cd::interface`
 
