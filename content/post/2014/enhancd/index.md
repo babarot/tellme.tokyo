@@ -2,7 +2,7 @@
 title: "enhancd という autojump/z ライクな bash/zsh プラグインを書いた"
 date: "2014-11-20T00:00:00+09:00"
 description: ""
-draft: true
+draft: false
 hidden: false
 toc: false
 tags: []
@@ -54,7 +54,7 @@ yusuke /etc[8]$ =                # (ディレクトリの履歴一覧表示)
  1 /tmp
  0 /etc
 yusuke /etc[9]$ = 2              # (リスト上のディレクトリを直接指定)
-yusuke ~[10]$ 
+yusuke ~[10]$
 ```
 
 というスクリプトである。しばらくこれを満足して使っていたのだが、いくつかの不満点を抱くようになった。
