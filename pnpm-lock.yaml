@@ -66,8 +66,8 @@ importers:
         specifier: ^26.6.3
         version: 26.6.3
       happy-dom:
-        specifier: ^20.14.5
-        version: 20.14.5
+        specifier: ^21.0.4
+        version: 21.0.4
       rehype-stringify:
         specifier: ^10.0.1
         version: 10.0.1
@@ -91,7 +91,7 @@ importers:
         version: 6.0.3
       vitest:
         specifier: ^5.0.2
-        version: 5.0.2(@types/node@26.6.3)(happy-dom@20.14.5)(vite@8.3.4(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
+        version: 5.0.2(@types/node@26.6.3)(happy-dom@21.0.4)(vite@8.3.4(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
       wrangler:
         specifier: ^4.151.0
         version: 4.151.0(@types/node@26.6.3)
@@ -1981,8 +1981,8 @@ packages:
   hachure-fill@0.5.2:
     resolution: {integrity: sha512-3GKBOn+m2LX9iq+JC1064cSFprJY4jL1jCXTcpnfER5HYE2l/4EfWSGzkPa/ZDBmYI0ZOEj5VHV/eKnPGkHuOg==}
 
-  happy-dom@20.14.5:
-    resolution: {integrity: sha512-x/RzkpWO40bTjIoT30iQtt64FLLmH/iRcUCN2X//bLx7H3ifkdfPXyqsro/OYtqzIAhiLMMA7mmiOR9C3NOKjQ==}
+  happy-dom@21.0.4:
+    resolution: {integrity: sha512-tFm+GaLBgo6o0awHnvHaNoraVo27qJ+2tZEtZ+cIa08hXbeitrxAJajLI05hsUy/2/YTKcUjQYzHe5mCcraLBw==}
     engines: {node: '>=20.0.0'}
 
   harfbuzzjs@0.10.0:
@@ -5207,7 +5207,7 @@ snapshots:
 
   hachure-fill@0.5.2: {}
 
-  happy-dom@20.14.5:
+  happy-dom@21.0.4:
     dependencies:
       '@types/node': 26.6.3
       '@types/whatwg-mimetype': 3.0.2
@@ -6723,7 +6723,7 @@ snapshots:
     optionalDependencies:
       vite: 8.3.4(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)
 
-  vitest@5.0.2(@types/node@26.6.3)(happy-dom@20.14.5)(vite@8.3.4(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)):
+  vitest@5.0.2(@types/node@26.6.3)(happy-dom@21.0.4)(vite@8.3.4(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)):
     dependencies:
       '@types/chai': 5.2.3
       '@vitest/mocker': 5.0.2(vite@8.3.4(@types/node@26.6.3)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
@@ -6741,7 +6741,7 @@ snapshots:
       why-is-node-running: 3.2.2
     optionalDependencies:
       '@types/node': 26.6.3
-      happy-dom: 20.14.5
+      happy-dom: 21.0.4
     transitivePeerDependencies:
       - msw
 
