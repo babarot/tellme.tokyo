@@ -3,7 +3,7 @@ title: "Vimでcdしたときにそのディレクトリの中身を自動でリ�
 date: "2014-07-31T00:00:00+09:00"
 description: ""
 draft: true
-hidden: false
+hidden: true
 toc: false
 tags: []
 ---

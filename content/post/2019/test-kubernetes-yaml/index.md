@@ -3,7 +3,7 @@ title: "Kubernetes などの YAML を独自のルールをもとにテストす�
 date: "2019-02-19T21:40:24+09:00"
 description: ""
 draft: true
-hidden: false
+hidden: true
 toc: false
 tags:
 - kubernetes

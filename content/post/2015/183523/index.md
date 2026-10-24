@@ -3,7 +3,7 @@ title: "ターミナルのディレクトリ移動を高速化するプラグイ
 date: "2015-08-12T00:00:00+09:00"
 description: ""
 draft: true
-hidden: false
+hidden: true
 toc: false
 tags: []
 ---

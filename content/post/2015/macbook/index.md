@@ -3,7 +3,7 @@ title: "MacBook 12 inch を買った"
 date: "2015-08-14T00:00:00+09:00"
 description: ""
 draft: true
-hidden: false
+hidden: true
 toc: false
 tags: []
 ---

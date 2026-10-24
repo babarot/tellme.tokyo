@@ -3,7 +3,7 @@ title: "スムーズに Hugo でブログを書くツール"
 date: "2018-10-16T13:18:07+09:00"
 description: "Hugo でブログを書くときに便利にするツールを Go で書いた話"
 draft: true
-hidden: false
+hidden: true
 toc: false
 tags:
 - blog

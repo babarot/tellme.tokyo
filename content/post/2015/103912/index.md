@@ -3,7 +3,7 @@ title: "Go でコマンドラインにゴミ箱を実装した話"
 date: "2015-05-22T00:00:00+09:00"
 description: ""
 draft: true
-hidden: false
+hidden: true
 toc: false
 tags: []
 ---

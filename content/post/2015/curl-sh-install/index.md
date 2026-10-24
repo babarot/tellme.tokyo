@@ -3,7 +3,7 @@ title: "dotfiles を curl -L dot.hoge.com | sh でインストールする方法
 date: "2015-01-18T00:00:00+09:00"
 description: ""
 draft: true
-hidden: false
+hidden: true
 toc: false
 tags: []
 ---
