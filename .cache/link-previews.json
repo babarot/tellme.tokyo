@@ -65,6 +65,48 @@
     "siteName": "ブレイキング・バッド ファイナル・シーズン | ソニー・ピクチャーズ公式",
     "fetchedAt": "2026-10-01T10:05:51.858Z"
   },
+  "https://addyosmani.com/blog/software-factories/": {
+    "url": "https://addyosmani.com/blog/software-factories/",
+    "title": "Software Factories, Light and Dark | AddyOsmani.com",
+    "description": "A software factory is harnessing loops at scale - the system that builds your software instead of you. You can run the loop with humans in it (light factory)...",
+    "image": "https://addyosmani.com/assets/images/software-factories.jpg",
+    "icon": "https://addyosmani.com/assets/images/favicons/android-chrome-192x192.png",
+    "siteName": "AddyOsmani.com",
+    "fetchedAt": "2026-10-23T15:38:27.691Z",
+    "localImage": {
+      "file": "8391d074f10f6ad5eb04f2b3b473a7408f8a12d23278f6b73b097cc70ebde364.webp",
+      "width": 960,
+      "height": 502
+    }
+  },
+  "https://ai.engineer/talks/aeTb5BdmTTc-amazon-agi": {
+    "url": "https://ai.engineer/talks/aeTb5BdmTTc-amazon-agi",
+    "title": "Agents, codebases, and teams: what it actually takes to ship together",
+    "description": "Personal agent setups can fail in a shared production codebase. Reliable team delivery requires discoverable context, repair loops, and a shared workflow engineers trust enough…",
+    "image": "https://ai.engineer/api/og/talk/amazon-agi",
+    "icon": "https://ai.engineer/favicon.ico",
+    "siteName": "ai.engineer",
+    "fetchedAt": "2026-10-23T17:38:36.685Z",
+    "localImage": {
+      "file": "0ce3497c0daa51789d7c12dbf586606a24c3f7e7a4a4153d0dd46597a54010ba.webp",
+      "width": 960,
+      "height": 504
+    }
+  },
+  "https://ai.engineer/talks/harness-engineering-is-not-enough-why-software-factories-fail": {
+    "url": "https://ai.engineer/talks/harness-engineering-is-not-enough-why-software-factories-fail",
+    "title": "Why Software Factories Fail",
+    "description": "Coding agents can shorten implementation while leaving maintainability unmeasured. Safer acceleration starts with understanding the training signal, then moving human judgment…",
+    "image": "https://ai.engineer/api/og/talk/harness-engineering-is-not-enough-why-software-factories-fail",
+    "icon": "https://ai.engineer/favicon.ico",
+    "siteName": "ai.engineer",
+    "fetchedAt": "2026-10-23T15:38:34.784Z",
+    "localImage": {
+      "file": "6d8547e7b07306bcb38acad73b5627d981ac60fcc794113434ff5b148e7a8c4c.webp",
+      "width": 960,
+      "height": 504
+    }
+  },
   "https://b4b4r07.hatenadiary.com": {
     "url": "https://b4b4r07.hatenadiary.com",
     "failed": true,
@@ -84,10 +126,38 @@
       "height": 504
     }
   },
+  "https://boristane.com/blog/the-software-development-lifecycle-is-dead/": {
+    "url": "https://boristane.com/blog/the-software-development-lifecycle-is-dead/",
+    "title": "Boris Tane",
+    "description": "AI agents didn't make the SDLC faster. They killed it. All that's left is context.",
+    "image": "https://boristane.com/assets/blog/the-software-development-lifecycle-is-dead/og.png",
+    "icon": "https://boristane.com/favicon.svg",
+    "siteName": "boristane.com",
+    "fetchedAt": "2026-10-23T15:38:27.500Z",
+    "localImage": {
+      "file": "bee8bfd6dc254b792ab69888a1cfe8b2eb4b215cf4f1a1931728d72cb3b0aaee.webp",
+      "width": 960,
+      "height": 480
+    }
+  },
   "https://builderscon.io/builderscon/tokyo/2016": {
     "url": "https://builderscon.io/builderscon/tokyo/2016",
     "failed": true,
     "fetchedAt": "2026-10-01T10:05:50.178Z"
+  },
+  "https://claude.dev/blog/solving-code-review-at-anthropic/": {
+    "url": "https://claude.dev/blog/solving-code-review-at-anthropic/",
+    "title": "How the Claude Code team does code review / claude.dev Blog",
+    "description": "How do you review code at the volume agents produce it? On the Claude Code team, once we had high coverage and deep reviews, we started optimizing for the minimum amount of human review time that doesn't raise reverts or incidents.",
+    "image": "https://claude.dev/blog/solving-code-review-at-anthropic/og.png",
+    "icon": "https://claude.dev/shared/img/favicon.svg",
+    "siteName": "claude.dev Blog",
+    "fetchedAt": "2026-10-23T15:38:27.063Z",
+    "localImage": {
+      "file": "1848a0b5a54b618975979e6cb08039e62c88391efadada1da29df4d60987e2c4.webp",
+      "width": 960,
+      "height": 504
+    }
   },
   "https://filmarks.com/users/b4b4r07": {
     "url": "https://filmarks.com/users/b4b4r07",
@@ -537,6 +607,20 @@
       "height": 480
     }
   },
+  "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md": {
+    "url": "https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md",
+    "title": "advanced-context-engineering-for-coding-agents/ace-fca.md at main · humanlayer/advanced-context-engineering-for-coding-agents",
+    "description": "Contribute to humanlayer/advanced-context-engineering-for-coding-agents development by creating an account on GitHub.",
+    "image": "https://opengraph.githubassets.com/f72b592719eb9e928cc3dfedfdfe3c9670ad12af77a4e26dcdc8cba2bff53ba8/humanlayer/advanced-context-engineering-for-coding-agents",
+    "icon": "https://github.githubassets.com/favicons/favicon.svg",
+    "siteName": "GitHub",
+    "fetchedAt": "2026-10-23T15:38:27.575Z",
+    "localImage": {
+      "file": "d211b7eaf1acba897d6519e23c27c0a5320c3b04734e4540a9b37a933f14a415.webp",
+      "width": 960,
+      "height": 480
+    }
+  },
   "https://github.com/itchyny/fillin": {
     "url": "https://github.com/itchyny/fillin",
     "title": "GitHub - itchyny/fillin: fill-in your command and execute",
@@ -649,6 +733,34 @@
       "height": 504
     }
   },
+  "https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html": {
+    "url": "https://martinfowler.com/articles/exploring-gen-ai/sdd-3-tools.html",
+    "title": "Understanding Spec-Driven-Development: Kiro, spec-kit, and Tessl",
+    "description": "Notes from my colleagues on AI-assisted software delivery",
+    "image": "https://martinfowler.com/articles/exploring-gen-ai/donkey-card.png",
+    "icon": "https://martinfowler.com/favicon.ico",
+    "siteName": "martinfowler.com",
+    "fetchedAt": "2026-10-23T15:38:28.109Z",
+    "localImage": {
+      "file": "d0f5585d1bdedc58f127b32d27e9fe005571f379d3a1f68b32650d2a00f54b16.webp",
+      "width": 960,
+      "height": 480
+    }
+  },
+  "https://martinfowler.com/articles/harness-engineering.html": {
+    "url": "https://martinfowler.com/articles/harness-engineering.html",
+    "title": "Harness engineering for coding agent users",
+    "description": "A mental model for building trust in coding agents through feedforward guides, feedback sensors, and iterative harness engineering.",
+    "image": "https://martinfowler.com/articles/harness-engineering/card.png",
+    "icon": "https://martinfowler.com/favicon.ico",
+    "siteName": "martinfowler.com",
+    "fetchedAt": "2026-10-23T15:38:27.909Z",
+    "localImage": {
+      "file": "fdafd72379cff205d2ecf7a2274601d18b6e4ccbdf3a7b17f94c947c07e1a12b.webp",
+      "width": 600,
+      "height": 300
+    }
+  },
   "https://medium.com/@catatsuy/2017年にお金を払ったサービス-6ae559c4c883": {
     "url": "https://medium.com/@catatsuy/2017年にお金を払ったサービス-6ae559c4c883",
     "failed": true,
@@ -673,6 +785,11 @@
       "height": 270
     }
   },
+  "https://news.ycombinator.com/item?id=45610996": {
+    "url": "https://news.ycombinator.com/item?id=45610996",
+    "failed": true,
+    "fetchedAt": "2026-10-23T15:38:27.508Z"
+  },
   "https://ponkotuy.hatenadiary.org/entry/20140827/1409127514": {
     "url": "https://ponkotuy.hatenadiary.org/entry/20140827/1409127514",
     "title": "JSONログのUNIX Timeを読みやすくする - ponkotuyの日記",
@@ -687,10 +804,61 @@
       "height": 504
     }
   },
+  "https://product.10x.co.jp/entry/2026/01/09/154331": {
+    "url": "https://product.10x.co.jp/entry/2026/01/09/154331",
+    "title": "conftestによる自動レビュー - 10X Product Blog",
+    "description": "conftest は、Open Policy Agent (OPA) の Rego 言語を使って、構造化データ（YAML、JSON、Terraform、Dockerfile など）に対するポリシーテストを実行するCLIツールです。 よくあるユースケースとして、Kubernetes マニフェストや Terraform の設定ファイルに対して「コンテナは root で実行してはいけない」「すべてのリソースにタグが必要」といったルールの適用です。これらのルールを組織ポリシーとして定義して、それに適合しているかをconftestで検査できます。conftestをCIに組み込めば、PRに含まれた変更が問…",
+    "image": "https://cdn.image.st-hatena.com/image/scale/7f5f8af5314f18cafa90dccad4e41b063433ec96/backend=imagemagick;version=1;width=1300/https%3A%2F%2Fcdn-ak.f.st-hatena.com%2Fimages%2Ffotolife%2Fb%2Fbabarot%2F20260109%2F20260109151423.png",
+    "icon": "https://product.10x.co.jp/icon/link",
+    "siteName": "10X Product Blog",
+    "fetchedAt": "2026-10-23T15:46:03.590Z",
+    "localImage": {
+      "file": "55a624a14ce0122ff14de943adfddb6099a1c6278ed3e194e5070cec137ed53a.webp",
+      "width": 820,
+      "height": 960
+    }
+  },
   "https://qiita.com/b4b4r07": {
     "url": "https://qiita.com/b4b4r07",
     "failed": true,
     "fetchedAt": "2026-10-01T10:05:48.444Z"
+  },
+  "https://simonwillison.net/2025/Oct/5/parallel-coding-agents/": {
+    "url": "https://simonwillison.net/2025/Oct/5/parallel-coding-agents/",
+    "title": "Embracing the parallel coding agent lifestyle",
+    "description": "For a while now I’ve been hearing from engineers who run multiple coding agents at once—firing up several Claude Code or Codex CLI instances at the same time, sometimes in …",
+    "image": "",
+    "icon": "https://simonwillison.net/favicon.ico",
+    "siteName": "Simon Willison’s Weblog",
+    "fetchedAt": "2026-10-23T18:22:52.591Z"
+  },
+  "https://simonwillison.net/2026/feb/7/software-factory/": {
+    "url": "https://simonwillison.net/2026/feb/7/software-factory/",
+    "title": "How StrongDM’s AI team build serious software without even looking at the code",
+    "description": "Last week I hinted at a demo I had seen from a team implementing what Dan Shapiro called the Dark Factory level of AI adoption, where no human even looks …",
+    "image": "https://static.simonwillison.net/static/2026/strong-dm-card.jpg",
+    "icon": "https://simonwillison.net/favicon.ico",
+    "siteName": "Simon Willison’s Weblog",
+    "fetchedAt": "2026-10-23T15:38:27.244Z",
+    "localImage": {
+      "file": "b6bc2dd46673c2018045356f3d657aa8963e8af05a40e45e4ee8c7c190b00e01.webp",
+      "width": 960,
+      "height": 480
+    }
+  },
+  "https://speakerdeck.com/kawasima/ningen-ha-dono-ishi-kettei-o-tebanaseru-no-ka": {
+    "url": "https://speakerdeck.com/kawasima/ningen-ha-dono-ishi-kettei-o-tebanaseru-no-ka",
+    "title": "人間はどの意思決定を手放せるのか",
+    "description": "技術的負債に向き合うConference 2026 の発表資料です。 ぜひ最後までお読みください。",
+    "image": "https://files.speakerdeck.com/presentations/13042a43d45d49dbaa584112d5741f58/slide_0.jpg?40582107",
+    "icon": "https://d1eu30co0ohy4w.cloudfront.net/assets/favicon-bdd5839d46040a50edf189174e6f7aacc8abb3aaecd56a4711cf00d820883f47.png",
+    "siteName": "Speaker Deck",
+    "fetchedAt": "2026-10-23T15:38:27.667Z",
+    "localImage": {
+      "file": "85a69cd09a640158aeaa520d266924d27de712b753990aa03e96a6d522420acf.webp",
+      "width": 960,
+      "height": 540
+    }
   },
   "https://specifications.freedesktop.org/trash-spec/latest/": {
     "url": "https://specifications.freedesktop.org/trash-spec/latest/",
@@ -729,6 +897,20 @@
     "url": "https://twitter.com/b4b4r07/status/677389940095713280",
     "failed": true,
     "fetchedAt": "2026-10-01T10:05:49.391Z"
+  },
+  "https://www.danshapiro.com/blog/2026/01/the-five-levels-from-spicy-autocomplete-to-the-software-factory/": {
+    "url": "https://www.danshapiro.com/blog/2026/01/the-five-levels-from-spicy-autocomplete-to-the-software-factory/",
+    "title": "The Five Levels: from Spicy Autocomplete to the Dark Factory",
+    "description": "In my last post, I wrote about technical deflation. We’re seeing the cost of code is dropping so fast that we need to change our tech debt payment plans. The smart teams…",
+    "image": "https://www.danshapiro.com/blog/wp-content/uploads/2026/01/image-7.png",
+    "icon": "https://www.danshapiro.com/blog/wp-content/uploads/2026/08/site-icon-300x300.png",
+    "siteName": "www.danshapiro.com",
+    "fetchedAt": "2026-10-23T15:38:29.764Z",
+    "localImage": {
+      "file": "92b3def0de76f522208ea24bf8b28f90a806b26508461aa122e2cc7ad6b7b6d5.webp",
+      "width": 960,
+      "height": 536
+    }
   },
   "https://www.google.co.jp/trends/explore?geo=JP&q=dein.vim,NeoBundle,vim-plug": {
     "url": "https://www.google.co.jp/trends/explore?geo=JP&q=dein.vim,NeoBundle,vim-plug",

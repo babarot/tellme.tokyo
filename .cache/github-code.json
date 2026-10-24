@@ -1,0 +1,6 @@
+{
+  "https://github.com/babarot/dotfiles/blob/main/home/.claude/CLAUDE.md?plain=1#L9-L19": {
+    "code": "# Review\n\n- After drafting a plan or finishing an implementation, have an agent other than this session review it when you judge that a review would make the result more certain, or when the user asks for one. It is not required every time.\n- Pick the reviewer by tier:\n  - Tier 1: Fable, through the Agent tool with `model: \"fable\"`. Only when the work is complex: the design branches widely, a mistake is hard to undo, or the change spans several modules. If Fable is out of credits, tell the user and fall back to tier 2.\n  - Tier 2: the default. The CLI and model are set per Mac in `~/.claude/rules/`.\n  - Tier 3: a subagent on the same model as this session. Only when tier 2 fails or the check is tiny; it shares this session's blind spots.\n- Always include \"Don't nitpick trivial points. Only point out fatal issues.\" in the request, and pass the full paths of the plan or changed files.\n- Run the reviewer read-only. It reviews; it does not edit.\n- To re-review, resume the first review by its session ID, never the most recent session: other sessions on this Mac may have run a review since.\n- Judge each finding yourself. Tell the user which ones you did not adopt and why.",
+    "fetchedAt": "2026-10-23T17:45:54.553Z"
+  }
+}
