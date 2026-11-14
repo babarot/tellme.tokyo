@@ -28,7 +28,7 @@
     "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.3.5",
+    "astro": "^7.4.7",
     "budoux": "^0.9.3",
     "mermaid": "^12.2.0",
     "remark-directive": "^4.0.0",
